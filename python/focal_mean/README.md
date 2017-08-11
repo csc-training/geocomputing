@@ -10,6 +10,8 @@ The first script is fairly straightforward. It uses rasterio to open the georefe
 
 ## Simple batch job file
 
+A more detailed documentation on batch job system can be found here: https://research.csc.fi/taito-batch-jobs
+
 In the batch job file batch\_job\_simple.sh we define where the output and error messages are written as well as computing resources assigned for our program. In this case 5 seconds of execution time on once cpu and 1mb of memory is plenty.
 
 Batch job can then be submitted with command sbatch batch\_job\_simple.sh. This will also give us a job id which we can use to check state and efficiency of our batch job with seff <jobid>
