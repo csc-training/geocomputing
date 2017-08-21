@@ -1,9 +1,9 @@
 ## Overview
 This is an example for running Python code on CSC's Taito supercluser. In this example we'll read a geotiff image and blur it using sliding mean. We'll first run the script for a single file using Taito's batch job system and then take a look on how to process multiple files in parallel using array jobs in Taito. Lastly we'll process a single image in multiple parts using multiprocessing python package as a serial job.
 
-There are two python scripts in this folder: simple\_folcal\_mean.py and multiprocessing\_focal\_mean.py The first uses a single process to blur the image while the latter splits the image into chunks and processes those in parallel.
+There are two python scripts in this folder: `simple\_folcal\_mean.py` and `multiprocessing\_focal\_mean.py` The first uses a single process to blur the image while the latter splits the image into chunks and processes those in parallel.
 
-There are also three .sh files called batch\_job\_simple.sh, array\_job.sh and batch\_job\_multiprocessing.sh These files are used to submit batch jobs to Taito.
+There are also three .sh files called `batch\_job\_simple.sh`, `array\_job.sh` and `batch\_job\_multiprocessing.sh`. These files are used to submit batch jobs to Taito.
 
 ## Simple focal mean python script
 The first script is fairly straightforward. It uses rasterio to open the georeferenced image (could be anything supported by GDAL including virtual raster) as numpy array and then uses scipy's ndimage.convolve to apply the focal mean function. In this example we'll just fill the image edges wiht nodata value where focal mean can't be computed. Lastly rasterio is used again to save output to folder 'smooth'. It's worth noting that rather than hardcoding the filename into to script we supply it as argument using sys.argv. This allows us to use the same python script in the next step when we want to process multiple files using array jobs.
@@ -12,7 +12,7 @@ The first script is fairly straightforward. It uses rasterio to open the georefe
 
 A more detailed documentation on batch job system can be found here: https://research.csc.fi/taito-batch-jobs
 
-In the batch job file batch\_job\_simple.sh we define where the output and error messages are written as well as computing resources assigned for our program. In this case 5 seconds of execution time on once cpu and 1mb of memory is plenty.
+In the batch job file `batch\_job\_simple.sh` we define where the output and error messages are written as well as computing resources assigned for our program. In this case 5 seconds of execution time on once cpu and 1mb of memory is plenty.
 
 Batch job can then be submitted with command sbatch batch\_job\_simple.sh. This will also give us a job id which we can use to check state and efficiency of our batch job with seff <jobid>
 
@@ -31,7 +31,7 @@ Because we supplied the input filename as an argument to our python script we ca
 Output from each job is written to array\_job\_out\_<array\_job\_id>.txt and array\_job\_err\_<array\_job\_id>.txt files. Memory and time allocations are per job, so we don't have to modify them from last example.
 
 we can then submit this array job file with:
-sbatch array\_job.sh file\_list.txt
+`sbatch array\_job.sh file\_list.txt`
 
 ## Using multiprocessing library
 In last example we were able to use array jobs to process 2 files basically in the same time it took to process just one file in the first exmple because we had 2 separate files to process at the same time. In cases where we are just going to run a script once on a single file (that can be large) this isn't going to speed thigns up. If we wan't to utilize Taito's parallel processing capabilities in these cases and to process each file faster we will have to  write our code to utilize parallel processing. We can do this pretty easily using pythons multiprocessing library that allows us to run our code in parallel processes.
