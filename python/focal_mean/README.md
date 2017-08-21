@@ -1,5 +1,5 @@
 ## Overview
-In this example we'll read a geotiff image and blur it using sliding mean. We'll first run the script for a single file using Taito's batch job system and then take a look on how to process multiple files in parallel using array jobs in Taito. Lastly we'll process a single image in multiple parts using multiprocessing python package.
+This is an example for running Python code on CSC's Taito supercluser. In this example we'll read a geotiff image and blur it using sliding mean. We'll first run the script for a single file using Taito's batch job system and then take a look on how to process multiple files in parallel using array jobs in Taito. Lastly we'll process a single image in multiple parts using multiprocessing python package as a serial job.
 
 There are two python scripts in this folder: simple\_folcal\_mean.py and multiprocessing\_focal\_mean.py The first uses a single process to blur the image while the latter splits the image into chunks and processes those in parallel.
 
@@ -24,7 +24,7 @@ Array jobs are an easy way of taking advantage of taitos parallel processing cap
 Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context a typical use would be to run some model on study area split into multiple files where output from one file doesn't have an impact on result of an other area. In this example we can use the script from previous exercies without any further modifications to blur several images at the same time.
 
 ## Using arrayjobs to smooth multiple files
-Because we supplied the input filename as an argument to our python script we can easily construct an arrayjob file to process multiple files at the same time. We give list of files to be processed as parameter to the array job file and when we submit the arrayjob a new job is submitted for each file in the file list. 
+Because we supplied the input filename as an argument to our python script we can easily construct an arrayjob file to process multiple files at the same time. We give list of files to be processed as parameter to the array job file and when we submit the arrayjob a new job is submitted for each file in the file list.
 
 --array parameter is used to tell how many jobs we want to start. Value 1-2 in this case means we will have $SULRM\_ARRAY\_TASK\_ID variable running from 1 to 2, which means we will use sed to read first two lines from our input file list and start jobs for those files. If we want to process all files in the file list we should set --array=1-<number of lines>
 
