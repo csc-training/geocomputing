@@ -20,7 +20,8 @@ def save_output(array, file_name, transform, crs):
 				crs=crs, transform=transform) as new_dataset:
 		new_dataset.write(array,1)
 
-#Multiprocessing worker function that takes a chunk out of our array and calculates sliding mean for that chunk. Note that because of edge effects in sliding window mean we have to add overlap of kernel size to both ends of a chunk
+# Multiprocessing worker function that takes a chunk out of our array and calculates sliding mean for that chunk. 
+# Note that because of edge effects in sliding window mean we have to add overlap of kernel size to both ends of a chunk.
 def worker(chunk, kernel_size, processes, res, i):
 	C=sliding_mean(chunk, kernel_size)
 	if i==0:
@@ -41,7 +42,8 @@ def main():
 			print "Not doing splitting into chunks properly, exiting"
 			return
 
-		#create a manager list for results. Manager list ensures that we can write to the list from parallel processes without conflicts.
+		# Create a manager list for results. Manager list ensures that we can write to the list from parallel 
+		# processes without conflicts.
 		man = multiprocessing.Manager()		
 		res = man.list([None]*processes)
 
