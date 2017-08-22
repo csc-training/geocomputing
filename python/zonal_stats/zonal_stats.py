@@ -19,7 +19,7 @@ def chunks(l, n):
         yield l[i:i + n]
 
 
-#calculates zonal stats and add results to a dictionary
+#calculates zonal stats and adds results to a dictionary
 def worker(z,vrt,d):	
 	z_stats = zonal_stats(z,vrt, stats=statistics)	
 	for i in xrange(0,len(z_stats)):
@@ -46,7 +46,8 @@ def main():
 		man = mp.Manager()	
 		d = man.dict()	
 
-		#split zone polygons into 10 chunks for parallel processing and call worker() for each. Adjust 10 to be number of cores you want to use for optimal performance.
+		#split zone polygons into 10 chunks for parallel processing and call worker() for each. 
+		# Adjust 10 to be number of cores you want to use for optimal performance.
 		split = chunks(zones, len(zones)/10)
 		for z in split:
 			p = mp.Process(target=worker,args=(z, vrt,d))
