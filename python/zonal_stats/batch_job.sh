@@ -5,9 +5,7 @@
 #SBATCH -t 00:01:30
 #SBATCH --cpus-per-task=11
 #SBATCH --mem=300
-#SBATCH -p test
+#SBATCH -p parallel
 
 module load geopython
 python zonal_stats.py
-
-
