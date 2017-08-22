@@ -5,6 +5,11 @@
 #SBATCH -t 00:00:20
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=2
-#SBATCH -p test
+#SBATCH -p serial
+
+# load needed modules
+module load geopython
+# move to the directory where the data files locate
+cd ~/input_files_folder
 
 python simple_focal_mean.py FILENAME
