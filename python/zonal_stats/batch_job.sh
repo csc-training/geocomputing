@@ -7,6 +7,7 @@
 #SBATCH --mem=300
 #SBATCH -p test
 
+module load geopython
 python zonal_stats.py
 
 
