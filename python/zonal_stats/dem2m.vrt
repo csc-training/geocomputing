@@ -1,0 +1,78 @@
+<VRTDataset rasterXSize="12000" rasterYSize="6000">
+  <SRS>PROJCS["ETRS89 / ETRS-TM35FIN",GEOGCS["ETRS89",DATUM["European_Terrestrial_Reference_System_1989",SPHEROID["GRS 1980",6378137,298.2572221010002,AUTHORITY["EPSG","7019"]],AUTHORITY["EPSG","6258"]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433],AUTHORITY["EPSG","4258"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",27],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",500000],PARAMETER["false_northing",0],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AUTHORITY["EPSG","3067"]]</SRS>
+  <GeoTransform>  2.1200000000000000e+05,  2.0000000000000000e+00,  0.0000000000000000e+00,  6.7140000000000000e+06,  0.0000000000000000e+00, -2.0000000000000000e+00</GeoTransform>
+  <VRTRasterBand dataType="Float32" band="1">
+    <Metadata>
+      <MDI key="STATISTICS_MAXIMUM">53,361999511719</MDI>
+      <MDI key="STATISTICS_MEAN">8,9004683831535</MDI>
+      <MDI key="STATISTICS_MINIMUM">-0,38899999856949</MDI>
+      <MDI key="STATISTICS_STDDEV">10,634276644289</MDI>
+    </Metadata>
+    <NoDataValue>-9999</NoDataValue>
+    <ColorInterp>Gray</ColorInterp>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322E.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="6000" yOff="3000" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322B.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322A.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="0" yOff="3000" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322H.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="9000" yOff="0" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322C.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="3000" yOff="3000" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322G.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="9000" yOff="3000" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322F.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="6000" yOff="0" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+    <ComplexSource>
+      <SourceFilename relativeToVRT="1">dem2m/L3322D.tif</SourceFilename>
+      <SourceBand>1</SourceBand>
+      <SourceProperties RasterXSize="3000" RasterYSize="3000" DataType="Float32" BlockXSize="256" BlockYSize="256" />
+      <SrcRect xOff="0" yOff="0" xSize="3000" ySize="3000" />
+      <DstRect xOff="3000" yOff="0" xSize="3000" ySize="3000" />
+      <NODATA>-9999</NODATA>
+    </ComplexSource>
+  </VRTRasterBand>
+</VRTDataset>
