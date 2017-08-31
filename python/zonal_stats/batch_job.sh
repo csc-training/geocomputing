@@ -7,5 +7,5 @@
 #SBATCH --mem=300
 #SBATCH -p parallel
 
-module load geopython
+module load geo-env
 python zonal_stats.py
