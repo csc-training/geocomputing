@@ -9,7 +9,7 @@
 #SBATCH -p serial
 
 # load needed modules
-module load geopython
+module load geo-env
 # move to the directory where the data files locate
 cd ~/input_files_folder
 
