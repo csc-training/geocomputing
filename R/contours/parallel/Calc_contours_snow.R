@@ -60,7 +60,7 @@ funtorun<-function(mapsheet) {
 }
 
 # Read the mapsheets from external file
-mapsheets <- readLines('~/R-with-Taito/R-with-Taito/examples/snow/mapsheets.txt')
+mapsheets <- readLines('~/git/geocomputing/R/contours/mapsheets.txt')
 
 # Give cluster the work to be done
 system.time(a<-clusterApply(cl,mapsheets,funtorun))
