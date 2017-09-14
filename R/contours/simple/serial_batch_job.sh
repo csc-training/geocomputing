@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J rspatial_job
-#SBATCH -o output.txt
-#SBATCH -e errors.txt
+#SBATCH -o out.txt
+#SBATCH -e err.txt
 #SBATCH -t 0:05:00
 #SBATCH -p test
 #SBATCH --nodes=1
