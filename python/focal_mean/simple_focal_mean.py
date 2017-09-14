@@ -3,7 +3,6 @@ import rasterio
 import time
 import os
 from scipy import ndimage
-import gdal
 import sys
 
 
