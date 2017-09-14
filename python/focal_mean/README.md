@@ -31,7 +31,7 @@ Because we supplied the input filename as an argument to our python script we ca
 Output from each job is written to `array_job_out_<array_job_id>.txt` and `array_job_err_<array_job_id>.txt` files. Memory and time allocations are per job, so we don't have to modify them from last example.
 
 We can then submit this array job file with:
-`sbatch array_job.sh file_list.txt`
+`sbatch array_job.sh`
 
 ## Using multiprocessing library
 In last example we were able to use array jobs to process 2 files basically in the same time it took to process just one file in the first exmple because we had 2 separate files to process at the same time. In cases where we are just going to run a script once on a single file (that can be large) this isn't going to speed thigns up. If we wan't to utilize Taito's parallel processing capabilities in these cases and to process each file faster we will have to  write our code to utilize parallel processing. We can do this pretty easily using Python's `multiprocessing` library that allows us to run our code in parallel processes.
