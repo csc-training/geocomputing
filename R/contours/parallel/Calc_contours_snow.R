@@ -62,7 +62,7 @@ clusterExport(cl, "shapeFolder")
 
 #Set working directory
 clusterEvalQ(cl, setwd(mainDir))
-=======
+
 # Read the mapsheets from external file
 mapsheets <- readLines('~/git/geocomputing/R/contours/mapsheets.txt')
 
