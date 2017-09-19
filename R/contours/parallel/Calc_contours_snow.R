@@ -51,7 +51,6 @@ funtorun<-function(mapsheet) {
   #The tool gives like other RSAGA tools "Error: select a tool" message, but it actually is working :)
 }
 
-<<<<<<< HEAD
 # load RSAGA and rgdal libraries
 clusterEvalQ(cl, library(RSAGA))
 clusterEvalQ(cl, library(gdalUtils))
@@ -66,7 +65,6 @@ clusterEvalQ(cl, setwd(mainDir))
 =======
 # Read the mapsheets from external file
 mapsheets <- readLines('~/git/geocomputing/R/contours/mapsheets.txt')
->>>>>>> 69a04124b19e2b80f1f645bb274828c6e8ea9344
 
 # Give cluster the work to be done
 system.time(a<-clusterApply(cl,mapsheets,funtorun))
