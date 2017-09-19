@@ -27,6 +27,9 @@ if (!dir.exists(gridFolder)) {
   dir.create(gridFolder)
 }
 
+# Read the mapsheets from external file
+mapsheets <- readLines('~/R-with-Taito/R-with-Taito/examples/snow/mapsheets.txt')
+
 # Start the snow cluster
 cl<-getMPIcluster()
 
@@ -34,17 +37,6 @@ cl<-getMPIcluster()
 # The R modules need to be loaded inside the functions.
 # The variables from outside of this function are not visible.
 funtorun<-function(mapsheet) {
-
-  # load RSAGA and rgdal libraries
-  library(RSAGA)
-  library(gdalUtils)
-
-  mainDir <- "~/R_spatial_2017_4"
-  gridFolder <- "1_grid"
-  shapeFolder <- "2_shape"
-
-  #Set working directory
-  setwd(mainDir)
 
   # SagaGIS needs the input in its own format, so let's change the original .tif file to Saga format.
   gridfile <- file.path(gridFolder, gsub("tif", "sdat", basename(mapsheet)))
@@ -59,12 +51,22 @@ funtorun<-function(mapsheet) {
   #The tool gives like other RSAGA tools "Error: select a tool" message, but it actually is working :)
 }
 
-# Read the mapsheets from external file
-mapsheets <- readLines('~/R-with-Taito/R-with-Taito/examples/snow/mapsheets.txt')
+# load RSAGA and rgdal libraries
+clusterEvalQ(cl, library(RSAGA))
+clusterEvalQ(cl, library(gdalUtils))
+
+#Export variable to each cluster
+clusterExport(cl, "mainDir")
+clusterExport(cl, "gridFolder")
+clusterExport(cl, "shapeFolder")
+
+#Set working directory
+clusterEvalQ(cl, setwd(mainDir))
 
 # Give cluster the work to be done
 system.time(a<-clusterApply(cl,mapsheets,funtorun))
 
+#Stop cluster
 stopCluster(cl)
 
-quit()
+#quit()
