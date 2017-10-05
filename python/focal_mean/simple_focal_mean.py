@@ -13,8 +13,8 @@ def sliding_mean(array, kernel_size):
 
 #Save output array as geotiff file in folder called "smooth".
 def save_output(array, file_name, transform, crs):
-	if not os.path.isdir('smooth'):
-		os.makedirs('smooth')	
+	if not os.path.isdir('high_low'):
+		os.makedirs('high_low')	
 	with rasterio.open(file_name, 'w', driver='GTiff',
 				height=array.shape[0], width=array.shape[1],
 				count=1, dtype='float32',
@@ -28,7 +28,8 @@ def main():
 		myarray = dataset.read(1)
 		kernel_size = 50
 		blurred = sliding_mean(myarray, kernel_size)
-		save_output(blurred, os.path.join('smooth',os.path.basename(file_name)), dataset.affine, dataset.crs)
+		high_low = myarray-high_low
+		save_output(blurred, os.path.join('high_low',os.path.basename(file_name)), dataset.affine, dataset.crs)
 
 if __name__ == '__main__':
 	t0 = time.time()

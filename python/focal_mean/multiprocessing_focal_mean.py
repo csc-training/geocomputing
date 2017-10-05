@@ -1,70 +1,71 @@
 import numpy as np
-import rasterio
-import time
-import os
-from scipy import ndimage
-import sys
 import multiprocessing
+from scipy import ndimage	
+import rasterio
+from functools import partial
+import sys
 
-def sliding_mean(array, kernel_size):
-	kernel = np.ones((kernel_size,kernel_size))/(kernel_size*kernel_size)
+#Applies a focal function (such as sliding mean) to an array
+def apply_focal(kernel, array):
 	return ndimage.convolve(array,kernel, mode='constant', cval=-9999)
 
+# Splits data into number of chunks defined in the chunks parameter, with amount of overlap defined in the margin parameter.
+# returns a list containing the chunks.
+def split_data(data, margin, chunks):
+	if chunks==1:
+		return [data]
+	rows = np.shape(data)[0]
+	chunk_size= rows/chunks
+	return [data[max(0, chunk_size*p-margin):min(rows,chunk_size*(p+1)+margin)] for p in xrange(chunks)]
+
+#Crops the margin from the split chunks and concatenates them back to single 2d array (reverse of split_data)
+def crop_result(result, margin):
+	if len(result)==1:
+		return result[0]
+	result = [
+		result[i][:-margin] if i==0 
+		else result[i][margin:] if i==len(result)-1  
+		else result[i][margin:-margin]  
+		for i in xrange(len(result))]
+	return np.concatenate(result, axis=0)	
+
+
+#Save output array as geotiff file in folder called "high_low".
 def save_output(array, file_name, transform, crs):
-	if not os.path.isdir('smooth'):
-		os.makedirs('smooth')	
+	if not os.path.isdir('high_low'):
+		os.makedirs('high_low')	
 	with rasterio.open(file_name, 'w', driver='GTiff',
 				height=array.shape[0], width=array.shape[1],
 				count=1, dtype='float32',
 				crs=crs, transform=transform) as new_dataset:
 		new_dataset.write(array,1)
-
-# Multiprocessing worker function that takes a chunk out of our array and calculates sliding mean for that chunk. 
-# Note that because of edge effects in sliding window mean we have to add overlap of kernel size to both ends of a chunk.
-def worker(chunk, kernel_size, processes, res, i):
-	C=sliding_mean(chunk, kernel_size)
-	if i==0:
-		res[i]=C[:-kernel_size]
-	elif i==processes-1:
-		res[i]=C[kernel_size:]
-	else:
-		res[i]=C[kernel_size:-kernel_size]
-
 def main():
+
+	# 1. Read input tif with rasterio in read mode.
 	file_name=sys.argv[1]
-	with rasterio.open(file_name) as dataset:		
-		myarray = dataset.read(1)
-		kernel_size = 50		
-		processes = 8 # here we should choose number of processes that allow as to divide our 1200 rows evenly
-		chunk_length = len(myarray)/processes
-		if processes*chunk_length != len(myarray):
-			print "Not doing splitting into chunks properly, exiting"
-			return
+	output_name="high_low.tif"
+	with rasterio.open(file_name, 'r') as dataset:		
+		data = dataset.read(1)
 
-		# Create a manager list for results. Manager list ensures that we can write to the list from parallel 
-		# processes without conflicts.
-		man = multiprocessing.Manager()		
-		res = man.list([None]*processes)
+		# 2. Create a kernel with equal weight in each cell and cell weights summing up to 1. 
+		kernel_size = 81
+		kernel = np.ones((kernel_size,kernel_size))/(kernel_size*kernel_size)
+	
+		# 3. Split the data for example into 4 parts using split_data function provided
+		procs = 1
+		margin = kernel_size/2
+		chunks = split_data(data, margin, procs)
 
-		#Create list to keep track of processes
-		jobs = [None]*processes
+		# 4. Create a Pool with as many processes as you split your data into and map apply_focal function to your chunks.
+		pool = multiprocessing.Pool(processes=procs)
+		func = partial(apply_focal, kernel)		
+		result = pool.map(func, chunks, chunksize=1)
+	
+		result = crop_result(result, margin)
+		high_low = data-result			
 
-		#start worker function for each chunk of our array in a separate process
-		for i in xrange(0, processes):
-			chunk = myarray[max(0,i*chunk_length-kernel_size):min((i+1)*chunk_length+kernel_size, len(myarray))]
-			p = multiprocessing.Process(target=worker,args=(chunk, kernel_size, processes,res, i,))
-			p.start()
-			jobs[i]=p
-
-		#wait that all jobs are finished and then concatenate results
-		[job.join() for job in jobs]
-		E = np.concatenate(res, axis=0)		
-		save_output(E, os.path.join('smooth',os.path.basename(file_name)), dataset.affine, dataset.crs)
+		# 7. Write output to raster file using rasterio. 
+		save_output(high_low, os.path.join('high_low',os.path.basename(file_name)), dataset.affine, dataset.crs)
 
 if __name__ == '__main__':
-	t0 = time.time()
 	main()
-	t1 = time.time()
-	total = t1-t0
-	print "Everything done, took: ", str(total)+"s" 
-
