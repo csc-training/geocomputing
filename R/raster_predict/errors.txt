@@ -1,0 +1,28 @@
+----------------------------------------------------------------------------
+  Setting up new environment, removing all currently loaded modules
+----------------------------------------------------------------------------
+  Loading new modules:
+    gcc/4.9.3
+sqlite version 3.19.3 is now in use
+PROJ4 version 4.9.3 is now in use
+Geos version 3.6.1 is now in use
+Spatialite version 4.3.0 is now in use
+GDAL version 2.2.1 is now in use
+ To use <tool_name>.py tools load geopython module before gdal.
+wxWidgets version 3.0.2 is now in use
+SAGA, System for Automated Geoscientific Analyses version 2.1.4 is now in use
+r-app R-3.4.1 environment loaded
+
+
+Due to MODULEPATH changes the following have been reloaded:
+  1) mkl/11.3.0
+
+Loading required package: utils
+Loading required package: utils
+Loading required package: utils
+Loading required package: utils
+Loading required package: utils
+Loading required package: utils
+Loading required package: utils
+Loading required package: utils
+Loading required package: sp
