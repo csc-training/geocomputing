@@ -1,0 +1,1 @@
+In this example raster.predict function is used to predict the precence/absence of R logo in an image. The example is from https://www.rdocumentation.org/packages/raster/versions/2.5-8/topics/predict and it's simplified and adapted to be run thorugh batch job system in Taito.
