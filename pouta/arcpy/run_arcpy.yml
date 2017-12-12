@@ -1,0 +1,70 @@
+---
+# Basic demo of using Ansible to create a virtual machine on Pouta.csc.fi
+#
+# You'll need to download and source your credentials before this will work:
+#  https://research.csc.fi/pouta-credentials as well as set up keypairs for your machine
+#
+#
+- name: Create virtual machine for running lastools on cPouta
+  hosts: localhost # The OpenStack modules run on your local machine.
+  connection: local
+
+  vars:
+    demo_key: YOUR KEY
+    demo_sg: YOUR SECURITY GROUP
+    demo_security_groups: default,{{ demo_sg }}
+
+
+  tasks:
+    - name: Create a virtual machine
+      register: result
+      os_server:
+        name: test-arcpy
+        flavor: standard.tiny
+        key_name: "{{ demo_key }}"
+        security_groups: "{{ demo_security_groups }}"
+        boot_volume: arcpy-volume
+    
+    - name: Add new host to inventory
+      add_host: name={{ result.server.public_v4 }} groups=arcpy_nodes
+    - name: clear ssh known_hosts
+      known_hosts: name={{ result.server.public_v4 }} state=absent
+      when: result | changed
+    - name: Wait for instance to be ready
+      wait_for: host={{ result.server.public_v4 }} port=22 search_regex=OpenSSH delay=10
+
+- name: Run some task on pouta machine
+  hosts: arcpy_nodes
+  remote_user: cloud-user
+  vars:
+    arcpy_script: my_arcpy_script.py
+  tasks:
+      - name: copy arcpy script to remote machine
+        copy:
+          src: ~/pouta/{{ arcpy_script }}
+          dest: ~/{{ arcpy_script }}
+          owner: cloud-user
+          group: cloud-user
+          mode: 0755
+
+      - synchronize:
+          mode: push
+          src: ~/pouta/data
+          dest: ~/
+
+      - name: run arcpy script
+        shell: ~/arcgis/server/tools/python {{ arcpy_script }}
+  
+      - synchronize:
+          mode: pull
+          src: ~/output
+          dest: ~/pouta/
+   
+- name: Destroy the compute instance
+  hosts: localhost
+  tasks:
+    - name: Destroy a VM
+      os_server:
+        name: test-arcpy
+        state: absent
+...
