@@ -8,8 +8,8 @@ from shapely.geometry import mapping, shape
 zone_f = "zones.shp"
 #output zonal stats
 zonal_f = "zonal_stats.shp"
-#Raster you want to use to compute zonal stastics from.
-vrt = "dem2m.vrt"
+#Raster you want to use to compute zonal stastics from, here the 10m DEM of whole Finland
+vrt = "/wrk/project_ogiir-csc/mml/dem10m_vrt/etrs-tm35fin-n2000/whole_finland_direct.vrt"
 
 statistics = ['count', 'min' ,'mean', 'max','median']
 
