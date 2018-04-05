@@ -1,9 +1,0 @@
-dem2m/
-dem2m/L3322E.tif
-dem2m/L3322B.tif
-dem2m/L3322A.tif
-dem2m/L3322H.tif
-dem2m/L3322C.tif
-dem2m/L3322G.tif
-dem2m/L3322F.tif
-dem2m/L3322D.tif
