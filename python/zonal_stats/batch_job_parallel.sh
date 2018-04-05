@@ -8,4 +8,4 @@
 #SBATCH -p parallel
 
 module load geo-env
-python zonal_stats.py
+python zonal_stats_parallel.py
