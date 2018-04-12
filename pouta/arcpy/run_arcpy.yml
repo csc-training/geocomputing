@@ -5,7 +5,7 @@
 #  https://research.csc.fi/pouta-credentials as well as set up keypairs for your machine
 #
 #
-- name: Create virtual machine for running lastools on cPouta
+- name: Create virtual machine for running ArcPy on cPouta
   hosts: localhost # The OpenStack modules run on your local machine.
   connection: local
 
@@ -24,7 +24,7 @@
         key_name: "{{ demo_key }}"
         security_groups: "{{ demo_security_groups }}"
         boot_volume: arcpy-volume
-    
+
     - name: Add new host to inventory
       add_host: name={{ result.server.public_v4 }} groups=arcpy_nodes
     - name: clear ssh known_hosts
@@ -54,12 +54,12 @@
 
       - name: run arcpy script
         shell: ~/arcgis/server/tools/python {{ arcpy_script }}
-  
+
       - synchronize:
           mode: pull
           src: ~/output
           dest: ~/pouta/
-   
+
 - name: Destroy the compute instance
   hosts: localhost
   tasks:
