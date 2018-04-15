@@ -1,0 +1,131 @@
+---
+# Basic demo of using Ansible to create a virtual machine on Pouta.csc.fi
+#
+# You'll need to download and source your credentials before this will work:
+#  https://research.csc.fi/pouta-credentials as well as set up keypairs for your machine
+#
+#
+- name: Create virtual machine for running lastools on cPouta
+  hosts: localhost # The OpenStack modules run on your local machine.
+  connection: local
+
+  vars:
+    demo_key: NAME OF YOUR KEY
+    demo_sg: NAME OF YOUR SECURITY GROUP
+    demo_security_groups: default,{{ demo_sg }}
+
+  tasks:
+    - name: Create a bootable volume
+      os_volume:
+        state: present
+        size: 80
+        display_name: arcpy-volume
+        image: CentOS-7
+    - name: Create a virtual machine
+      register: result
+      os_server:
+        name: test-arcpy
+        flavor: standard.tiny
+        key_name: "{{ demo_key }}"
+        security_groups: "{{ demo_security_groups }}"
+        boot_volume: arcpy-volume
+    
+    - name: Add new host to inventory
+      add_host: name={{ result.server.public_v4 }} groups=arcpy_nodes
+    - name: clear ssh known_hosts
+      known_hosts: name={{ result.server.public_v4 }} state=absent
+      when: result | changed
+    - name: Wait for instance to be ready
+      wait_for: host={{ result.server.public_v4 }} port=22 search_regex=OpenSSH delay=10
+
+- name: Run some task on pouta machine
+  hosts: arcpy_nodes
+  remote_user: cloud-user
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: False
+  
+  vars:
+    arcgis_prvc: NAME_OF_YOUR_PROVISION_FILE
+
+
+  tasks:
+    - name: Install dependencies
+      yum: name={{item}} state=present update_cache=yes
+      with_items:
+       - fontconfig
+       - mesa-libGL
+       - mesa-libGLU
+       - libXtst
+       - libXext
+       - libX11
+       - libXi
+       - libXdmcp
+       - libXrender
+       - libXau
+       - xorg-x11-server-Xvfb
+       - libXfont
+       - unzip
+       - nfs-utils
+      become: true
+
+
+    - name: Mount NFS read-only
+      mount:
+        path: /home/cloud-user/nfsmnt
+        src: 193.166.25.143:/media/volume
+        fstype: nfs
+        opts: ro
+        state: mounted
+      become: true
+
+  
+    - name: Copy prvc from local machine.
+      copy:
+        src: ~/Downloads/{{ arcgis_prvc }}
+        dest: ~/{{ arcgis_prvc }}
+        owner: cloud-user
+        group: cloud-user
+        mode: 0755
+
+    - name: Copy ArcGISServer installer from nfs mount.
+      copy:
+        src: ~/nfsmnt/ArcGIS_Server_Linux_1051_156429.tar.gz
+        dest: ~/ArcGIS_Server_Linux_1051_156429.tar.gz
+        owner: cloud-user
+        group: cloud-user
+        mode: 0755
+        remote_src: yes
+
+    - name: Unarchive arcgis server
+      unarchive:
+        src: ~/ArcGIS_Server_Linux_1051_156429.tar.gz
+        dest: ~/
+        remote_src: yes
+
+    - name: Increase number of files allowed to be open
+      pam_limits:
+        domain: cloud-user
+        limit_type: '-'
+        limit_item: nofile
+        value: 65535
+      become: true
+
+    - name: Increase number of processes
+      pam_limits:
+        domain: cloud-user
+        limit_type: '-'
+        limit_item: nproc
+        value: 25059
+      become: true
+
+    - name: Install ArcGisServer
+      shell: ~/ArcGISServer/Setup -m silent -l Yes -a ~/{{ arcgis_prvc }}
+
+- name: Destroy the compute instance
+  hosts: localhost
+  tasks:
+    - name: Destroy a VM
+      os_server:
+        name: test-arcpy
+        state: absent
+...
