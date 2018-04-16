@@ -6,3 +6,4 @@ The following are some simple R scripts demonstrating how the Lidar dataset can 
 
 1. [Get Lidar files intersecting a given polygon](get_lidar_files.R)
 1. [Basic Lidar management with ````rlas```` package](basic_rlas.R)
+1. [Example batch job to run basic_rlas.R script](batchjob_rlas_basics.sh)
