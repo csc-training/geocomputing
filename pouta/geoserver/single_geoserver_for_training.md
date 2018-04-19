@@ -62,11 +62,15 @@ After GeoServer has been installed, make following edits:
 
 
 ## Installation commands and settings
-````bash
-# You have an Ubuntu 16.04 server with proper security groups (firewalls) in place (you need access to at least ports 22 and 8080). You also have the "Platform Independent Binary" installation package in the server.
+Below are described the command and/or steps to be done to set up the GeoServer VM.
 
-# Preliminary steps
-# ----------------
+### Preparation steps
+````bash
+# You have:
+#   - an Ubuntu 16.04 server with proper security groups (firewalls) in place
+#   - access to at least ports 22 and 8080)
+#   - the "Platform Independent Binary" installation package in the server
+
 # Update VM
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -84,32 +88,18 @@ sudo apt install unzip
 sudo unzip geoserver-2.12.1-bin.zip -d /usr/share/
 # change owner of geoserver folder to "cloud-user"
 sudo chown -R cloud-user /usr/share/geoserver-2.12.1/
+````
 
-# Set up environment variables
+### Install a service for GeoServer to start with the VM at boot
+````
 # Check path to Java and set to environment
 sudo update-alternatives --config java
-# copy your java path without the "/jre/bin/java" part
-sudo bash -c "echo JAVA_HOME=/usr/lib/jvm/java-8-oracle >> /etc/environment"
-source /etc/environment
-echo $JAVA_HOME
-# Set GeoServer home variable
-echo "export GEOSERVER_HOME=/usr/share/geoserver-2.12.1" >> ~/.profile
-source ~/.profile
-echo $GEOSERVER_HOME
-
-# Test your GeoServer manually
-screen sh $GEOSERVER_HOME/bin/startup.sh
-# To detach the screen terminal just push Ctr+A +D
-# Check process is running
-ps aux | grep GEOSERVER
-# Check also the GeoServer web GUI at http://vm-public-ip:8080/geoserver/web/
-# Stop the server
-sh $GEOSERVER_HOME/bin/shutdown.sh
+# When setting your java path in the service definition below, use it without the "/jre/bin/java" part
 
 # Add GeoServer as service so it starts with VM starts
 sudo vim /etc/systemd/system/geoserver.service
 # Manually add these lines to the file
-# Edit the parts with the Java and GeoServer paths as mentioned above
+# Edit the parts with the Java and GeoServer paths to match your system
 [Unit]
 Description=GeoServer Jetty container starter (metadata service crawler)
 After=network.target
@@ -132,13 +122,16 @@ WantedBy=multi-user.target
 sudo systemctl daemon-reload
 sudo systemctl enable geoserver.service
 sudo shutdown -r now
+````
+Test that your GeoServer is up and running via the web GUI: http://<vm-public-ip>:8080/geoserver/web/ (edit the <vm-public-ip> with your VM public ip).
 
-# After restart, check that GeoServer is running after VM restarts at http://vm-public-ip:8080/geoserver/web/
-# Check also from the terminal
+You can check that the server is running via the terminal for example with:
+````
 ps aux | grep GEOSERVER
 journalctl -b | less | grep GEOSERVER
+````
 
-# Enabling CORS to allow JavaScript applications
-# Edit manually following http://docs.geoserver.org/latest/en/user/production/container.html#enable-cors
+### Enabling CORS to allow JavaScript applications
+Edit manually the GeoServer configuration following the instruction at: http://docs.geoserver.org/latest/en/user/production/container.html#enable-cors
 
 ````
