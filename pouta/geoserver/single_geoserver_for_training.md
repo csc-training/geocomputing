@@ -65,12 +65,11 @@ After GeoServer has been installed, make following edits:
 Below are described the command and/or steps to be done to set up the GeoServer VM.
 
 ### Preparation steps
+You have:
+- an Ubuntu 16.04 server with proper security groups (firewalls) in place
+- access to at least ports 22 and 8080)
+- the "Platform Independent Binary" installation package in the server
 ````bash
-# You have:
-#   - an Ubuntu 16.04 server with proper security groups (firewalls) in place
-#   - access to at least ports 22 and 8080)
-#   - the "Platform Independent Binary" installation package in the server
-
 # Update VM
 sudo apt-get update
 sudo apt-get -y upgrade
@@ -91,7 +90,7 @@ sudo chown -R cloud-user /usr/share/geoserver-2.12.1/
 ````
 
 ### Install a service for GeoServer to start with the VM at boot
-````
+````bash
 # Check path to Java and set to environment
 sudo update-alternatives --config java
 # When setting your java path in the service definition below, use it without the "/jre/bin/java" part
@@ -126,7 +125,7 @@ sudo shutdown -r now
 Test that your GeoServer is up and running via the web GUI: http://<vm-public-ip>:8080/geoserver/web/ (edit the <vm-public-ip> with your VM public ip).
 
 You can check that the server is running via the terminal for example with:
-````
+````bash
 ps aux | grep GEOSERVER
 journalctl -b | less | grep GEOSERVER
 ````
