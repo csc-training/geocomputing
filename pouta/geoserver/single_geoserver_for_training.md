@@ -30,8 +30,9 @@ http://docs.geoserver.org/maintain/en/user/installation/linux.html)
 The installation steps differ from the basic installation in the following:
 - Ubuntu machine set to Europe/Helsinki timezone for the logs to be in local time.
 - GeoServer is added as a service to Ubuntu for automatic startup on reboot.
-- CORS is manually enabled to allow JavaScript apps to run.
 - New `student` user is added to GeoServer.
+- CORS is manually enabled to allow JavaScript apps to run.
+- GeoServer contact information is edited.
 
 If you need such a GeoServer VM, you can also request for a ready VM image from CSC's service desk. The image has the specifications described here. You can also create such a VM yourself by following these instructions.
 
@@ -100,11 +101,6 @@ ps aux | grep GEOSERVER
 journalctl -b | less | grep GEOSERVER
 ````
 
-### Enabling CORS to allow JavaScript applications (optional)
-If students want to use GeoServer services for example from a OpenLayers application, which code they write on the local machine, CORS must be allowed on GeoServer.
-- Edit manually the GeoServer configuration following these [instruction](http://docs.geoserver.org/latest/en/user/production/container.html#enable-cors).
-
-
 ### Managing GeoServer users
 To a little bit limit what students can do with the GeoServer, make them a separate user account. Here students are still given a lot of permissions, depending on the exercise, it might make sense to limit more.
 
@@ -124,6 +120,11 @@ Preparations for problem situations
 - if Admin and student password is changed, master password needs to be used
   - login as "root", password is same as for Admin
   - edit the Admin password to original value
-  
+
+
+### Enabling CORS to allow JavaScript applications (optional)
+If students want to use GeoServer services for example from a OpenLayers application, which code they write on the local machine, CORS must be allowed on GeoServer.
+- Edit manually the GeoServer configuration following these [instruction](http://docs.geoserver.org/latest/en/user/production/container.html#enable-cors).
+
 ### Contact info (optional)
 - Add course/department specific details to the GeoServer [contact information](http://docs.geoserver.org/latest/en/user/configuration/contact.html)
