@@ -3,9 +3,9 @@ The aim of this workflow is to set up GeoServer for a university course. The sam
 
 ## How GeoServer is used by the students
 - The students have only access to the GeoServer web GUI using the "student" user with the provided password.
-- The students have access to most of the administrator functionality of GeoServer
-- No access to the web server machine
-- The exercise instructions requests the students to be careful with the GeoServer general definitions (that affect the whole platform) and are request to limit their edits to their own Workspaces
+- The students have access to most of the administrator functionality of GeoServer.
+- The students have no shh access to the web server machine.
+- The exercise instructions ask the students to be careful with the GeoServer general definitions (that affect the whole platform) and are request to limit their edits to their own Workspaces
 - The student creates its own named Workspace where edits are made adding and editing stores, layers, styles... (also named with the student's name).
 
 # Installation
