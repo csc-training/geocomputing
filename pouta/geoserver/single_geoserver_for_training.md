@@ -1,8 +1,11 @@
 # Single GeoServer VM for teaching
-The aim of this workflow is to set up GeoServer for a university course. The same GeoServer instance is used by several students, who share the same username. Students upload their data using QGIS [GeoServer Explorer plugin](https://plugins.qgis.org/plugins/geoserverexplorer/) and then continue adjusting settings from GeoServer web admin interface.
+The aim of this workflow is to set up GeoServer for a university course. The same GeoServer instance is used by several students. Students upload their data using QGIS [GeoServer Explorer plugin](https://plugins.qgis.org/plugins/geoserverexplorer/) and then continue adjusting settings from GeoServer web admin interface.
+
+The installation is done using [GeoServer "Platform Independent Binary" installation package](http://geoserver.org/release/stable/), which includes built-in Jetty servlet container.
 
 ## How GeoServer is used by the students
-- The students have only access to the GeoServer web GUI using the "student" user with the provided password.
+- The students have only access to the GeoServer web GUI and REST API.
+- All students share the same GeoServer "student" user account.
 - The students have access to most of the administrator functionality of GeoServer.
 - The students have no shh access to the web server machine.
 - The exercise instructions ask the students to be careful with the GeoServer general definitions (that affect the whole platform) and are request to limit their edits to their own Workspaces
@@ -20,34 +23,27 @@ Prerequisites to follow installation instructions:
 - You have SSH and GeoServer access to the VM (TODO: unclear)
 - You have copied the GeoServer "Platform Independent Binary" installation package to the server
 
-## Summary details about the VM
-
-The operating system of the VM is Ubuntu 16.04 and the installationof GeoServer is done using the **Linux binary** based on the official installation instructions:
-http://docs.geoserver.org/maintain/en/user/installation/linux.html
+## GeoServer installation
+Installation of GeoServer is done using the [**Linux binary** official installation instructions:](
+http://docs.geoserver.org/maintain/en/user/installation/linux.html)
 
 The installation steps differ from the basic installation in the following:
-- Ubuntu machine set to Europe/Helsinki timezone for the logs to be in local time
-- GeoServer is added as a service to Ubuntu for automatic startup on reboot
-- CORS is manually enabled to allow JavaScript apps to run
+- Ubuntu machine set to Europe/Helsinki timezone for the logs to be in local time.
+- GeoServer is added as a service to Ubuntu for automatic startup on reboot.
+- CORS is manually enabled to allow JavaScript apps to run.
+- New `student` user is added to GeoServer.
 
 See below for specific installation commands and settings.
 
-## GeoServer customization for teaching purposes
-GeoServer configuration can been customized this way:
-- The GROUP_ADMIN role is modified to have ADMIN role as parent (gives full admin capabilities)
-- A user named "student" has been created with GROUP_ADMIN role
-- the Admin and Master/root user accounts are set to the same password
+If you need such a GeoServer VM, you can also request for a ready VM image from CSC's service desk. The image has the specifications described here. You can also create such a VM yourself by following these instructions.
 
-If you need such a GeoServer VM, you can also request for a ready VM image from CSC's service desk. The image has the specifications described above. You can also create such a VM yourself by following instructions below.
+## Managing GeoServer users
+After GeoServer has been installed, change the Master password and add new user for students:
+- At first login (admin:geoserver), sey the Admin and Master/root user accounts to the same password <course-admin-password> (TODO: unclear)
+- Modify the GROUP_ADMIN role to have ADMIN role as parent (gives full admin capabilities)
+- Add a user named "student" with GROUP_ADMIN role
 
-
-## GeoServer customization
-After GeoServer has been installed, make following edits:
-- At first login (admin:geoserver), the Admin and Master/root user accounts are set to the same password <course-admin-password>
-- The GROUP_ADMIN role is modified to have ADMIN role as parent (gives full admin capabilities)
-- A user named "student" has been created with GROUP_ADMIN role
-
-## Suggested customizations
+## Contact info (optional)
 - Add course/department specific details to the GeoServer contact information
 
 ## Potential problems
