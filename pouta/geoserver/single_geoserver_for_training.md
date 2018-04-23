@@ -1,10 +1,18 @@
-# Installation of single GeoServer VM for teaching
-The aim of this workflow is to set up GeoServer for a university course. The same GeoServer instance is used by several students, who share the same username. Students work is identified by their name in Workspace, Layer and Layergroup name. Students upload their data using QGIS [[GeoServer Explorer plugin][https://plugins.qgis.org/plugins/geoserverexplorer/]] and then continue adjusting settings from GeoServer web admin interface.
+# Single GeoServer VM for teaching
+The aim of this workflow is to set up GeoServer for a university course. The same GeoServer instance is used by several students, who share the same username. Students upload their data using QGIS [GeoServer Explorer plugin](https://plugins.qgis.org/plugins/geoserverexplorer/) and then continue adjusting settings from GeoServer web admin interface.
 
+## How GeoServer is used by the students
+- The students have only access to the GeoServer web GUI using the "student" user with the provided password.
+- The students have access to most of the administrator functionality of GeoServer
+- No access to the web server machine
+- The exercise instructions requests the students to be careful with the GeoServer general definitions (that affect the whole platform) and are request to limit their edits to their own Workspaces
+- The student creates its own named Workspace where edits are made adding and editing stores, layers, styles... (also named with the student's name).
+
+# Installation
 ## Prerequisites
 Prerequisites to follow installation instructions:
 - Virtual machine (VM) with Ubuntu, the instructions are tested with Ubuntu 16.04 (use for ex. CSC's cPouta environment)
-  - TODO: size recommendatation?
+  - TODO: size recommendatation, links to cPouta page?
 - Proper security settings are defined: (TODO links?)
   - keypair to access the VM
   - security groups for firewall rules for ports 22 and 8080
@@ -12,7 +20,7 @@ Prerequisites to follow installation instructions:
 - You have SSH and GeoServer access to the VM (TODO: unclear)
 - You have copied the GeoServer "Platform Independent Binary" installation package to the server
 
-## Summary details about the GeoServer VM
+## Summary details about the VM
 
 The operating system of the VM is Ubuntu 16.04 and the installationof GeoServer is done using the **Linux binary** based on the official installation instructions:
 http://docs.geoserver.org/maintain/en/user/installation/linux.html
@@ -42,14 +50,6 @@ After GeoServer has been installed, make following edits:
 ## Suggested customizations
 - Add course/department specific details to the GeoServer contact information
 
-
-## How GeoServer is used by the students
-- The students have only access to the GeoServer web GUI using the "student" user with the provided password.
-- The students have access to most of the administrator functionality of GeoServer
-- No access to the web server machine
-- The exercise instructions requests the students to be careful with the GeoServer general definitions (that affect the whole platform) and are request to limit their edits to their own Workspaces
-- The student creates its own named Workspace where edits are made adding and editing stores, layers, styles... (also named with the student's name).
-
 ## Potential problems
 - Students can edit GeoServer general details that affect everyone
 - Students can change Admin and student passwords (on purpose or by simply testing what it does), locking everyone out
@@ -58,10 +58,9 @@ After GeoServer has been installed, make following edits:
 ## Preparations for problem situations
 - if student password is changed, Admin user can reset
 - if admin password is changed, student user can reset
-- if Admin and student password is change, master password needs to be used
+- if Admin and student password is changed, master password needs to be used
   - login as "root", password is same as for Admin
   - edit the Admin password to original value
-
 
 
 ## Installation commands and settings
