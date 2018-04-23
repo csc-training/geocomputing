@@ -20,7 +20,7 @@ Prerequisites to follow installation instructions:
   - keypair to access the VM
   - security groups for firewall rules for ports 22 and 8080
   - restrict the access to limited ip addresses to avoid risks
-- You have SSH and GeoServer access to the VM (TODO: unclear)
+- The ports for SSH and GeoServer are open, at least ports 22 and 8080 (TODO: correct?)
 - You have copied the GeoServer "Platform Independent Binary" installation package to the server
 
 ## GeoServer installation
@@ -33,40 +33,12 @@ The installation steps differ from the basic installation in the following:
 - CORS is manually enabled to allow JavaScript apps to run.
 - New `student` user is added to GeoServer.
 
-See below for specific installation commands and settings.
-
 If you need such a GeoServer VM, you can also request for a ready VM image from CSC's service desk. The image has the specifications described here. You can also create such a VM yourself by following these instructions.
 
-## Managing GeoServer users
-After GeoServer has been installed, change the Master password and add new user for students:
-- At first login (admin:geoserver), sey the Admin and Master/root user accounts to the same password <course-admin-password> (TODO: unclear)
-- Modify the GROUP_ADMIN role to have ADMIN role as parent (gives full admin capabilities)
-- Add a user named "student" with GROUP_ADMIN role
+Below are specific installation commands and settings.
 
-## Contact info (optional)
-- Add course/department specific details to the GeoServer contact information
+### Basic GeoServer installation
 
-## Potential problems
-- Students can edit GeoServer general details that affect everyone
-- Students can change Admin and student passwords (on purpose or by simply testing what it does), locking everyone out
-- Students can see, edit, delete other student's work and settings
-
-## Preparations for problem situations
-- if student password is changed, Admin user can reset
-- if admin password is changed, student user can reset
-- if Admin and student password is changed, master password needs to be used
-  - login as "root", password is same as for Admin
-  - edit the Admin password to original value
-
-
-## Installation commands and settings
-Below are described the command and/or steps to be done to set up the GeoServer VM.
-
-### Preparation steps
-You have:
-- an Ubuntu 16.04 server with proper security groups (firewalls) in place
-- access to at least ports 22 and 8080)
-- the "Platform Independent Binary" installation package in the server
 ````bash
 # Update VM
 sudo apt-get update
@@ -131,4 +103,24 @@ journalctl -b | less | grep GEOSERVER
 ### Enabling CORS to allow JavaScript applications
 Edit manually the GeoServer configuration following the instruction at: http://docs.geoserver.org/latest/en/user/production/container.html#enable-cors
 
-````
+
+### Managing GeoServer users
+After GeoServer has been installed, change the Master password and add new user for students:
+- At first login (admin:geoserver), sey the Admin and Master/root user accounts to the same password <course-admin-password> (TODO: unclear)
+- Modify the GROUP_ADMIN role to have ADMIN role as parent (gives full admin capabilities)
+- Add a user named "student" with GROUP_ADMIN role
+
+#### Potential problems
+- Students can edit GeoServer general details that affect everyone
+- Students can change Admin and student passwords (on purpose or by simply testing what it does), locking everyone out
+- Students can see, edit, delete other student's work and settings
+
+#### Preparations for problem situations
+- if student password is changed, Admin user can reset
+- if admin password is changed, student user can reset
+- if Admin and student password is changed, master password needs to be used
+  - login as "root", password is same as for Admin
+  - edit the Admin password to original value
+  
+### Contact info (optional)
+- Add course/department specific details to the GeoServer contact information
