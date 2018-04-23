@@ -59,7 +59,7 @@ sudo unzip geoserver-2.12.1-bin.zip -d /usr/share/
 sudo chown -R cloud-user /usr/share/geoserver-2.12.1/
 ````
 
-### Install a service for GeoServer to start with the VM at boot
+### Start GeoServer automatically at VM boot
 ````bash
 # Check path to Java and set to environment
 sudo update-alternatives --config java
@@ -100,22 +100,25 @@ ps aux | grep GEOSERVER
 journalctl -b | less | grep GEOSERVER
 ````
 
-### Enabling CORS to allow JavaScript applications
-Edit manually the GeoServer configuration following the instruction at: http://docs.geoserver.org/latest/en/user/production/container.html#enable-cors
+### Enabling CORS to allow JavaScript applications (optional)
+If students want to use GeoServer services for example from a OpenLayers application, which code they write on the local machine, CORS must be allowed on GeoServer.
+- Edit manually the GeoServer configuration following these [instruction](http://docs.geoserver.org/latest/en/user/production/container.html#enable-cors).
 
 
 ### Managing GeoServer users
+To a little bit limit what students can do with the GeoServer, make them a separate user account. Here students are still given a lot of permissions, depending on the exercise, it might make sense to limit more.
+
 After GeoServer has been installed, change the Master password and add new user for students:
 - At first login (admin:geoserver), sey the Admin and Master/root user accounts to the same password <course-admin-password> (TODO: unclear)
 - Modify the GROUP_ADMIN role to have ADMIN role as parent (gives full admin capabilities)
 - Add a user named "student" with GROUP_ADMIN role
 
-#### Potential problems
+Potential problems
 - Students can edit GeoServer general details that affect everyone
 - Students can change Admin and student passwords (on purpose or by simply testing what it does), locking everyone out
 - Students can see, edit, delete other student's work and settings
 
-#### Preparations for problem situations
+Preparations for problem situations
 - if student password is changed, Admin user can reset
 - if admin password is changed, student user can reset
 - if Admin and student password is changed, master password needs to be used
@@ -123,4 +126,4 @@ After GeoServer has been installed, change the Master password and add new user 
   - edit the Admin password to original value
   
 ### Contact info (optional)
-- Add course/department specific details to the GeoServer contact information
+- Add course/department specific details to the GeoServer [contact information](http://docs.geoserver.org/latest/en/user/configuration/contact.html)
