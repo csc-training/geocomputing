@@ -1,12 +1,15 @@
 # Installation of single GeoServer VM for teaching
+The aim of this workflow is to set up GeoServer for a university course. The same GeoServer instance is used by several students, who share the same username. Students work is identified by their name in Workspace, Layer and Layergroup name. Students upload their data using QGIS [[GeoServer Explorer plugin][https://plugins.qgis.org/plugins/geoserverexplorer/]] and then continue adjusting settings from GeoServer web admin interface.
 
+## Prerequisites
 Prerequisites to follow installation instructions:
-- Virtual machine (VM) with Ubuntu 16.04 (use for ex. CSC's cPouta environment)
-- Proper security settings are defined:
+- Virtual machine (VM) with Ubuntu, the instructions are tested with Ubuntu 16.04 (use for ex. CSC's cPouta environment)
+  - TODO: size recommendatation?
+- Proper security settings are defined: (TODO links?)
   - keypair to access the VM
   - security groups for firewall rules for ports 22 and 8080
   - restrict the access to limited ip addresses to avoid risks
-- You have SSH and GeoServer access to the VM
+- You have SSH and GeoServer access to the VM (TODO: unclear)
 - You have copied the GeoServer "Platform Independent Binary" installation package to the server
 
 ## Summary details about the GeoServer VM
