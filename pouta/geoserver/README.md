@@ -3,4 +3,4 @@ Different instructions to install GeoServer to cPouta virtual machines (VM) for 
 
 GeoServer for training purposes:
 - [Basic GeoServer installation](basic_geoserver_jetty.md)
-- [Single GeoServer VM used by all students](single_geoserver_for_training.md)
+- [Single GeoServer course VM used by all students](single_geoserver_for_training.md)
