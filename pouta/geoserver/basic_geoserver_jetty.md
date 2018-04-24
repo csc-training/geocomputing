@@ -1,4 +1,3 @@
-
 # Basic GeoServer installation
 
 The following instructions describe the steps to install a GeoServer server (with in-built Jetty container) in an Ubuntu 16.04 virtual machine.
