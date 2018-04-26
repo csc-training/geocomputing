@@ -1,18 +1,18 @@
 # Setting up and using ArcPy in cPouta
-I you need to run ArPy scripts ([ArcGIS pyhton](http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm)) in CSC's cPouta environment, the following instructions will help you set up a remote virtual machine with the necessary software.
+If you need to run [ArPy scripts](http://desktop.arcgis.com/en/arcmap/latest/analyze/arcpy/what-is-arcpy-.htm) in CSC's cPouta environment, the following instructions will help you set up a remote virtual machine with the necessary software.
 
-Usually in a Windows machine, you would install ArcGIS Desktop which will install the necessary ArcPy libraries. In cPouta, virtual machines often use Linux operating systems. ArcGIS Desktop does not have a linux version but the ArcGIS Server does and installing it, will also install the necessary ArcPy libraries allowing you to run your ArcPy scripts.
+Usually in a Windows machine, you would install ArcGIS Desktop which will install the necessary ArcPy libraries. In cPouta, virtual machines often use Linux operating systems. ArcGIS Desktop does not have a linux version but the ArcGIS Server does and installing it, will also install the necessary ArcPy libraries allowing you to run your ArcPy scripts. Please notice that ArcGIS Pro ArcPy scripts have slightly different syntax, and are unlikely to run with ArcGIS Server ArcPy.
 
-**Important**: ArcGIS is a licensed software. You must have an ArcGIS Server license provisioning file and the corresponding installation package. If you are a CSC's customer, see our [CSC's ArcGIS user pages](https://research.csc.fi/web/research/-/arcgis).
+**Important**: ArcGIS is a licensed software. You must have an ArcGIS Server license provisioning file and the corresponding installation package. Universities with ArcGIS campus license (inc. ArcGIS Server licenses) are listed [here](https://research.csc.fi/web/research/-/arcgis).
 
 ## Prerequisites
-In order to follow these instructions you will need to have a cPouta account and a project. You should also have some basic skills in managing cPouta (see the [Pouta User Guide](https://research.csc.fi/pouta-user-guide)).
+In order to follow these instructions you will need to have a cPouta account and a project. You should also have some basic skills in managing cPouta, see the [Pouta User Guide](https://research.csc.fi/pouta-user-guide).
 
 
 ## Manual installation
 These instructions explain the necessary steps to create a cPouta virtual machine with an ArcGIS Server installation and how to test it with a simple ArcPy script.
 
-The [`ArcGIS_Server_manual_installation.sh`](ArcGIS_Server_manual_installation.sh) script includes minimum settings to install ArcGIS Server to an existing Cent OS virtual machine in cPouta.
+The [`ArcGIS_Server_manual_installation.sh`](ArcGIS_Server_manual_installation.sh) script includes minimum settings to install ArcGIS Server to an existing CentOS virtual machine in cPouta.
 
 Modify the script to your own use case as necessary.
 
@@ -41,4 +41,4 @@ The process is split in two scripts:
 
 1. [`ansible_install_arcpy.yml`](ansible_install_arcpy.yml) creates a volume and installs operating system and ArcGIS Server to it. The cPouta virtual machine is created using a permanent volume which allows to destroy the virtual machine and recreate it whenever needed again.
 
-2. [`ansible_run_arcpy.yml`](ansible_run_arcpy.yml) boots a new virtual machine from the volume created with the first script and runs an arcpy script on it. Afterwards the machine gets deleted but volume is stored for further use. Note that the results of the example ArcPy script are stored to that volume and that to access it you would need to edit this ansible script so that the virtual machine does not get deleted (see comments in the script) or you could send the results to an existig NFS disk.
+2. [`ansible_run_arcpy.yml`](ansible_run_arcpy.yml) boots a new virtual machine from the volume created with the first script and runs an ArcPy script on it. Afterwards the machine gets deleted but volume is stored for further use. Note that the results of the example ArcPy script are stored to that volume and to access it you would need to edit this ansible script so that the virtual machine does not get deleted (see comments in the script) or you could send the results to an existig NFS disk.
