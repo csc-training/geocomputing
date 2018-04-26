@@ -1,35 +1,44 @@
 # Setting up and using ArcPy in cPouta
+I you need to run ArPy scripts ([ArcGIS pyhton](http://pro.arcgis.com/en/pro-app/arcpy/get-started/what-is-arcpy-.htm)) in CSC's cPouta environment, the following instructions will help you set up a remote virtual machine with the necessary software.
+
+Usually in a Windows machine, you would install ArcGIS Desktop which will install the necessary ArcPy libraries. In cPouta, virtual machines often use Linux operating systems. ArcGIS Desktop does not have a linux version but the ArcGIS Server does and installing it, will also install the necessary ArcPy libraries allowing you to run your ArcPy scripts.
+
+**Important**: ArcGIS is a licensed software. You must have an ArcGIS Server license provisioning file and the corresponding installation package. If you are a CSC's customer, see our [CSC's ArcGIS user pages](https://research.csc.fi/web/research/-/arcgis).
+
+## Prerequisites
+In order to follow these instructions you will need to have a cPouta account and a project. You should also have some basic skills in managing cPouta (see the [Pouta User Guide](https://research.csc.fi/pouta-user-guide)).
+
 
 ## Manual installation
-The .sh script includes minimum settings to install ArcGIS Server to an existing Ubuntu virtual machine in cPouta.
+These instructions explain the necessary steps to create a cPouta virtual machine with an ArcGIS Server installation and how to test it with a simple ArcPy script.
+
+The [`ArcGIS_Server_manual_installation.sh`](ArcGIS_Server_manual_installation.sh) script includes minimum settings to install ArcGIS Server to an existing Cent OS virtual machine in cPouta.
 
 Modify the script to your own use case as necessary.
 
-Create a virtual machine in cPouta, log in to it and run the script.
+Create a virtual machine in cPouta, log into it and run the script.
+
 
 ## Automating ArcPy computation using Ansible playbooks
-These scripts demonstrate the use of Ansible playbooks to automate the management of virtual machines in cPouta and how to remotely run processes in server machines.
+### Prerequisites
+**Important**: Using Ansible scripts is an advanced topic where skills in system adminstration and remote connections are required. In addition you should understand the Ansible language itself.
 
-Using Ansible scripts is an advanced topic where skills in system adminstration and remote connections are required. In addition you should understand the Ansible language itself.
+The first thing you need is to make sure that you have the necessary tools and settings to work with Ansible. Review the information about [how to set up your terminal environment to work with Ansible scripts](ansible_preparations.md).
 
+Before running the Ansible playbooks, you will need to make some adjustments to the ansible scripts such as names for keypairs and security groups corresponding to your cPouta project. See comments in the scripts.
 
-There are two Ansible playbooks in this example:
+To run Ansible playbooks:
+````bash
+ansible-playbook ansible-playbook.yml
+````
 
-1. Creates a volume and installs operating system and ArcGIS Server to it
+### The ArcPy Ansible playbooks
+These scripts demonstrate the use of Ansible playbooks to automate the management of virtual machines in cPouta, in this case to install an ArcGIS Server machine and reuse it to run ArcPy scripts.
 
-2. Boots a new machine from volume created in step 1 and runs an arcpy script on it. Afterwards the machine gets deleted but volume is stored for further use.
+The following two Ansible playbooks repeat many of the steps shown in the manual installation above. The main difference being that these scripts are meant to be used in a fully automatic way so that the virtual machine is only running while some operation is being executed.
 
-Before running the playbooks you need to have following things in order:
+The process is split in two scripts:
 
-1. You need to have access to linux machine on which you have installed python, openstack-client, ansible and shade. Instructions how to install these: https://research.csc.fi/pouta-install-client
+1. [`ansible_install_arcpy.yml`](ansible_install_arcpy.yml) creates a volume and installs operating system and ArcGIS Server to it. The cPouta virtual machine is created using a permanent volume which allows to destroy the virtual machine and recreate it whenever needed again.
 
-2. You need to have set up a pouta project with key-pairs and security groups to make connecting from your local machine possible. Instructions: https://research.csc.fi/pouta-getting-started
-
-3. You need to have sourced the OpenStack RC file during your current  (section 3.4.1.3 Configure your terminal environment for OpenStack in https://research.csc.fi/pouta-install-client)
-
-4. To install ArcGISServer you will need a provisioning file. Contact your University's contact person or giscoord@csc.fi
-
-5. You will need to make some adjustments to playbooks such as names for keys and security groups you created and name of the arcpy script you want to run.
-
-Running playbooks:
-ansible-playbook paybook.yml
+2. [`ansible_run_arcpy.yml`](ansible_run_arcpy.yml) boots a new virtual machine from the volume created with the first script and runs an arcpy script on it. Afterwards the machine gets deleted but volume is stored for further use. Note that the results of the example ArcPy script are stored to that volume and that to access it you would need to edit this ansible script so that the virtual machine does not get deleted (see comments in the script) or you could send the results to an existig NFS disk.
