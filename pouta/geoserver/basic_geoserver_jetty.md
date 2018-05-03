@@ -3,7 +3,7 @@
 The following instructions describe the steps to install a GeoServer server (with in-built Jetty container) in an Ubuntu 16.04 virtual machine.
 
 ## Prerequisites
-You need to have a basic virtual machine (VM) with a ready Ubuntu OS. These instructions have bee tested in a CSC's cPouta environment and with a Ubuntu 16.04 OS.
+You need to have a basic virtual machine (VM) with a ready Ubuntu OS. These instructions have been tested in a CSC's cPouta environment and with a Ubuntu 16.04 OS.
 
 Hardware requirements:
 - a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes (tested with cPouta's hpc-gen1.1core flavour, see about [cPouta flavours](https://research.csc.fi/pouta-flavours))
