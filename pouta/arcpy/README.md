@@ -39,6 +39,6 @@ The following two Ansible playbooks repeat many of the steps shown in the manual
 
 The process is split in two scripts:
 
-1. [`ansible_install_arcpy.yml`](ansible_install_arcpy.yml) creates a volume and installs operating system and ArcGIS Server to it. The cPouta virtual machine is created using a permanent volume which allows to destroy the virtual machine and recreate it whenever needed again.
+1. [`ansible_install_arcpy.yml`](ansible_install_arcpy.yml) creates a volume from an existing image with CentOS operating system and installs ArcGIS Server to it. The cPouta virtual machine is created using a permanent volume which allows to destroy the virtual machine and recreate it whenever needed again.
 
 2. [`ansible_run_arcpy.yml`](ansible_run_arcpy.yml) boots a new virtual machine from the volume created with the first script and runs an ArcPy script on it. Afterwards the machine gets deleted but volume is stored for further use. Note that the results of the example ArcPy script are stored to that volume and to access it you would need to edit this ansible script so that the virtual machine does not get deleted (see comments in the script) or you could send the results to an existig NFS disk.
