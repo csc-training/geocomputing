@@ -1,6 +1,8 @@
-# Installation instructions of GeoServer in cPouta
-Different instructions to install GeoServer to cPouta virtual machines (VM) for different purposes. Although the instructions are developed around the cPouta cloud services, most should be valid for other platforms (AWS, VirtualBox...).
+# Using GeoServer in cPouta
+Sets of instructions to install GeoServer in cPouta virtual machines (VM) and some use cases for different purposes. Although the instructions are developed around the cPouta cloud services, most should be valid for other platforms (AWS, VirtualBox...).
 
-GeoServer for training purposes:
+Installing GeoServer
 - [Basic GeoServer installation](basic_geoserver_jetty.md)
+
+Use cases of using GeoServer for courses
 - [Single GeoServer course VM used by all students](single_geoserver_for_training.md)
