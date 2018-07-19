@@ -76,13 +76,13 @@ To add GeoServer as a service to your server, you need two pieces of information
 
 The folder where your GeoServer was unziped, something like:
 
-```
+```bash
 /usr/share/geoserver-2.12.1/
 ```
 
 And the path to the java installation. You can get it by running:
 
-```
+```bash
 # Check path to Java and set to environment
 sudo update-alternatives --config java
 # Ouputs something like:
@@ -123,7 +123,7 @@ WantedBy=multi-user.target
 
 To finish the installation enable the service you just created and restart the VM.
 
-````
+````bash
 # Add the service
 sudo systemctl daemon-reload
 sudo systemctl enable geoserver.service
