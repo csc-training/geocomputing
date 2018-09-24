@@ -50,6 +50,15 @@ sudo apt-get update
 sudo apt-get install -y oracle-java8-installer
 ````
 
+### Ensure VM's restarts
+Add automated daily reboots to ensure that the virtual machine's is updated with kernel updates.
+
+Add the following lines at the end of the file `/etc/crontab`:
+```
+# Reboot at 3 am
+0 3     * * *   root    /sbin/reboot
+```
+
 ### Get installation package and unzip
 
 Downloand and unpack the GeoServer [**Platform Independent Binary** installation package](http://geoserver.org/release/maintain/) to the VM.
@@ -76,13 +85,13 @@ To add GeoServer as a service to your server, you need two pieces of information
 
 The folder where your GeoServer was unziped, something like:
 
-```bash
+```
 /usr/share/geoserver-2.12.1/
 ```
 
 And the path to the java installation. You can get it by running:
 
-```bash
+```
 # Check path to Java and set to environment
 sudo update-alternatives --config java
 # Ouputs something like:
@@ -123,7 +132,7 @@ WantedBy=multi-user.target
 
 To finish the installation enable the service you just created and restart the VM.
 
-````bash
+````
 # Add the service
 sudo systemctl daemon-reload
 sudo systemctl enable geoserver.service
