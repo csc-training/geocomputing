@@ -73,9 +73,20 @@ sudo unzip geoserver-2.12.1-bin.zip -d /usr/share/
 
 # change owner of geoserver folder to "cloud-user"
 sudo chown -R cloud-user /usr/share/geoserver-2.12.1/
-````
+```
 
-**Note**: don't forget to change the ownership of the */usr/share/geoserver-2.12.1/* folder, GeoServer will not be able to start.
+**Note**:  if you have problems getting GeoServer to start, check that you actually changed the rights to the */usr/share/geoserver-2.12.1/* folder.
+
+###  Create a symlinks to GeoServer installation
+This will make easier to update GeoServer versions since you will need to only update these symlinks.
+```
+# Create symlink for installation folder
+ln -s /usr/share/geoserver-2.12.1/ /usr/share/geoserver
+# Create symlink for data folder
+ln -s /usr/share/geoserver-2.12.1/data_dir /usr/share/geoserver_data
+```
+
+Once you have set these symlinks you can use them through out your configuration settings.
 
 ### Add GeoServer to start automatically at VM boot
 GeoServer is now installed but it is not running yet. To automatically start
@@ -83,19 +94,14 @@ GeoSever whenever the VM restarts, it is best to add it as a service.
 
 To add GeoServer as a service to your server, you need two pieces of information:
 
-The folder where your GeoServer was unziped, something like:
+- the symlink folder from previous step as the folder where your GeoServer is installed: `/usr/share/geoserver/`
 
+- and the path to the java installation. You can get it by running:
 ```
-/usr/share/geoserver-2.12.1/
-```
-
-And the path to the java installation. You can get it by running:
-
-```
-# Check path to Java and set to environment
+# Check path to Java
 sudo update-alternatives --config java
 # Ouputs something like:
-  /usr/lib/jvm/java-8-oracle/jre/bin/java
+ > /usr/lib/jvm/java-8-oracle/jre/bin/java
 ```
 The bit that you need is the path indicated in the output but withouth the
 "/jre/bin/java" part, for ex **/usr/lib/jvm/java-8-oracle**
@@ -118,9 +124,9 @@ After=network.target
 [Service]
 User=cloud-user
 Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle
-Environment=GEOSERVER_HOME=/usr/share/geoserver-2.12.1
-ExecStart=/usr/share/geoserver-2.12.1/bin/startup.sh
-ExecStop=/usr/share/geoserver-2.12.1/bin/shutdown.sh
+Environment=GEOSERVER_HOME=/usr/share/geoserver
+ExecStart=/usr/share/geoserver/bin/startup.sh
+ExecStop=/usr/share/geoserver/bin/shutdown.sh
 
 # Output needs to appear in instance console output
 StandardOutput=journal+console
@@ -141,13 +147,15 @@ sudo shutdown -r now
 
 ### Test that GeoServer is running
 
-After your VM restars, test that your GeoServer is up and running via the web GUI: http://<vm-public-ip>:8080/geoserver/web/ (edit the vm-public-ip with your VM public ip).
+After your VM restars, test that your GeoServer is up and running via the web GUI:
 
-You can check that the server is running via the terminal for example with:
-````bash
+**http://<vm-public-ip>:8080/geoserver/web/** (edit the vm-public-ip with your VM public ip).
+
+You can also check that the server is running via the terminal for example with:
+```bash
 ps aux | grep GEOSERVER
 journalctl -b | less | grep GEOSERVER
-````
+```
 
 ## Post installation settings
 
