@@ -67,7 +67,7 @@ Connect to your Vm and run the following commands. Remember to edit the zip file
  name to match the one you actually downloaded:
 
 ```bash
-# Downloand and unpack GeoServer following http://docs.geoserver.org/maintain/en/user/installation/linux.html
+# Downloand and unpack GeoServer following http://docs.geoserver.org/stable/en/user/installation/linux.html
 sudo apt install unzip
 sudo unzip geoserver-2.12.1-bin.zip -d /usr/share/
 
