@@ -43,10 +43,10 @@ sudo ln -sfn /usr/share/geoserver-2.14.0 /usr/share/geoserver
 
 The data directory can remain the same as it was previously.
 
-Finally, reboot the machine:
+Finally, reboot GeoServer:
 
 ```
-sudo /sbin/reboot
+sudo systemctl restart geoserver.service
 ```
 
  Your server should now be running the new GeoServer version with the same layers and configuration as before the upgrade.
