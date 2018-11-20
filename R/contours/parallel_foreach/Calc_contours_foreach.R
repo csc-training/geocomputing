@@ -40,9 +40,7 @@ if (!dir.exists(gridFolder)) {
 # The variables from outside of this function are not visible.
 
 funtorun<-function(mapsheet) {
-  library(RSAGA)
-  library(gdalUtils)
-
+  
   # SagaGIS needs the input in its own format, so let's change the original .tif file to Saga format.
   gridfile <- file.path(gridFolder, gsub("tif", "sdat", basename(mapsheet)))
   gdal_translate(mapsheet, gridfile, of="SAGA",verbose=TRUE)
@@ -53,14 +51,18 @@ funtorun<-function(mapsheet) {
   gridfile <- gsub("sdat", "sgrd", gridfile)
   rsaga.contour(gridfile, shapefile, 50, 200, 750, env = rsaga.env())
 
+  return(shapefile)
   #The tool gives like other RSAGA tools "Error: select a tool" message, but it actually is working :)
 }
 
-# Run funtorun function in parallel for each mapsheet
-a<-foreach(i=1:3) %dopar% {
+# Run funtorun function in parallel for each mapsheet. .export passes variables and .packages the necessary packages.
+# If return value is used .combine can be used to specify which function to use for combining results.
+
+a<-foreach(i=1:3, .export=c("gridFolder", "shapeFolder"), .packages=c("RSAGA","gdalUtils"), .combine="c") %dopar% {
 	funtorun(mapsheets[i])
 }
-
+#Print combined return values. In this case names of created shapefiles.
+print(a)
 closeCluster(cl)
 mpi.quit()
 
