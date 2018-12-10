@@ -1,7 +1,11 @@
 # Single GeoServer VM for teaching
-The aim of this workflow is to set up GeoServer for a university course. The same GeoServer instance is used by several students. Students upload their data using QGIS [GeoServer Explorer plugin](https://plugins.qgis.org/plugins/geoserverexplorer/) and then continue adjusting settings from GeoServer web admin interface.
+The aim of this guide is to set up GeoServer for a university course with the following characteristics:
+- The same GeoServer instance is used by several students.
+- Students upload their data using QGIS [GeoServer Explorer plugin](https://plugins.qgis.org/plugins/geoserverexplorer/).
 
 The installation is done using [GeoServer "Platform Independent Binary" installation package](http://geoserver.org/release/stable/), which includes built-in Jetty servlet container. The basic installation has been modified so that the GeoServer is started at boot time (see details below).
+
+After the installation, some settings are modified from GeoServer web admin interface.
 
 ## How GeoServer is used by the students
 - The students have only access to the GeoServer web GUI and REST API.

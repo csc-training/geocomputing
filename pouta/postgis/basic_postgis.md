@@ -1,12 +1,12 @@
 # Basic PostGIS installation
 
-The following instructions describe the steps to install PostGIS in an Ubuntu 16.04 virtual machine.
+The following instructions describe the steps to install PostGIS in an Ubuntu 16.04 virtual machine in cPouta environment.
 
 ## Prerequisites
 You need to have a basic virtual machine (VM) with a ready Ubuntu OS. These instructions have been tested in a CSC's cPouta environment and with a Ubuntu 16.04 OS.
 
 Hardware requirements:
-- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes (tested with cPouta's hpc-gen1.1core flavour, see about [cPouta flavours](https://research.csc.fi/pouta-flavours))
+- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes. For cPouta virtual machines' configurations, see [cPouta flavours](https://research.csc.fi/pouta-flavours)).
 
 Security recommendations:
 - Define the VM's security settings carefully (for cPouta, see [Security Guidelines for cPouta](https://research.csc.fi/pouta-security)):
@@ -15,13 +15,13 @@ Security recommendations:
   - restrict the access to limited ip addresses to avoid risks.
 
 ## Postgis installation
-The steps below will install a PostgreSQL 9.6 database with PostGIS 2.3 in a cPouta Ubuntu 16.04 VM.
+The steps below will install a PostgreSQL 9.6 database with PostGIS 2.3.
 
-The installation is based on: https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS23UbuntuPGSQL96Apt
+The installation is based on the general [OSGeo PostGIS installation instructions](https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS23UbuntuPGSQL96Apt). You should be able to understand the installation steps and make modifications if needed for your case.
 
 ### Preparation steps
 
-Connect to your VM and from the terminal run the following commands, see comments in the code for more details:
+Connect to your VM and run the following commands from the terminal, see comments in the code for more details:
 
 ````sh
 # Run as superuser
@@ -104,4 +104,6 @@ CREATE ROLE geo LOGIN PASSWORD 'geoman' SUPERUSER;
 NEWUSER
 ````
 
-You are done! You can test your PostGIS database by connecting to it at the VM's public IP on port 5432 from your local machine. Use for example your local pgAdmin or QGIS applications to test it.
+You are done!
+
+You can test your PostGIS database by connecting to it at the VM's public IP on port 5432 from your local machine. Use for example your local pgAdmin or QGIS applications to test it.

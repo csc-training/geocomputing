@@ -3,4 +3,5 @@ Different instructions to install PostGIS to cPouta virtual machines (VM) for di
 
 PostGIS for training purposes:
 - [Basic PostGIS installation](basic_postgis.md)
+- [Managing your PostGIS database](basic_postgis_management.md)
 - [Single PostGIS course VM used by all students](single_postgis_for_training.md)
