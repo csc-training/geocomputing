@@ -42,3 +42,6 @@ We can then submit this array job file with:
 
 ## Using snow library for parallel processing
 In this case the R code takes care of dividing the work to 3 processes, one for each input file. The snow package is used for multiprocessing.
+
+## Using foreach with doMPI library for parallel processing
+As above the R code takes care of dividing the work. Instead of snow, foreach and doMPI are used.
