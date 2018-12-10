@@ -88,7 +88,7 @@ ALTER SYSTEM SET listen_addresses='*';
 \q
 POSTGRESSETUP
 
-# Edit pg_hba. to allow md5 connections from any IP
+# Edit pg_hba.conf to allow md5 connections from any IP
 # sed -i -e 's/host    all             all             127.0.0.1\/32/host    all             all             0.0.0.0\/0/g' /etc/postgresql/9.6/main/pg_hba.conf
 sed -i -e 's/host    all             all             127.0.0.1\/32/hostssl    all             all             0.0.0.0\/0/g' /etc/postgresql/9.6/main/pg_hba.conf
 
