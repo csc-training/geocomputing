@@ -1,5 +1,6 @@
 ## Testing python routing using igraph and networkx with multiprocessing
 
+* Creating graphml file from osm data with osmnx requires a lot of memory as osmnx uses networkx graphs. Downloading from overpass api is suitable for only smaller areas. Downloading whole Finland graph took 19 hours in our tests. 
 * Memory consumption increases with parallelisation, but not by much
 * Parallelisation done within one node (=up to 16 or 24 cores depending on node type, 256GB memory, 1.5TB in hugemem queue, see Taito userguide for details about different node types and queues)
 
