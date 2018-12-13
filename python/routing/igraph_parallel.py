@@ -22,7 +22,10 @@ def sp(start,end):
 	path_len=[g.es[e]['weight'] for e in path[0]]
 	return sum(path_len)
 
+#Get number of cores from batch job script as argument, so number of processes used here matches the reserved number of cores
 print(sys.argv[1], " cores")
+
+#Create multiprocessing pool and map shortest path calculations for each start, end pair to the pool.
 with mp.Pool(processes=int(sys.argv[1])) as pool:
 	t0 = time.time()
 	results = pool.starmap(sp, args)
