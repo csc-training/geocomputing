@@ -1,13 +1,19 @@
-## Testing python routing using igraph and networkx with multiprocessing
+## Routing using Python igraph or networkx package with multiprocessing
 
-* osmnx-graphml.py contains example how to create a graph in graphml format from osm data.
-* igraph_parallel.py and nx_parallel.py are examples on how to run shortest path analysis with igraph and networkx in parallel with multiprocessing module.
-* batch_igarph.sh and batch_nx.sh files are batch job files for submitting the shortest paths scripts to batch job system in Taito.
-* Creating graphml file from osm data with osmnx requires a lot of memory as osmnx uses networkx graphs. Downloading from overpass api is suitable for only smaller areas. Downloading whole Finland graph took 19 hours in our tests. 
+Here you can find example code for doing network routing in Taito with Python igraph or networkx package. For reading the data from OpenStreetMap osmnx package is used. osmnx can create network data needed by networkx directly. For igraph the data has to be save in GraphML format first, and then igraph can read from GraphML. In general igraph is faster and requires less memory, while networkx might be easier to use.
+
+Files:
+* osmnx-graphml.py - how to create a graph in GraphML format from OpenStreetMap data.
+* igraph_parallel.py and nx_parallel.py - how to run shortest path analysis with igraph and networkx in parallel with multiprocessing module.
+* batch_igarph.sh and batch_nx.sh - batch job files for submitting the shortest paths scripts to batch job system in Taito.
+
+Notes:
+* Creating GraphML file from OpenStreetMap data with osmnx requires a lot of memory as osmnx uses networkx graphs. Downloading from overpass API is suitable for only smaller areas. Downloading whole Finland graph took 19 hours in our tests. 
 * Memory consumption increases with parallelisation, but not by much
-* Parallelisation done within one node (=up to 16 or 24 cores depending on node type, 256GB memory, 1.5TB in hugemem queue, see Taito userguide for details about different node types and queues)
+* Parallelisation is done within one node, in Taito up to 24 cores and 256GB memory (or 1.5TB in hugemem queue) can be used.
 
-Time and memory consumption for shortest paths analysis on whole Finland street network from OSM using igraph.
+###Test results
+Time and memory consumption for shortest paths analysis on whole *Finland* street network from OSM using igraph.
 
 | Cores	 |Wall clock (min:s)|Time on pathfinding (min:s)|Mem (GB)|
 | ------ |------------------|-----------------------|--------|
@@ -15,7 +21,7 @@ Time and memory consumption for shortest paths analysis on whole Finland street 
 | 4|5:39|3:27|8.27|
 | 10|3:43|1:31|10.05|
 
-Time and memory consumption for shortest paths analysis on Helsinki street network using networkx
+Time and memory consumption for shortest paths analysis on *Helsinki* street network using networkx
 
 | Cores  |Wall clock (min:s)|Time on pathfinding (min:s)|Mem (GB)|
 | ------ |------------------|-----------------------|--------|
