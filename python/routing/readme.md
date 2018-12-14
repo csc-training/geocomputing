@@ -12,7 +12,7 @@ Notes:
 * Memory consumption increases with parallelisation, but not by much
 * Parallelisation is done within one node, in Taito up to 24 cores and 256GB memory (or 1.5TB in hugemem queue) can be used.
 
-###Test results
+### Test results
 Time and memory consumption for shortest paths analysis on whole *Finland* street network from OSM using igraph.
 
 | Cores	 |Wall clock (min:s)|Time on pathfinding (min:s)|Mem (GB)|
