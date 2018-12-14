@@ -154,5 +154,5 @@ Limitations:
 * OpenStreetMap, [GeoFabrik](https://download.geofabrik.de/europe/finland.html)
 * [Digiroad](www.digiroad.fi) - Road data by Finnish Transport Agency
 * [ESRI road and street network for Finland](https://avaa.tdata.fi/adata/esri/esri_stk.html), available for free for univeristies in CSC consortium. Based on Digiroad.
-* Public transport data in GTFS format: http://transitfeeds.com/l/530-finland
+* Public transport data in [GTFS format](http://transitfeeds.com/l/530-finland)
 
