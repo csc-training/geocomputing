@@ -1,7 +1,7 @@
 # Software for routing at CSC computing environment
 
 Below is given a list of routing tools that can be used in CSC computing environment, either Taito or cPouta. At the very end also the main routing data sources are listed.  
-Contributors: Kylli Ek (CSC), Elias Annila (CSC), Janne Helin (LUKE), Henrikki Tenkanen (HY), Olli-Jussi Korpinen (LUT).  
+Contributors: Kylli Ek (CSC), Elias Annila (CSC), Henrikki Tenkanen (HY), Janne Helin (LUKE), Tuomas Nummelin (LUKE), Olli-Jussi Korpinen (LUT).  
 If you have any comments or additions, please send them to giscoord@csc.fi
 
 ## Routing in Taito
