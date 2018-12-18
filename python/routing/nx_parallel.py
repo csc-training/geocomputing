@@ -5,7 +5,7 @@ import numpy as np
 import sys
 import osmnx
 #Graphml file containing street network Hanko, Finland.
-graph_file="data/helsinki.graphml"
+graph_file="data/hanko.graphml"
 g=nx.read_graphml(graph_file, node_type=int)
 
 print("graph read")
