@@ -31,7 +31,7 @@ https://networkx.github.io/
 Taito: available in geoconda and geopython modules.
 
 Pure Python routing library, which is simple and easy to use. 
-* It can use any network data as input, from OSM or Shape file, but the Shape file reader does not work with Digiroad data.
+* It can use any network data as input, from OSM or Shape file. The Shape file reader does not work with Digiroad data, but Henrikki Tenkanen has written own [importer for Digiroad](https://gist.github.com/HTenkanen/6ed582a97a83e9530bbdcca84bca8d0c).
 * A lot of algorithms available. [Shortest path ones](https://networkx.github.io/documentation/stable/reference/algorithms/shortest_paths.html), inc Dijkstra and A*.
 * Possible to run in parallel in Taito, some extra memory is needed. [Example code](https://github.com/csc-training/geocomputing/tree/master/python/routing).
 * [A lof of examples for networkx and osmnx](https://github.com/gboeing/osmnx-examples/tree/master/notebooks).
