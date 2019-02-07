@@ -14,8 +14,11 @@ read_whole_layer <- function(){
 }
 
 # Geopackage is internally an sqlite database which can be connected to and queried. 
-# The read_sf function takes a query= parameter that allows us to specify an sql query to select only some parts of data. 
-# This can be used in several ways:
+# The read_sf function takes a query= parameter that allows us to specify an SQL query to select only some parts of data. 
+# The given SQL is handled by OGR, so see https://www.gdal.org/ogr_sql.html for available further details.
+# Basically selection based on any attribute is possible, but selection by geometry does not seem to be possible.
+
+# SQL selections can be used in several ways:
 
 # Reading rows in range 10-20. Only the rows that we want will be read regardless of the actual number of rows in the layer.
 read_rows_in_range <- function(){
