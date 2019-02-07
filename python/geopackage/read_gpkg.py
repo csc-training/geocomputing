@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """
-Examples on reading data from NLS geopackage with geopandas, fiona and sqlite3. The geopackge is nearly 80GB so reading the whole thing takes a while. We can however read parts of it quickly without having to inspect each row as shown in below examples:
+Examples for reading data from NLS geopackage with geopandas, fiona and sqlite3. 
+The geopackges are rather big, so reading the whole file might not be optimal. 
+We can however read parts of it quickly without having to inspect each row as shown in examples below:
 """
 import geopandas as gpd
 import fiona
@@ -15,7 +17,9 @@ def read_whole_layer():
     print("Hylky:\n",df.head())
 
 """
-Reading an area specified by a boundingbox from a single layer into a dataframe. Geopandas takes advantage of geopackage's spatial indexing and this is a fast operation even on large layers. For line and polygon geometries all features that at least intersect bounding box are selected.
+Reading an area specified by a boundingbox from a single layer into a dataframe. 
+Geopandas takes advantage of geopackage's spatial indexing and this is a fast operation even on large layers. 
+For line and polygon geometries all features that at least intersect bounding box are selected.
 """
 def read_area():
 
