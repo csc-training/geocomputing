@@ -5,6 +5,9 @@
 Login to psql without password:
 - `sudo -u postgres psql db_name`
 
+Login to psql with and existing user and password:
+- `psql -U geo -d db_name`
+
 Create a user:
 - `CREATE ROLE user_name LOGIN PASSWORD 'your_password' SUPERUSER;``
 
