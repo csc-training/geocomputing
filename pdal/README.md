@@ -155,7 +155,7 @@ PDAL can also be used from inside a Python script. The advantage here is that it
 1. Connect to Taito-shell
 2. Load necessary modules (geo-env)
 3. Run pdal\_ground.py script using python (python pdal\_ground.py)
-4. Take a look at the plot you created (eog plots/part00.png)
+4. Take a look at the plot you created (for example copy the plot to your local computer)
 5. If you have time, construct an array job to create similar plots for all 4 files.
 
 ``` python
