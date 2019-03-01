@@ -148,7 +148,30 @@ output=outputs/$(echo "$name" | cut -f 2 -d '/').tif
 #Run the pipeline as in previous exercise. Note that it is possible to override input and output files in your pipeline json from the commandline.
 pdal pipeline --readers.las.filename=$input --writers.gdal.filename=$output pipeline.json
 ```
-## Exercise 4. PDAL usage from a Python script
+
+
+## Exercise 4. Index creation
+
+Pdal provides a convinient tool tindex for creating index maps for pointcloud files. 
+Usage: ```pdal tindex index.shp file\_pattern options```
+To reduce computation time use ```--fast_boundary``` option. Without this pdal will check location of each point individually which will take longer.
+File pattern means that all files matching the pattern will be included in the index. To match multiple files use * character. This character is interperted as any filename or part of file name. For example to include all files ending in .laz in current folder use pattern "\*.laz". To include all files in some other folder use pattern "path/to/some/folder/\*"
+1. Connect to taito-shell
+2. Use the ```pdal tindex``` command to create an index shapefile of the four files created under data folder.
+
+
+## Exercise 5. PDAL translate, Filtering example
+
+When performing simple tasks it's sometimes a bit cumbersome to create separate pipeline files. The ```pdal_translate``` can be used to run operations directly from command line without constructing pipeline file. In this exercise the task is to compute height above ground and extract points that are above 2m from ground.
+The syntax for pdal translate is as follows: ```pdal translate input-file output-file filters options-for-filters```
+
+1. Replace Z coordinate with height above ground. You can use following command: ```pdal translate data/part\_00.laz outputs/hag_00.laz hag ferry --filters.ferry.dimensions="HeightAboveGround=Z"``` In this example ```hag``` filter is used to compute height above ground. Because .laz files can't store custom attributes we use ```ferry``` filter to replace Z with HeightAboveGround before saving.
+2. Use ```range``` filter to extract points with height above ground value (stored in Z) above 2m. The range filter takes limits option as: ```--filters.range.limits="Attribute\[1:100\]" Where Attribute is the name of the attribute used for filtering and the numbers between square brackets are lower and upper limits. If one of the limits can also be left out to leave one end of the range unlimited.
+3. Check the resulting pointcloud with ccViewer
+4. (Extra) It's also possible to combine multiple filters into one pdal translate command as was done with hag and ferry filters in the first step. Try to repeat the whole exercise with just one command combining hag ferry and range filters in correct order.
+
+
+## Exercise 6. PDAL usage from a Python script
 
 PDAL can also be used from inside a Python script. The advantage here is that it enables you to easily do some preprocessing with PDAL and then load the data into Python for further analysis or for example plotting. In third exercise we'll do just that by first doing ground classification using PDAL, after which we'll read the result into a Pandas data frame and plot the points. In taito Python support for PDAL has been installed with PDAL 1.5 version found in geo-env module.
 
@@ -156,7 +179,7 @@ PDAL can also be used from inside a Python script. The advantage here is that it
 2. Load necessary modules (geo-env)
 3. Run pdal\_ground.py script using python (python pdal\_ground.py)
 4. Take a look at the plot you created (for example copy the plot to your local computer)
-5. If you have time, construct an array job to create similar plots for all 4 files.
+
 
 ``` python
 # -*- coding: utf-8 -*-
