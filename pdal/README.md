@@ -4,7 +4,7 @@
 Throughout these exercises we will ALS data fron National Land Survey. We will use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Taito as part of shared gis data and can be found in ```/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz```. We a ready made script in github we will use in this exercise so the first thing to do is download the exercise scripts.
 
 
-1. 
+1. Copy exercise zip from your local machine to Taito.
 2. Login to Taito-shell
 3. Load necessary modules (module load geo-env)
 4. Go to your work directory and unzip exercise zip (cd $WRKDIR & unzip pdal_exercise.zip)
