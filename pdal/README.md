@@ -60,7 +60,7 @@ In this exercise we'll detect ground returns using simple morphological filter (
 
  1. Run the pipeline with pdal. Syntax: ```pdal pipeline pipeline.json```
  2. Check resulting dem with qgis
- 3. Run the same pipeline for different input and output files (more files in data folder). To do this it is possible to override input and outputfiles in the pipeline using --readers.las.filename --writers.gdal.filename switches with pdal pipeline command. For example `pdal pipeline --readers.las.filename=data/lake.laz --writers.gdal.filename=outputs/lake.tif pipe.json`. Ability to override input and outptufiles will come handy also in the next exercise when we start processing multiple files with array jobs.
+ 3. Run the same pipeline for different input and output files (more files in data folder). To do this it is possible to override input and outputfiles in the pipeline using --readers.las.filename --writers.gdal.filename switches with pdal pipeline command. For example `pdal pipeline --readers.las.filename=data/lake.laz --writers.gdal.filename=outputs/lake.tif pipeline.json`. Ability to override input and outptufiles will come handy also in the next exercise when we start processing multiple files with array jobs.
 
 _pipeline.json_
 ``` json
