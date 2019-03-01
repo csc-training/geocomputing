@@ -3,10 +3,12 @@
 ## Exercise 1. Extracting smaller area from .laz file
 Throughout these exercises we will ALS data fron National Land Survey. We will use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Taito as part of shared gis data and can be found in ```/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz```. We a ready made script in github we will use in this exercise so the first thing to do is download the exercise scripts.
 
-1. Login to Taito-shell
-2. Load necessary modules (module load geo-env)
-3. Go to your work directory (cd $WRKDIR)
-4. clone the exercise github repo (git clone URL) and change to the downloaded pdal_exercise directory
+
+1. 
+2. Login to Taito-shell
+3. Load necessary modules (module load geo-env)
+4. Go to your work directory and unzip exercise zip (cd $WRKDIR & unzip pdal_exercise.zip)
+5. Go to the extracted pdal_exercise folder.
 
 In order to extract smaller pieces of it we will use PDAL's crop filter. We have two necessary files for this exercise: crop\_pipeline.json and split\_laz.sh. Crop\_pipeline.json defines a pdal pipeline for cropping a .laz file and split\_laz.sh runs the pipeline 4 times changing the crop area and output file.
 
@@ -146,7 +148,7 @@ output=outputs/$(echo "$name" | cut -f 2 -d '/').tif
 #Run the pipeline as in previous exercise. Note that it is possible to override input and output files in your pipeline json from the commandline.
 pdal pipeline --readers.las.filename=$input --writers.gdal.filename=$output pipeline.json
 ```
-##Exercise 3. PDAL usage from a Python script
+## Exercise 4. PDAL usage from a Python script
 
 PDAL can also be used from inside a Python script. The advantage here is that it enables you to easily do some preprocessing with PDAL and then load the data into Python for further analysis or for example plotting. In third exercise we'll do just that by first doing ground classification using PDAL, after which we'll read the result into a Pandas data frame and plot the points. In taito Python support for PDAL has been installed with PDAL 1.5 version found in geo-env module.
 
