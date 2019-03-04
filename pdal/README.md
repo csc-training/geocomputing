@@ -1,8 +1,7 @@
 # PDAL
 
 ## Exercise 1. Extracting smaller area from .laz file
-Throughout these exercises we will ALS data fron National Land Survey. We will use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Taito as part of shared gis data and can be found in ```/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz```. We a ready made script in github we will use in this exercise so the first thing to do is download the exercise scripts.
-
+Throughout these exercises we'll use ALS data from National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Taito as part of shared gis data and can be found in ```/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz```. In this exercise we'll use a ready made script to extract four smaller pieces from the tile.
 
 1. Copy exercise zip from your local machine to Taito.
 2. Login to Taito-shell
