@@ -3,13 +3,11 @@
 ## Exercise 1. Extracting smaller area from .laz file
 Throughout these exercises we'll use ALS data from National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Taito as part of shared gis data and can be found in ```/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz```. In this exercise we'll use a ready made script to extract four smaller pieces from the tile.
 
-1. Copy exercise zip from your local machine to Taito.
-2. Login to Taito-shell
-3. Load necessary modules (module load geo-env)
-4. Go to your work directory and unzip exercise zip (cd $WRKDIR & unzip pdal_exercise.zip)
-5. Go to the extracted pdal_exercise folder.
-6. Run the split\_laz.sh script (./split_laz.sh)
-7. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
+1. Login to Taito-shell
+2. Load necessary modules (module load geo-env)
+3. Go to your exercise directory (/wrk/$USER/lidar/pdal\_exercise)
+4. Run the split\_laz.sh script (./split_laz.sh)
+5. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
 
 In order to extract smaller pieces we will use PDAL's crop filter. We have two necessary files for this exercise: crop\_pipeline.json and split\_laz.sh. Crop\_pipeline.json defines a pdal pipeline for cropping a .laz file and split\_laz.sh runs the pipeline 4 times changing the crop area and output file.
 
@@ -54,7 +52,7 @@ done
 
 
 ## Exercise 2. Direct PDAL usage - Ground identification using SMRF
-In this exercise we'll detect ground returns using simple morphological filter (SMRF) and construct a DEM from the ground points. We'll use PDAL directly from taito-shell using JSON pipelines. Below you will find a ready made json pipeline. The same pipeline can be found in the exercise zip as _pipeline.json_ The aim of the first thing to do is simply get it running using PDAL from command line.
+In this exercise we'll detect ground returns using simple morphological filter (SMRF) and construct a DEM from the ground points. We'll use PDAL directly from taito-shell using JSON pipelines. Below you will find a ready made json pipeline. The same pipeline can be found in the exercise folder as _pipeline.json_ The aim of the first thing to do is simply get it running using PDAL from command line.
 
  1. Run the pipeline with pdal. Syntax: ```pdal pipeline pipeline.json```
  2. Check resulting dem with qgis
@@ -89,7 +87,7 @@ _pipeline.json_
 
 ## Excercise 3. Parallelising PDAL usage with array jobs
 
-When you want to run your pipeline on multiple files it can be done easily in Taito with array jobs. Array jobs are a way of running the same task multiple times for example for different input files. To use array jobs you need to submit your job through the batch job system rather than running it interactively in Taito-shell. In the second excercise the goal is to run the json pipeline created in the first excersize on 4 different files in parallel.
+When you want to run your pipeline on multiple files it can be done easily in Taito with array jobs. Array jobs are a way of running the same task multiple times for example for different input files. To use array jobs you need to submit your job through the batch job system rather than running it interactively in Taito-shell. In this excercise the goal is to run the json pipeline from the previousexcersize on 4 different files in parallel.
 
  1. Connect to taito login node
  2. Change to the excercise folder.
@@ -133,7 +131,7 @@ _arrayjob.sh_
 module load geo-env
 #Change to the directory where you have the files
 
-cd $WRKDIR/pdal_exercise
+cd $WRKDIR/lidar/pdal_exercise
 #Read the file to be processed from a list of input files. This is done by getting the line corresponding to the $SLURM_ARRAY_TASK_ID from the input file list.
 input=$(sed -n "$SLURM_ARRAY_TASK_ID"p filelist.csv)
 
