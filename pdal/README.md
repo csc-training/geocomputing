@@ -8,8 +8,10 @@ Throughout these exercises we'll use ALS data from National Land Survey. We'll u
 3. Load necessary modules (module load geo-env)
 4. Go to your work directory and unzip exercise zip (cd $WRKDIR & unzip pdal_exercise.zip)
 5. Go to the extracted pdal_exercise folder.
+6. Run the split\_laz.sh script (./split_laz.sh)
+7. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
 
-In order to extract smaller pieces of it we will use PDAL's crop filter. We have two necessary files for this exercise: crop\_pipeline.json and split\_laz.sh. Crop\_pipeline.json defines a pdal pipeline for cropping a .laz file and split\_laz.sh runs the pipeline 4 times changing the crop area and output file.
+In order to extract smaller pieces we will use PDAL's crop filter. We have two necessary files for this exercise: crop\_pipeline.json and split\_laz.sh. Crop\_pipeline.json defines a pdal pipeline for cropping a .laz file and split\_laz.sh runs the pipeline 4 times changing the crop area and output file.
 
 _crop\_pipeline.json_
 ``` json
@@ -49,9 +51,6 @@ do
 done
 
 ```
-
-5. Run the split\_laz.sh script (./split_laz.sh)
-6. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
 
 
 ## Exercise 2. Direct PDAL usage - Ground identification using SMRF
