@@ -54,11 +54,11 @@ done
 
 
 ## Exercise 2. Direct PDAL usage - Ground identification using SMRF
-In this exercise we'll detect ground returns using simple morphological filter (SMRF), filter outliers and construct a DEM. In the first exercise we will use PDAL directly from taito-shell using JSON pipelines. Below you will find a ready made json pipeline. The same pipeline can be found in the exercise zip as _pipeline.json_ The aim of the first thing to do is simply get it running using PDAL from command line.
+In this exercise we'll detect ground returns using simple morphological filter (SMRF) and construct a DEM from the ground points. We'll use PDAL directly from taito-shell using JSON pipelines. Below you will find a ready made json pipeline. The same pipeline can be found in the exercise zip as _pipeline.json_ The aim of the first thing to do is simply get it running using PDAL from command line.
 
  1. Run the pipeline with pdal. Syntax: ```pdal pipeline pipeline.json```
  2. Check resulting dem with qgis
- 3. Run the same pipeline for different input and output files (more files in data folder). To do this it is possible to override input and outputfiles in the pipeline using --readers.las.filename --writers.gdal.filename switches with pdal pipeline command. For example `pdal pipeline --readers.las.filename=data/part_01.laz --writers.gdal.filename=outputs/part_01.tif pipeline.json`. Ability to override input and outptufiles will come handy also in the next exercise when we start processing multiple files with array jobs.
+ 3. Run the same pipeline for different input and output files (more files in data folder). To do this it is possible to override input and outputfiles in the pipeline using `--readers.las.filename` and `--writers.gdal.filename` switches with pdal pipeline command. For example `pdal pipeline --readers.las.filename=new_input_file --writers.gdal.filename=new_output_file pipeline.json`. Ability to override input and outptufiles will come handy also in the next exercise when we start processing multiple files with array jobs.
 
 _pipeline.json_
 ``` json
