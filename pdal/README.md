@@ -167,7 +167,7 @@ Pdal provides a convinient tool tindex for creating index maps for pointcloud fi
 Usage: ```pdal tindex index.shp file_pattern options```
 To reduce computation time use ```--fast_boundary``` option. Without this pdal will check location of each point individually which will take longer.
 File pattern means that all files matching the pattern will be included in the index. To match multiple files use * character. This character is interperted as any filename or part of file name. For example to include all files ending in .laz in current folder use pattern ```"*.laz"```. To include all files in some other folder use pattern ```"path/to/some/folder/*"```
-1. Connect to taito-shell
+1. Connect to taito-shell and change to exercise directory
 2. Use the ```pdal tindex``` command to create an index shapefile of the four files created under data folder.
 
 
