@@ -150,17 +150,7 @@ pdal pipeline --readers.las.filename=$input --writers.gdal.filename=$output pipe
 ```
 
 
-## Exercise 4. Index creation
-
-Pdal provides a convinient tool tindex for creating index maps for pointcloud files. 
-Usage: ```pdal tindex index.shp file\_pattern options```
-To reduce computation time use ```--fast_boundary``` option. Without this pdal will check location of each point individually which will take longer.
-File pattern means that all files matching the pattern will be included in the index. To match multiple files use * character. This character is interperted as any filename or part of file name. For example to include all files ending in .laz in current folder use pattern ```"*.laz"```. To include all files in some other folder use pattern ```"path/to/some/folder/*"```
-1. Connect to taito-shell
-2. Use the ```pdal tindex``` command to create an index shapefile of the four files created under data folder.
-
-
-## Exercise 5. PDAL translate, Filtering example
+## Exercise 4. PDAL translate, Filtering example
 
 When performing simple tasks it's sometimes a bit cumbersome to create separate pipeline files. The ```pdal_translate``` can be used to run operations directly from command line without constructing pipeline file. In this exercise the task is to compute height above ground and extract points that are above 2m from ground.
 The syntax for pdal translate is as follows: ```pdal translate input-file output-file filters options-for-filters```
@@ -169,6 +159,16 @@ The syntax for pdal translate is as follows: ```pdal translate input-file output
 2. Use ```range``` filter to extract points with height above ground value (stored in attribute Z) above 2m. The range filter takes limits option as: ```--filters.range.limits="Attribute[1:100]"``` Where Attribute is the name of the attribute used for filtering and the numbers between square brackets are lower and upper limits. If one of the limits can also be left out to leave one end of the range unlimited.
 3. Check the resulting pointcloud with ccViewer
 4. (Extra) It's also possible to combine multiple filters into one pdal translate command as was done with hag and ferry filters in the first step. Try to repeat the whole exercise with just one command combining hag ferry and range filters in correct order.
+
+
+## Exercise 5. Index creation
+
+Pdal provides a convinient tool tindex for creating index maps for pointcloud files. 
+Usage: ```pdal tindex index.shp file_pattern options```
+To reduce computation time use ```--fast_boundary``` option. Without this pdal will check location of each point individually which will take longer.
+File pattern means that all files matching the pattern will be included in the index. To match multiple files use * character. This character is interperted as any filename or part of file name. For example to include all files ending in .laz in current folder use pattern ```"*.laz"```. To include all files in some other folder use pattern ```"path/to/some/folder/*"```
+1. Connect to taito-shell
+2. Use the ```pdal tindex``` command to create an index shapefile of the four files created under data folder.
 
 
 ## Exercise 6. PDAL usage from a Python script
