@@ -101,10 +101,9 @@ When you want to run your pipeline on multiple files it can be done easily in Ta
  6. Verify that all DEM files were successfully created
  7. Modify the arrayjob.sh and filelist.csv files to only process part00.laz and part10.laz files and save the outputs in a new folder.
 
-_arrayjob.sh_ 
-
 A batch job script containts two parts, first are the instructions to the batch job system marked with #SBATCH. After these rest of the file is normal shell script (same commands you would write to the terminal). Each #SBATCH option used is explained in the example script below. 
 
+_arrayjob.sh_ 
 ``` bash
 
 #!/bin/bash -l
@@ -180,7 +179,7 @@ PDAL can also be used from inside a Python script. The advantage here is that it
 3. Run pdal\_ground.py script using python (python pdal\_ground.py)
 4. Take a look at the plot you created (for example copy the plot to your local computer)
 
-
+_pdal\_ground.py_
 ``` python
 # -*- coding: utf-8 -*-
 import pdal
