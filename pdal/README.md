@@ -6,8 +6,9 @@ Throughout these exercises we'll use ALS data from National Land Survey. We'll u
 1. Login to Taito-shell
 2. Load necessary modules (module load geo-env)
 3. Go to your exercise directory (/wrk/$USER/lidar/pdal\_exercise)
-4. Run the split\_laz.sh script (./split_laz.sh)
-5. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
+4. Make split\_.laz.sh executable (chmod +x split_laz.sh)
+5. Run the split\_laz.sh script (./split_laz.sh)
+6. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
 
 In order to extract smaller pieces we will use PDAL's crop filter. We have two necessary files for this exercise: crop\_pipeline.json and split\_laz.sh. Crop\_pipeline.json defines a pdal pipeline for cropping a .laz file and split\_laz.sh runs the pipeline 4 times changing the crop area and output file.
 
