@@ -9,6 +9,7 @@ Some other reference documentation used:
 - https://peteris.rocks/blog/remote-desktop-and-vnc-on-ubuntu-server/
 
 ** Description**
+
 The installation script will set up a TightVNC and an xRDP servers. The connection to the RDP server is done via the VNC server so you will need set up (and use) one single password (edit the password in the script before installing).
 
 The connection ports are 5901 for the VNC server and 3389 for the xRDP server. The installed desktop is Gnome with copy/paste functionality. Firefox, Chrome and gedit tools are installed too.
