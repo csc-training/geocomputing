@@ -8,7 +8,7 @@ Some other reference documentation used:
 - https://www.linode.com/docs/applications/remote-desktop/install-vnc-on-ubuntu-16-04 https://help.ubuntu.com/community/VNC/Servers
 - https://peteris.rocks/blog/remote-desktop-and-vnc-on-ubuntu-server/
 
-** Description**
+**Description**
 
 The installation script will set up a TightVNC and an xRDP servers. The connection to the RDP server is done via the VNC server so you will need set up (and use) one single password (edit the password in the script before installing).
 
