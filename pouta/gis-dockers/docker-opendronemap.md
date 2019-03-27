@@ -1,4 +1,4 @@
-## Installing OpenDroneMap
+## Installing OpenDroneMap CLI with Docker
 
 Docker applications can be used in different ways often depending on how the application has been constructed.
 
