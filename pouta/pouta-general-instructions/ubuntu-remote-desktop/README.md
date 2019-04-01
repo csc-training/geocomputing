@@ -1,9 +1,11 @@
 # Create a remote Ubuntu desktop machine in cPouta
 
 **Goal**
+
 To setup a remote desktop virtual machine (VM) in cPouta. The VM desktop can then be opened from a local laptop or PC with some remote desktop tool, for example TightVNC or Windows Remote Desktop Connection. In this way it is possible to use any tool with graphical user interface (GUI) in cPouta, for example QGIS, RStudio etc.
 
 **Refernces**
+
 This document is based on Henrikki Tenkkane's work for **Automating GIS processes** and **Introduction to Quantitative Geology** -courses.
 
 Some other reference documentation used:
