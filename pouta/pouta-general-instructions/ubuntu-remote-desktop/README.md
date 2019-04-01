@@ -1,7 +1,9 @@
 # Create a remote Ubuntu desktop machine in cPouta
 
-This is an example for a basic setup of a remote desktop virtual machine (VM) from an Ubuntu 16.04 server in cPouta.
+**Goal**
+To setup a remote desktop virtual machine (VM) in cPouta. The VM desktop can then be opened from a local laptop or PC with some remote desktop tool, for example TightVNC or Windows Remote Desktop Connection. In this way it is possible to use any tool with graphical user interface (GUI) in cPouta, for example QGIS, RStudio etc.
 
+**Refernces**
 This document is based on Henrikki Tenkkane's work for **Automating GIS processes** and **Introduction to Quantitative Geology** -courses.
 
 Some other reference documentation used:
@@ -10,7 +12,7 @@ Some other reference documentation used:
 
 **Description**
 
-The installation script will set up a TightVNC and an xRDP servers. The connection to the RDP server is done via the VNC server so you will need set up (and use) one single password (edit the password in the script before installing).
+The installation script will set up a TightVNC and an xRDP servers on Ubuntu 16.04. The connection to the RDP server is done via the VNC server so you will need set up (and use) one single password (edit the password in the script before installing).
 
 The connection ports are 5901 for the VNC server and 3389 for the xRDP server. The installed desktop is Gnome with copy/paste functionality. Firefox, Chrome and gedit tools are installed too.
 
@@ -20,8 +22,8 @@ The user name used for the setup is **cloud-user** (this user must exist in the 
 
 You need to have:
 - access to a cPouta project
-- and an existing Ubuntu 16.04 VM running in cPouta
-- a public ip linked to your VM
+- an existing Ubuntu 16.04 VM running in cPouta
+- a public IP linked to your VM
 - the keypair to connect via SSH to that server machine
 - a correct setup of the cPouta security groups to access the VM to ports 22 (for SSH), 5901 (for VNC) and 3389 (for XRDP).
 
