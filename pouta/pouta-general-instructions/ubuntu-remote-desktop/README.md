@@ -40,7 +40,7 @@ Steps:
 - move the script to your VM (for ex. using WinSCP)
 - run the modified script with:
 ```bash
-sudo sh ubuntu-remote-desktop\cPouta-ubuntu-remote-desktop.sh
+sudo sh cPouta-ubuntu-remote-desktop.sh
 ```
 
 ## Test the remote connection
