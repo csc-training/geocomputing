@@ -12,4 +12,4 @@ Here you find a collection of instructions to perform some basic tasks in cPouta
 - [Installing Docker in a cPouta VM](basic-pouta-management/docker-basic-installation.md)
 
 **Other interesting setups**
-- [Create a remote Ubuntu desktop machine in cPouta](../ubuntu-remote-desktop)
+- [Create a remote Ubuntu desktop machine in cPouta](./ubuntu-remote-desktop)
