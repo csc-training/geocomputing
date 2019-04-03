@@ -61,4 +61,10 @@ In Windows you can use the default RDP client (Windows Remote Desktop Connection
 After connecting you will be asked for password you set previously (same as for the VNC connection).
 
 ## Known issues
-Copy/paste works in both directions well when you use a VNC client tool (for ex. TightVNC) but using Windows Remote Desktop Connection tool works only in direction VM to Desktop.
+**Copy/paste**
+- Copy/paste works in both directions well when you use a VNC client tool (for ex. TightVNC)
+- Copy/paste using `Windows Remote Desktop` Connection tool works only in direction VM to Desktop.
+
+**Ubuntu 18.04**
+- If you would use the CSC's Ubuntu 18.04, note that the only user by default is **ubuntu** (instead of cloud-user). You should edit the commands in the script accordingly.
+- xRDP connection installation does not work with the current script, VNC connection works
