@@ -1,0 +1,71 @@
+---
+title: "The lidR package - LAS formal class"
+author: "Eduardo González"
+date: "23. February 2019"
+output:
+  html_document:
+    df_print: paged
+    theme: flatly
+---
+
+This materials have been adapted from the official [lidR wiki documentation](https://github.com/Jean-Romain/lidR/wiki) and [A Brief Introduction of lidR](http://xzsunbest.tk/2018/07/30/ABriefIntroductionOfLidR/).
+
+
+# The `rlas` package
+
+The `rlas` package relies on a modified version of `LASlib` and `LASzip` libraries (by Martin Isenburg) that were modified to be compatible with `R`. See the official documentation of [the `rlas` package](https://cran.r-project.org/web/packages/rlas/index.html) for more information.
+
+The main use of the `rlas` package is to read and write `.las` and `.laz` binary files used to store LiDAR data. LAS version 1.0 to 1.4 are supported. Point data record format 0,1,2,3,6,7,8 are supported.
+
+The tools offer some basic functionality to directly read and manipulate LAS data.
+
+```{r}
+library(rlas)
+file_name <- "/wrk/gonzalez/R_lidar_2019/r_lidar_data/mml/laserkeilaus/2008_17/2017/T522/1/T5224G2_1.laz"
+lasdata   <- read.las(file_name)
+lasheader <- read.lasheader(file_name)
+```
+
+
+## Basic structure of an rlas data object
+
+You can verify that the an `rlas` object is simply a data table with the data for each lidar point as a row:
+```{r }
+class(lasdata)
+names(lasdata)
+```
+
+See a subset of the lidar data table:
+```{r}
+print(lasdata[c(1:10),])
+```
+
+The original laz file size is 190Mb, but its size when loaded in memory to R is 3.3Gb. To see the size of the data table in memory:
+```{r}
+size <- object.size(lasdata)
+print(size, units = "auto")
+```
+
+You may apply filters to columns and what points to load based on their attributes when loading LAS files:
+```{r}
+filtered_las <- read.las(file_name, select = "ia", filter = "-keep_first -drop_intensity_below 95")
+size <- object.size(filtered_las)
+print(size, units = "auto")
+```
+
+The example above loads the coordinate columns x, y and z which are always loaded plus the intensity (i) column and the san angle (a) column. Then only the rows representing a first return point are loaded. Check the documentation for this function with `?read.las` or from the [rlas reference manual](https://cran.r-project.org/web/packages/rlas/rlas.pdf) to see all the available values for selection and filtering. Note that the filter values are the same as those in LAStools and can be checked with:
+```{r}
+rlas:::lasfilterusage()
+```
+
+To write the fildered LAS data as a las or compressed laz file you ned to create the header first and then use `write.las()` function A las or laz file is created following the extension you inditate in the command:
+```{r}
+filtered_header <- header_create(filtered_las)
+write.las("./outputs/out_las.las", filtered_header, filtered_las)
+write.las("./outputs/out_las.laz", filtered_header, filtered_las)
+```
+
+It is recommendable to also create an index for LAS file, you can do that with the `writelax()` function.
+```{r}
+writelax("./outputs/out_las.laz")
+```
