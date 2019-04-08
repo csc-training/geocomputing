@@ -4,6 +4,8 @@ For convinience, the full open Lidar datasets from National Land Survey of Finla
 
 The following are some simple R scripts demonstrating how the LiDAR dataset can be queried in your R scripts.
 
-1. [Get LiDAR files intersecting a given polygon](get_lidar_files_function.R)
-1. [Basic LiDAR Taito files management with `rlas` package](basic_rlas.R)
-1. [Example batch job to run basic_rlas.R script](batchjob_rlas_basics.sh)
+- [Get LiDAR files intersecting a given polygon](get_lidar_files_function.R)
+- [Basic LiDAR Taito files management with `rlas` package](basic_rlas.R)
+- [Example batch job to run basic_rlas.R script](batchjob_rlas_basics.sh)
+
+See more LiDAR tools and examples in the [R LiDAR Course exercises](R_lidar_course_exercises)
