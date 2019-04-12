@@ -37,7 +37,7 @@ In the same way you can read any LAS or LAZ files. You can find the lidar data p
 
 Once you know the path to a .las or .laz file in Taito, you can open it with (note that the files are often over 100 Mb in size and will take a bit to load):
 ```{r  }
-LASfile <- "/wrk/gonzalez/R_lidar_2019/r_lidar_data/mml/laserkeilaus/2008_17/2017/T522/1/T5224G2_1.laz"
+LASfile <- "$HOME/R_lidar_2019/r_lidar_data/mml/laserkeilaus/2008_17/2017/T522/1/T5224G2_1.laz"
 las <- readLAS(LASfile)
 print(las)
 ```
@@ -174,7 +174,7 @@ Other functions work in a similar way. Look at the documentation and test the on
 
 Let's use the `grid_terrain` function to run an R script that we can run as an array job in Taito. An array job is meant to run the same script on multiple files given for ex. as a list of files in a text file.
 
-There is a ready dataset with 6 las files in `/wrk/gonzalez/R_lidar_2019/r_lidar_data/las_subset`, including a text file with the list of las files that will be used `lasfiles.txt`.
+There is a ready dataset with 6 las files in `$HOME/R_lidar_2019/r_lidar_data/las_subset`, including a text file with the list of las files that will be used `lasfiles.txt`.
 
 Open the file `simple_lidR.R` and study it. It includes some parts that relate to the batch job you will need to send a request to Taito.
 
