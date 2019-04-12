@@ -7,7 +7,7 @@ The materials in this repository are based mostly on the above mentioned documen
 The original 2019 CSC's course page: [Lidar data analysis in Taito, with PDAL and R](https://www.csc.fi/web/training/-/lidar-data-analysis-in-taito-with-pdal-and-r)
 
 
-You need to download the dataset from: https://gis-open.object.pouta.csc.fi/r_lidar_data.zip. Unzip the data to your $Home directory. The data will be accessible by your scripts at  `$HOME/R_lidar_2019/r_lidar_data/`
+You need to download the dataset from: https://gis-open.object.pouta.csc.fi/r_lidar_data.zip. Unzip the data to your $HOME directory. The data will be accessible by your scripts at  `$HOME/R_lidar_2019/r_lidar_data/`
 
 The most up-to-date version of the exercises is in this repository. Download the contents of this repository as a zip file to your $WRKDIR in Taito and unzip it with `unzip R_lidar_2019.zip`. Then connect to Taito using NoMachine and start RStudio. Open the `R_lidar.Rproj` project from the `r_exercise` folder you just unziped.
 
