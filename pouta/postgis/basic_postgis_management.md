@@ -1,48 +1,63 @@
-# PostGIS management
+# PostgreSQL/PostGIS basic management
 
-## Basic commands in PostGRES PostGIS
+## Basic commands in PostgreSQL
+When working on the server where you have PostgreSQL running you would commonly use the *psql* tool a tool to manage your PostgreSQL database and run SQL commands. *psql* commands start with *\*, whereas SQL commands start with an SQL keyword. Note that in pgAdmin you can only run SQL commands.
+
+You can manage your dabase and can run both psql and SQL commands by login in to *psql*:
 
 Login to psql without password:
-- `sudo -u postgres psql db_name`
+
+`sudo -u postgres psql db_name`
 
 Login to psql with and existing user and password:
-- `psql -U geo -d db_name`
 
-Create a user:
-- `CREATE ROLE user_name LOGIN PASSWORD 'your_password' SUPERUSER;``
+`psql -U geo -d db_name`
 
-Set/reset password to an existing user:
-- `ALTER USER user_name WITH PASSWORD 'new_password';`
-- ... or manually: `\password user_name`
+Once logged in to psql (or from pgAdmid) you can create a user with:
 
-## Other PostGIS general management commands
-Review the tables size in disk
+`CREATE ROLE user_name LOGIN PASSWORD 'your_password' SUPERUSER;``
+
+To set/reset the password for an existing user:
+
+`ALTER USER user_name WITH PASSWORD 'new_password';`
+
+... or uisng the 'psql' command:
+
+`\password user_name`
+
+See other basic *psql* commands for psql for ex. from this [cheat sheet](https://gist.github.com/Kartones/dd3ff5ec5ea238d4c546).
+
+## Other useful commands
+Review the tables names and size in disk for current user:
 ````
 SELECT
    relname AS "Table",
    pg_size_pretty(pg_total_relation_size(relid)) As "Size",
    pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid)) as "External Size"
-   FROM pg_catalog.pg_statio_user_tables ORDER BY pg_total_relation_size(relid) DESC;
+FROM pg_catalog.pg_statio_user_tables
+ORDER BY pg_total_relation_size(relid) DESC;
 ````
 
-Select random rows to show:
-See the fields of pg_catalog.pg_statio_user_tables
+To understand the previous query you can see the fields of pg_catalog.pg_statio_user_tables using 'psql':
 ````
-   \d pg_catalog.pg_statio_user_tables
+\d pg_catalog.pg_statio_user_tables
 ````
 
+Use 'SQL quey' tool from pgAdmin to view random rows from a table (you can also try in psql):
 ````
-	SELECT *
-	FROM flickr_data_hma
-	order by random()
-	limit 100;
+SELECT *
+FROM data_table_name
+order by random()
+limit 100;
 ````
-Review important db settings
+
+Review important db settings using 'SQL':
 ````
 SELECT name, context, unit, setting, boot_val, reset_val
 FROM pg_settings
 WHERE name IN ( 'listen_addresses', 'max_connections', 'shared_buffers', 'effective_cache_size', 'work_mem', 'maintenance_work_mem');
 ````
+
 ## Spatial data management
 **Checking and fixing geometry_columns**
 
@@ -89,7 +104,7 @@ ALTER TABLE your_table
 
 **Adding other GIS data to POSTGIS**
 
-You can import more data to your PostGIS from the command line with:
+You can import more data to your PostGIS from your server's terminal with:
 ```
 shp2pgsql -s 3879 new_data.shp public.new_data | psql -U student_user -h localhost -d postgres
 ```

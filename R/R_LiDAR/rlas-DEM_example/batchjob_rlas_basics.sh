@@ -3,7 +3,7 @@
 #SBATCH -o out_R.txt
 #SBATCH -e err_R.txt
 #SBATCH -t 00:15:00
-#SBATCH --mem-per-cpu=1500
+#SBATCH --mem-per-cpu=4000
 #SBATCH -p serial
 #SBATCH -n 1
 

@@ -1,7 +1,7 @@
 # Custom docker images in Rahti
 
 ## Building your custom docker images
-Build your docker images by modifying the example dockerfiles to your needs and by following notebook-images repository's instructions. For example:
+Build your docker images by modifying the example dockerfiles to your needs and by following [notebook-images repository's instructions](https://github.com/CSCfi/notebook-images/blob/master/builds/build.sh). For example:
   1. for Notebook backend, use builds/build.sh
   2. for Rahti backend, use build_and_upload_to_openshift.bash
 
