@@ -8,4 +8,4 @@ The following are some simple R scripts demonstrating how the LiDAR dataset can 
 - [Basic LiDAR Taito files management with `rlas` package](basic_rlas.R)
 - [Example batch job to run basic_rlas.R script](batchjob_rlas_basics.sh)
 
-See more LiDAR tools and examples in the [R LiDAR Course exercises](R_lidar_course_exercises)
+See more LiDAR tools and examples in the [R LiDAR Course exercises](../R_lidar_course_exercises)
