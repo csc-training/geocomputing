@@ -6,7 +6,7 @@ To setup a remote desktop virtual machine (VM) in cPouta. The VM desktop can the
 
 **Refernces**
 
-This document is based on Henrikki Tenkkane's work for **Automating GIS processes** and **Introduction to Quantitative Geology** -courses.
+This document is based on Henrikki Tenkkanen's work for **Automating GIS processes** and **Introduction to Quantitative Geology** -courses.
 
 Some other reference documentation used:
 - https://www.linode.com/docs/applications/remote-desktop/install-vnc-on-ubuntu-16-04 https://help.ubuntu.com/community/VNC/Servers
@@ -44,7 +44,7 @@ sudo sh cPouta-ubuntu-remote-desktop.sh
 ```
 
 ## Test the remote connection
-You can connect to the VM using whether a VNC or a RDP client tool.
+You can connect to the VM using VNC or Windows Remote Desktop Connection client (RDP) client tool.
 
 *VNC connection*
 The VNC server connection should be available at port 5901. Use your VNC client (for ex. TightVNC) to connect to:
@@ -54,7 +54,7 @@ The VNC server connection should be available at port 5901. Use your VNC client 
 You will be asked for the password you set previously.
 
 *Windows Remote Desktop Connection client (RDP)*
-In Windows you can use the default RDP client (Windows Remote Desktop Connection) to connect to port 3389 at (replace the `xxx` values with the IP address your cPouta VM has been assigned):
+In Windows you can use the default RDP client to connect to:
 
 `<vm-public-ip>:3389`
 
