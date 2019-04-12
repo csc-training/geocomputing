@@ -13,7 +13,3 @@ In case you need to download the dataset you can get it from: https://gis-open.o
 The most up-to-date version of the exercises is in this repository. Download the contents of this repository as a zip file to your $WRKDIR in Taito and unzip it with `unzip R_lidar_2019.zip`. Then connect to Taito using NoMachine and start RStudio. Open the `R_lidar.Rproj` project from the `r_exercise` folder you just unziped.
 
 Note that all the necessary software packages are already installed in the Taito supercluster and thus their installation is not covered in these exercises. To see a description of the installed R spatial packages ready installed see: https://research.csc.fi/-/rspatial-env
-
-Other GIS software are also installed and maintained by CSC in the Taito supercluster, more details about available GIS software: https://research.csc.fi/gis-software
-
-This course materials were developed to be used in CSC's Taito supercluster which will be available until the end of 2019.
