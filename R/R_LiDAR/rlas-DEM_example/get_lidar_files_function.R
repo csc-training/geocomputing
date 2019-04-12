@@ -1,7 +1,8 @@
 # Function to get LiDAR files from Taito's GIS datasets for a
 # given area of interest
 
-# Make sure that you have Taito's R spatial environment loaded by using module load rspatial-env or by using interactively GIS RStudio in NoMachine.
+# Make sure that you have Taito's R spatial environment loaded by using module load rspatial-env or by using interactively 
+# GIS RStudio in NoMachine.
 
 lidar_files_taito <- function(f_poly){
 
