@@ -1,55 +1,9 @@
-# Custom docker images in Rahti
+# Custom CSC's Notebook's docker images for Notebooks and Rahti
+By custom docker images, we mean customized versions of the existing docker images in CSC's [notebook-images repository](https://github.com/CSCfi/notebook-images/blob/master). You can addapt these instructions to customize your favorite docker images. Note that the custom images in Notebooks-images dockerfiles contain different commands that make the image compatible with Rahti or Notebooks backend. If you want to use other dockerfiles as a starting point, see that these commands are included in your dockerfile in the correct position. Easiest is to start from the mentioned CSC's base images (see /builds directory).
 
-## Building your custom docker images
-Build your docker images by modifying the example dockerfiles to your needs and by following [notebook-images repository's instructions](https://github.com/CSCfi/notebook-images/blob/master/builds/build.sh). For example:
-  1. for Notebook backend, use builds/build.sh
-  2. for Rahti backend, use build_and_upload_to_openshift.bash
+## Building your custom docker images using the readilly available scripts
+Build your docker images by modifying the example dockerfiles to your needs and by following [notebook-images repository's instructions](https://github.com/CSCfi/notebook-images/blob/master/builds/build.sh).
 
-
-## Connecting to CSC's Rahti from command line
-You will need to first get an account from Rahti platform, apply from rahti-support@csc.fi.
-
-Log in to your Rahti project at https://rahti.csc.fi and copy you access token (from upper right menu).
-
-To log in to CSC's Rahti from your command line:
-```
-# Set Rahti's docker registry name and your project as variables
-export OSO_REGISTRY=docker-registry.rahti.csc.fi
-export OSO_PROJECT=your_project_name
-
-# Login to Rahti from the terminal...
-oc login https://rahti.csc.fi:8443 --token=AshbpkLpAhagk76fVDX0dh4LFAasd99+asdV4
-
-# Check that you are logged in to Rahti
-oc whoami -t
-
-# Login to Rahti from docker
-docker login -u ignored -p $(oc whoami -t) $OSO_REGISTRY
-
-# Activate your project
-oc project $OSO_PROJECT
-```
-
-To upload your image to Rahti:
-```
-./build_and_upload_to_openshift.bash pb-jupyter-minimal
-```
-
-### Uploading a modified container as image
-To upload an image created from a container:
-```
-# Save your container as an image in docker
-docker commit container_name csc/container_name_img
-
-# Set the Rahti registry name as a variable
-export oso_registry_base="$OSO_REGISTRY/$OSO_PROJECT"
-echo $oso_registry_base
-
-# Set the tag of your image to the Rahti registry name
-docker tag csc/container_name_img $oso_registry_base/container_name_img
-
-# Push the image to rahti
-docker push $oso_registry_base/container_name_img
-```
-
-Your image should be visible in your Rahti web interface. You ready to create applications from it.
+After modifying, you will need to build the images or/and upload to Rahti:
+  1. for Notebook backend, use builds/build.sh -> will build locally your docker image
+  2. for Rahti backend, use build_and_upload_to_openshift.bash -> will upload your dockerfile to Rahti and build the image there

@@ -1,5 +1,5 @@
 # Docker factory VM creation
-A good alternative to having docker installed locally is to create a cloud VM to create and manage your docker images creation and containers testing. Docker can easily fill up your machine and creating images can take long times. In a cloud environment both managing disk space and leaving processes to the background can be easily done. Besides, in many cases you will want to test access to the containers via internet rather than locally, which is easily done in a remote VM.
+A good alternative to having docker installed locally is to create a cloud VM to create and manage your docker images creation and containers testing. Docker can easily fill up your machine and creating images can take long times. In a cloud environment both managing disk space and leaving processes to the background can be easily done. Besides, in many cases you will want to test access to the containers via internet rather than locally, which is easily done in a remote VM. Nonetheless, the same instructions could be installed in your Linux local machine (or see the [official installation documentation for Windows](https://docs.docker.com/docker-for-windows/install/))
 
 The following steps will be needed to create a VM than can be used to manage docker images and containers for CSC's Notebooks and Rahti platforms:
 
