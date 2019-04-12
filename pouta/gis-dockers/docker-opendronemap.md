@@ -2,7 +2,7 @@
 
 Docker applications can be used in different ways often depending on how the application has been constructed.
 
-In the case of OpenDronemap, it is implemented so that you can run the application directly from the docker container's starting command for which you simply need to havwe docker installed, an internet connection,  the input dataset and know the OpenDroneMap parameters you want to use.
+In the case of OpenDronemap, it is implemented so that you can run the application directly from the docker container's starting command for which you simply need to have docker installed, an internet connection,  the input dataset and know the OpenDroneMap parameters you want to use.
 
 So the following command will download the OpenDroneMap application (only the first time you call for this docker image), calculate a mosaic and save it to the output folder. When the computation is finished it will delete the container application freeing resources in the virtual machine:
 ```bash
