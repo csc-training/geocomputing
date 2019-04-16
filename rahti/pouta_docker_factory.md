@@ -6,6 +6,8 @@ Many things are general to managing docker containers and the rahti platform, so
 ## Install OpenShift command line tool
 Besides the graphical interface to interact with the Rahti's platform, you will neet to offten work with the OpenShift CLI tools from the command line.
 
+The instructions below are for Ubuntu systems, tested on Ubuntu 16.04.
+
 Install some basic tools:
 ```shell
 sudo apt -y install python-pip && pip install --upgrade pip && pip install python-swiftclient

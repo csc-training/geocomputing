@@ -10,6 +10,14 @@ Build your docker images by modifying the template dockerfiles in [notebook-imag
 
 After you have gotten your dockerfile ready, you will need to build the images or/and upload to Rahti:
   1. for Notebook backend, use builds/build.sh -> will build locally your docker image
-  2. for Rahti backend, use build_and_upload_to_openshift.bash -> will upload your dockerfile to Rahti and build the image there
+```shell
+cd builds
+sh build.sh <dockerfile-name-without-extension>
+```
+  2. for Rahti backend, use build_and_upload_to_openshift.bash -> will upload your dockerfile to Rahti and build the image directly in the platform
+```shell
+cd builds
+sh build.sh <dockerfile-name-without-extension>
+```
 
  See more instructions at [notebook-images repository](https://github.com/CSCfi/notebook-images/tree/master/builds).
