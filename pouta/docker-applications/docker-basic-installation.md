@@ -18,6 +18,7 @@ Containerization is increasingly popular because containers are:
 
 ### installation steps
 Installing Docker to an Ubuntu machine (the virtual machine we are using has that operating system) is relatively simple. You would find the best instructions on how to install it from:
+- in case you need a cPouta VM, you can see instructions [here](./pouta/pouta-general-instructions)
 - the Docker documentation ([https://docs.docker.com/install/linux/docker-ce/ubuntu/](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
 - and for example Digital Ocean guides ([https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04)).
 
