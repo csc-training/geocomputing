@@ -1,9 +1,0 @@
----
-# Run playbook with variables from file:
-# $ ansible-playbook -e @variables.yml playbook.yml
-
-# Create a general VM with automatic ip, which is added to temporary server group: tmp_group
-- import_playbook: 1-create_vm_as_bootable_volume.yml
-
-# Install docker (includes docker-compose)
-- import_playbook: 2-add_docker.yml
