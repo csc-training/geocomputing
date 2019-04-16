@@ -1,0 +1,8 @@
+# Add docker via ansible-galaxy
+# ansible-galaxy install geerlingguy.docker
+- name: Install docker
+  hosts: "{{server_ips}}"
+  user: cloud-user
+  become: yes
+  roles:
+    - role: geerlingguy.docker
