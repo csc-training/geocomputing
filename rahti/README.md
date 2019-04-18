@@ -10,5 +10,5 @@ Guidelines and examples about using CSC's Rahti platform to provide customized i
 Guidelines:
 - [Docker environment](./pouta_docker_factory.md) - setting up a dedicated Docker environment locally or in a Pouta VM
 - [Create a custom container](./create_custom_rahti_images.md) - Basic scripts to create and upload Rahti's and Notebooks images
-- [Manually create rahti images](./manually_create_rahti_images.md) - Manually build, test and upload images
+- [test your container](./testing_your_container.md) - Manually build, test and upload images
 - Implement container's in CSC's Notebooks - TODO
