@@ -45,6 +45,21 @@ sh build.sh <dockerfile-name-without-extension>
 
 You can run and test this image in your local Docker environment. See some instructions in [test your docker container](testing_your_container.md).
 
+## Manually upload your image to Rahti
+To upload your image to Rahti, it is necessary that you tag your image with Rahti:
+```shell
+docker tag csc/<your-image-name>:latest docker-registry.rahti.csc.fi/<your-rahti-project-name>/<your-image-name>:latest
+```
+Then push your image to Rahti's registry with:
+```shell
+docker push docker-registry.rahti.csc.fi/<your-rahti-project-name>/<your-image-name>:latest
+```
+
+After your custom image has been uploaded, you can start your application from the Rahti paltform and check that your custom container is running as expected as a Rahti application.
+
+## Using the Notebooks' scripts to upload your image to Rahti
+You may need to modify the scripts for them to work with your specific docker images' naming:
+
 * If you need to upload it to the Rahti platform, use the `build_and_upload_to_openshift.bash` script. It will build your image locally and upload it to Rahti when ready:
 ```shell
 cd builds
@@ -56,7 +71,5 @@ cd builds
 cd builds
 ./build_openshift.bash <dockerfile-name-without-extension>
 ```
-After your custom image has been uploaded, you can start your application from the Rahti paltform and check that your custom container is running as expected as a Rahti application.
-
 
 See more instructions at [notebook-images repository](https://github.com/CSCfi/notebook-images/tree/master/builds).
