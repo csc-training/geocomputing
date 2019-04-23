@@ -12,4 +12,4 @@ Guidelines:
 - [Create a custom container](./create_custom_rahti_images.md) - Basic scripts to create and upload Rahti's and Notebooks images
 - [test your container](./testing_your_container.md) - Manually build, test and upload images
 - [start an application in Rahti](start_rahti_app.md)
-- Implement container's in CSC's Notebooks - TODO How to get your Rahti application added to CSC's Notebooks
+- [Running containers in CSC's Notebooks platform](./run_rahti_app_in_notebooks.md) - if you are granted **group owner rights to [CSC's Notebooks platform](http://notebooks.csc.fi)** you would be able to distribute your rahti applications from its web graphical interface.
