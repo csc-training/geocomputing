@@ -15,9 +15,12 @@ docker-registry.rahti.csc.fi/<your-project-name>/<your-image-name>:latest
 ```
 Use this link in the `Image` field when creating the blueprint.
 
-## Using large Docker images
-If your images are several Gb in size, you should consider wa
+**important**: you need to edit your Rahti project's access rights, so that Notebooks platform can use your image (new projects are set as private in Rahti's registry):
+- go to https://registry-console.rahti.csc.fi/registry#/projects
+- select your project
+- change your project's access rights to  `Anonymous: Allow all unauthenticated users to pull images`
 
+## Using large Docker images
 The first time that an image is used in the Rahti platform, the image needs to be copied to the specific node where the application will be run. This is true for every node of Rahti's platform (the images are not copied by default to all possible nodes). For this reason, the first time you deploy an application from a large image, it will take several minutes to start.
 
 When you start a container from Notebooks, a deployment is done in Rahti and the above mentioned delay will be noticeable. If you want to overcome this issue, you will need to "warm up" Rahti by forcing the upload of your image to Rahti's nodes.
