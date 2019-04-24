@@ -1,4 +1,4 @@
-# Installation instruction of PostGIS in cPouta
+# Installing and using PostGIS in Pouta
 Different instructions to install PostGIS to cPouta virtual machines (VM) for different purposes. Although the instructions are developed around the cPouta cloud services, most should be valid for other platforms (AWS, VirtualBox...).
 
 PostGIS for training purposes:
