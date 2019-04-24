@@ -1,5 +1,4 @@
-# Basic GeoServer installation
-
+15.0# Basic GeoServer installation
 The following instructions describe the steps to install a GeoServer server (with in-built Jetty container) in an Ubuntu 16.04 virtual machine. These instructions are meant to run in CSC's cPouta environment but can be used for other platforms.
 
 These installation instructions are based on the official [**Linux binary** installation instructions](
@@ -20,7 +19,6 @@ Security recommendations:
 For more details on using cPouta, visit the [Pouta User Guide](https://research.csc.fi/pouta-user-guide) site.
 
 ## Basic platform-independent GeoServer installation
-
 These installation steps differ from the official basic installation in the following:
 - Ubuntu machine set to Europe/Helsinki timezone for the logs to be in local time.
 - GeoServer is added as a service to Ubuntu for automatic startup on reboot.
@@ -33,7 +31,6 @@ To run these instructions you neet:
 - a public IP assigned to your VM
 
 ### Install Java and set server's time
-
 Connect to your Vm and run the following commands:
 
 ````bash
@@ -44,6 +41,9 @@ sudo apt-get -y upgrade
 sudo timedatectl set-timezone Europe/Helsinki
 
 ### Install Java
+sudo apt-get -y install default-jre
+
+
 sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
 # Manually accept licenses for oracle java
@@ -63,27 +63,31 @@ Add the following lines at the end of the file `/etc/crontab`:
 
 Downloand and unpack the GeoServer [**Platform Independent Binary** installation package](http://geoserver.org/release/maintain/) to the VM.
 
-Connect to your Vm and run the following commands. Remember to edit the zip file
- name to match the one you actually downloaded:
+To download GeoServer version 2.15.0:
+```shell
+wget https://downloads.sourceforge.net/project/geoserver/GeoServer/2.15.0/geoserver-2.15.0-bin.zip
+```
+
+Connect to your VM and run the following commands. Remember to edit the zip file name to match the one you actually downloaded:
 
 ```bash
 # Downloand and unpack GeoServer following http://docs.geoserver.org/stable/en/user/installation/linux.html
 sudo apt install unzip
-sudo unzip geoserver-2.12.1-bin.zip -d /usr/share/
+sudo unzip geoserver-2.15.0-bin.zip -d /usr/share/
 
 # change owner of geoserver folder to "cloud-user"
-sudo chown -R cloud-user /usr/share/geoserver-2.12.1/
+sudo chown -R cloud-user /usr/share/geoserver-2.15.0/
 ```
 
-**Note**:  if you have problems getting GeoServer to start, check that you actually changed the rights to the */usr/share/geoserver-2.12.1/* folder.
+**Note**:  if you have problems getting GeoServer to start, check that you actually changed the rights to the */usr/share/geoserver-2.15.0/* folder.
 
 ###  Create a symlinks to GeoServer installation
 This will make easier to update GeoServer versions since you will need to only update these symlinks.
 ```
 # Create symlink for installation folder
-ln -s /usr/share/geoserver-2.12.1/ /usr/share/geoserver
+sudo ln -s /usr/share/geoserver-2.15.0/ /usr/share/geoserver
 # Create symlink for data folder
-ln -s /usr/share/geoserver-2.12.1/data_dir /usr/share/geoserver_data
+ln -s /usr/share/geoserver-2.15.0/data_dir /usr/share/geoserver_data
 ```
 
 Once you have set these symlinks you can use them through out your configuration settings.
@@ -100,14 +104,12 @@ To add GeoServer as a service to your server, you need two pieces of information
 ```
 # Check path to Java
 sudo update-alternatives --config java
-# Ouputs something like:
- > /usr/lib/jvm/java-8-oracle/jre/bin/java
+# Ouput should include something like:
+ > /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 ```
-The bit that you need is the path indicated in the output but withouth the
-"/jre/bin/java" part, for ex **/usr/lib/jvm/java-8-oracle**
+The bit that you need is the path indicated in the output but withouth the "/jre/bin/java" part, for ex **/usr/lib/jvm/java-8-openjdk-amd64**
 
-Connect to your VM and use vim (or any other text editor) to create a service
-file and edit its content with your GeoServer installation folder and your
+Connect to your VM and use vim (or any other text editor) to create a service file and edit its content with your GeoServer installation folder and your
 Java path:
 
 ````bash
@@ -123,7 +125,7 @@ After=network.target
 
 [Service]
 User=cloud-user
-Environment=JAVA_HOME=/usr/lib/jvm/java-8-oracle
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 Environment=GEOSERVER_HOME=/usr/share/geoserver
 ExecStart=/usr/share/geoserver/bin/startup.sh
 ExecStop=/usr/share/geoserver/bin/shutdown.sh
