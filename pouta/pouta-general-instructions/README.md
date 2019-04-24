@@ -7,7 +7,7 @@ A collection of instructions to perform some basic tasks in cPouta.
 
 VM management:
 - [Create a VM snapshot in cPouta](./basic-pouta-management/create-vm-snapshot.md)
-- [Using Pouta with the OpenSatack Command Line interface](./Pouta_CLI)
+- [Using Pouta with the OpenSatack Command Line interface](./pouta_cli)
 
 Storage management:
 - [Setting up your Taito's home directory](./basic-pouta-management/set-taito-home-directory.md)
