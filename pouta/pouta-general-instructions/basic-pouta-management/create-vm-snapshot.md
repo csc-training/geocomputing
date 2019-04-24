@@ -1,5 +1,4 @@
 ## Create a VM snapshot in cPouta
-
 In order to back up a VM state (or to s save billing units when a VM is not used) you can create a snapshot from it, so that you can continue use it to start new virtual machines later.
 
 #### Create a snapshot

@@ -1,5 +1,5 @@
 # Using cPouta from command line
-Make sure you have the correct tools installed and your API credentials are loaded (see [Getting started with cPouta Command Line Interface](Pouta-CLI-Getting_started.md))
+Make sure you have the correct tools installed and your API credentials are loaded (see [Getting started with cPouta Command Line Interface](cli_getting_started.md))
 
 ### Basic tools
 For every topic to be managed in cPouta, there is a specific `openstack` tool.

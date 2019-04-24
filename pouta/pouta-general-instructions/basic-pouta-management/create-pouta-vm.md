@@ -9,7 +9,6 @@ The end result is something similar to what your own desktop computer is, just i
 - [Set up basic access components](#set-up-basic-access-components)
 - [Create a virtual machine](#create-a-virtual-machine)
 - [Connect to your virtual machine](#connect-to-your-virtual-machine)
-- [Optional exercise: create a snapshot of your VM](#optional-exercise--create-a-snapshot-of-your-vm)
 
 ## Log in to the Pouta web interface
 
