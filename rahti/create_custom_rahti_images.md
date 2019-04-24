@@ -72,4 +72,6 @@ cd builds
 ./build_openshift.bash <dockerfile-name-without-extension>
 ```
 
+See an [example gis dockerfile](./example_gis_python_container.dockerfile) for reference.
+
 See more instructions at [notebook-images repository](https://github.com/CSCfi/notebook-images/tree/master/builds).
