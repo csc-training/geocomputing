@@ -35,6 +35,7 @@ Pure Python routing library, which is simple and easy to use.
 * A lot of algorithms available. [Shortest path ones](https://networkx.github.io/documentation/stable/reference/algorithms/shortest_paths.html), inc Dijkstra and A*.
 * Possible to run in parallel in Taito, some extra memory is needed. [Example code](https://github.com/csc-training/geocomputing/tree/master/python/routing).
 * [A lof of examples for networkx and osmnx](https://github.com/gboeing/osmnx-examples/tree/master/notebooks).
+* HY, Helle Joose used networkx in his gradu, source code in [GitHub](https://github.com/hellej/quiet-paths-msc/tree/master/src/batch_jobs/full_hel_nw)
 
 ### Python igraph
 http://igraph.org/python/  
