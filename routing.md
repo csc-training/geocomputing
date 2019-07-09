@@ -18,12 +18,13 @@ Taito: available in geoconda module
 
 `osmnx` is a libarary for retrieving OpenStreetMap data for routing. It can:
 * Create a graph suitable for `networkx` library directly.
+* There is a possiblity to choose type of network, driving, walking, etc. (no highways only though)
 * Save the `networkx` graph in GraphML format, from where the data can be used also with `igraph` and `graph-tool` libraries.
 * Read from OSM API. Data retrieval time from OSM: ~30mins for Helsinki area, 19h 30min for whole Finland.
 * Read local .osm file. .osm files are available from Geofabrik.
 
 Notes:
-* If graph is needed repeatedly, it is good to save it as GraphML.
+* If graph is needed repeatedly, it is good to save it as GraphML. Reading from GraphML file is much faster than reading local .osm file. GraphML size is also smaller both on disk and in memory.
 * `networkx` graph requires a lot of memory if the study area is big, so make sure that you have enough memory. For example the OSM Finland graph requires ca 40 Gb.
 
 ### Python networkx
@@ -50,7 +51,7 @@ Python routing library which is based on C/C++ `igraph` library.
 
 ### Python graph-tool
 https://graph-tool.skewed.de/  
-Taito: Should work, but installation with conda is not straighforward (just doing `conda install graph-tool` results in somehow broken gdal being installed). Installation not possible with pip, compiling from source should be possible, but not tested.
+Taito: Should work, but installation with conda was not successful in 2018 (just doing `conda install graph-tool` results in somehow broken gdal being installed). Installation not possible with pip, compiling from source should be possible, but not tested.
 
 Python routing library with OpenMP support.
 * [Supports Dijkstra and A*](https://graph-tool.skewed.de/static/doc/search_module.html).
