@@ -8,7 +8,7 @@ Files:
 * batch_igarph.sh and batch_nx.sh - batch job files for submitting the shortest paths scripts to batch job system in Taito.
 
 Notes:
-* Creating GraphML file from OpenStreetMap data with osmnx requires a lot of memory as osmnx uses networkx graphs. Downloading from overpass API is suitable for only smaller areas. Downloading whole Finland graph took 19 hours in our tests. 
+* Creating GraphML file from OpenStreetMap data with osmnx requires a lot of memory as osmnx uses networkx graphs. Downloading from overpass API is suitable for only smaller areas.
 * Memory consumption increases with parallelisation, but not by much
 * Parallelisation is done within one node, in Taito up to 24 cores and 256GB memory (or 1.5TB in hugemem queue) can be used.
 
