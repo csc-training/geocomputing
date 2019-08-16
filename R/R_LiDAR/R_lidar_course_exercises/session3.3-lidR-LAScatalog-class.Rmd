@@ -31,7 +31,7 @@ ctg <- catalog("path/to/las/files/big_file.las")
 
 To read a folder of las files and plot their footprint to a map viewer:
 ```{r}
-ctg_subset <- catalog("$HOME/R_lidar_2019/r_lidar_data/las_subset")
+ctg_subset <- catalog("/wrk/your-username-here/R_lidar_2019/r_lidar_data/las_subset")
 print(ctg_subset)
 plot(ctg_subset, map = TRUE)
 ```
@@ -143,6 +143,6 @@ Once you are sure all the parameters are correctly set, open a terminal to Taito
 ```bash
 sbatch simple_catalog_lidR_batchjob.sh
 ```
-The input data in those scripts is the same as before `$HOME/R_lidar_2019/r_lidar_data/las_subset`.
+The input data in those scripts is the same as before `/wrk/your-username-here/R_lidar_2019/r_lidar_data/las_subset`.
 
 The results are written to the `./batch_output` folder, check also the batch jobs' output and error text files.

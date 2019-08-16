@@ -24,6 +24,6 @@ module load rspatial-env
 cd $WRKDIR/R_lidar_2019
 
 #Read the file to be processed from a list of input files. This is done by getting the line corresponding to the $SLURM_ARRAY_TASK_ID from the input file list.
-input=$(sed -n "$SLURM_ARRAY_TASK_ID"p $HOME/R_lidar_2019/r_lidar_data/las_subset/lasfiles.txt)
+input=$(sed -n "$SLURM_ARRAY_TASK_ID"p /wrk/your-username-here/R_lidar_2019/r_lidar_data/las_subset/lasfiles.txt)
 
 srun Rscript --no-save simple_lidR.R $input
