@@ -7,7 +7,7 @@ The materials in this repository are based mostly on the above mentioned documen
 The original 2019 CSC's course page: [Lidar data analysis in Taito, with PDAL and R](https://www.csc.fi/web/training/-/lidar-data-analysis-in-taito-with-pdal-and-r)
 
 
-You need to download the dataset from: https://gis-open.object.pouta.csc.fi/r_lidar_data.zip. Unzip the data to your $HOME directory. The data will be accessible by your scripts at  `$HOME/R_lidar_2019/r_lidar_data/`
+You need to download the dataset from: https://gis-open.object.pouta.csc.fi/r_lidar_data.zip. Unzip the data to your $WRKDIR directory. The data will be accessible by your scripts at  `/wrk/your-username-here/R_lidar_2019/r_lidar_data/`
 
 The original NLS lidar files might not workd with `lidR`, because of scale errors. For fixing this, use e.g. las2las
 
