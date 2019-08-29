@@ -2,6 +2,8 @@
 
 export JUPYTER_ENABLE_LAB=true
 
+export OPENBLAS_NUM_THREADS=2
+
 cd /home/$NB_USER/work
 # git reflog requires a name and email if user is not in passwd
 # even if you're only cloning
@@ -13,7 +15,6 @@ git clone https://github.com/geo-python/notebooks.git
 
 # Go to containing folder
 cd /home/$NB_USER/work/notebooks/notebooks
-
 
 # backwards compatibility to BOOTSTRAP_* -vars in existing blueprints
 if [ ! -z "$BOOTSTRAP_URL" ]; then

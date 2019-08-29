@@ -1,6 +1,6 @@
 FROM jupyter/datascience-notebook
 
-MAINTAINER Johannes Nyman <johannesnyman@csc.fi>
+MAINTAINER Johannes Nyman <johannes.nyman@csc.fi>
 
 USER $NB_USER
 
