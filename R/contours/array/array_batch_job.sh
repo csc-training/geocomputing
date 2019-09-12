@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J array_job
-#SBATCH -o array_job_out_%j.txt
-#SBATCH -e array_job_err_%j.txt
+#SBATCH -o array_job_out_%A_%a.txt
+#SBATCH -e array_job_err_%A_%a.txt
 #SBATCH -t 00:02:00
 #SBATCH --mem-per-cpu=4000
 #SBATCH --array=1-3
