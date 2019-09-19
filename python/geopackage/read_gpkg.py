@@ -46,6 +46,39 @@ def read_specific_rows():
         rows = (1,5,100)
         df=gpd.GeoDataFrame.from_features([c[i] for i in rows])
         print(df)
+        
+"""
+Reading rows where an attribute has a certain value (or based on any SQL query).
+Fiona and thus geopandas don't support reading only specifc rows based on an attribute. However if you really need to be able to do this fast you can do it by first creating an index for the column you want to use and then using sqlite to get numbers of rows you need. After this you can create dataframe as above. This method can of course be used to run any SQL query to first select IDs of the rows that we want before reading the data into memory. Weather these queries need to actually inspect each row or if faster execution is possible depends on the query and the indexes available. The main benefit here is that you can take advantage of additional indexes and you don't need to first read all the rows into geopandas dataframe.
+Geopandas also specifies read_postgis() method that you can use to accomplish the same end result, but using this with geopackage creates a need for some geometry type conversions that can be problematic.
+"""
+
+import sqlite3
+def create_index():
+    table="suo"
+    col="mtk_id"
+    conn = sqlite3.connect(fn)
+    c = conn.cursor()
+    sql="CREATE INDEX index_{}_{} ON {} ({})".format(table, col, table, col)
+    c.execute(sql)
+    conn.commit()
+    conn.close()
+
+def read_by_attribute():
+    conn = sqlite3.connect(fn)
+    c = conn.cursor()
+    layer="suo"
+    attribute_col="mtk_id"
+    attribute_val=219920480
+    id_col = 'fid'
+    sql="select {} from {} where {}={}".format(id_col, layer, attribute_col, attribute_val)
+    c.execute(sql)
+    rows = c.fetchall()
+    rows = [r[0] for r in rows]
+    print(rows)
+    with fiona.open(fn,layer="suo") as c:
+        df=gpd.GeoDataFrame.from_features([c[i] for i in rows])
+        print(df)
 
 if __name__=='__main__':
     read_whole_layer()
