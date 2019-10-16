@@ -13,6 +13,6 @@ for dockerfile in $filter.dockerfile; do
     echo "Building $repository/$name"
     echo
 
-    docker build -t "$repository/$name" -f "$dockerfile" $DOCKER_BUILD_OPTIONS .
+    docker build --no-cache --pull -t "$repository/$name" -f "$dockerfile" $DOCKER_BUILD_OPTIONS .
 
 done

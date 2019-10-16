@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook
+FROM jupyter/scipy-notebook
 
 MAINTAINER Johannes Nyman <johannes.nyman@csc.fi>
 
@@ -21,6 +21,8 @@ RUN echo "Upgrading conda" \
 	jupyterlab-git
 
 RUN jupyter lab build
+
+RUN conda clean -afy
 
 USER root
 
