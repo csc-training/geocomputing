@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=deepRegression
+#SBATCH --job-name=deepClassification
 #SBATCH --account=project_2002044
 #SBATCH --gres=gpu:v100:1
 #SBATCH --mem=16G
