@@ -1,0 +1,115 @@
+model_name: PredictSpruceBatchesModel
+model_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceBatchesModel.pth'
+
+train: false
+infer: true
+
+pretrained: true
+nn_framework: torch
+batch_size: 12
+
+data_specs:
+  width: 512
+  height: 512
+  image_type: normalized
+  rescale: false
+  rescale_minima: auto
+  rescale_maxima: auto
+  channels: 3
+  label_type: mask
+  is_categorical: false
+  mask_channels: 1
+  val_holdout_frac: 0.1
+  data_workers: 1
+
+training_data_csv: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tile_filepaths_for_training.csv'
+validation_data_csv:
+inference_data_csv: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tile_filepaths_for_prediction.csv'
+
+training_augmentation:
+  augmentations:
+    HorizontalFlip:
+      p: 0.5
+    RandomRotate90:
+      p: 0.5
+    RandomCrop:
+      height: 512
+      width: 512
+      p: 1.0
+    Normalize:
+      mean:
+        - 0.17396631162454
+        - 0.033582232626573
+        - 0.040423970924474
+      std:
+        - 0.093608074909319
+        - 0.027442049122189
+        - 0.022834374265174
+      max_pixel_value: 1.0
+      p: 1.0
+  p: 1.0
+  shuffle: true
+validation_augmentation:
+  augmentations:
+    CenterCrop:
+      height: 512
+      width: 512
+      p: 1.0
+    Normalize:
+      mean:
+        - 0.17396631162454
+        - 0.033582232626573
+        - 0.040423970924474
+      std:
+        - 0.093608074909319
+        - 0.027442049122189
+        - 0.022834374265174
+      max_pixel_value: 1.0
+      p: 1.0
+  p: 1.0
+inference_augmentation:
+  augmentations:
+    SwapChannels:
+      axis: 0
+      first_idx: 0
+      second_idx: 2
+      p: 1.0
+    Normalize:
+      mean:
+        - 0.17396631162454
+        - 0.033582232626573
+        - 0.040423970924474
+      std:
+        - 0.093608074909319
+        - 0.027442049122189
+        - 0.022834374265174
+      max_pixel_value: 1.0
+      p: 1.0
+  p: 1.0
+training:
+  epochs: 3
+  steps_per_epoch:
+  optimizer: Adam
+  lr: 1e-3
+  opt_args:
+  loss:
+    bcewithlogits:
+    jaccard:
+  loss_weights:
+    bcewithlogits: 10
+    jaccard: 2.5
+  metrics:
+    training:
+    validation:
+  checkpoint_frequency: 10
+  callbacks:
+    model_checkpoint:
+      filepath: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceBatchesModel.pth'
+      monitor: val_loss
+  model_dest_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceBatchesModel_final.pth'
+  verbose: true
+
+inference:
+  window_step_size_x:
+  window_step_size_y:
+  output_dir: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tiles/results_PredictSpruceBatchesModel/'
