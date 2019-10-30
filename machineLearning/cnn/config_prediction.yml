@@ -1,5 +1,5 @@
 model_name: PredictSpruceForestsModel
-model_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceForestsModel.pth'
+model_path: 'PredictSpruceForestsModel.pth'
 
 train: false
 infer: true
@@ -22,9 +22,9 @@ data_specs:
   val_holdout_frac: 0.1
   data_workers: 1
 
-training_data_csv: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tile_filepaths_for_training.csv'
+training_data_csv: 'tile_filepaths_for_training.csv'
 validation_data_csv:
-inference_data_csv: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tile_filepaths_for_prediction.csv'
+inference_data_csv: 'tile_filepaths_for_prediction.csv'
 
 training_augmentation:
   augmentations:
@@ -104,12 +104,12 @@ training:
   checkpoint_frequency: 10
   callbacks:
     model_checkpoint:
-      filepath: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceForestsModel.pth'
+      filepath: 'PredictSpruceForestsModel.pth'
       monitor: val_loss
-  model_dest_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceForestsModel_final.pth'
+  model_dest_path: 'PredictSpruceForestsModel_final.pth'
   verbose: true
 
 inference:
   window_step_size_x:
   window_step_size_y:
-  output_dir: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tiles/results_PredictSpruceForestsModel/'
+  output_dir: '/scratch/project_2002044/students/YOUR_STUDENT_NUMBER/data/tiles/results_PredictSpruceForestsModel/'

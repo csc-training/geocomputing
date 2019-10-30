@@ -22,9 +22,9 @@ data_specs:
   val_holdout_frac: 0.2
   data_workers: 1
 
-training_data_csv: '/scratch/project_2000599/johannes_version/tile_filepaths_for_training.csv'
+training_data_csv: 'tile_filepaths_for_training.csv'
 validation_data_csv:
-inference_data_csv: '/scratch/project_2000599/johannes_version/tile_filepaths_for_prediction.csv'
+inference_data_csv: 'tile_filepaths_for_prediction.csv'
 
 training_augmentation:
   augmentations:
@@ -111,12 +111,12 @@ training:
   metrics:
     training:
     validation:
-  checkpoint_frequency: 10
+  checkpoint_frequency: 1000
   callbacks:
     model_checkpoint:
-      filepath: '/scratch/project_2000599/johannes_version/models/PredictSpruceBatchesModel.pth'
+      filepath: ''
       monitor: val_loss
-  model_dest_path: '/scratch/project_2000599/johannes_version/models/PredictSpruceBatchesModel_final.pth'
+  model_dest_path: 'PredictSpruceForestsModel_final.pth'
   verbose: true
 
 inference:

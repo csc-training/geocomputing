@@ -1,14 +1,13 @@
 # In this exercise k-means clustering is used for finding 5 clusters from a 4 band Sentinel satellite image.
 
-# Before starting lets make a virtual raster for stacking the bands of individual JP2 files with GDAL from commandline.
-# module load geoconda
-# cd [dir_with_jp2_files]
-# gdalbuildvrt -separate stack.vrt *.jp2
-
 import spectral
 import rasterio
 import numpy as np
+import os
 
+### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
+wrkFolder = ""
+inputImage =  os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_scaled.tif')
 
 def run_model(image_data):
     # scaling back reflectance values to be between 0 and 1
@@ -49,7 +48,7 @@ def predict_image(classes, meta):
 
 def main():
     # Read the input dataset with Rasterio
-    input_dataset = rasterio.open('/users/ekkylli/testdata/stack.vrt')
+    input_dataset = rasterio.open(inputImage)
     input_data = input_dataset.read()
     classes, centers = run_model(input_data)
     predict_image(classes, input_dataset.meta)

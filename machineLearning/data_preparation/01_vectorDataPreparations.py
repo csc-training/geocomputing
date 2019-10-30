@@ -15,7 +15,7 @@ import os
 from shapely.geometry import Point, MultiPolygon, Polygon
 from sklearn.preprocessing import StandardScaler
 
-### Fill here the path where your data is. e.g "/scratch/project_2000599/students/26/data"
+### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
 base_folder = ""
 
 ### Path to the input files. Zipcode level Paavo dataset with population statistics and the finnish regions (maakunta) shapefile

@@ -19,8 +19,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
 from tensorflow.keras.optimizers import RMSprop
 
-### Path to your base folder for this excercise
-base_folder = "/Users/jnyman/Documents/local/rndm/gis_ml"
+### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
+base_folder = ""
 
 ### Relative path to the zip code geopackage file that was prepared by vectorDataPreparations.py
 input_geopackage_path = os.path.join(base_folder,"zip_code_data_after_preparation.gpkg")
