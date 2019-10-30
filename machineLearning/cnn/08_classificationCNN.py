@@ -14,13 +14,13 @@ base_folder = ""
 tile_output_folder = os.path.join(base_folder,"tiles")
 
 ### The whole image (prediction), training image (clipped from the whole img) and the label image
-training_image_path = os.path.join(base_folder,"T34VFM_20180829T100019_training_clip.tif")
+training_image_path = os.path.join(base_folder,"T34VFM_20180829T100019_scaled.tif")
 training_label_path = os.path.join(base_folder,"forest_spruce.tif")
 prediction_image_path = os.path.join(base_folder,"T34VFM_20180829T100019.tif")
 
-training_image_tile_subfolder = os.path.join(tile_output_folder,"image_tiles")
+training_image_tile_subfolder = os.path.join(tile_output_folder,"image_training_tiles")
 training_label_tile_subfolder = os.path.join(tile_output_folder, "label_tiles")
-prediction_image_tile_subfolder = os.path.join(tile_output_folder,"prediction_tiles")
+prediction_image_tile_subfolder = os.path.join(tile_output_folder,"image_prediction_tiles")
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)

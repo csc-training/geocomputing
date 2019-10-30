@@ -82,34 +82,36 @@ gdal_translate forest_spruce.tif forest_spruce_scaled.tif -ot Byte -scale 0 2 0 
 # For prediction no overlap is used, because prediction tiles bigger than model seemed to cause unwanted side-effects.
 
 # Tile the satellite image for training with GDAL.
-mkdir imageTiles650
-gdal_retile -ps 650 650 -overlap 300 -targetDir imageTiles650 T34VFM_20180829T100019_clipped_scaled.tif
+mkdir tiles
+cd tiles
+mkdir image_training_tiles_650
+gdal_retile -ps 650 650 -overlap 300 -targetDir image_training_tiles_650 T34VFM_20180829T100019_clipped_scaled.tif
 # -ps - tile size in pixels
 # -overlap - overlap of tiles in pixels
 # -targetDir - the directory of output tiles
 
 # Tile the labels with the same setting as the image.
-mkdir labels650
-gdal_retile -ps 650 650 -overlap 300 -targetDir labels650 forest_spruce_scaled.tif
+mkdir label_tiles_650
+gdal_retile -ps 650 650 -overlap 300 -targetDir label_tiles_650 forest_spruce_scaled.tif
 
 # Tile the satellite image for predicting with the bigger bbox.
-mkdir imageTiles512
-gdal_retile -ps 512 512 -targetDir imageTiles512 T34VFM_20180829T100019_scaled.tif
+mkdir image_prediction_tiles_512
+gdal_retile -ps 512 512 -targetDir image_prediction_tiles_512 T34VFM_20180829T100019_scaled.tif
 
 # CNN model requires at least 512x512 size of images, so the remove the files from right and bottom edge, that are too small.
 # Please note that the last column and row of tiles may be smaller than requested.
 # In our case for training data, only the last row of tiles is too low, so we delete these files.
-cd imageTiles650
+cd image_training_tiles_650
 del *_8_*.tif
+del *_8.tif
 
-cd ..\labels650
+cd ..\label_tiles_650
 del *_8_*.tif
+del *_8.tif
 
 # For predicting data we have to remove last column and row of tiles.
-cd ..\imageTiles512
+cd ..\image_prediction_tiles_512
 del *_12_*.tif
 del *_15.tif
 
-# Solaris wants to get the tile paths as a CSV file.
-# See: https://solaris.readthedocs.io/en/latest/tutorials/notebooks/creating_im_reference_csvs.html
-python make_csv.py
+
