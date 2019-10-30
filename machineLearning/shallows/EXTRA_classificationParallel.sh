@@ -9,4 +9,4 @@
 
 module load geoconda
 
-srun python 03_classification.py
+srun python EXTRA_classificationParallel.py

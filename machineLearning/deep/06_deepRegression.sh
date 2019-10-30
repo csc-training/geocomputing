@@ -11,4 +11,4 @@
 
 module load tensorflow/2.0.0
 
-srun python 07_deepRegression.py
+srun python 06_deepRegression.py
