@@ -101,7 +101,7 @@ training:
   metrics:
     training:
     validation:
-  checkpoint_frequency: 10
+  checkpoint_frequency: 100
   callbacks:
     model_checkpoint:
       filepath: 'PredictSpruceForestsModel.pth'

@@ -111,7 +111,7 @@ training:
   metrics:
     training:
     validation:
-  checkpoint_frequency: 1000
+  checkpoint_frequency: 100
   callbacks:
     model_checkpoint:
       filepath: ''

@@ -11,6 +11,9 @@ from PredictSpruceForestsModel import PredictSpruceForestsModel
 ### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
 base_folder = ""
 
+### This is the folder of this file. We use it to fetch the .yml files
+script_folder = os.path.dirname(os.path.realpath(__file__))
+
 tile_output_folder = os.path.join(base_folder,"tiles")
 
 ### The whole image (prediction), training image (clipped from the whole img) and the label image
@@ -51,11 +54,11 @@ def createTileListFiles():
     ### Create a pandas dataframe that has the training image filepath and label image filepath as columns and write it to csv
     training_filename_df = pd.DataFrame({'image': list_of_training_tiles, 'label': list_of_label_tiles})
     print(training_filename_df.head())
-    training_filename_df.to_csv(os.path.join(base_folder, 'tile_filepaths_for_training.csv'), encoding='utf-8')
+    training_filename_df.to_csv(os.path.join(script_folder, 'tile_filepaths_for_training.csv'), encoding='utf-8')
 
     ### Create a pandas dataframe that has the prediction image filepaths as a column and write it to csv
     prediction_filename_df = pd.DataFrame({'image': list_of_prediction_tiles})
-    prediction_filename_df.to_csv(os.path.join(base_folder, 'tile_filepaths_for_prediction.csv'), encoding='utf-8')
+    prediction_filename_df.to_csv(os.path.join(script_folder, 'tile_filepaths_for_prediction.csv'), encoding='utf-8')
 
 def trainModel(config,custom_model_dict):
     ### This function trains the convolutional neural network model
@@ -128,7 +131,7 @@ def main():
     createTileListFiles()
 
     ### Let's load the configuration .yml file for the prediction phase
-    training_config = sol.utils.config.parse(os.path.join(base_folder,'scripts','config_training.yml'))
+    training_config = sol.utils.config.parse(os.path.join(script_folder,'config_training.yml'))
     custom_model_dict = {'model_name': 'PredictSpruceForestsModel', 'weight_path': None, 'weight_url': None,
                          'arch': PredictSpruceForestsModel}
 
@@ -137,7 +140,7 @@ def main():
 
 
     ### Let's load the configuration .yml file for the prediction phase
-    prediction_config = sol.utils.config.parse(os.path.join(base_folder, 'scripts', 'config_prediction.yml'))
+    prediction_config = sol.utils.config.parse(os.path.join(script_folder, 'config_prediction.yml'))
     custom_model_dict = {'model_name': 'PredictSpruceForestsModel',
                          'weight_path': prediction_config['training']['model_dest_path'],
                          'weight_url': None,
