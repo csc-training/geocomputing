@@ -15,8 +15,8 @@ import os
 from shapely.geometry import Point, MultiPolygon, Polygon
 from sklearn.preprocessing import StandardScaler
 
-### Path to your base folder for this excercise
-base_folder = "/Users/jnyman/Documents/local/rndm/gis_ml"
+### Fill here the path where your data is. e.g "/scratch/project_2000599/students/26/data"
+base_folder = ""
 
 ### Path to the input files. Zipcode level Paavo dataset with population statistics and the finnish regions (maakunta) shapefile
 zip_code_shapefile = os.path.join(base_folder,"pno_tilasto_2019.shp")
@@ -25,6 +25,10 @@ finnish_regions_shapefile = os.path.join(base_folder,"SuomenMaakuntajako_2018_10
 ### The output geopackage file of the data preparation script
 output_file_path =  os.path.join(base_folder,"zip_code_data_after_preparation.gpkg")
 
+### Settings for pandas so it agrees to print all columns
+pd.set_option('display.max_columns', None)
+pd.set_option('display.expand_frame_repr', False)
+pd.set_option('max_colwidth', -1)
 
 def readZipcodeData(zipcode_filepath):
 
@@ -106,8 +110,8 @@ def addAndEncodeCategoricalColumns(scaled_gdf,finnish_regions_shapefile):
     ### The resulting dataframe has Polygon and Multipolygon geometries. This upcasts the polygons to multipolygon format so all of them are the same
     scaled_and_encoded_gdf["geometry"] = [MultiPolygon([feature]) if type(feature) == Polygon else feature for feature in scaled_and_encoded_gdf["geometry"]]
 
-    print("First 5 rows of the final geodataframe:\n")
-    print(scaled_and_encoded_gdf.tail(10))
+    print("First 10rows of the final geodataframe:\n")
+    print(scaled_and_encoded_gdf.head(10))
     return scaled_and_encoded_gdf
 
 def main():
