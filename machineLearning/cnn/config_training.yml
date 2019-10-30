@@ -28,11 +28,6 @@ inference_data_csv: 'tile_filepaths_for_prediction.csv'
 
 training_augmentation:
   augmentations:
-    SwapChannels:
-      axis: 2
-      first_idx: 0
-      second_idx: 2
-      p: 1.0
     HorizontalFlip:
       p: 0.5
     RandomRotate90:
@@ -56,11 +51,6 @@ training_augmentation:
   shuffle: true
 validation_augmentation:
   augmentations:
-    SwapChannels:
-      axis: 2
-      first_idx: 0
-      second_idx: 2
-      p: 1.0
     CenterCrop:
       height: 512
       width: 512
@@ -79,11 +69,6 @@ validation_augmentation:
   p: 1.0
 inference_augmentation:
   augmentations:
-    SwapChannels:
-      axis: 0
-      first_idx: 0
-      second_idx: 2
-      p: 1.0
     Normalize:
       mean:
         - 0.17395850358514
@@ -97,10 +82,10 @@ inference_augmentation:
       p: 1.0
   p: 1.0
 training:
-  epochs: 500
+  epochs: 30
   steps_per_epoch:
   optimizer: Adam
-  lr: 0.01
+  lr: 1e-3
   opt_args:
   loss:
     bcewithlogits:

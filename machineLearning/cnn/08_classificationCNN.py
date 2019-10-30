@@ -79,7 +79,6 @@ def predictForTiles(config,custom_model_dict):
     inf_df = sol.nets.infer.get_infer_df(config)
     print('dataset loaded. Running inference on the image.')
     start_time = time.time()
-    print(inf_df.head())
     xdxd_inferer(inf_df)
     end_time = time.time()
     print('running inference on one image took {} seconds'.format(end_time - start_time))
@@ -103,9 +102,7 @@ def mergeOutputTiles(predicted_tiles_folder):
             list_of_rasters.append(raster)
 
     print("Succesfully added CRS information to the predicted tiles")
-    print(list_of_rasters)
     mosaic, out_trans = rasterio.merge.merge(list_of_rasters)
-    print(mosaic.shape)
     out_metafile = raster.meta.copy()
 
     out_metafile.update({"driver": "GTiff",
@@ -115,7 +112,6 @@ def mergeOutputTiles(predicted_tiles_folder):
             "crs": "+proj=utm +zone=34 +datum=WGS84 +units=m +no_defs "
         }
     )
-    print(out_metafile)
 
     output_path = os.path.join(base_folder,"predicted_spruce.tif")
     with rasterio.open(output_path, "w", **out_metafile) as dest:

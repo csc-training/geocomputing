@@ -69,11 +69,6 @@ validation_augmentation:
   p: 1.0
 inference_augmentation:
   augmentations:
-    SwapChannels:
-      axis: 0
-      first_idx: 0
-      second_idx: 2
-      p: 1.0
     Normalize:
       mean:
         - 0.17396631162454
