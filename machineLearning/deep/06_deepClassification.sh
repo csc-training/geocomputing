@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=deepRegression
+#SBATCH --job-name=deepClassification
 #SBATCH --account=project_2002044
 #SBATCH --gres=gpu:v100:1
 #SBATCH --mem=16G
@@ -11,4 +11,4 @@
 
 module load tensorflow/2.0.0
 
-srun python deepRegression.py
+srun python 07_deepRegression.py

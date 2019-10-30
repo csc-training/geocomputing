@@ -174,7 +174,7 @@ def main():
     createTileListFiles()
 
     ### Let's load the configuration .yml file for the prediction phase
-    training_config = sol.utils.config.parse(os.path.join(home_folder,'scripts','CNNPredictSpruceAreas_config_training.yml'))
+    training_config = sol.utils.config.parse(os.path.join(home_folder,'scripts','config_training.yml'))
     custom_model_dict = {'model_name': 'PredictSpruceAreasModel', 'weight_path': None, 'weight_url': None,
                          'arch': PredictSpruceBatchesModel}
 
@@ -183,7 +183,7 @@ def main():
 
 
     ### Let's load the configuration .yml file for the prediction phase
-    prediction_config = sol.utils.config.parse(os.path.join(home_folder, 'scripts', 'CNNPredictSpruceAreas_config_prediction.yml'))
+    prediction_config = sol.utils.config.parse(os.path.join(home_folder, 'scripts', 'config_prediction.yml'))
     custom_model_dict = {'model_name': 'PredictSpruceAreassModel',
                          'weight_path': prediction_config['training']['model_dest_path'],
                          'weight_url': None,

@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torchvision.models import vgg16
 
-class PredictSpruceAreasModel(nn.Module):
+class PredictSpruceForestsModel(nn.Module):
 
     def __init__(self, num_filters=32, pretrained=False):
         super().__init__()

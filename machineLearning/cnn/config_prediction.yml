@@ -1,5 +1,5 @@
-model_name: PredictSpruceBatchesModel
-model_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceBatchesModel.pth'
+model_name: PredictSpruceForestsModel
+model_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceForestsModel.pth'
 
 train: false
 infer: true
@@ -104,12 +104,12 @@ training:
   checkpoint_frequency: 10
   callbacks:
     model_checkpoint:
-      filepath: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceBatchesModel.pth'
+      filepath: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceForestsModel.pth'
       monitor: val_loss
-  model_dest_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceBatchesModel_final.pth'
+  model_dest_path: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/models/PredictSpruceForestsModel_final.pth'
   verbose: true
 
 inference:
   window_step_size_x:
   window_step_size_y:
-  output_dir: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tiles/results_PredictSpruceBatchesModel/'
+  output_dir: '/Users/jnyman/Documents/local/git/gis/analysis/ML/cnn/johannes_version/tiles/results_PredictSpruceForestsModel/'

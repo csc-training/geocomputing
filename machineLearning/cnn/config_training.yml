@@ -1,4 +1,4 @@
-model_name: PredictSpruceBatchesModel
+model_name: PredictSpruceForestsModel
 model_path: ''
 
 train: true
