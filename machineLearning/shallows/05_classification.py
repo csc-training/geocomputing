@@ -23,19 +23,20 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
 #Set working directory and input/output file names.
-#wrkFolder = r"\Temp\ML\exercises\classification"
-wrkFolder = r"/scratch/project_2000599/classification"
+
+base_folder = "/tmp/gis-ml/data/forest"
 
 # Input
-inputImage =  os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_scaled.tif')
-labelsImage =  os.path.join(wrkFolder,'forest_species_reclassified.tif')
+inputImage =  os.path.join(base_folder,'T34VFM_20180829T100019_clipped_scaled.tif')
+labelsImage =  os.path.join(base_folder,'forest_species_reclassified.tif')
+inputImageSVM =  os.path.join(base_folder,'T34VFM_20180829T100019_scaled_10_07.tif')
 
 # Outputs of 4 different models
-RandomForestImage = os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_random_forest.tif')
-SVCImage = os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_SVC.tif')
-SGDImage = os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_SGD.tif')
-GradientBoostImage = os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_gradient_boost.tif')
-SVCImageGridSearch = os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_SVC_grid_search.tif')
+RandomForestImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_random_forest.tif')
+SVCImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SVC.tif')
+SGDImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SGD.tif')
+GradientBoostImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_gradient_boost.tif')
+SVCImageGridSearch = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SVC_grid_search.tif')
 
 # Available cores
 n_jobs = 4
@@ -86,9 +87,9 @@ def estimateModel(clf, x_test, y_test):
     print('Classification report: \n', classification_report(y_test, test_predictions))
 
 # Predict on whole image and save it as .tif file
-def predictImage(trained_model, predictedImagePath):
+def predictImage(trained_model, predictedImagePath, predictImage):
 	# Read the satellite image
-    with rasterio.open(inputImage, 'r') as image_dataset:
+    with rasterio.open(predictImage, 'r') as image_dataset:
         start_time = time.time()    
         
 		#Reshape data to 1D as we did before model training
@@ -144,27 +145,29 @@ def main():
     clf_random_forest = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=0, n_jobs=n_jobs)
     random_forest_model = trainModel(x_train, y_train, clf_random_forest)	
     estimateModel(random_forest_model, x_test, y_test)
-    predictImage(random_forest_model, RandomForestImage)
+    predictImage(random_forest_model, RandomForestImage, inputImage)
     print('Feature importances: \n', random_forest_model.feature_importances_)
 
     print("Stochastic Gradient Decent")
     clf_SGD = SGDClassifier(alpha=0.000001, loss="log", learning_rate='adaptive', eta0=.1, n_jobs=n_jobs, max_iter=100)
     SGD_model = trainModel(input_image, input_labels, clf_SGD)
     estimateModel(SGD_model, x_test, y_test)
-    predictImage(SGD_model, SGDImage)
+    predictImage(SGD_model, SGDImage, inputImage)
     
     print("Gradient Boost")
     clf_gradient_boost = GradientBoostingClassifier(n_estimators=50, learning_rate=.05)
     gradient_boost_model = trainModel(input_image, input_labels, clf_gradient_boost)
     estimateModel(gradient_boost_model, x_test, y_test)
-    predictImage(gradient_boost_model, GradientBoostImage)
+    predictImage(gradient_boost_model, GradientBoostImage, inputImage)
     print('Feature importances: \n', gradient_boost_model.feature_importances_)    
 
     print("Support Vector Classifier")   
     clf_svc = SVC(kernel='rbf', gamma='auto')
     svc_model = trainModel(x_train2, y_train2, clf_svc)
     estimateModel(svc_model, x_test2, y_test2)
-    predictImage(svc_model, SVCImage)
+    # Use a small tile (512x512), to get it done in ca 3 min.
+    # Predicting the whole image takes too long for the course.
+    predictImage(svc_model, SVCImage, inputImageSVM)
                       
 					 
 					  
@@ -180,8 +183,8 @@ def main():
     print('Best estimator: ',format(grid.best_estimator_))
     # Test the classifier using test data
     estimateModel(grid, x_test2, y_test2)
-	# Save the results as .tif
-    predictImage(grid, SVCImageGridSearch)
+	# Predict again on the small tile.
+    predictImage(grid, SVCImageGridSearch, inputImageSVM)
  
 
 if __name__ == '__main__':

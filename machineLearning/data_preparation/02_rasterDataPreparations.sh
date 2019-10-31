@@ -8,23 +8,23 @@
 
 # GET DATA
 cd classification
-wget https://aineistot.metsaan.fi/avoinmetsatieto/Metsavarakuviot/Maakunta/MV_Uusimaa.zip
-wget https://aineistot.metsaan.fi/avoinmetsatieto/Metsavarakuviot/Kunta/MV_Salo.zip
+#wget https://aineistot.metsaan.fi/avoinmetsatieto/Metsavarakuviot/Maakunta/MV_Uusimaa.zip
+#wget https://aineistot.metsaan.fi/avoinmetsatieto/Metsavarakuviot/Kunta/MV_Salo.zip
 # Download the Sentinel image from https://scihub.copernicus.eu/, S2B_MSIL2A_20180829T100019_N0208_R122_T34VFM_20180829T184909
 # Scihub requires registration, but the files are available for free.
 
 # Unzip the forest stands datasets and delete zips
-unzip MV_Uusimaa.zip
-unzip MV_Salo.zip
-del MV_Uusimaa.zip
-del MV_Salo.zip
+#unzip MV_Uusimaa.zip
+#unzip MV_Salo.zip
+#del MV_Uusimaa.zip
+#del MV_Salo.zip
 
 ### SENTINEL SATELLITE IMAGE PREPARATIONS
 # Select bands 08, 04 and 03 for exercise and clip them to two areas, one for training, and one for predicting.
 # The training area is smaller, because in Lohja community the forest data seems to be missing a lot of forest polygons, so we want to exclude that.
 
 # Go to the folder of original Sentinel data
-cd ..\S2B_MSIL2A_20180829T100019_N0208_R122_T34VFM_20180829T184909.SAFE\GRANULE\L2A_T34VFM_A007727_20180829T100017\IMG_DATA\R10m
+cd ../S2B_MSIL2A_20180829T100019_N0208_R122_T34VFM_20180829T184909.SAFE/GRANULE/L2A_T34VFM_A007727_20180829T100017/IMG_DATA/R10m
 
 # Select the bands used: 08 (NIR), 04 and 03 and make a virtual raster file of them
 gdalbuildvrt -separate T34VFM_20180829T100019.vrt T34VFM_20180829T100019_B08_10m.jp2 T34VFM_20180829T100019_B04_10m.jp2 T34VFM_20180829T100019_B03_10m.jp2
@@ -32,11 +32,11 @@ gdalbuildvrt -separate T34VFM_20180829T100019.vrt T34VFM_20180829T100019_B08_10m
 
 # Normalize the pixel values from 0 to 10 000 -> 0 to 1. This is specific to Sentinal 2A product, that it has to be devided with 10 0000.
 # Clip to exercise area.
-gdal_translate -projwin 614500 6668500 644500 6640500 T34VFM_20180829T100019.vrt ..\..\..\..\..\classification\T34VFM_20180829T100019_clipped_scaled.tif -ot Float32 -scale 0 10000 0 1
-gdal_translate -projwin 604500 6698500 677000 6640000 T34VFM_20180829T100019.vrt ..\..\..\..\..\classification\T34VFM_20180829T100019_scaled.tif -ot Float32 -scale 0 10000 0 1
+gdal_translate -projwin 614500 6668500 644500 6640500 T34VFM_20180829T100019.vrt ../../../../../T34VFM_20180829T100019_clipped_scaled.tif -ot Float32 -scale 0 10000 0 1
+gdal_translate -projwin 604500 6698500 677000 6640000 T34VFM_20180829T100019.vrt ../../../../../T34VFM_20180829T100019_scaled.tif -ot Float32 -scale 0 10000 0 1
 
-# Go back to exercise folder
-cd ..\..\..\..\..\classification
+# Go back to the "forest" data folder
+cd ../../../../
 
 ### FOREST STANDS PREPARATIONS
 # Clip to study area and merge the two GeoPackage files. Exclude polygons, that have no main tree species value.
@@ -65,7 +65,7 @@ gdal_rasterize -a maintreespecies -ot Byte -tr 10 10 -te 614500 6640500 644500 6
 # 2 - spruce
 # 3 - deciduous trees
 # 0 - no forest
-gdal_calc -A forest_species.tif --outfile=forest_species_reclassified.tif --calc="3*(A>=3)+1*(A==1)+2*(A==2)" --NoDataValue=0
+gdal_calc.py -A forest_species.tif --outfile=forest_species_reclassified.tif --calc="3*(A>=3)+1*(A==1)+2*(A==2)" --NoDataValue=0
 # -A input file
 # --calc, how to recalculate the values, we keep values aof 1 and 1 as they are. And assign 3 to everything that was 3 or bigger.
 
@@ -85,34 +85,34 @@ gdal_translate forest_spruce.tif forest_spruce_scaled.tif -ot Byte -scale 0 2 0 
 
 # Tile the satellite image for training with GDAL.
 mkdir tiles
-mkdir tiles\image_training_tiles_650
-gdal_retile -ps 650 650 -overlap 300 -targetDir tiles\image_training_tiles_650 T34VFM_20180829T100019_clipped_scaled.tif
+mkdir tiles/image_training_tiles_650
+gdal_retile.py -ps 650 650 -overlap 300 -targetDir tiles/image_training_tiles_650 T34VFM_20180829T100019_clipped_scaled.tif
 # -ps - tile size in pixels
 # -overlap - overlap of tiles in pixels
 # -targetDir - the directory of output tiles
 
 # Tile the labels with the same setting as the image.
-mkdir tiles\label_tiles_650
-gdal_retile -ps 650 650 -overlap 300 -targetDir tiles\label_tiles_650 forest_spruce_scaled.tif
+mkdir tiles/label_tiles_650
+gdal_retile.py -ps 650 650 -overlap 300 -targetDir tiles/label_tiles_650 forest_spruce_scaled.tif
 
 # Tile the satellite image for predicting with the bigger bbox.
-mkdir tiles\image_prediction_tiles_512
-gdal_retile -ps 512 512 -targetDir tiles\image_prediction_tiles_512 T34VFM_20180829T100019_scaled.tif
+mkdir tiles/image_prediction_tiles_512
+gdal_retile.py -ps 512 512 -targetDir tiles/image_prediction_tiles_512 T34VFM_20180829T100019_scaled.tif
 
 # CNN model requires at least 512x512 size of images, so the remove the files from right and bottom edge, that are too small.
 # Please note that the last column and row of tiles may be smaller than requested.
 # In our case for training data, only the last row of tiles is too low, so we delete these files.
-cd tiles\image_training_tiles_650
-del *_8_*.tif
-del *_8.tif
+cd tiles/image_training_tiles_650
+rm -f *_8_*.tif
+rm -f *_8.tif
 
-cd ..\label_tiles_650
-del *_8_*.tif
-del *_8.tif
+cd ../label_tiles_650
+rm -f *_8_*.tif
+rm -f *_8.tif
 
 # For predicting data we have to remove last column and row of tiles.
-cd ..\image_prediction_tiles_512
-del *_12_*.tif
-del *_15.tif
+cd ../image_prediction_tiles_512
+rm -f *_12_*.tif
+rm -f *_15.tif
 
 

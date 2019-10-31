@@ -16,7 +16,7 @@ import os
 from sklearn.model_selection import train_test_split
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Flatten
+from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import RMSprop
 
 ### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
@@ -26,47 +26,44 @@ base_folder = ""
 input_geopackage_path = os.path.join(base_folder,"zip_code_data_after_preparation.gpkg")
 output_geopackage_path = os.path.join(base_folder,"num_unemployed_per_zipcode_deep_learning.gpkg")
 
-def readZipcodeData(zipcode_filepath):
-    ### Read the data from a shapefile to a geopandas dataframe
-    gdf = gpd.read_file(zipcode_filepath,encoding='utf-8')
-
-    print("\nTotal of " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns \n")
-    return gdf
-
-def trainAndRunNetwork(original_gdf):
+def trainAndEstimateModel(original_gdf):
     ### Split the gdf to x (the predictor attributes) and y (the attribute to be predicted)
     y = original_gdf['pt_tyott'].to_numpy()  # number of unemployed persons
+    ### remove geometry and textual fields
     x = original_gdf.drop(['geometry', 'posti_alue', 'nimi', 'pt_tyott'], axis=1).to_numpy()
 
     ### Split the both datasets to train (80%) and test (20%) datasets
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.2, random_state=63)
 
     ### Initialize a Sequential keras model
-    network = Sequential()
+    model = Sequential()
     # add first layer with 64 perceptrons. 121 in input_shape goes for the number of attributes used in training
-    network.add(Dense(64, activation='relu', input_shape=(121,)))
+    model.add(Dense(64, activation='relu', input_shape=(121,)))
+    model.add(Dropout(0.2))
     # add second layer with 32 perceptrons
-    network.add(Dense(32, activation='relu'))
+    model.add(Dense(32, activation='relu'))
+    model.add(Dropout(0.2))    
     # add third layer with 16 perceptrons
-    network.add(Dense(16, activation='relu'))
+    model.add(Dense(16, activation='relu'))
+    model.add(Dropout(0.2))    
     # adding a linear layer with no activation functions since this is a regressor model
-    network.add(Dense(1))
+    model.add(Dense(1))
     # setting optimizer and loss functions. learning rate set to 0.01
-    network.compile(optimizer=RMSprop(lr=.01), loss='mse', metrics=['mae'])
+    model.compile(optimizer=RMSprop(lr=.01), loss='mse', metrics=['mae'])
     # train the network in 100 epoch
-    network.fit(x_train, y_train, epochs=100, batch_size=32)
+    model.fit(x_train, y_train, epochs=100, batch_size=32)
     # evaluating the performance of the model using test data
-    mse, mae = network.evaluate(x_test, y_test)
+    mse, mae = model.evaluate(x_test, y_test)
     rmse = sqrt(mse)
 
     print("\nMODEL ACCURACY METRICS WITH TEST DATASET: \n" +
           "\t Root mean squared error: "+ str(rmse) + "\n" +
           "\t Mean absolute error: " + str(mae) + "\n")
 
-    return network
+    return model
 
 def predictToAllZipCodes(network, original_gdf):
-    ### Let's drop the not-needed columns from original_gdf
+    ### Drop the not-used columns from original_gdf as done before model training.
     x = original_gdf.drop(['geometry', 'posti_alue', 'nimi', 'pt_tyott'], axis=1).to_numpy()
 
     ### Predict number of unemployed people with the already trained model
@@ -79,14 +76,14 @@ def predictToAllZipCodes(network, original_gdf):
     return resulting_gdf
 
 def main():
-    ### Read the data into a geopandas dataframe named gdf
-    original_gdf = readZipcodeData(input_geopackage_path)
+    ### Read the data into a geopandas dataframe named original_gdf
+    original_gdf = gpd.read_file(input_geopackage_path,encoding='utf-8')
 
     ### Build the model, train it and run it to the test part of the dataset
-    network = trainAndRunNetwork(original_gdf)
+    model = trainAndEstimateModel(original_gdf)
 
-    ### Let's predict the number of unemployed people to all zip codes
-    resulting_gdf = predictToAllZipCodes(network,original_gdf)
+    ### Predict the number of unemployed people to all zip codes
+    resulting_gdf = predictToAllZipCodes(model,original_gdf)
 
     ### Write resulting geodataframe to a geopacakage
     resulting_gdf.to_file(output_geopackage_path, driver="GPKG")
@@ -98,4 +95,4 @@ if __name__ == '__main__':
     start = time.time()
     main()
     end = time.time()
-    print("Script completed in " + str(round(((end - start) / 60),3)) + " minutes")
+    print("Script completed in " + str(round((end - start),0)) + " seconds")

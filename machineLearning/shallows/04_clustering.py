@@ -1,58 +1,70 @@
-# In this exercise k-means clustering is used for finding 5 clusters from a 4 band Sentinel satellite image.
+# In this exercise k-means clustering is used for finding 7 clusters from a 3 band Sentinel satellite image.
 
-import spectral
+from sklearn.cluster import KMeans
 import rasterio
 import numpy as np
 import os
+import time
 
 ### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-wrkFolder = ""
-inputImage =  os.path.join(wrkFolder,'T34VFM_20180829T100019_clipped_scaled.tif')
+base_folder = "/tmp/gis-ml/data/forest"
+inputImage =  os.path.join(base_folder,'T34VFM_20180829T100019_clipped_scaled.tif')
+outputImage = os.path.join(base_folder,'T34VFM_20180829T100019_KMeans.tif')
 
-def run_model(image_data):
-    # scaling back reflectance values to be between 0 and 1
-    scaled_input_data = image_data / 10000
+# Read data and shape it to suitable form for scikit-learn
+def prepareData(image_dataset):    
+    # Read the pixel values from .tif file as dataframe
+    image_data = image_dataset.read()
 
+    # We have to change the data format from bands x width x height to width*height x bands
+    # This means that each pixel from the original dataset has own row in the result dataframe.
     # Check shape of input data
-    scaled_input_data.shape
+    print ('Dataframe original shape, 3D: ', image_data.shape)    
+    # First move the bands to last axis.
+    image_data2 = np.transpose(image_data, (1, 2, 0))
+    # Check again the data shape, now the bands should be last.
+    print ('Dataframe shape after transpose, 3D: ', image_data2.shape) 
+    
+    # Then reshape to 1D.
+    pixels = image_data2.reshape(-1, 3)
+    print ('Dataframe shape after transpose and reshape, 2D: ', pixels.shape) 
+    
+    return pixels    
 
-    # Spectral.kmeans function expects data in width x height x bands format.
-    # So we have to change the axis order, moving the bands axis to last.
-    input_data2 = np.transpose(scaled_input_data, (1, 2, 0))
-    # Check that now data is in correct format.
-    input_data2.shape
+def runModel(image_data):
     # Calculate clusters, interested in 5 classes and 5 iterations.
-    classes, centers = spectral.kmeans(input_data2, nclusters=5, max_iterations=5)
-    return classes, centers
+    classes = KMeans(n_clusters=7, random_state=63, max_iter=10, n_jobs=4).fit_predict(image_data)
+    return classes
 
 
-def predict_image(classes, meta):
+def saveClassifiedImage(classes, meta):   
+    print ('Dataframe shape, output, 1D: ', classes.shape) 
+    
+    #Reshape back to 2D    
+    classes2D = np.reshape(classes, (meta['height'], meta['width']))
+    print ('Dataframe shape, output after reshape, 2D: ', classes2D.shape)     
+    
     # Save the result to a GeoTiff file
     # First prepare the metadata of new file,
-    # compared to original file, we will have only 1 band, different format and data type.
-    meta.update(count=1, driver='GTiff', dtype='int8')
-    # Check the data type of classes array
-    classes.dtype
-    # Rasterio does not support int64.
-    # See https://github.com/mapbox/rasterio/blob/master/rasterio/dtypes.py for available data types in Rasterio.
-    # So change the data type to int8, as we have only integers 0 to 4 in our result dataset, int8 is enough.
-    classes_int8 = classes.astype('int8')
-
-    # Check that data type is now correct
-    classes_int8.dtype
-
-    # Save the results to predict.tif
-    with rasterio.open('predicted.tif', 'w', **meta) as dst:
-        dst.write(classes_int8, 1)
+    # compared to original file, we will have only 1 band and int32 data type.
+    meta.update(count=1, dtype='int32')
+    # Save the data
+    with rasterio.open(outputImage, 'w', **meta) as dst:
+        dst.write(classes2D, 1)
 
 
 def main():
     # Read the input dataset with Rasterio
     input_dataset = rasterio.open(inputImage)
-    input_data = input_dataset.read()
-    classes, centers = run_model(input_data)
-    predict_image(classes, input_dataset.meta)
+    input_data = prepareData(input_dataset)
+    classes = runModel(input_data)
+    saveClassifiedImage(classes, input_dataset.meta)
 
 
 if __name__ == '__main__':
+    ### This part just runs the main method and times it
+    start = time.time()
     main()
+    end = time.time()
+    print("Script completed in " + str(round((end - start),0)) + " seconds")
+

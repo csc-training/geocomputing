@@ -3,7 +3,7 @@
 
 This script prepares the PAAVO zip code dataset retrieved from Paituli (originally from the Statistics of Finland)
 for machine learning purposes. It reads the original shapefile, scales all the numerical values, joins some auxiliary
-data and encodes one text field for machine learning purposes.
+data and encodes one text field for machine learning purposes. The result is saved as geopackage.
 
 author: johannes.nyman@csc.fi
 """
@@ -16,7 +16,7 @@ from shapely.geometry import Point, MultiPolygon, Polygon
 from sklearn.preprocessing import StandardScaler
 
 ### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-base_folder = ""
+base_folder = "/home/cscuser/gis-ml/data/paavo"
 
 ### Path to the input files. Zipcode level Paavo dataset with population statistics and the finnish regions (maakunta) shapefile
 zip_code_shapefile = os.path.join(base_folder,"pno_tilasto_2019.shp")
@@ -30,24 +30,30 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
 pd.set_option('max_colwidth', -1)
 
-def readZipcodeData(zipcode_filepath):
+def readZipcodesAndCleanData(zipcode_filepath):
 
     ### Read the data from a shapefile to a geopandas dataframe
     gdf = gpd.read_file(zipcode_filepath,encoding='utf-8')
+    print("Original dataframe size: " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns")
+    
+    ### Drop all rows that have missing values or where number of unemployed people is -1 (=not known)
+    gdf = gdf.dropna()    
+    gdf = gdf[gdf['pt_tyott']!= -1].reset_index(drop=True)    
 
-    ### Let's drop all rows that have missing values or where number of unemployed people is not -1
-    gdf = gdf.dropna()
-    gdf = gdf[gdf['pt_tyott']!= -1].reset_index(drop=True)
+    print("Dataframe size after dropping some rows: " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns")
 
-    print("\nTotal of " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns \n")
+    ### Remove some attributes that are strings (nanm, kunta = name of the municipality in Finnish and Swedish.
+    ### or which make the modeling too easy (pt_tyoll = the number of people working)
+    columns_to_be_removed_completely = ['namn','kunta','pt_tyoll']
+    gdf = gdf.drop(columns_to_be_removed_completely,axis=1)
+    print("Dataframe size after dropping some columns: " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns")
+    
     return gdf
 
-def scaleNumericalColumns(original_gdf):
-
-    ### Let's remove some attributes that are strings or which make the modeling too easy
-    columns_to_be_removed_completely = ['namn','kunta','pt_tyoll']
-    gdf = original_gdf.drop(columns_to_be_removed_completely,axis=1)
-    all_columns = list(gdf.columns)
+def scaleNumericalColumns(original_gdf): 
+    
+    ### Get list of all column headings
+    all_columns = list(original_gdf.columns)
 
     ### List the column names that we don't want to be scaled
     col_names_no_scaling = ['posti_alue','nimi','pt_tyott','geometry']
@@ -55,27 +61,27 @@ def scaleNumericalColumns(original_gdf):
     ### List of column names we want to scale. (all columns minus those we don't want)
     col_names_to_scaling = [column for column in all_columns if column not in col_names_no_scaling]
 
-    ### Let's subset the data for only those to-be scaled
-    gdf = gdf[col_names_to_scaling]
+    ### Subset the data for only those to-be scaled
+    gdf = original_gdf[col_names_to_scaling]
 
-    ### We apply a Scikit StandardScaler for all the columns left in gdf
+    ### Apply a Scikit StandardScaler for all the columns left in gdf
     scaler = StandardScaler()
     scaled_values_array = scaler.fit_transform(gdf)
 
-    ### The scaled columns come back as a numpy ndarray, here we switch thath to a geopandas dataframe again
+    ### The scaled columns come back as a numpy ndarray, switch back to a geopandas dataframe again
     gdf = pd.DataFrame(scaled_values_array)
     gdf.columns = col_names_to_scaling
 
-    ### Finally, let's join the non-scaled columns back with the the scaled columns by index
+    ### Join the non-scaled columns back with the the scaled columns by index
     final_gdf = original_gdf[col_names_no_scaling].join(gdf)
 
     return final_gdf
 
 def addAndEncodeCategoricalColumns(scaled_gdf,finnish_regions_shapefile):
-    print(len(scaled_gdf.index))
-    ###### First, let's spatially join the correct region (maakunta) name for every zip code
 
-    ### Read the region shapefile and choose only the name of the region and its geometry
+    ###### Join spatially region (maakunta) name to every zip code
+
+    ### Read the regions shapefile and choose only the name of the region and its geometry
     finnish_regions_gdf = gpd.read_file(finnish_regions_shapefile)
     finnish_regions_gdf = finnish_regions_gdf[['NAMEFIN','geometry']]
 
@@ -87,10 +93,11 @@ def addAndEncodeCategoricalColumns(scaled_gdf,finnish_regions_shapefile):
         point_geometry = Point(centroid_x,centroid_y)
         return point_geometry
 
-    ### Let's stash the polygon geometry to another column as we are going to overwrite the 'geometry' with centroid geometry
+    ### Stash the polygon geometry to another column as we are going to overwrite the 'geometry' with centroid geometry
     scaled_gdf['polygon_geometry'] = scaled_gdf['geometry']
 
-    ### We will be joining the region name to zip codes according to the zip code centroid. This calls the function above and returns centroid to every row
+    ### We will be joining the region name to zip codes according to the zip code centroid. 
+    ### This calls the function above and returns centroid to every row
     scaled_gdf["geometry"] = scaled_gdf['geometry'].apply(returnPointGeometryFromXY)
 
     ### Spatially join the region name to the zip codes using the centroid of zip codes and region polygons
@@ -100,26 +107,29 @@ def addAndEncodeCategoricalColumns(scaled_gdf,finnish_regions_shapefile):
     scaled_gdf['geometry'] = scaled_gdf['polygon_geometry']
     scaled_gdf.drop(['index_right','polygon_geometry'],axis=1, inplace=True)
 
-    ### Now let's encode the region name with the One-hot encoding (also dummy encoding) method so machine learning can understand it better
+    ### Encode the region name with the One-hot encoding (= pandas dummy encoding) 
+    ### method so machine learning can understand it better
     encoded_gdf = pd.get_dummies(scaled_gdf['NAMEFIN'])
 
     ### Join scaled gdf and encoded gdf together
     scaled_and_encoded_gdf = scaled_gdf.join(encoded_gdf).drop('NAMEFIN',axis=1)
 
-    print(len(scaled_and_encoded_gdf.index))
-    ### The resulting dataframe has Polygon and Multipolygon geometries. This upcasts the polygons to multipolygon format so all of them are the same
+    ### The resulting dataframe has Polygon and Multipolygon geometries. 
+    ### This upcasts the polygons to multipolygon format so all of them have the same
     scaled_and_encoded_gdf["geometry"] = [MultiPolygon([feature]) if type(feature) == Polygon else feature for feature in scaled_and_encoded_gdf["geometry"]]
+    print("Dataframe size after adding region name: " + str(len(scaled_and_encoded_gdf.index))+ " zip codes with " + str(len(scaled_and_encoded_gdf.columns)) + " columns")
 
-    print("First 10rows of the final geodataframe:\n")
-    print(scaled_and_encoded_gdf.head(10))
     return scaled_and_encoded_gdf
 
 def main():
     ### Read the data into a geopandas dataframe named original_gdf
-    original_gdf = readZipcodeData(zip_code_shapefile)
+    ### Drop unnecessary rows and colulmns
+    original_gdf = readZipcodesAndCleanData(zip_code_shapefile)
 
-    ### Do the data preparations. Scaling of numerical columns and encoding of categorical (region name) columns
+    ### Scale numerical columns. 
     scaled_gdf = scaleNumericalColumns(original_gdf)
+    
+    ### Add region (maakunta) names and encode them as categorical values
     scaled_and_encoded_df = addAndEncodeCategoricalColumns(scaled_gdf,finnish_regions_shapefile)
 
     ### Write the prepared zipcode dataset to a geopackage
@@ -131,4 +141,4 @@ if __name__ == '__main__':
     start = time.time()
     main()
     end = time.time()
-    print("Script completed in " + str(round(((end - start) / 60),3)) + " minutes")
+    print("Script completed in " + str(round(((end - start)),0)) + " seconds")
