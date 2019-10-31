@@ -1,11 +1,9 @@
-name: gis
+name: gis_ml
 dependencies:
   - python=3.7
   - geopandas
   - rasterio
-  - spectral
-  - spyder
+  - scikit-learn
+  - imbalanced-learn
   - qgis
-  - pip
-  - pip:
-    - spectral
+
