@@ -5,6 +5,10 @@
 # * Forest stands from Forest center (Metsäkeskus). https://www.metsaan.fi/paikkatietoaineistot
 # * Sentinel 2A satellite image from ESA. https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-2/data-products
 
+# *** WINDOWS USERS CHANGE THESE IN THIS SCRIPT ***
+# 	- replace / with \
+#	- replace rm with del
+#	- replace gdal_retile.py, gdal_calc.py with gdal_retile and gdal_calc
 
 # GET DATA
 cd classification
