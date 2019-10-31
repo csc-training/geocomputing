@@ -1,0 +1,11 @@
+name: gis
+dependencies:
+  - python=3.7
+  - geopandas
+  - rasterio
+  - spectral
+  - spyder
+  - qgis
+  - pip
+  - pip:
+    - spectral
