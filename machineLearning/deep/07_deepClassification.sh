@@ -5,10 +5,10 @@
 #SBATCH --mem=16G
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
-#SBATCH --time=00:10:00
-#SBATCH --partition=gpu
-#SBATCH --reservation ml_training
+#SBATCH --time=00:14:00
+#SBATCH --partition=gputest
+# SBATCH --reservation ml_training
 
 module load tensorflow/2.0.0
 
-srun python 06_deepRegression.py
+srun python 07_deepClassification_kylli.py
