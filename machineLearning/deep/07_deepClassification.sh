@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:14:00
 #SBATCH --partition=gputest
-# SBATCH --reservation ml_training
+#SBATCH --reservation ml_training
 
 module load tensorflow/2.0.0
 
