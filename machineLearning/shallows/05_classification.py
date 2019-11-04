@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-
 This script reads forest stands and Sentinel 2A satellite data produced by raster_preparations_sentinel.sh and creates 4 a machine learning models for
 predicting the forest main tree species from satellite data.
-
 It assess the model accuracy with a test dataset but also predicts the main tree species for whole image (the cropped version).
-
 author: kylli.ek@csc.fi
 """
 
 import os, time
 from imblearn.under_sampling import RandomUnderSampler
+from joblib import dump, load
 import numpy as np
 import rasterio
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
@@ -24,7 +22,7 @@ from sklearn.svm import SVC
 
 #Set working directory and input/output file names.
 
-base_folder = "/tmp/gis-ml/data/forest"
+base_folder = "/home/cscuser/gis-ml/data/forest/analysis_ready"
 
 # Input
 inputImage =  os.path.join(base_folder,'T34VFM_20180829T100019_clipped_scaled.tif')
@@ -32,11 +30,12 @@ labelsImage =  os.path.join(base_folder,'forest_species_reclassified.tif')
 inputImageSVM =  os.path.join(base_folder,'T34VFM_20180829T100019_scaled_10_07.tif')
 
 # Outputs of 4 different models
-RandomForestImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_random_forest.tif')
-SVCImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SVC.tif')
-SGDImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SGD.tif')
-GradientBoostImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_gradient_boost.tif')
-SVCImageGridSearch = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SVC_grid_search.tif')
+outputImageBase='T34VFM_20180829T100019_clipped_'
+#RandomForestImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_random_forest.tif')
+#SVCImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SVC.tif')
+#SGDImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SGD.tif')
+#GradientBoostImage = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_gradient_boost.tif')
+#SVCImageGridSearch = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_SVC_grid_search.tif')
 
 # Available cores
 n_jobs = 4
@@ -73,11 +72,15 @@ def prepareData(image_dataset, labels_dataset):
     return pixels_resampled, labels_resampled
 
 # Train the model and see how long it took.
-def trainModel(x_train, y_train, clf):
+def trainModel(x_train, y_train, clf, classifierName):
     start_time = time.time()    
     # training the model
     clf.fit(x_train, y_train)
     print('Model training took: ', round((time.time() - start_time), 2), ' seconds')
+    
+    # Save the model to a file
+    modelFilePath = os.path.join(base_folder, ('model_' + classifierName + '.sav'))
+    dump(clf, modelFilePath) 
     return clf
 
 # Predict on test data and see the model accuracy
@@ -87,8 +90,10 @@ def estimateModel(clf, x_test, y_test):
     print('Classification report: \n', classification_report(y_test, test_predictions))
 
 # Predict on whole image and save it as .tif file
-def predictImage(trained_model, predictedImagePath, predictImage):
+def predictImage(modelName, predictImage):
+    predictedClassesFile = outputImageBase + modelName + '.tif'
 	# Read the satellite image
+    predictedClassesPath = os.path.join(base_folder, predictedClassesFile)
     with rasterio.open(predictImage, 'r') as image_dataset:
         start_time = time.time()    
         
@@ -97,6 +102,8 @@ def predictImage(trained_model, predictedImagePath, predictImage):
         image_data2 = np.transpose(image_data, (1, 2, 0))
         pixels = image_data2.reshape(-1, 3)
         
+        modelFilePath = os.path.join(base_folder, ('model_' + modelName + '.sav'))
+        trained_model = load(modelFilePath)
         # predicting the classification
         prediction = trained_model.predict(pixels)
         
@@ -111,7 +118,7 @@ def predictImage(trained_model, predictedImagePath, predictImage):
 		# Change the number of bands and data type.
         outputMeta.update(count=1, dtype='uint8')
         # Writing the image on the disk
-        with rasterio.open(predictedImagePath, 'w', **outputMeta) as dst:
+        with rasterio.open(predictedClassesPath, 'w', **outputMeta) as dst:
             dst.write(prediction2D, 1)
         
         print('Predicting took: ', round((time.time() - start_time), 1), ' seconds')
@@ -140,52 +147,60 @@ def main():
     # Fit and predict 4 models on the data. Each outputs a .tif image with the predicted classification.
 	# The workflow is the same for all, except for SVM where smaller sample of data is used.
 	
-    print("Random forest")
+    print("\n\nRandom forest")
     # Initialize the random forest classifier and give the hyperparameters.
+    classifierName = 'random_forest'
     clf_random_forest = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=0, n_jobs=n_jobs)
-    random_forest_model = trainModel(x_train, y_train, clf_random_forest)	
-    estimateModel(random_forest_model, x_test, y_test)
-    predictImage(random_forest_model, RandomForestImage, inputImage)
-    print('Feature importances: \n', random_forest_model.feature_importances_)
+    clf_random_forest = trainModel(x_train, y_train, clf_random_forest, classifierName)	
+    estimateModel(clf_random_forest, x_test, y_test)
+    predictImage(classifierName, inputImage)
+    print('Feature importances: \n', clf_random_forest.feature_importances_)
 
-    print("Stochastic Gradient Decent")
-    clf_SGD = SGDClassifier(alpha=0.000001, loss="log", learning_rate='adaptive', eta0=.1, n_jobs=n_jobs, max_iter=100)
-    SGD_model = trainModel(input_image, input_labels, clf_SGD)
-    estimateModel(SGD_model, x_test, y_test)
-    predictImage(SGD_model, SGDImage, inputImage)
+    print("\n\nStochastic Gradient Decent")
+    classifierName = 'SGD'    
+    clf_SGD = SGDClassifier(alpha=1e-5, loss="log", learning_rate='adaptive', eta0=.1, n_jobs=n_jobs, max_iter=40)
+    clf_SGD = trainModel(input_image, input_labels, clf_SGD, classifierName)
+    estimateModel(clf_SGD, x_test, y_test)
+    predictImage(classifierName, inputImage)
     
-    print("Gradient Boost")
+    print("\n\nGradient Boost")
+    classifierName = 'gradient_boost'    
     clf_gradient_boost = GradientBoostingClassifier(n_estimators=50, learning_rate=.05)
-    gradient_boost_model = trainModel(input_image, input_labels, clf_gradient_boost)
-    estimateModel(gradient_boost_model, x_test, y_test)
-    predictImage(gradient_boost_model, GradientBoostImage, inputImage)
-    print('Feature importances: \n', gradient_boost_model.feature_importances_)    
+    clf_gradient_boost = trainModel(input_image, input_labels, clf_gradient_boost, classifierName)
+    estimateModel(clf_gradient_boost, x_test, y_test)
+    predictImage(classifierName, inputImage)
+    print('Feature importances: \n', clf_gradient_boost.feature_importances_)    
 
-    print("Support Vector Classifier")   
+    print("\n\nSupport Vector Classifier")   
+    classifierName = 'SVM'        
     clf_svc = SVC(kernel='rbf', gamma='auto')
-    svc_model = trainModel(x_train2, y_train2, clf_svc)
-    estimateModel(svc_model, x_test2, y_test2)
+    clf_svc = trainModel(x_train2, y_train2, clf_svc, classifierName)
+    estimateModel(clf_svc, x_test2, y_test2)
     # Use a small tile (512x512), to get it done in ca 3 min.
     # Predicting the whole image takes too long for the course.
-    predictImage(svc_model, SVCImage, inputImageSVM)
-                      
-					 
-					  
-    print('Grid search for SVC')
+    predictImage(classifierName, inputImageSVM)    
+                     	  
+    print('\n\nGrid search for SVC')
+    classifierName = 'SVC_grid_search'        
 	# Find the optimal parameters for SVM
     param_grid = {'C': [1000, 10000], 'gamma': [1, 10]}
     # Initialize the grid search, cv is the number of iterations, kept at minimum here for faster results.
-    grid = GridSearchCV(SVC(), param_grid, verbose=1, n_jobs=n_jobs, cv=2)
+    grid = GridSearchCV(SVC(), param_grid, verbose=1, n_jobs=n_jobs, cv=2)    
     # Try different options
-    grid.fit(x_train2, y_train2)
-	# Plot the best
+    grid = trainModel(x_train2, y_train2, grid, classifierName)
+    
+	# Plot the best option
     print('Best selected parameters: ',format(grid.best_params_))
     print('Best estimator: ',format(grid.best_estimator_))
     # Test the classifier using test data
     estimateModel(grid, x_test2, y_test2)
 	# Predict again on the small tile.
-    predictImage(grid, SVCImageGridSearch, inputImageSVM)
+    predictImage(classifierName, inputImageSVM)    
  
 
 if __name__ == '__main__':
+    ### This part just runs the main method and times it
+    start = time.time()
     main()
+    end = time.time()
+    print("Script completed in " + str(round((end - start),0)) + " seconds")
