@@ -102,9 +102,11 @@ def predictImage(modelName, predictImage):
         image_data2 = np.transpose(image_data, (1, 2, 0))
         pixels = image_data2.reshape(-1, 3)
         
+        #Load the model from the saved file
         modelFilePath = os.path.join(base_folder, ('model_' + modelName + '.sav'))
         trained_model = load(modelFilePath)
-        # predicting the classification
+        
+        # predicting the class for each pixel
         prediction = trained_model.predict(pixels)
         
 		# Reshape back to 2D
