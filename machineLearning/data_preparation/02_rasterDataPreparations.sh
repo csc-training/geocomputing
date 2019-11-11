@@ -28,7 +28,7 @@ cd classification
 # The training area is smaller, because in Lohja community the forest data seems to be missing a lot of forest polygons, so we want to exclude that.
 
 # Go to the folder of original Sentinel data
-cd ../S2B_MSIL2A_20180829T100019_N0208_R122_T34VFM_20180829T184909.SAFE/GRANULE/L2A_T34VFM_A007727_20180829T100017/IMG_DATA/R10m
+cd S2B_MSIL2A_20180829T100019_N0208_R122_T34VFM_20180829T184909.SAFE/GRANULE/L2A_T34VFM_A007727_20180829T100017/IMG_DATA/R10m
 
 # Select the bands used: 08 (NIR), 04 and 03 and make a virtual raster file of them
 gdalbuildvrt -separate T34VFM_20180829T100019.vrt T34VFM_20180829T100019_B08_10m.jp2 T34VFM_20180829T100019_B04_10m.jp2 T34VFM_20180829T100019_B03_10m.jp2
@@ -40,7 +40,7 @@ gdal_translate -projwin 614500 6668500 644500 6640500 T34VFM_20180829T100019.vrt
 gdal_translate -projwin 604500 6698500 677000 6640000 T34VFM_20180829T100019.vrt ../../../../../T34VFM_20180829T100019_scaled.tif -ot Float32 -scale 0 10000 0 1
 
 # Go back to the "forest" data folder
-cd ../../../../
+cd ../../../../../
 
 ### FOREST STANDS PREPARATIONS
 # Clip to study area and merge the two GeoPackage files. Exclude polygons, that have no main tree species value.
