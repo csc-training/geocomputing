@@ -51,9 +51,9 @@ def trainAndEstimateModel(original_gdf):
     # setting optimizer and loss functions. learning rate set to 0.01
     model.compile(optimizer=RMSprop(lr=.01), loss='mse', metrics=['mae'])
     # train the network in 100 epoch
-    model.fit(x_train, y_train, epochs=100, batch_size=32)
+    model.fit(x_train, y_train, epochs=100, batch_size=32, verbose=2)
     # evaluating the performance of the model using test data
-    mse, mae = model.evaluate(x_test, y_test)
+    mse, mae = model.evaluate(x_test, y_test, verbose=0)
     rmse = sqrt(mse)
 
     print("\nMODEL ACCURACY METRICS WITH TEST DATASET: \n" +
