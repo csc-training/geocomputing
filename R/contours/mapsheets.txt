@@ -1,3 +1,3 @@
-/wrk/project_ogiir-csc/mml/dem10m/etrs-tm35fin-n2000/W3/W33/W3333.tif
-/wrk/project_ogiir-csc/mml/dem10m/etrs-tm35fin-n2000/W3/W33/W3332.tif
-/wrk/project_ogiir-csc/mml/dem10m/etrs-tm35fin-n2000/W3/W33/W3331.tif
+/appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
+/appl/data/geo/mml/dem10m/2019/W3/W33/W3332.tif
+/appl/data/geo/mml/dem10m/2019/W3/W33/W3331.tif
