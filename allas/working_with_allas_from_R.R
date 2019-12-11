@@ -33,10 +33,7 @@ for (row in 1:nrow(tif_files)) {
 }
 
 # Writing files.
-# Not recommended to use like this.. 
-# For some reason R can not read these files back again, 
-# although the file is created and GDAL-commandline tools can read them and also if downloaded and opened with QGIS, 
-# then everything seems to be ok.. 
+# Note, for some reason R can not read these files back again, during the same R session.
 
 # Writing raster file
 s3write_using(r, FUN = raster::writeRaster,
