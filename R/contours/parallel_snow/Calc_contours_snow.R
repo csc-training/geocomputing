@@ -27,9 +27,6 @@ if (!dir.exists(gridFolder)) {
   dir.create(gridFolder)
 }
 
-# Read the mapsheets from external file
-mapsheets <- readLines('~/R-with-Taito/R-with-Taito/examples/snow/mapsheets.txt')
-
 # Start the snow cluster
 cl<-getMPIcluster()
 
