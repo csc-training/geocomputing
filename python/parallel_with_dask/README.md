@@ -16,4 +16,17 @@ https://github.com/robintw/XArrayAndRasterio/blob/master/rasterio_to_xarray.py
 
 ### ndvi_dast_example.sh
 
-The simple batch job file used to test this. Change the parameters accordingly! Project, partition etc. The script was tested with relative small amount of 7 Sentinel images. Benchmarking suggested that number of cpu cores should be at minimum the number of Sentinel images. Dask knows how to divide pixels to chunks so several CPUs can work on one image. Though on Puhti, the maximum number of CPUs is 40 as this kind of Python processes can't run on several nodes. 
+The simple batch job file used to test this. Change the parameters accordingly! Project, partition etc. The script was tested with relative small amount of 7 Sentinel images. Benchmarking suggested that number of cpu cores should be at minimum the number of Sentinel images. Dask knows how to divide pixels to chunks so several CPUs can work on one image. Though on Puhti, the maximum number of CPUs is 40 as this kind of Python processes can't run on several nodes.
+
+## Benchmark
+
+| Number of CPU cores | seconds |
+|---------------------|---------|
+| 1                   | 439     |
+| 2                   | 230     |
+| 4                   | 133     |
+| 6                   | 100     |
+| 8                   | 93      |
+| 10                  | 83      |
+| 12                  | 78      |
+| 16                  | 67      |
