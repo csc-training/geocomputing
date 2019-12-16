@@ -3,7 +3,7 @@
 
 ## NDVI calculation with S2 L2 images
 
-The script iterates over Sentinel image folders (.SAFE folders) and calculates NDVI using xarray and utilizes also parallel calculation with Dask. 
+The script iterates over Sentinel image folders (.SAFE folders) and calculates NDVI using xarray and utilizes also parallel calculation with Dask. This uses delayed functions https://docs.dask.org/en/latest/delayed.html which means the library maps first everything that needs to be ran, finds what resources are available (automatically) and distributes the work load in the most efficient way.
 
 ### ndvi_dask_example.py
 
@@ -30,3 +30,9 @@ The simple batch job file used to test this. Change the parameters accordingly! 
 | 10                  | 83      |
 | 12                  | 78      |
 | 16                  | 67      |
+
+### More information
+
+https://docs.dask.org/en/latest/
+http://xarray.pydata.org/en/stable/dask.html
+https://examples.dask.org/xarray.html
