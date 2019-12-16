@@ -33,6 +33,6 @@ The simple batch job file used to test this. Change the parameters accordingly! 
 
 ### More information
 
-https://docs.dask.org/en/latest/
-http://xarray.pydata.org/en/stable/dask.html
-https://examples.dask.org/xarray.html
+* https://docs.dask.org/en/latest/
+* http://xarray.pydata.org/en/stable/dask.html
+* https://examples.dask.org/xarray.html
