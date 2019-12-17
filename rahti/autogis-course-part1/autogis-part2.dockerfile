@@ -13,6 +13,8 @@ RUN echo "Upgrading conda" \
 	pandas \
 	geopandas \
 	matplotlib \
+	pyproj=2.4.0 \
+	geojson \
 	patrikhlobil::pandas-bokeh \
 	imageio \
 	nose \
