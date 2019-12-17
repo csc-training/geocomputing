@@ -13,8 +13,14 @@ RUN echo "Upgrading conda" \
 	pandas \
 	geopandas \
 	matplotlib \
-	pyproj=2.4.0 \
+	pysal \
+	mapclassify \
 	geojson \
+	rasterio \
+	contextily \
+	folium \
+	mplleaflet \
+	osmnx \
 	patrikhlobil::pandas-bokeh \
 	imageio \
 	nose \
