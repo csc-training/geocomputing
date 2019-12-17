@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH --account=project_2000599
 #SBATCH -J array_job
 #SBATCH -o array_job_out_%A_%a.txt
 #SBATCH -e array_job_err_%A_%a.txt
@@ -8,7 +9,7 @@
 #SBATCH -n 1
 #SBATCH -p serial
 
-module load rspatial-env
+module load r-env
 # move to the directory where the data files locate
 cd ~/git/geocomputing/R/contours/array
 # set input file to be processed

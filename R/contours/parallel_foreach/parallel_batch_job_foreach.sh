@@ -1,4 +1,5 @@
 #!/bin/bash -l
+#SBATCH --account=project_2000599
 #SBATCH -J r_multi_proc
 #SBATCH -o output.txt
 #SBATCH -e errors.txt
@@ -8,5 +9,5 @@
 #SBATCH -p test
 #SBATCH --mem-per-cpu=1000
 
-module load rspatial-env
+module load renv
 srun Rscript --no-save --slave Calc_contours_foreach.R

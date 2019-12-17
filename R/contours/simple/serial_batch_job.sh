@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH --account=project_2000599
 #SBATCH -J rspatial_job
 #SBATCH -o out.txt
 #SBATCH -e err.txt
@@ -7,6 +8,6 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=1000
-#
-module load rspatial-env
+
+module load r-env
 srun Rscript --no-save Contours_simple.R

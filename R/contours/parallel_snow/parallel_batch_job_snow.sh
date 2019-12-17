@@ -1,4 +1,5 @@
 #!/bin/bash -l
+#SBATCH --account=project_2000599
 #SBATCH -J r_multi_proc
 #SBATCH -o output_%j.txt
 #SBATCH -e errors_%j.txt
@@ -8,5 +9,5 @@
 #SBATCH -p test
 #SBATCH --mem-per-cpu=1000
 
-module load rspatial-env
+module load r-env
 srun RMPISNOW --no-save -f Calc_contours_snow.R
