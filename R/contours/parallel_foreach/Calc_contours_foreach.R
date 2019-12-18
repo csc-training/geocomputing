@@ -1,4 +1,4 @@
-# This is an spatial analysis example script for using R in CSC Taito
+# This is an spatial analysis example script for using R in CSC Puhti
 # This script can be used for parallel jobs.
 # Here 3 .tif files are saved to SagaGIS format
 # and then countours are calculated and saved in Shape format.
@@ -6,19 +6,19 @@
 # The input files are listed in the mapsheet.txt file
 
 # For parallel tasks the foreach with doMPI is used.
-# See https://research.csc.fi/-/r
+# See https://docs.csc.fi/#apps/r-env/
 
 library(doMPI,quietly=TRUE)
 cl<-startMPIcluster()
 registerDoMPI(cl)
 
 #Set directory for output files (in this case from user's workdirectory): 
-mainDir <- file.path(Sys.getenv("WRKDIR"), "R_contours_foreach")
-gridFolder <- file.path(mainDir, "1_grid")
-shapeFolder <- file.path(mainDir, "2_shape")
+mainDir <- file.path(Sys.getenv("HOME"),'R_parallel_foreach')
+gridFolder <- file.path(mainDir,"1_grid")
+shapeFolder <- file.path(mainDir,"2_shape")
 
 # Read the mapsheets from external file, in this case from user's workdirectory
-mapsheets <- readLines(file.path(Sys.getenv("WRKDIR"),'geocomputing/R/contours/mapsheets.txt'))
+mapsheets <- readLines(file.path(Sys.getenv("HOME"),'geocomputing/R/contours/mapsheets.txt'))
 
 
 # Set the working directory

@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=project_2000599
+#SBATCH --account=<YOUR-PROJECT>
 #SBATCH -J r_multi_proc
 #SBATCH -o output_%j.txt
 #SBATCH -e errors_%j.txt

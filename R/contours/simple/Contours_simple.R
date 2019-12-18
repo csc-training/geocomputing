@@ -21,7 +21,7 @@ if (!dir.exists(mainDir)) {
 }
 setwd(mainDir)
 
-mapsheets <- readLines('~/git/geocomputing/R/contours/mapsheets.txt')
+mapsheets <- readLines('~/geocomputing/R/contours/mapsheets.txt')
 
 #Make folders for files, do not make, if already exist
 if (!dir.exists(shapeFolder)) {

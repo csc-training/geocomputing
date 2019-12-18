@@ -1,4 +1,4 @@
-# This is an spatial analysis example script for using R in CSC Taito
+# This is an spatial analysis example script for using R in CSC Puhti
 # This scipt can be used for parallel jobs.
 # Here 3 .tif files are saved to SagaGIS format
 # and then countours are calculated and saved in Shape format.
@@ -61,7 +61,7 @@ clusterExport(cl, "shapeFolder")
 clusterEvalQ(cl, setwd(mainDir))
 
 # Read the mapsheets from external file
-mapsheets <- readLines('~/git/geocomputing/R/contours/mapsheets.txt')
+mapsheets <- readLines('~/geocomputing/R/contours/mapsheets.txt')
 
 # Give cluster the work to be done
 system.time(a<-clusterApply(cl,mapsheets,funtorun))

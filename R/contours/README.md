@@ -1,5 +1,5 @@
 ## Overview
-This is an example for running R code on CSC's Taito supercluster as three different job styles: simple serial, array and parellel. In this example we'll calculate contours based on a geotiff image with RSAGA.
+This is an example for running R code on CSC's Puhti supercluster as three different job styles: simple serial, array and parellel. In this example we'll calculate contours based on a geotiff image with RSAGA.
 
 The main tasks in this example:
 * Creating needed folders
@@ -13,7 +13,7 @@ Contents of this example
 **	An .R file for defining the tasks to be done.
 ** An .sh file for submitting the job to SLURM: `serial_batch_job.sh`, `array_job.sh` and `parallel_batch_job.sh`
 
-A more detailed documentation on batch job system can be found here: https://research.csc.fi/taito-batch-jobs
+A more detailed documentation on batch job system can be found here: https://docs.csc.fi/#computing/running/creating-job-scripts/
 
 ## The serial R script
 This is a basic R script, which uses a for loop for going through all 3 files.
@@ -26,8 +26,8 @@ Batch job can then be submitted with command `sbatch serial_batch_job.sh`. This 
 
 Once the job is finished we can see output in out.txt and any possible errors in err.txt
 
-## Array jobs and R-spatial in Taito
-Array jobs are an easy way of taking advantage of Taitos parallel processing capabilities. For more detailed instructions on array jobs see: https://research.csc.fi/taito-array-jobs#3.5.2
+## Array jobs and R-spatial in Puhti
+Array jobs are an easy way of taking advantage of Puhti's parallel processing capabilities. For more detailed instructions on array jobs see: https://docs.csc.fi/#computing/running/array-jobs/
 
 Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context a typical use would be to run some model on study area split into multiple files where output from one file doesn't have an impact on result of an other area. 
 

@@ -1,4 +1,4 @@
-# This is an spatial analysis example script for using R in CSC Taito
+# This is an spatial analysis example script for using R in CSC Puhti
 # This scipt can be used for serial or array jobs.
 # Here a .tif file provided as argument is save to SagaGIS format
 # and then countours are calculated and saved in Shape format.
