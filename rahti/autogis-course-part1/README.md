@@ -1,7 +1,10 @@
 # Automatizing GIS-processes course notebook Rahti files
 
-### autogis-part1.dockerfile
-  * The docker build file that pulls the jupyter notebook docker image 
+### creating_csc_notebooks_image.md
+  * The documentation for building, modifying and deploying the notebooks image. Read this!
+  
+### autogis-part1.dockerfile, autogis-part2.dockerfile
+  * The docker build files that pull the jupyter notebook docker images
   * Installs python libraries and the jupyter lab git extension with conda 
 
 ### build.sh
