@@ -3,7 +3,6 @@ import rasterio
 import geopandas as gpd
 from rasterio.io import MemoryFile
 import tempfile
-import getpass
 import os
 
 """
@@ -11,41 +10,38 @@ Example script for using Allas directly from a Python script with swift library
 Created on 27.01.2020 by Johannes Nyman
 """
 
-
-### Swift requires your CSC username and password for authenticating (not ideal).
-### The only secure way is to use getpass library (commented lines below) and input the credentials every time
-### But that won't work with batch jobs so next best is to store them in environment variables
-
-
 ### 1. Establishing the Swift connection to Allas
 
-# Swift connection settings for Allas
-_authurl = 'https://pouta.csc.fi:5001/v3'
+# You need to run the following commands in Puhti to get the authentication to Allas active
+
+"""
+module load allas
+allas-conf
+"""
+
+# These exist after running allas-conf
+_authurl = os.environ['OS_STORAGE_URL']
+_auth_token = os.environ['OS_AUTH_TOKEN']
+_project_name = os.environ['OS_PROJECT_NAME']
+_user = os.environ['OS_USERNAME']
+
+
+# Various settings for connecting to Puhti
 _auth_version = '3'
 _os_options = {
     'user_domain_name': 'Default',
     'project_domain_name': 'Default',
-    'project_name': '<YOUR-PROJECT>' # e.g project_2000000
+    'project_name': _project_name
 }
-
-# You need to set these env variables before running the script like e.g. 'export OS_USERNAME=<your-username>'
-_user = os.environ['OS_USERNAME']
-_key = os.environ['OS_PASSWORD']
-
-# The more secure but interactive method
-#_user = getpass.getuser()
-#_key = getpass.getpass(prompt='Enter your password: ')
-
 
 # Creating the connection client
 conn = swiftclient.Connection(
-    authurl=_authurl,
     user=_user,
-    key=_key,
+    preauthurl=_authurl,
+    preauthtoken=_auth_token,
     os_options=_os_options,
     auth_version=_auth_version
 )
-
 
 ### 1. Download a file from Allas to local filesystem
 obj = '<YOUR-ALLAS-FILE>'
