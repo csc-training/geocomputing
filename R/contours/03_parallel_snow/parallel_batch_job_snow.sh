@@ -10,4 +10,4 @@
 #SBATCH --mem-per-cpu=1000
 
 module load r-env
-srun RMPISNOW --no-save -f Calc_contours_snow.R
+srun RMPISNOW --no-save --slave -f Calc_contours_snow.R

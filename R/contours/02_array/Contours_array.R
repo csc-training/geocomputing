@@ -13,20 +13,15 @@ if (length(args)==0) {
   # default output file
   mapsheet <- args[1]
 }
-
+print(mapsheet)
 # load RSAGA and gdalUtils libraries
-library(RSAGA)
-library(gdalUtils)
+library(raster)
 
 #Set the names of the folders.
-mainDir <- "~/R_spatial_2017_3"
-gridFolder <- "1_grid"
-shapeFolder <- "2_shape"
+mainDir <- "/scratch/project_2002044/students/training011/R_spatial_exercises/02_array"
+shapeFolder <- "shape"
 
 # Set the working directory
-if (!dir.exists(mainDir)) {
-  dir.create(mainDir)
-}
 setwd(mainDir)
 
 #Make folders for files, do not make, if already exist
@@ -34,20 +29,10 @@ if (!dir.exists(shapeFolder)) {
   dir.create(shapeFolder)
 }
 
-if (!dir.exists(gridFolder)) {
-  dir.create(gridFolder)
-}
-
-# SagaGIS needs the input in its own format, so let's change the original .tif file to Saga format.
-gridfile <- file.path(gridFolder, gsub("tif", "sdat", basename(mapsheet)))
-gdal_translate(mapsheet, gridfile, of="SAGA")
-
-
 # Calculate contours with 50m intervals, from 200 to 750m
+DEM <- raster(mapsheet)
 shapefile <- file.path(shapeFolder, gsub("tif", "shp", basename(mapsheet)))
-gridfile <- gsub("sdat", "sgrd", gridfile)
-rsaga.contour(gridfile, shapefile, 50, 200, 750, env = rsaga.env())
-
-#The tool gives like other RSAGA tools "Error: select a tool" message, but it actually is working :)
-
-quit()
+contours<-rasterToContour(DEM)
+shapefile(contours, filename=shapefile, overwrite=TRUE)
+plot(DEM)
+plot(contours, add=TRUE)

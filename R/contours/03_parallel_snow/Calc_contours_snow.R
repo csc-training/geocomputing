@@ -8,23 +8,15 @@
 # For parallel tasks the snow package is used.
 
 #Set the names of the folders.
-mainDir <- "~/R_spatial_2017_4"
-gridFolder <- "1_grid"
-shapeFolder <- "2_shape"
+mainDir <- "/scratch/project_2002044/students/training011/R_spatial_exercises/03_parallel_snow"
+shapeFolder <- "shape"
 
 # Set the working directory
-if (!dir.exists(mainDir)) {
-  dir.create(mainDir)
-}
 setwd(mainDir)
 
 #Make folders for files, do not make, if already exist
 if (!dir.exists(shapeFolder)) {
   dir.create(shapeFolder)
-}
-
-if (!dir.exists(gridFolder)) {
-  dir.create(gridFolder)
 }
 
 # Start the snow cluster
@@ -34,39 +26,29 @@ cl<-getMPIcluster()
 # The R modules need to be loaded inside the functions.
 # The variables from outside of this function are not visible.
 funtorun<-function(mapsheet) {
-
-  # SagaGIS needs the input in its own format, so let's change the original .tif file to Saga format.
-  gridfile <- file.path(gridFolder, gsub("tif", "sdat", basename(mapsheet)))
-  gdal_translate(mapsheet, gridfile, of="SAGA",verbose=TRUE)
-
-
-  # Calculate contours with 50m intervals, from 200 to 750m
+  DEM <- raster(mapsheet)
   shapefile <- file.path(shapeFolder, gsub("tif", "shp", basename(mapsheet)))
-  gridfile <- gsub("sdat", "sgrd", gridfile)
-  rsaga.contour(gridfile, shapefile, 50, 200, 750, env = rsaga.env())
-
-  #The tool gives like other RSAGA tools "Error: select a tool" message, but it actually is working :)
+  contours<-rasterToContour(DEM)
+  shapefile(contours, filename=shapefile, overwrite=TRUE)
+  plot(DEM)
+  plot(contours, add=TRUE)  
 }
 
-# load RSAGA and rgdal libraries
-clusterEvalQ(cl, library(RSAGA))
-clusterEvalQ(cl, library(gdalUtils))
+# load raster library
+clusterEvalQ(cl, library(raster))
 
 #Export variable to each cluster
 clusterExport(cl, "mainDir")
-clusterExport(cl, "gridFolder")
 clusterExport(cl, "shapeFolder")
 
 #Set working directory
 clusterEvalQ(cl, setwd(mainDir))
 
 # Read the mapsheets from external file
-mapsheets <- readLines('~/geocomputing/R/contours/mapsheets.txt')
+mapsheets <- readLines('../mapsheets.txt')
 
 # Give cluster the work to be done
 system.time(a<-clusterApply(cl,mapsheets,funtorun))
 
 #Stop cluster
 stopCluster(cl)
-
-#quit()

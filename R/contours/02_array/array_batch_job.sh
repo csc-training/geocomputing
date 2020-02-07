@@ -11,8 +11,8 @@
 
 module load r-env
 # move to the directory where the data files locate
-cd ~/geocomputing/R/contours/array
+cd /scratch/project_2002044/students/training011/R_spatial_exercises/02_array
 # set input file to be processed
 name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../mapsheets.txt)
 # run the analysis command
-srun Rscript Calc_contours.R $name
+srun Rscript Contours_array.R $name
