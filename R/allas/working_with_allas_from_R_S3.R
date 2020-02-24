@@ -8,9 +8,15 @@ library("sf")
 library("aws.s3")
 library("tidyverse")
 
-# Before starting to use Allas with aws.s3 set up your connection to Allas, as described here: https://docs.csc.fi/#apps/gdal/
-# (Run allas-conf --mode s3cmd and create .aws/credentials file.) 
-# Setting the S3 endpoint can be done with R:
+# Before starting to use Allas with aws.s3 set up your connection to Allas, run:
+# module load
+# allas-conf --mode s3cmd
+# This:
+# * creates .aws/credentials file to your home directory
+# * sets AWS_S3_ENDPOINT environment variable.
+# The credentials are saved to a file, so they need to be set only once from a new computer.
+# Environment variables are cleaned after session end, so it must be set again in each new session,
+# for example from R script:
 Sys.setenv("AWS_S3_ENDPOINT" = "a3s.fi")
 
 # Reading raster file
