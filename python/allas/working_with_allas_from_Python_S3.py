@@ -37,8 +37,6 @@ import tempfile
 # This creates [.aws/credentials-file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
 # The credentials are saved to a file, so they need to be set only once from a new computer.
 
-# Before starting to use Allas with S3 set up your connection to Allas, as described here: https://docs.csc.fi/#apps/gdal/
-# (Run allas-conf --mode s3cmd and create .aws/credentials file.) 
 
 # READING data from Allas
 
