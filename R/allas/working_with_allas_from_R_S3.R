@@ -8,16 +8,18 @@ library("sf")
 library("aws.s3")
 library("tidyverse")
 
-# Before starting to use Allas with aws.s3 set up your connection to Allas, run:
-# module load
+# Before starting to use Allas with aws.s3 set up your connection to Allas.
+# In Puhti run:
+#
+# module load allas
+# OR
+# Sys.setenv("AWS_S3_ENDPOINT" = "a3s.fi")
+# This sets AWS_S3_ENDPOINT environment variable to "a3s.fi".
+# Environment variables are cleaned after session end, so it must be set again in each new session.
+#
 # allas-conf --mode s3cmd
-# This:
-# * creates .aws/credentials file to your home directory
-# * sets AWS_S3_ENDPOINT environment variable.
+# This creates [.aws/credentials-file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
 # The credentials are saved to a file, so they need to be set only once from a new computer.
-# Environment variables are cleaned after session end, so it must be set again in each new session,
-# for example from R script:
-Sys.setenv("AWS_S3_ENDPOINT" = "a3s.fi")
 
 # Reading raster file
 r <- raster('/vsis3/name_of_your_Allas_bucket/name_of_your_input_raster_file.tif')
