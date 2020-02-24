@@ -24,12 +24,23 @@ from rasterio.io import MemoryFile
 # For writing vectors to Allas
 import tempfile
 
+# Before starting to use Allas with S3 set up your connection to Allas.
+# In Puhti run:
+#
+# module load allas
+# OR
+# os.environ["AWS_S3_ENDPOINT"] = "a3s.fi"
+# This sets AWS_S3_ENDPOINT environment variable to "a3s.fi".
+# Environment variables are cleaned after session end, so it must be set again in each new session.
+#
+# allas-conf --mode s3cmd
+# This creates [.aws/credentials-file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
+# The credentials are saved to a file, so they need to be set only once from a new computer.
+
 # Before starting to use Allas with S3 set up your connection to Allas, as described here: https://docs.csc.fi/#apps/gdal/
 # (Run allas-conf --mode s3cmd and create .aws/credentials file.) 
 
 # READING data from Allas
-# Setting the S3 endpoint can be done with Python:
-os.environ["AWS_S3_ENDPOINT"] = "a3s.fi"
 
 # Reading raster file
 r = rasterio.open('/vsis3/name_of_your_Allas_bucket/name_of_your_input_raster_file.tif')
