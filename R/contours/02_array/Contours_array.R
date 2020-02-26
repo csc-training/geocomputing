@@ -18,9 +18,6 @@ if (length(args)==0) {
 }
 print(mapsheet)
 
-# Set the working directory to the current directory
-setwd(getSrcDirectory()[1])
-
 # Create output folder if it does not exist
 shapeFolder <- "shape"
 if (!dir.exists(shapeFolder)) {
@@ -34,5 +31,5 @@ contours<-rasterToContour(DEM)
 shapefile(contours, filename=shapefile, overwrite=TRUE)
 
 # If working locally, you can plot both files
-plot(DEM)
-plot(contours, add=TRUE)
+#plot(DEM)
+#plot(contours, add=TRUE)
