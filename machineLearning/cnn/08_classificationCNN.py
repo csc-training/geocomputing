@@ -21,9 +21,9 @@ training_image_path = os.path.join(base_folder,"T34VFM_20180829T100019_scaled.ti
 training_label_path = os.path.join(base_folder,"forest_spruce.tif")
 prediction_image_path = os.path.join(base_folder,"T34VFM_20180829T100019.tif")
 
-training_image_tile_subfolder = os.path.join(tile_output_folder,"image_training_tiles")
-training_label_tile_subfolder = os.path.join(tile_output_folder, "label_tiles")
-prediction_image_tile_subfolder = os.path.join(tile_output_folder,"image_prediction_tiles")
+training_image_tile_subfolder = os.path.join(tile_output_folder,"image_training_tiles_650")
+training_label_tile_subfolder = os.path.join(tile_output_folder, "label_tiles_650")
+prediction_image_tile_subfolder = os.path.join(tile_output_folder,"image_prediction_tiles_512")
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.expand_frame_repr', False)
