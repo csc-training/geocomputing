@@ -9,10 +9,11 @@
 #SBATCH -n 1
 #SBATCH -p small
 
+# load the Puhti module for R
 module load r-env
-# move to the directory where the data files locate
-cd /scratch/project_2002044/students/training011/R_spatial_exercises/02_array
-# set input file to be processed
+
+# read the file that has filepaths for mapsheets and pick one row according to variable $SLURM_ARRAY_TASK_ID
 name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../mapsheets.txt)
+
 # run the analysis command
 srun Rscript Contours_array.R $name
