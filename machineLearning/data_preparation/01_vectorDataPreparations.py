@@ -16,11 +16,12 @@ from shapely.geometry import Point, MultiPolygon, Polygon
 from sklearn.preprocessing import StandardScaler
 
 ### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-base_folder = "/home/cscuser/gis-ml/data/paavo"
+#base_folder = "/home/cscuser/gis-ml/data/paavo"
+base_folder = "C:\\temp\\ML_course_data\\paavo"
 
 ### Path to the input files. Zipcode level Paavo dataset with population statistics and the finnish regions (maakunta) shapefile
-zip_code_shapefile = os.path.join(base_folder,"pno_tilasto_2019.shp")
-finnish_regions_shapefile = os.path.join(base_folder,"SuomenMaakuntajako_2018_10k.shp")
+zip_code_shapefile = os.path.join(base_folder,"pno_tilasto_2020.shp")
+finnish_regions_shapefile = os.path.join(base_folder,"SuomenMaakuntajako_2020_10k.shp")
 
 ### The output geopackage file of the data preparation script
 output_file_path =  os.path.join(base_folder,"zip_code_data_after_preparation.gpkg")
@@ -56,7 +57,7 @@ def scaleNumericalColumns(original_gdf):
     all_columns = list(original_gdf.columns)
 
     ### List the column names that we don't want to be scaled
-    col_names_no_scaling = ['posti_alue','nimi','pt_tyott','geometry']
+    col_names_no_scaling = ['postinumer','nimi','pt_tyott','geometry']
 
     ### List of column names we want to scale. (all columns minus those we don't want)
     col_names_to_scaling = [column for column in all_columns if column not in col_names_no_scaling]
