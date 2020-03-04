@@ -15,19 +15,19 @@ import pandas as pd
 from math import sqrt
 import os
 
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor, BaggingRegressor,ExtraTreesRegressor, AdaBoostRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error,r2_score
 
 ### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-base_folder = "/home/cscuser/gis-ml/data/paavo"
-base_folder = "/tmp/gis-ml/data/paavo"
+#base_folder = "/home/cscuser/gis-ml/data/paavo"
+base_folder = "/Users/jnyman/Documents/local/rndm/ml_course_DEV/test"
 
 ### Relative path to the zip code geopackage file that was prepared by vectorDataPreparations.py
 input_geopackage_path = os.path.join(base_folder,"zip_code_data_after_preparation.gpkg")
 
-### Output file
-output_geopackage_path = os.path.join(base_folder,"num_unemployed_per_zipcode_randomforest.gpkg")
+### Output file. Change name for different regression models
+output_geopackage_path = os.path.join(base_folder,"median_income_per_zipcode_randomforest.gpkg")
 
 ### Just some pandas settings that allow us to print all columns
 pd.set_option('display.max_columns', None)
@@ -36,16 +36,21 @@ pd.set_option('display.max_rows', None)
 def trainAndEstimateModel(original_gdf):
 
     ### Split the gdf to x (the predictor attributes) and y (the attribute to be predicted)
-    y = original_gdf['pt_tyott'] # number of unemployed persons
+    y = original_gdf['hr_mtu'] # Average income
     ### remove geometry and textual fields
-    x = original_gdf.drop(['geometry','posti_alue','nimi','pt_tyott'],axis=1) 
+    x = original_gdf.drop(['geometry','postinumer','nimi','hr_mtu'],axis=1)
 
     ### Split the both datasets to train (80%) and test (20%) datasets
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.2, random_state=63)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=.2, random_state=42)
 
-    ### Define the model to be used
-    model = GradientBoostingRegressor(n_estimators=40, learning_rate=0.1)
-    #model = RandomForestRegressor(n_estimators=40)
+    ### Choose the model to be used
+    model = GradientBoostingRegressor(n_estimators=40, learning_rate=0.1,verbose=1)
+    #model = RandomForestRegressor(n_estimators=40,verbose=1)
+    #model = BaggingRegressor(n_estimators=40,verbose=1)
+    #model = ExtraTreesRegressor(n_estimators=40,verbose=1)
+    #model = AdaBoostRegressor(n_estimators=40)
+
+    print(model)
 
     ### Train the model with x and y of the train dataset
     model.fit(x_train, y_train)
@@ -68,14 +73,15 @@ def trainAndEstimateModel(original_gdf):
 def predictToAllZipCodes(model, original_gdf):
 
     ### Drop the not-used columns from original_gdf as done before model training.
-    x = original_gdf.drop(['geometry','posti_alue','nimi','pt_tyott'],axis=1)
+    x = original_gdf.drop(['geometry','postinumer','nimi','hr_mtu'],axis=1)
 
-    ### Predict number of unemployed people with already trained model
+    ### Predict the median income with already trained model
     prediction = model.predict(x)
 
     ### Join the predictions to the original geodataframe and pick only interesting columns for results
-    original_gdf['predicted_pt_tyott'] = prediction.round(0)
-    resulting_gdf = original_gdf[['posti_alue','nimi','pt_tyott','predicted_pt_tyott','geometry']]
+    original_gdf['predicted_hr_mtu'] = prediction.round(0)
+    original_gdf['difference'] = original_gdf['predicted_hr_mtu'] - original_gdf['hr_mtu']
+    resulting_gdf = original_gdf[['postinumer','nimi','hr_mtu','predicted_hr_mtu','difference','geometry']]
 
     return resulting_gdf
 
@@ -87,7 +93,7 @@ def main():
     ### Build the model, train it and run it to the test part of the dataset
     model = trainAndEstimateModel(original_gdf)
 
-    ### Predict the number of unemployed people to all zip codes
+    ### Predict the median income to all zip codes
     resulting_gdf = predictToAllZipCodes(model,original_gdf)
 
     ### Write resulting geodataframe to a geopackage
