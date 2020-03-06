@@ -14,10 +14,11 @@ import pandas as pd
 import os
 from shapely.geometry import Point, MultiPolygon, Polygon
 from sklearn.preprocessing import StandardScaler
+from sklearn.externals.joblib import dump, load
 
 ### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
 #base_folder = "/home/cscuser/gis-ml/data/paavo"
-base_folder = "C:\\temp\\ML_course_data\\paavo"
+base_folder = "/Users/jnyman/Documents/local/rndm/ml_course_DEV/test"
 
 ### Path to the input files. Zipcode level Paavo dataset with population statistics and the finnish regions (maakunta) shapefile
 zip_code_shapefile = os.path.join(base_folder,"pno_tilasto_2020.shp")
@@ -37,15 +38,15 @@ def readZipcodesAndCleanData(zipcode_filepath):
     gdf = gpd.read_file(zipcode_filepath,encoding='utf-8')
     print("Original dataframe size: " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns")
     
-    ### Drop all rows that have missing values or where number of unemployed people is -1 (=not known)
+    ### Drop all rows that have missing values or where average income is -1 (=not known) or 0
     gdf = gdf.dropna()    
-    gdf = gdf[gdf['pt_tyott']!= -1].reset_index(drop=True)    
+    gdf = gdf[gdf["hr_mtu"]>0].reset_index(drop=True)
 
     print("Dataframe size after dropping some rows: " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns")
 
-    ### Remove some attributes that are strings (nanm, kunta = name of the municipality in Finnish and Swedish.
-    ### or which make the modeling too easy (pt_tyoll = the number of people working)
-    columns_to_be_removed_completely = ['namn','kunta','pt_tyoll']
+    ### Remove some columns that are strings (nanm, kunta = name of the municipality in Finnish and Swedish.
+    ### or which might make the modeling too easy ('hr_mtu','hr_tuy','hr_pi_tul','hr_ke_tul','hr_hy_tul','hr_ovy')
+    columns_to_be_removed_completely = ['namn','kunta','hr_ktu','hr_tuy','hr_pi_tul','hr_ke_tul','hr_hy_tul','hr_ovy']
     gdf = gdf.drop(columns_to_be_removed_completely,axis=1)
     print("Dataframe size after dropping some columns: " + str(len(gdf.index))+ " zip codes with " + str(len(gdf.columns)) + " columns")
     
@@ -57,7 +58,7 @@ def scaleNumericalColumns(original_gdf):
     all_columns = list(original_gdf.columns)
 
     ### List the column names that we don't want to be scaled
-    col_names_no_scaling = ['postinumer','nimi','pt_tyott','geometry']
+    col_names_no_scaling = ['postinumer','nimi','hr_mtu','geometry']
 
     ### List of column names we want to scale. (all columns minus those we don't want)
     col_names_to_scaling = [column for column in all_columns if column not in col_names_no_scaling]
@@ -68,6 +69,9 @@ def scaleNumericalColumns(original_gdf):
     ### Apply a Scikit StandardScaler for all the columns left in gdf
     scaler = StandardScaler()
     scaled_values_array = scaler.fit_transform(gdf)
+
+    ### You can save the scaler for later use if you want
+    dump(scaler, os.path.join(base_folder,'zip_code_scaler.bin'), compress=True)
 
     ### The scaled columns come back as a numpy ndarray, switch back to a geopandas dataframe again
     gdf = pd.DataFrame(scaled_values_array)
