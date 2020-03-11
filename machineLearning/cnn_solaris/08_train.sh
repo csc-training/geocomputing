@@ -11,4 +11,4 @@
 
 module load solaris
 
-srun python 08_classificationCNN.py
+srun python 08_train.py

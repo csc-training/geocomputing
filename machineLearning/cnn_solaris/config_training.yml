@@ -11,6 +11,7 @@ batch_size: 12
 data_specs:
   width: 650
   height: 650
+  dtype:
   image_type: normalized
   rescale: false
   rescale_minima: auto
@@ -24,7 +25,7 @@ data_specs:
 
 training_data_csv: 'tile_filepaths_for_training.csv'
 validation_data_csv:
-inference_data_csv: 'tile_filepaths_for_prediction.csv'
+inference_data_csv:
 
 training_augmentation:
   augmentations:
@@ -71,13 +72,13 @@ inference_augmentation:
   augmentations:
     Normalize:
       mean:
-        - 0.17395850358514
-        - 0.035442982050778
-        - 0.041676467416446
+        - 0.17396631162454
+        - 0.033582232626573
+        - 0.040423970924474
       std:
-        - 0.10218734901152
-        - 0.029166612631494
-        - 0.02251037551648
+        - 0.093608074909319
+        - 0.027442049122189
+        - 0.022834374265174
       max_pixel_value: 1.0
       p: 1.0
   p: 1.0
@@ -103,8 +104,3 @@ training:
       monitor: val_loss
   model_dest_path: 'PredictSpruceForestsModel_final.pth'
   verbose: true
-
-inference:
-  window_step_size_x:
-  window_step_size_y:
-  output_dir: ''
