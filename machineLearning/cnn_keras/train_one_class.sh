@@ -11,4 +11,6 @@ module load tensorflow/2.0.0
 #tar cvf forest.tar image_training_tiles_650 label_tiles_650
 tar xf /scratch/project_2002044/test/johannes/tiles/forest.tar -C $LOCAL_SCRATCH
 
+ls $LOCAL_SCRATCH
+
 srun python3 train.py $LOCAL_SCRATCH

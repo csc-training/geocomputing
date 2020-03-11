@@ -9,7 +9,7 @@ from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Conv2DTranspose
 from tensorflow.keras.layers import concatenate, BatchNormalization, Dropout
 from tensorflow.keras import Model
 
-def cosmiq_sn4_baseline(input_shape=(512, 512, 3), base_depth=64):
+def cosmiq_sn4_baseline(input_shape=(512, 512, 3), base_depth=64, no_of_classes=1):
     """Keras implementation of untrained TernausNet model architecture.
 
     Arguments:
@@ -81,7 +81,11 @@ def cosmiq_sn4_baseline(input_shape=(512, 512, 3), base_depth=64):
     up11 = Conv2DTranspose(int(base_depth/2), 2, strides=(2, 2),
                            activation='relu', padding='same')(conv10_1)
     concat11 = concatenate([up11, conv1])
-
-    out = Conv2D(1, 1, activation='sigmoid', padding='same')(concat11)
+    
+    if no_of_classes == 1: 
+        activation='sigmoid'  
+    else:
+        activation='softmax'
+    out = Conv2D(no_of_classes, 1, activation=activation, padding='same')(concat11)
 
     return Model(inputs=inputs, outputs=out)
