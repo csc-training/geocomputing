@@ -7,27 +7,15 @@ import time
 import os
 from PredictSpruceForestsModel import PredictSpruceForestsModel
 
-
-### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-base_folder = ""
-
 ### This is the folder of this file. We use it to fetch the .yml files
 script_folder = os.path.dirname(os.path.realpath(__file__))
 
+### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
+base_folder = "/Users/jnyman/Documents/local/rndm/solaris/big_training"
+
+### Rest of the hierarchical subfolder structure
 tile_output_folder = os.path.join(base_folder,"tiles")
-
-### The whole image (prediction), training image (clipped from the whole img) and the label image
-training_image_path = os.path.join(base_folder,"T34VFM_20180829T100019_scaled.tif")
-training_label_path = os.path.join(base_folder,"forest_spruce.tif")
-prediction_image_path = os.path.join(base_folder,"T34VFM_20180829T100019.tif")
-
-training_image_tile_subfolder = os.path.join(tile_output_folder,"image_training_tiles_650")
-training_label_tile_subfolder = os.path.join(tile_output_folder, "label_tiles_650")
 prediction_image_tile_subfolder = os.path.join(tile_output_folder,"image_prediction_tiles_512")
-
-pd.set_option('display.max_columns', None)
-pd.set_option('display.expand_frame_repr', False)
-pd.set_option('max_colwidth', -1)
 
 def checkGPUavailability():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -38,38 +26,14 @@ def checkGPUavailability():
 
 def createTileListFiles():
     #### Create lists of the tile filenames
-    list_of_training_tiles = os.listdir(training_image_tile_subfolder)
-    list_of_label_tiles = os.listdir(training_label_tile_subfolder)
     list_of_prediction_tiles = os.listdir(prediction_image_tile_subfolder)
 
     ### Add the whole path to the filenames
-    list_of_training_tiles = [os.path.join(training_image_tile_subfolder, i) for i in list_of_training_tiles]
-    list_of_label_tiles = [os.path.join(training_label_tile_subfolder, i) for i in list_of_label_tiles]
     list_of_prediction_tiles = [os.path.join(prediction_image_tile_subfolder, i) for i in list_of_prediction_tiles]
-
-    ### Sort the two lists used in training so they match
-    list_of_training_tiles.sort()
-    list_of_label_tiles.sort()
-
-    ### Create a pandas dataframe that has the training image filepath and label image filepath as columns and write it to csv
-    training_filename_df = pd.DataFrame({'image': list_of_training_tiles, 'label': list_of_label_tiles})
-    print(training_filename_df.head())
-    training_filename_df.to_csv(os.path.join(script_folder, 'tile_filepaths_for_training.csv'), encoding='utf-8')
 
     ### Create a pandas dataframe that has the prediction image filepaths as a column and write it to csv
     prediction_filename_df = pd.DataFrame({'image': list_of_prediction_tiles})
     prediction_filename_df.to_csv(os.path.join(script_folder, 'tile_filepaths_for_prediction.csv'), encoding='utf-8')
-
-def trainModel(config,custom_model_dict):
-    ### This function trains the convolutional neural network model
-
-    start_time = time.time()
-    print('Training the model...')
-    trainer = sol.nets.train.Trainer(config, custom_model_dict=custom_model_dict)
-    trainer.train()
-    end_time = time.time()
-
-    print('training took {} seconds'.format(end_time - start_time))
 
 def predictForTiles(config,custom_model_dict):
     ### This function runs the prediction for another dataset using the trained model
@@ -127,18 +91,9 @@ def main():
     createTileListFiles()
 
     ### Let's load the configuration .yml file for the prediction phase
-    training_config = sol.utils.config.parse(os.path.join(script_folder,'config_training.yml'))
-    custom_model_dict = {'model_name': 'PredictSpruceForestsModel', 'weight_path': None, 'weight_url': None,
-                         'arch': PredictSpruceForestsModel}
-
-
-    trainModel(training_config,custom_model_dict)
-
-
-    ### Let's load the configuration .yml file for the prediction phase
     prediction_config = sol.utils.config.parse(os.path.join(script_folder, 'config_prediction.yml'))
     custom_model_dict = {'model_name': 'PredictSpruceForestsModel',
-                         'weight_path': prediction_config['training']['model_dest_path'],
+                         'weight_path': prediction_config['model_path'],
                          'weight_url': None,
                          'arch': PredictSpruceForestsModel}
 
