@@ -24,11 +24,13 @@ import rasterio
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.callbacks import CSVLogger
 from tensorflow.keras.optimizers import Adam
+#from tensorflow_addons.losses import SigmoidFocalCrossEntropy
 from tensorflow.keras.models import load_model
 from tensorflow import one_hot
 
 # The CNN model architecture is in anouther local file:
 import model_solaris
+#import loss_jaccard
 
 #SETTINGS
 
@@ -53,13 +55,13 @@ results_dir='/scratch/project_2002044/test/kylli'
 
 # The number of classes in labels
 # TOFIX: Change the number according to the used data
-no_of_classes=2 #For binary classification
+no_of_classes=4 #For binary classification
 # no_of_classes=4 # n for multiclass
 
 # Folders with data and labels
 train_data_dir = os.path.join(data_dir, 'image_training_tiles_650')
 train_data_file_name='T34VFM_20180829T100019_clipped_scaled_'
-if no_of_classes == 1: 
+if no_of_classes == 2: 
     labels_data_dir = os.path.join(data_dir, 'label_tiles_650')  
     label_file_name = 'forest_spruce_scaled_'
 else:
@@ -67,8 +69,8 @@ else:
     label_file_name = 'forest_species_reclassified_'
 
 # Folders for results and log
-model_best = os.path.join(results_dir, 'model_best_mc_5000_4_2.h5')
-training_log_file = os.path.join(results_dir, 'log_mc_5000_4_2.csv')
+model_best = os.path.join(results_dir, 'model_best_mc_5000_3_2_weighted1_3_6_40.h5')
+training_log_file = os.path.join(results_dir, 'log_mc_5000_3_2_weighted1_3_6_40.csv')
 
 # With more data save some tiles for testing later
 # Not used in the exercise
@@ -87,23 +89,46 @@ data_col='tile'
 label_col='label'
 
 #Trainig settings
-# TODO Comments on other options?
-batch_size=8
+# 16 or 32 might be better for bigger datasets 
+batch_size=12
 # Number of epochs depends a lot on amount of data
 # In the exercise we have little data, so big amount of epochs goes fast.
 no_of_epochs = 5000
 # Changing optimizer or its settings could be the first option for trying different models
 # By default Adam epsilon is much smaller, but for image segmentation tasks bigger epsilon like here could work better.
-optimizer = Adam(lr=1E-4, epsilon=0.01)
+optimizer = Adam(lr=1E-3, epsilon=0.01)
 
 # Set loss according to the number of classes.
 # Do not change this.
+# TODO, how to add weights to these for get smaller categories to classify correctly.
+# TODO Use jaccard or combinartion with binary_crossentropy (or focal_crossentropy)
 if no_of_classes == 2: 
     loss='binary_crossentropy'  
+    #loss=loss_jaccard.jaccard_loss
+    #loss=SigmoidFocalCrossEntropy()
 else:
     loss='categorical_crossentropy'
+
+# Class weithts used during model training.
+# Because in example data the classes have very different number of pixels,
+# we use class weights to compensate.
+# The other option could be to use some other loss function.
+# In binary classification the spruce class is simply given 10 time more importance than background.
+if no_of_classes == 2: 
+    class_weight = {0: 1.,
+                    1: 10.}  
+else:
+    # Weights are dependent on how many pixels certain class has in the data, in our example there is:
+    # Class 0 (background) - 200 000 pixels, weight 1
+    # Class 1 - 75 000 -> 3
+    # Class 2 - 35 000 -> 6
+    # Class 3 - 5 000 -> 40
+    class_weight = {0: 1.,
+                    1: 3.,
+                    2: 6.,
+                    3: 40.}
     
-# TODO: Comments on other options?
+    
 metrics=['accuracy']
 
 # Read all the training files and randomly assign to training and validation sets
@@ -126,7 +151,6 @@ def prepareData():
     # Generate train, val, and test sets for frames
     # In the exercies we have so little data, so we skip the test set.
     # Here we use 70% of frames for training and 30% for validation.
-    # TODO: Ok?
     train_split = int(0.7*len(all_frames_df))
     train_frames = all_frames_df[:train_split]
     val_frames = all_frames_df[train_split:]
@@ -210,7 +234,6 @@ def data_gen(img_df, augment):
 def trainModel(train_gen, val_gen, no_of_training_tiles, no_of_validation_tiles):
    
     # If CNN model already exist continue training
-    # TODO: It seems not to work as expected. Something wrong here?
     if os.path.exists(model_best):
         m = load_model(model_best)
 
@@ -232,19 +255,23 @@ def trainModel(train_gen, val_gen, no_of_training_tiles, no_of_validation_tiles)
     csv_logger = CSVLogger(training_log_file, append=True, separator=';')
     
     # Stop training if model does not get better in patience number of epochs.
-    # TODO: Had to remove it, because training stopped too early. Any better settings?
     earlystopping = EarlyStopping(monitor = 'val_loss', verbose = 1,
-                                  min_delta = 0.001, patience = 500, mode = 'min')
+                                  min_delta = 0.001, patience = 100, mode = 'min')
 
-    callbacks_list = [checkpoint, csv_logger] #, earlystopping
+    callbacks_list = [checkpoint, csv_logger, earlystopping] #
 
     # Train the model
+    # TODO, add class weights
     m.fit(train_gen, epochs=no_of_epochs, 
                               steps_per_epoch = (no_of_training_tiles//batch_size),
+                              class_weight=class_weight,
                               verbose=2,
                               validation_data=val_gen, 
                               validation_steps=(no_of_validation_tiles//batch_size), 
                               callbacks=callbacks_list)
+    
+    # TODO.
+    m.save()
 
 
 def main():

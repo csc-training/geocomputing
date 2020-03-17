@@ -34,7 +34,7 @@ def cosmiq_sn4_baseline(input_shape=(512, 512, 3), base_depth=64, no_of_classes=
     inputs = Input(input_shape)
 
     # Convolution wtih Conv2D and MaxPooling2D layers.
-    # TODO. 3 here is the window size of 3x3 pixels. Any comments on using for example 5x5 window? Unusual?
+    # 3 here is the window size of 3x3 pixels.
     conv1 = Conv2D(base_depth, 3, activation='relu', padding='same')(inputs) #No of pixels: 512x512
     pool1 = MaxPooling2D(pool_size=(2, 2))(conv1) #256x256
 

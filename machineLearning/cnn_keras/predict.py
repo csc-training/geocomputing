@@ -15,6 +15,7 @@ import numpy as np
 import rasterio
 import rasterio.merge
 from tensorflow.keras.models import load_model
+from loss_jaccard import jaccard_loss
 
 #SETTINGS
 
@@ -25,7 +26,7 @@ results_dir='/scratch/project_2002044/test/kylli'
 #data_dir='C:\\temp\\ML_course_data\\tiles_new'
 #results_dir=data_dir
 
-model_name='mc_5000_4_2'
+model_name='spruce_5000_3_2_weighted1_10'
 prediction_data_dir = os.path.join(data_dir, 'image_prediction_tiles_512')
 model_final = os.path.join(results_dir, 'model_best_'+model_name+'.h5')
 
@@ -62,7 +63,6 @@ def predictTile(model, dataImage):
         prediction = model.predict(image_data3)
 
         # If multi-class, find the class with best probability
-        # TODO Any tricks to here, now smallest class gets no pixels in the classification.
         if no_of_classes > 2: 
             prediction = np.argmax(prediction, 3)
         
@@ -85,16 +85,16 @@ def predictTile(model, dataImage):
             dst.write(prediction2, 1)
 
 
-def listdir_fullpath(d):
-    return [os.path.join(d, f) for f in os.listdir(d)]
                
 # Merge all tiles to one big .tif-image
 def  mergeTiles():
     
-    tile_files = listdir_fullpath(predicted_tiles_folder)
+    #Find all .tif files in the predicted tiles folder
+    tile_files = glob.glob(predicted_tiles_folder+"/*.tif")
     
     # Make first GDAL virtual raster of the tiles.
     my_vrt = gdal.BuildVRT(prediction_vrt_file, tile_files)
+    # set my_vrt to None, because only then GDAL writes the file to disk.
     my_vrt = None    
        
     # Save the virtual raster to one file.
@@ -107,15 +107,18 @@ def  mergeTiles():
 
 def main():
     # Load the previously trained model
-    model = load_model(model_final) 
-            
-    # Predict for all tiles
+    model = load_model(model_final, custom_objects={'jaccard_loss': jaccard_loss}) 
+    
+    # Find all data tiles for prediction
     all_frames = glob.glob(prediction_data_dir+"/*.tif")
     # Make a folder for the predicted tiles
-    os.makedirs(predicted_tiles, exist_ok=True)
+    os.makedirs(predicted_tiles_folder, exist_ok=True)
+    
+    # Predict for all tiles
     for tile in all_frames:
         predictTile(model, tile)
-        
+    
+    #Merge tiles to one GeoTiff    
     mergeTiles()
        
 if __name__ == '__main__':
