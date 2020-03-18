@@ -7,11 +7,15 @@ import time
 import os
 from PredictSpruceForestsModel import PredictSpruceForestsModel
 
+### The first (and only) input argument for this script is the folder where data exists
+if len(sys.argv) != 2:
+   print('Please give the data directory')
+   sys.exit()
+
+base_folder=sys.argv[1]
+
 ### This is the folder of this file. We use it to fetch the .yml files
 script_folder = os.path.dirname(os.path.realpath(__file__))
-
-### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-base_folder = "/Users/jnyman/Documents/local/rndm/solaris/big_training"
 
 ### Rest of the hierarchical subfolder structure
 tile_output_folder = os.path.join(base_folder,"tiles")
