@@ -8,8 +8,8 @@
 #SBATCH --gres=gpu:v100:1,nvme:1 #Local disk in Gb
 
 module load tensorflow/2.0.0
-#tar cvf forest.tar image_training_tiles_650 label_tiles_650
-tar xf /scratch/project_2002044/test/johannes/tiles/forest.tar -C $LOCAL_SCRATCH
+#tar cvf spruce.tar image_training_tiles_650 label_tiles_650
+tar xf /scratch/project_2002044/test/johannes/tiles/spruce.tar -C $LOCAL_SCRATCH
 
 ls $LOCAL_SCRATCH
 
