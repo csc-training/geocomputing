@@ -2,10 +2,12 @@ import solaris as sol
 import torch
 import rasterio
 import rasterio.merge
+import rasterio.mask
 import pandas as pd
 import time
 import os
 from PredictSpruceForestsModel import PredictSpruceForestsModel
+import sys
 
 ### The first (and only) input argument for this script is the folder where data exists
 if len(sys.argv) != 2:
@@ -20,6 +22,12 @@ script_folder = os.path.dirname(os.path.realpath(__file__))
 ### Rest of the hierarchical subfolder structure
 tile_output_folder = os.path.join(base_folder,"tiles")
 prediction_image_tile_subfolder = os.path.join(tile_output_folder,"image_prediction_tiles_512")
+
+### Output path for the predicted image 
+predicted_image_output_path = os.path.join(base_folder,"spruce_prediction_1200_epochs.tif")
+
+### Validation image which will be compared to the predicted one
+validation_image_path = os.path.join(base_folder,"validation","forest_spruce_scaled_validation_2.tif")
 
 def checkGPUavailability():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -81,10 +89,35 @@ def mergeOutputTiles(predicted_tiles_folder):
         }
     )
 
-    output_path = os.path.join(base_folder,"predicted_spruce.tif")
-    with rasterio.open(output_path, "w", **out_metafile) as dest:
+    with rasterio.open(predicted_image_output_path, "w", **out_metafile) as dest:
         dest.write(mosaic)
 
+def produceEvaluationMetrics():
+
+    ### Open both predicted image and the validation image
+    with rasterio.open(predicted_image_output_path) as predicted_image:
+            with rasterio.open(validation_image_path) as validation_image:
+                ### Generate a simple geojson from the extent of the validation image
+                v = validation_image.bounds
+                val_img_extent_geoJSON = {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [v.left,v.bottom],
+                            [v.right,v.bottom],
+                            [v.right,v.top],
+                            [v.left,v.top],
+                            [v.left,v.bottom]]]}
+                ### Clip the predicted image to the extent of the validation image
+                predicted_image_clip, out_transform = rasterio.mask.mask(predicted_image, [val_img_extent_geoJSON], crop=True)
+
+                ### Let's print the shapes of both images. They need to be the same
+                print("Shape of the Prediction image clip: ",  predicted_image_clip.shape)
+                print("Shape of the Validation image clip: ",  validation_image.shape)
+
+                ### Calculate the f1, precision and recall with Solaris
+                ### prop_threshold determines what value is the dividing number on the predicted image. Below that will get 0, over it 1 so change it to your liking
+                f1, precision, recall = sol.eval.pixel.f1(validation_image,predicted_image_clip,prop_threshold=0.001,verbose=True)
+                #print("F1 score: {}, Precision: {}, Recall: {}".format(f1,precision,recall))
 
 
 def main():
@@ -97,14 +130,17 @@ def main():
     ### Let's load the configuration .yml file for the prediction phase
     prediction_config = sol.utils.config.parse(os.path.join(script_folder, 'config_prediction.yml'))
     custom_model_dict = {'model_name': 'PredictSpruceForestsModel',
-                         'weight_path': prediction_config['model_path'],
-                         'weight_url': None,
-                         'arch': PredictSpruceForestsModel}
+                        'weight_path': prediction_config['model_path'],
+                        'weight_url': None,
+                        'arch': PredictSpruceForestsModel}
 
     predictForTiles(prediction_config,custom_model_dict)
 
     ### The prediction is done to single tiles, this function merges them back to a larger image
     mergeOutputTiles(prediction_config['inference']['output_dir'])
+
+    ### Evaluate the prediction with a validation image
+    produceEvaluationMetrics()
 
 if __name__ == '__main__':
     ### This part just runs the main method and times it
