@@ -20,20 +20,20 @@ results_dir='/scratch/project_xx/test/results'
 
 no_of_classes = 2
 
-prediction_image_file = os.path.join(results_dir, 'predicted_spruce_spruce_5000_3_2_weighted1_10.tif')
+predicted_image_output_path = os.path.join(results_dir, 'predicted_spruce_spruce_5000_3_2_weighted1_10.tif')
  
 if no_of_classes == 2: 
-    test_dataset = os.path.join(data_dir, 'forest_spruce_scaled.tif')  
+    test_image_path = os.path.join(data_dir, 'forest_spruce_scaled.tif')  
 else:
-    test_dataset = os.path.join(data_dir, 'forest_species_reclassified.tif')
+    test_image_path = os.path.join(data_dir, 'forest_species_reclassified.tif')
     
 #Treshold for the binary classification
 prediction_treshold = 0.22    
 
 def estimateModel():
     # Open image files of predicted data and test data
-    with rasterio.open(prediction_image_file, 'r') as prediction_dataset:      
-        with rasterio.open(test_dataset, 'r') as test_labels_dataset:           
+    with rasterio.open(predicted_image_output_path, 'r') as prediction_dataset:      
+        with rasterio.open(test_image_path, 'r') as test_labels_dataset:           
             
             #Find out the overlappin area of two images.
             #Because of tiling the prediction image is slightly smaller than the original clip.

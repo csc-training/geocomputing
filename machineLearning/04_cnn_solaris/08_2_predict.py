@@ -27,7 +27,7 @@ prediction_image_tile_subfolder = os.path.join(tile_output_folder,"image_predict
 predicted_image_output_path = os.path.join(base_folder,"spruce_prediction_1200_epochs.tif")
 
 ### Validation image which will be compared to the predicted one
-validation_image_path = os.path.join(base_folder,"validation","forest_spruce_scaled_validation_2.tif")
+test_image_path = os.path.join(base_folder,"validation","forest_spruce_scaled_validation_2.tif")
 
 def checkGPUavailability():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -92,32 +92,40 @@ def mergeOutputTiles(predicted_tiles_folder):
     with rasterio.open(predicted_image_output_path, "w", **out_metafile) as dest:
         dest.write(mosaic)
 
-def produceEvaluationMetrics():
-
-    ### Open both predicted image and the validation image
-    with rasterio.open(predicted_image_output_path) as predicted_image:
-            with rasterio.open(validation_image_path) as validation_image:
-                ### Generate a simple geojson from the extent of the validation image
-                v = validation_image.bounds
-                val_img_extent_geoJSON = {
+def estimateModel():
+    
+    # Open image files of predicted data and test data
+    with rasterio.open(predicted_image_output_path, 'r') as prediction_dataset:      
+        with rasterio.open(test_image_path, 'r') as test_labels_dataset:           
+            
+            #Find out the overlappin area of two images.
+            #Because of tiling the prediction image is slightly smaller than the original clip.
+            left = max(prediction_dataset.bounds.left,test_labels_dataset.bounds.left)
+            bottom = max(prediction_dataset.bounds.bottom,test_labels_dataset.bounds.bottom)
+            right = min(prediction_dataset.bounds.right,test_labels_dataset.bounds.right)
+            top = min(prediction_dataset.bounds.top,test_labels_dataset.bounds.top)
+            
+            common_bbox = {
                         "type": "Polygon",
                         "coordinates": [[
-                            [v.left,v.bottom],
-                            [v.right,v.bottom],
-                            [v.right,v.top],
-                            [v.left,v.top],
-                            [v.left,v.bottom]]]}
-                ### Clip the predicted image to the extent of the validation image
-                predicted_image_clip, out_transform = rasterio.mask.mask(predicted_image, [val_img_extent_geoJSON], crop=True)
+                            [left, bottom],
+                            [left, top],
+                            [right, top],
+                            [right, bottom],
+                            [left, bottom]]]}
+                        
+            # Read data from only the overlapping area
+            y_pred, transform = rasterio.mask.mask(prediction_dataset, common_bbox, crop=True)
+            y_true, transform = rasterio.mask.mask(test_labels_dataset, common_bbox, crop=True)
 
-                ### Let's print the shapes of both images. They need to be the same
-                print("Shape of the Prediction image clip: ",  predicted_image_clip.shape)
-                print("Shape of the Validation image clip: ",  validation_image.shape)
+            ### Let's print the shapes of both images. They need to be the same
+            print("Shape of the Prediction image clip: ",  y_pred.shape)
+            print("Shape of the Validation image clip: ",  y_true.shape)
 
-                ### Calculate the f1, precision and recall with Solaris
-                ### prop_threshold determines what value is the dividing number on the predicted image. Below that will get 0, over it 1 so change it to your liking
-                f1, precision, recall = sol.eval.pixel.f1(validation_image,predicted_image_clip,prop_threshold=0.001,verbose=True)
-                #print("F1 score: {}, Precision: {}, Recall: {}".format(f1,precision,recall))
+            ### Calculate the f1, precision and recall with Solaris
+            ### prop_threshold determines what value is the dividing number on the predicted image. Below that will get 0, over it 1 so change it to your liking
+            f1, precision, recall = sol.eval.pixel.f1(y_true,y_pred,prop_threshold=0.001,verbose=True)
+            #print("F1 score: {}, Precision: {}, Recall: {}".format(f1,precision,recall))
 
 
 def main():
@@ -140,7 +148,7 @@ def main():
     mergeOutputTiles(prediction_config['inference']['output_dir'])
 
     ### Evaluate the prediction with a validation image
-    produceEvaluationMetrics()
+    estimateModel()
 
 if __name__ == '__main__':
     ### This part just runs the main method and times it
