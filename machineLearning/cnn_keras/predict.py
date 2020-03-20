@@ -15,18 +15,21 @@ import numpy as np
 import rasterio
 import rasterio.merge
 from tensorflow.keras.models import load_model
-from loss_jaccard import jaccard_loss
+
 
 #SETTINGS
 
-# Paths for INPUTS: data and model
-data_dir='/scratch/project_2002044/test/johannes/tiles'
-results_dir='/scratch/project_2002044/test/kylli'
-#TODO clean away
-#data_dir='C:\\temp\\ML_course_data\\tiles_new'
-#results_dir=data_dir
+# The number of classes in labels
+# TOFIX: Change the number according to the used data
+no_of_classes=2 #For binary classification
+# no_of_classes=4 # n for multiclass
 
-model_name='spruce_5000_3_2_weighted1_10'
+# Paths for INPUTS: data and model
+data_dir='/scratch/project_xx/data'
+results_dir='/scratch/project_xx/test/results'
+
+
+model_name='mc_5000_3_2_weighted1_10_50_500'
 prediction_data_dir = os.path.join(data_dir, 'image_prediction_tiles_512')
 model_final = os.path.join(results_dir, 'model_best_'+model_name+'.h5')
 
@@ -38,10 +41,6 @@ prediction_vrt_file = os.path.join(results_dir,'predicted_spruce_'+model_name+'.
 #Setting of the data
 img_size = 512
 img_channels = 3
-# The number of classes in labels
-# TOFIX: Change the number according to the used data
-no_of_classes=2 #For binary classification
-# no_of_classes=4 # n for multiclass
 
 # Predict a tile and save it as .tif file
 def predictTile(model, dataImage):
@@ -78,7 +77,7 @@ def predictTile(model, dataImage):
         else:
             #For multi-class change also data type, argmax output is in int64 not supported by rasterio.
             prediction2 = prediction2.astype(np.uint8)
-            dtype='ubyte'
+            dtype=rasterio.uint8
         outputMeta.update(count=1, dtype=dtype)
         # Writing the image on the disk
         with rasterio.open(predictedImageFile, 'w', **outputMeta) as dst:
@@ -102,12 +101,14 @@ def  mergeTiles():
     with rasterio.open(prediction_vrt_file, 'r') as vrt_in:
         out_metafile = vrt_in.meta.copy()
         out_metafile.update({"driver": "GTiff"})
+        if no_of_classes > 2:
+            out_metafile.update({"compress": "lzw"})
         with rasterio.open(prediction_image_file, "w", **out_metafile) as dest:
             dest.write(vrt_in.read())  
 
 def main():
     # Load the previously trained model
-    model = load_model(model_final, custom_objects={'jaccard_loss': jaccard_loss}) 
+    model = load_model(model_final) 
     
     # Find all data tiles for prediction
     all_frames = glob.glob(prediction_data_dir+"/*.tif")

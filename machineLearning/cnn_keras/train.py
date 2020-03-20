@@ -24,9 +24,9 @@ import rasterio
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.callbacks import CSVLogger
 from tensorflow.keras.optimizers import Adam
-#from tensorflow_addons.losses import SigmoidFocalCrossEntropy
 from tensorflow.keras.models import load_model
 from tensorflow import one_hot
+
 
 # The CNN model architecture is in anouther local file:
 import model_solaris
@@ -45,13 +45,9 @@ if len(sys.argv) != 2:
 
 data_dir=sys.argv[1]
 
-# TODO: clean away
-#data_dir='C:\\temp\\ML_course_data\\tiles_new'
-#results_dir=data_dir
-
 # The results are written to Puhti scratch disk
 # TOFIX: Change the path according to your own username
-results_dir='/scratch/project_2002044/test/kylli'
+results_dir='/scratch/project_xx/test/results'
 
 # The number of classes in labels
 # TOFIX: Change the number according to the used data
@@ -69,8 +65,8 @@ else:
     label_file_name = 'forest_species_reclassified_'
 
 # Folders for results and log
-model_best = os.path.join(results_dir, 'model_best_mc_5000_3_2_weighted1_3_6_40.h5')
-training_log_file = os.path.join(results_dir, 'log_mc_5000_3_2_weighted1_3_6_40.csv')
+model_best = os.path.join(results_dir, 'model_best_mc_5000_3_2_weighted1_10_50_500.h5')
+training_log_file = os.path.join(results_dir, 'log_mc_5000_3_2_weighted1_10_50_500.csv')
 
 # With more data save some tiles for testing later
 # Not used in the exercise
@@ -99,35 +95,29 @@ no_of_epochs = 5000
 optimizer = Adam(lr=1E-3, epsilon=0.01)
 
 # Set loss according to the number of classes.
-# Do not change this.
-# TODO, how to add weights to these for get smaller categories to classify correctly.
-# TODO Use jaccard or combinartion with binary_crossentropy (or focal_crossentropy)
+# For very unbalanced cases it might make sense to use some other loss function,
+# for example SigmoidFocalCrossEntropy, jaccard, dice or some combination.
 if no_of_classes == 2: 
     loss='binary_crossentropy'  
-    #loss=loss_jaccard.jaccard_loss
-    #loss=SigmoidFocalCrossEntropy()
 else:
     loss='categorical_crossentropy'
 
 # Class weithts used during model training.
 # Because in example data the classes have very different number of pixels,
 # we use class weights to compensate.
+# Without class_weights no pixels from class 3 were found and very few of class 2.
+# But even with weights the model does not find class 3 well..
 # The other option could be to use some other loss function.
 # In binary classification the spruce class is simply given 10 time more importance than background.
 if no_of_classes == 2: 
     class_weight = {0: 1.,
                     1: 10.}  
 else:
-    # Weights are dependent on how many pixels certain class has in the data, in our example there is:
-    # Class 0 (background) - 200 000 pixels, weight 1
-    # Class 1 - 75 000 -> 3
-    # Class 2 - 35 000 -> 6
-    # Class 3 - 5 000 -> 40
+    # Weights are dependent on how many pixels certain class has in the data, smaller classes are given bigger weight:
     class_weight = {0: 1.,
-                    1: 3.,
-                    2: 6.,
-                    3: 40.}
-    
+                    1: 10.,
+                    2: 50.,
+                    3: 500.}
     
 metrics=['accuracy']
 
@@ -154,13 +144,7 @@ def prepareData():
     train_split = int(0.7*len(all_frames_df))
     train_frames = all_frames_df[:train_split]
     val_frames = all_frames_df[train_split:]
-    
-    # If interested in saving some tiles for testing, split to 3
-    #val_split = int(0.9 * len(all_frames_df))
-    #val_frames = all_frames_df[train_split:val_split]
-    #test_frames = all_frames_df[val_split:]
-    #test_frames.to_csv(test_tiles_file) 
-    
+        
     return train_frames, val_frames
 
 # Custom data generator for training, using rasterio.
@@ -256,12 +240,11 @@ def trainModel(train_gen, val_gen, no_of_training_tiles, no_of_validation_tiles)
     
     # Stop training if model does not get better in patience number of epochs.
     earlystopping = EarlyStopping(monitor = 'val_loss', verbose = 1,
-                                  min_delta = 0.001, patience = 100, mode = 'min')
+                                  min_delta = 0.0001, patience = 200, mode = 'min')
 
     callbacks_list = [checkpoint, csv_logger, earlystopping] #
 
     # Train the model
-    # TODO, add class weights
     m.fit(train_gen, epochs=no_of_epochs, 
                               steps_per_epoch = (no_of_training_tiles//batch_size),
                               class_weight=class_weight,
@@ -270,10 +253,6 @@ def trainModel(train_gen, val_gen, no_of_training_tiles, no_of_validation_tiles)
                               validation_steps=(no_of_validation_tiles//batch_size), 
                               callbacks=callbacks_list)
     
-    # TODO.
-    m.save()
-
-
 def main():
     # Read the files from data folders and divide between traininga, validataion (and testing).
     train_frames, val_frames = prepareData()
@@ -294,21 +273,3 @@ if __name__ == '__main__':
     main()
     end = time.time()
     print("Script completed in " + str(round(((end - start)/60),0)) + " minutes") 
-
-#m.save(model_final)
-
-#import rasterio
-#src = rasterio.open('C:\\temp\\ML_course_data\\tiles\\imageTiles650\\T34VFM_20180829T100019_clipped_scaled_1_1.tif')
-#train_img = src.read().transpose(1, 2, 0)
-#
-#train_mask = rasterio.open('C:\\temp\\ML_course_data\\tiles_new\\labels_all_classes_tiles_650\\forest_species_reclassified_1_1.tif').read().transpose(1, 2, 0)
-#
-#import matplotlib.pyplot as plt
-#plt.imshow(train_img)
-#plt.imshow(train_img_cropped)
-#train_mask2 = train_mask.reshape(650,650)
-#train_mask3 = train_mask_cropped.reshape(512,512)
-#plt.imshow(train_mask2)
-#plt.imshow(train_mask3)
-#
-#src2 = imread('C:\\temp\\ML_course_data\\tiles\\imageTiles650\\T34VFM_20180829T100019_clipped_scaled_1_1.tif')

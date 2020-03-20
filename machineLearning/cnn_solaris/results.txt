@@ -1,0 +1,87 @@
+spruce_3_2_weighted_1_10 (3_2 -> learning rate 1E-3, Adam epsilon 1E-2, weighted_1_10 -> class weights)
+Confusion Matrix
+[[5886634  874742]
+ [ 472014  662610]]
+Classification Report
+              precision    recall  f1-score   support
+
+           0       0.93      0.87      0.90   6761376
+           1       0.43      0.58      0.50   1134624
+
+    accuracy                           0.83   7896000
+   macro avg       0.68      0.73      0.70   7896000
+weighted avg       0.85      0.83      0.84   7896000
+
+******
+spruce_4_2
+Confusion Matrix
+[[5706223 1055153]
+ [ 465593  669031]]
+Classification Report
+              precision    recall  f1-score   support
+
+           0       0.92      0.84      0.88   6761376
+           1       0.39      0.59      0.47   1134624
+
+    accuracy                           0.81   7896000
+   macro avg       0.66      0.72      0.68   7896000
+weighted avg       0.85      0.81      0.82   7896000
+
+
+******
+mc_3_2_weighted1_9_18_120
+
+Confusion Matrix
+[[3327746  386237  148343       0]
+ [ 218157 2258928  225053       0]
+ [ 248174  394151  493191       0]
+ [  66609   59621   69790       0]]
+Classification Report
+              precision    recall  f1-score   support
+
+           0       0.86      0.86      0.86   3862326
+           1       0.73      0.84      0.78   2702138
+           2       0.53      0.43      0.48   1135516
+           3       0.00      0.00      0.00    196020
+
+    accuracy                           0.77   7896000
+   macro avg       0.53      0.53      0.53   7896000
+weighted avg       0.75      0.77      0.76   7896000
+
+*******
+mc_3_2_weighted1_10_25_300 retrained from previous
+Confusion Matrix
+[[3369994  350783  141499      50]
+ [ 215028 2262846  224201      63]
+ [ 239074  390871  505467     104]
+ [  63712   60085   72018     205]]
+Classification Report
+              precision    recall  f1-score   support
+
+           0       0.87      0.87      0.87   3862326
+           1       0.74      0.84      0.78   2702138
+           2       0.54      0.45      0.49   1135516
+           3       0.49      0.00      0.00    196020
+
+    accuracy                           0.78   7896000
+   macro avg       0.66      0.54      0.54   7896000
+weighted avg       0.77      0.78      0.76   7896000
+
+********
+mc_3_2_weighted1_10_50_500
+Confusion Matrix
+[[3331918  341770  187463    1175]
+ [ 192307 2220598  288706     527]
+ [ 200643  354598  578198    2077]
+ [  53115   53509   86855    2541]]
+Classification Report
+              precision    recall  f1-score   support
+
+           0       0.88      0.86      0.87   3862326
+           1       0.75      0.82      0.78   2702138
+           2       0.51      0.51      0.51   1135516
+           3       0.40      0.01      0.03    196020
+
+    accuracy                           0.78   7896000
+   macro avg       0.63      0.55      0.55   7896000
+weighted avg       0.77      0.78      0.77   7896000
