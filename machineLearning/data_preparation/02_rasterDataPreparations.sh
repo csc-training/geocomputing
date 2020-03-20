@@ -119,4 +119,8 @@ cd ../image_prediction_tiles_512
 rm -f *_12_*.tif
 rm -f *_15.tif
 
+### COMPRESSING 
+## Lastly let's compress the tiles-folder to single .tar file. .tar files are very similar than .zip files 
+cd ../..
+tar -czvf tiles.tar tiles
 

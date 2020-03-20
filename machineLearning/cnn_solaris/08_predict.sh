@@ -11,4 +11,8 @@
 
 module load solaris
 
-srun python 08_predict.py
+### This uncompresses (unzips) the tar you created from the tiles folder to a local filesystem on the computatation node
+tar xf <PATH-TO-YOUR-TILES-TAR> -C $LOCAL_SCRATCH
+
+### Give the local filesystem dir to the python function as argument
+srun python 08_predict.py $LOCAL_SCRATCH

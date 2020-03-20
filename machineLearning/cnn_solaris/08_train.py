@@ -6,10 +6,14 @@ import pandas as pd
 import time
 import os
 from PredictSpruceForestsModel import PredictSpruceForestsModel
+import sys
 
+### The first (and only) input argument for this script is the folder where data exists
+if len(sys.argv) != 2:
+   print('Please give the data directory')
+   sys.exit()
 
-### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-base_folder = "/Users/jnyman/Documents/local/rndm/solaris/big_training"
+data_dir=sys.argv[1]
 
 ### This is the folder of this file. We use it to fetch the .yml files
 script_folder = os.path.dirname(os.path.realpath(__file__))
@@ -20,11 +24,6 @@ tile_output_folder = os.path.join(base_folder,"tiles")
 ### This script's training and label tile folders
 training_image_tile_subfolder = os.path.join(tile_output_folder,"image_training_tiles_650")
 training_label_tile_subfolder = os.path.join(tile_output_folder, "label_tiles_650")
-
-### General Pandas settings for printing dataframes
-#pd.set_option('display.max_columns', None)
-#pd.set_option('display.expand_frame_repr', False)
-#pd.set_option('max_colwidth', -1)
 
 def checkGPUavailability():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
