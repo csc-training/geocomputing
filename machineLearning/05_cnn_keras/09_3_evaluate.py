@@ -42,12 +42,18 @@ def estimateModel():
             right = min(prediction_dataset.bounds.right,test_labels_dataset.bounds.right)
             top = min(prediction_dataset.bounds.top,test_labels_dataset.bounds.top)
             
-               
-            bbox = [{'type': 'Polygon', 'coordinates': [[[left, bottom], [left, top], [right, top], [right, bottom], [left, bottom]]]}]
-            
+            common_bbox = {
+                        "type": "Polygon",
+                        "coordinates": [[
+                            [left, bottom],
+                            [left, top],
+                            [right, top],
+                            [right, bottom],
+                            [left, bottom]]]}
+                        
             # Read data from only the overlapping area
-            y_pred, transform = rasterio.mask.mask(prediction_dataset, bbox, crop=True)
-            y_true, transform = rasterio.mask.mask(test_labels_dataset, bbox, crop=True)
+            y_pred, transform = rasterio.mask.mask(prediction_dataset, common_bbox, crop=True)
+            y_true, transform = rasterio.mask.mask(test_labels_dataset, common_bbox, crop=True)
             
             # Reshape data for scikit-learn
             y_pred2 = y_pred.reshape(-1)
