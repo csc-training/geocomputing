@@ -125,7 +125,7 @@ def estimateModel():
             ### Calculate the f1, precision and recall with Solaris
             ### prop_threshold determines what value is the dividing number on the predicted image. Below that will get 0, over it 1 so change it to your liking
             f1, precision, recall = sol.eval.pixel.f1(y_true,y_pred,prop_threshold=0.001,verbose=True)
-            #print("F1 score: {}, Precision: {}, Recall: {}".format(f1,precision,recall))
+            print("F1 score: {}, Precision: {}, Recall: {}".format(f1,precision,recall))
 
 
 def main():
