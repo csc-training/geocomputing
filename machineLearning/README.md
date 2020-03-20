@@ -21,4 +21,13 @@ Regression
 
 Before the starting with the models also the [data preparation scripts](01_data_preparation) must be run.
 
+The numbers in the beginning of folders and files note the order exercises are done during the course.
+
 The shallow learning exercises can well be run on any PC, likely also the deep learning examples here, for CNN a GPU machine is needed, for example CSC Puhti. For deep learning exercises therefore also Puhti batch job files are provided. 
+
+Main used libraries:
+* GDAL command-line, rasterio and geopandas for data preparations
+* scikit-learn for shallow learning and some helping functions also for deep learning scripts (Puhti [geoconda](https://docs.csc.fi/apps/geoconda/) module)
+* Keras for deep learning and CNN_keras (Puhti [tensorflow/2.0.0](https://docs.csc.fi/apps/tensorflow/) module)
+* solaris and pytorch for CNN_solaris (Puhti [solaris](https://docs.csc.fi/apps/solaris/) module)
+* (There are also some minor libraries used, so check the imports of scripts before doing the installations to your own PC.)
