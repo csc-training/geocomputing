@@ -95,32 +95,39 @@ gdal_retile.py -ps 650 650 -overlap 300 -targetDir tiles/image_training_tiles_65
 # -overlap - overlap of tiles in pixels
 # -targetDir - the directory of output tiles
 
-# Tile the labels with the same setting as the image.
+# Tile the labels with the same setting as the image. Only spurce for CNN
 mkdir tiles/label_tiles_650
 gdal_retile.py -ps 650 650 -overlap 300 -targetDir tiles/label_tiles_650 forest_spruce_scaled.tif
 
-# Tile the satellite image for predicting with the bigger bbox.
+# Labels for multiclass CNN
+mkdir tiles/labels_all_classes_tiles_650
+gdal_retile.py -ps 650 650 -overlap 300 -targetDir tiles/labels_all_classes_tiles_650 forest_species_reclassified.tif
+
+# Tile the satellite image for predicting with the bigger bbox and model size tiles.
 mkdir tiles/image_prediction_tiles_512
 gdal_retile.py -ps 512 512 -targetDir tiles/image_prediction_tiles_512 T34VFM_20180829T100019_scaled.tif
 
 # CNN model requires at least 512x512 size of images, so the remove the files from right and bottom edge, that are too small.
-# Please note that the last column and row of tiles may be smaller than requested.
-# In our case for training data, only the last row of tiles is too low, so we delete these files.
-cd tiles/image_training_tiles_650
-rm -f *_8_*.tif
-rm -f *_8.tif
+# Sentinel tiles
+rm -f tiles/image_training_tiles_650/*_8_*.tif
+rm -f tiles/image_training_tiles_650/*_8.tif
 
-cd ../label_tiles_650
-rm -f *_8_*.tif
-rm -f *_8.tif
+# Spruce label tiles
+rm -f tiles/label_tiles_650/*_8_*.tif
+rm -f tiles/label_tiles_650/*_8.tif
+
+# Multiclass label tiles
+rm -f tiles/labels_all_classes_tiles_650/*_8_*.tif
+rm -f tiles/labels_all_classes_tiles_650/*_8.tif
 
 # For predicting data we have to remove last column and row of tiles.
-cd ../image_prediction_tiles_512
-rm -f *_12_*.tif
-rm -f *_15.tif
+cd tiles/image_prediction_tiles_512/
+rm -f tiles/image_prediction_tiles_512/*_12_*.tif
+rm -f tiles/image_prediction_tiles_512/*_15.tif
 
 ### COMPRESSING 
 ## Lastly let's compress the tiles-folder to single .tar file. .tar files are very similar than .zip files 
-cd ../..
-tar -czvf tiles.tar tiles
+cd tiles
+tar -czvf spruce.tar image_training_tiles_650 label_tiles_650
+tar -czvf forest.tar image_training_tiles_650 labels_all_classes_tiles_650
 
