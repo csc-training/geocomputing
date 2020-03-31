@@ -7,21 +7,21 @@ and only the method of parallelisation changes (the code in the main function)
 
 Examples included here are
 
-* _single core job_
-* _array job_
-* _multiprocessing library_ (parallel job)
-* _joblib library_ (parallel job)
-* _dask and xarray library_ (parallel job)
+* **single core job**
+* **array job**
+* **multiprocessing library** (parallel job)
+* **joblib library** (parallel job)
+* **dask and xarray libraries** (parallel job)
 
 # Scripts
 
-You can download these scripts to Puhti to a location of your choice with
+You can download these scripts to **Puhti** into a location of your choice with
 
 `git clone https://github.com/csc-training/geocomputing.git`
 
 # Data 
 
-These examples use a set of three Sentinel L2A images from southern Finland. You can download the set to Puhti from Allas with the command:
+These examples use a set of three **Sentinel L2A images** from southern Finland. You can download the set to **Puhti** from **Allas** with the command:
 
 `wget <ALLAS-URL>`
 
@@ -31,11 +31,23 @@ and unzip it to your project's scratch folder
 
 # Running the examples 
 
-You can submit these jobs by 
+You can submit these jobs to Puhti by 
 
 * Navigating to the directory of an example
 * Changing the batch job script (the .sh file) to include your project's number
 * Running `sbatch <THE-EXAMPLES-BATCH-JOB-SCRIPT>`
-* See the difference in job execution times for the different jobs aftre completion with the command `seff <JOB-ID>`
+
+See the difference in job execution times for the different jobs after completion with the command `seff <JOB-ID>`
+
+# Example benchmarks 
+
+| Example         | Jobs | CPU cores / job | Time (min) | CPU efficiency |
+|-----------------|------|-----------------|------------|----------------|
+| single core     | 1    | 1               | 03:23      | 86.70%         |
+| multiprocessing | 1    | 3               | 01:05      | 92.31%         |
+| joblib          | 1    | 3               | 01:12      | 86.57%         |
+| dask            | 1    | 3               | 01:22      | 78.46%         |
+| array job       | 3    | 1               |            |                |
+
 
 
