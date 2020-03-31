@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python joblib_example.py
+srun python joblib_example.py <INSERT-PATH-TO-SENTINEL-FOLDER>

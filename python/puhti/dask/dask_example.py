@@ -7,6 +7,7 @@ Date: 31.03.2020
 """
 
 import os
+import sys
 import xarray as xr
 import time
 from dask import delayed
@@ -17,7 +18,7 @@ from dask import compute
 from rasterio_to_xarray import xarray_to_rasterio
 
 ### Declare the folder with input sentinel SAFE folders and output folder
-image_folder = r"/Users/jnyman/Downloads/sentinel_images"
+image_folder = sys.argv[1]
 output_folder = os.path.join(image_folder,"results")
 
 def readImage(image_folder_fp):

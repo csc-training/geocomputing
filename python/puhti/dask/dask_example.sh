@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python dask_example.py
+srun python dask_example.py <INSERT-PATH-TO-SENTINEL-FOLDER>

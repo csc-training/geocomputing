@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python multiprocessing_example.py
+srun python multiprocessing_example.py <INSERT-PATH-TO-SENTINEL-FOLDER>

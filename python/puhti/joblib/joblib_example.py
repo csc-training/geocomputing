@@ -7,12 +7,13 @@ Date: 31.03.2020
 """
 
 import os
+import sys
 import time
 import rasterio
 from joblib import Parallel, delayed
 
 ### The filepath for the input Sentinel image folder and the output filename
-image_folder = r"/Users/jnyman/Downloads/sentinel_images"
+image_folder = sys.argv[1]
 output_folder = os.path.join(image_folder,"results")
 
 def readImage(image_folder_fp):

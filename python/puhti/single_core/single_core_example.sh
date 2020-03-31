@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python single_core_example.py
+srun python single_core_example.py <INSERT-PATH-TO-SENTINEL-FOLDER>
