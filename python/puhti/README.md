@@ -7,11 +7,11 @@ and only the method of parallelisation changes (the code in the main() function)
 
 Examples included here are
 
-* single core job
-* array job
-* multiprocessing library (parallel job)
-* joblib library (parallel job)
-* dask and xarray library (parallel job)
+* _single core job_
+* _array job_
+* _multiprocessing library_ (parallel job)
+* _joblib library_ (parallel job)
+* _dask and xarray library_ (parallel job)
 
 # Scripts
 
