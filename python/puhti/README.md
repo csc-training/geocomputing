@@ -3,7 +3,7 @@
 These are examples on how to run Python processes in Puhti with different parallelisation libraries. 
 The examples are about calculating NDVI (Normalized Difference Vegetation Index) from the Sentinel red and near infrared bands.
 The reading, writing and calculation of NDVI are identical in the examples (with the exception of Dask example) 
-and only the method of parallelisation changes (the code in the main() function)
+and only the method of parallelisation changes (the code in the main function)
 
 Examples included here are
 
@@ -15,7 +15,7 @@ Examples included here are
 
 # Scripts
 
-You can download these scripts to Puhti  to a location of your choice with
+You can download these scripts to Puhti to a location of your choice with
 
 `git clone https://github.com/csc-training/geocomputing.git`
 

@@ -1,8 +1,20 @@
-Examples for doing spatial analysis with **Python** in CSC computing environment:
-* `focal_mean` - Calculating focal mean with `rasterio`, also in paralellel with `multiprocessing`. Includes examples for different job types in Taito: simple serial, array and parallel. 
-* `zonal_stats` - Calculating zonals statistics of a large raster dataset using virtual rasters on multiple cores with `rasterstats` and `multiprocessing`.
-* `grass_multiprocessing_with_python`- Raster algebra with **GRASS**, also in parallel with `ParallelModuleQue`. 
+# CSC geocomputing Python examples
 
-Reference:
-* [Taito's geopython documentation](https://research.csc.fi/-/geopython)
-* [Python multiprocessing](http://pymotw.com/2/multiprocessing/basics.html)
+##Topics
+
+###Allas
+* How to download, upload and use data with Allas and Python
+* Examples with S3 and Swift technologies
+
+###Puhti
+* How to parallelize your Python code with different methods for running in Puhti supercomputer
+* Array job and different parallel job examples
+
+###Routing //todo puhti
+* Examples of Routing in Puhti supercomputer
+
+###Zonal Stats //todo puhti
+* Examples of running zonal statistics on Puhti supercomputer
+
+###Geopackage //todo puhti
+* How to use the large topographic database geopackages on Puhti with Python

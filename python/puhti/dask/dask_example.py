@@ -18,6 +18,7 @@ from rasterio_to_xarray import xarray_to_rasterio
 
 ### Declare the folder with input sentinel SAFE folders and output folder
 image_folder = r"/Users/jnyman/Downloads/sentinel_images"
+output_folder = os.path.join(image_folder,"results")
 
 def readImage(image_folder_fp):
     print("Reading Sentinel image from: %s" % (image_folder_fp))
@@ -67,9 +68,10 @@ def processImage(image_folder_fp):
 def saveImage(ndvi,image_name):
     ## Create the output filename and save it with using a function xarray_to_rasterio from a separate python file
     output_file = image_name.replace(".SAFE", "_NDVI.tif")
+    output_path = os.path.join(output_folder, output_file)
 
-    print("Saving image: %s" % output_file)
-    xarray_to_rasterio(ndvi,  output_file)
+    print("Saving image: %s" % output_path)
+    xarray_to_rasterio(ndvi,  output_path)
 
 def main():
 
