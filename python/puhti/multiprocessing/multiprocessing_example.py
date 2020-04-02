@@ -14,7 +14,12 @@ from multiprocessing import Pool
 
 ### The filepath for the input Sentinel image folder and the output filename
 image_folder = sys.argv[1]
-output_folder = os.path.join(image_folder,"results")
+
+## Create a results folder to this location
+if not os.path.exists('results'):
+    os.makedirs('results')
+
+output_folder = "results"
 
 def readImage(image_folder_fp):
     print("Reading Sentinel image from: %s" % (image_folder_fp))
