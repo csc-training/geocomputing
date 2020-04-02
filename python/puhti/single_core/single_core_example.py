@@ -49,10 +49,11 @@ def calculateNDVI(red,nir):
     return ndvi
 
 def saveImage(ndvi, sentinel_image_path, input_image):
-
+    ## Create output filepath for the image. We use the input name with _NDVI end
     output_file = os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
     output_path = os.path.join(output_folder,output_file)
     print("Saving image: %s" % output_file)
+
     ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
     metadata = input_image.profile
 
@@ -60,7 +61,6 @@ def saveImage(ndvi, sentinel_image_path, input_image):
     metadata.update(
         dtype=rasterio.float64,
         driver='GTiff')
-
 
     ## Write the ndvi numpy array to a GeoTiff with the updated metadata
     with rasterio.open(output_path, 'w', **metadata) as dst:
@@ -79,7 +79,7 @@ def processImage(sentinel_image_path):
     saveImage(ndvi,sentinel_image_path,red)
 
 def main():
-
+    ## Loop the directory where all sentinel image folders are and run processImage function to them one by one
     for directory in os.listdir(image_folder):
         sentinel_image_path = os.path.join(image_folder, directory)
         if os.path.isdir(sentinel_image_path):

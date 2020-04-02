@@ -51,10 +51,11 @@ def calculateNDVI(red,nir):
     return ndvi
 
 def saveImage(ndvi, sentinel_image_path, input_image):
-
+    ## Create output filepath for the image. We use the input name with _NDVI end
     output_file = os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
-    output_path = os.path.join(output_folder, output_file)
-    print("Saving image: %s" % output_path)
+    output_path = os.path.join(output_folder,output_file)
+    print("Saving image: %s" % output_file)
+    
     ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
     metadata = input_image.profile
 
@@ -80,10 +81,13 @@ def processImage(sentinel_image_path):
     saveImage(ndvi,sentinel_image_path,red)
 
 def main():
+    ## How many parallel processes do we want to use
     parallel_processes = 3
+
+    ## Make a list of the full filepaths of the sentinel image folders
     list_of_sentinel_folders = [os.path.join(image_folder, f) for f in os.listdir(image_folder)]
-    list_of_sentinel_folders.remove(os.path.join(image_folder, '.DS_Store'))
-    print(list_of_sentinel_folders)
+
+    ## Start a Parallel job that gives one path from the list to a worker process
     Parallel(n_jobs=parallel_processes)(delayed(processImage)(image) for image in list_of_sentinel_folders)
 
 
