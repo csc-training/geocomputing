@@ -15,7 +15,13 @@ Examples included here are
 
 # Scripts
 
-You can download these scripts to **Puhti** into a location of your choice with the command
+You can download these scripts to **Puhti** with git. You should first navigate to your project's **projappl** or **scratch** folder
+
+`cd /projappl/<YOUR-PROJECT>`
+or
+`cd /scratch/<YOUR-PROJECT>`
+
+And then clone this repository there
 
 `git clone https://github.com/csc-training/geocomputing.git`
 
