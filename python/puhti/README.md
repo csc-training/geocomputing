@@ -41,13 +41,15 @@ See the difference in job execution times for the different jobs after completio
 
 # Example benchmarks 
 
+These are just to demonstrate the difference between single core vs. some kind of parallelism. Depending on the issue, some library might be faster or slower.
+
 | Example         | Jobs | CPU cores / job | Time (min) | CPU efficiency |
 |-----------------|------|-----------------|------------|----------------|
 | single core     | 1    | 1               | 03:23      | 86.70%         |
 | multiprocessing | 1    | 3               | 01:05      | 92.31%         |
 | joblib          | 1    | 3               | 01:12      | 86.57%         |
 | dask            | 1    | 3               | 01:22      | 78.46%         |
-| array job       | 3    | 1               |            |                |
+| array job       | 3    | 1               | 01:03      | 95.16%         |
 
 
 
