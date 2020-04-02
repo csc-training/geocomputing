@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python single_core_example.py <INSERT-PATH-TO-SENTINEL-FOLDER>
+srun python single_core_example.py /appl/data/geo/sentinel/s2_example_data

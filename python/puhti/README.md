@@ -21,13 +21,9 @@ You can download these scripts to **Puhti** into a location of your choice with 
 
 # Data 
 
-These examples use a set of three **Sentinel L2A images** from southern Finland. You can download the set to **Puhti** from **Allas** with the command:
+These examples use a set of three **Sentinel L2A images** from southern Finland. The data is already stored in Puhti. It can be found from the path
 
-`wget <ALLAS-URL>`
-
-and unzip it to your project's scratch folder
-
-`unzip <ZIP-NAME> -d /scratch/<YOUR-PROJECT>`
+`/appl/data/geo/sentinel/s2_example_data`
 
 # Running the examples 
 

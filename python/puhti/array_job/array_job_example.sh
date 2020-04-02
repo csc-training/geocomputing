@@ -12,7 +12,7 @@
 
 module load geoconda
 
-image_path_list=${readlink -f <INSERT_PATH_TO_SENTINEL_FOLDERS>/*}
-image=$(sed -n ${SLURM_ARRAY_TASK_ID}p image_path_list)
+readlink -f /appl/data/geo/sentinel/s2_example_data/S2* > image_path_list.txt
+image_path=$(sed -n ${SLURM_ARRAY_TASK_ID}p image_path_list.txt)
 
-srun python array_job_example.py ${image}
+srun python array_job_example.py $image_path

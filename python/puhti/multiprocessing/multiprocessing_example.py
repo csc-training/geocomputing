@@ -85,7 +85,7 @@ def main():
     parallel_processes = 3
     
     ## Make a list of the full filepaths of the sentinel image folders
-    list_of_sentinel_folders = [os.path.join(image_folder, f) for f in os.listdir(image_folder)]
+    list_of_sentinel_folders = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if image_folder.startswith("S2")]
 
     ## Create a pool of workers and run the function processImage for each filepath in the list
     pool = Pool(parallel_processes)
