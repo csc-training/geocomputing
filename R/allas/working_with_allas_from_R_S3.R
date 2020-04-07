@@ -18,7 +18,7 @@ library("tidyverse")
 # Environment variables are cleaned after session end, so it must be set again in each new session.
 #
 # allas-conf --mode s3cmd
-# This creates [.aws/credentials-file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
+# This creates [.s3cfg](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
 # The credentials are saved to a file, so they need to be set only once from a new computer.
 
 # Reading raster file
