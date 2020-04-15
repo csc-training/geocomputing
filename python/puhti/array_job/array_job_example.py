@@ -1,6 +1,8 @@
 """
 A simple example Python script how to calculate NDVI for three Sentinel satellite images
-with an array job
+with an array job.
+This script handles only ONE file, which is given as parameter to the script.
+
 
 Author: Johannes Nyman, CSC
 Date: 31.03.2020
