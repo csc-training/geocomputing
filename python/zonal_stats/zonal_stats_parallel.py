@@ -9,20 +9,20 @@ zone_f = "zones.shp"
 #output zonal stats
 zonal_f = "zonal_stats.shp"
 #Raster you want to use to compute zonal stastics from, here the 10m DEM of whole Finland
-vrt = "/wrk/project_ogiir-csc/mml/dem10m_vrt/etrs-tm35fin-n2000/whole_finland_direct.vrt"
+vrt = "/appl/data/geo/mml/dem10m/dem10m_direct.vrt"
 
 statistics = ['count', 'min' ,'mean', 'max','median']
 
 #yields n sized chunks from list l (used for splitting task to multiple processes)
 def chunks(l, n):
-    for i in xrange(0, len(l), n):
+    for i in range(0, len(l), n):
         yield l[i:i + n]
 
 
 #calculates zonal stats and adds results to a dictionary
 def worker(z,vrt,d):	
 	z_stats = zonal_stats(z,vrt, stats=statistics)	
-	for i in xrange(0,len(z_stats)):
+	for i in range(0,len(z_stats)):
 		d[z[i]['id']]=z_stats[i]
 
 #write output polygon
@@ -48,7 +48,7 @@ def main():
 
 		#split zone polygons into 10 chunks for parallel processing and call worker() for each. 
 		# Adjust 10 to be number of cores you want to use for optimal performance.
-		split = chunks(zones, len(zones)/10)
+		split = chunks(zones, len(zones)//10)
 		for z in split:
 			p = mp.Process(target=worker,args=(z, vrt,d))
 			p.start()
@@ -64,4 +64,4 @@ if __name__ == '__main__':
 	main()	
 	t1 = time.time()
 	total = t1-t0
-	print "Everything done, took: ", str(total)+"s" 
+	print("Everything done, took: " + str(total)+"s")

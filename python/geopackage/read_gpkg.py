@@ -6,8 +6,8 @@ We can however read parts of it quickly without having to inspect each row as sh
 """
 import geopandas as gpd
 import fiona
-fn_muut= "/proj/ogiir-csc/mml/maastotietokanta/2019/MTK-muut_19-01-23.gpkg"
-fn_suo = "/proj/ogiir-csc/mml/maastotietokanta/2019/MTK-suo_19-01-23.gpkg" 
+fn_muut= "/appl/data/geo/mml/maastotietokanta/2020/gpkg/MTK-muut_20-02-06.gpkg"
+fn_suo = "/appl/data/geo/mml/maastotietokanta/2020/gpkg/MTK-suo_20-02-06.gpkg" 
 
 """
 Reading a layer into a dataframe. Some layers are large, but for smaller layers this can be quick enough.
