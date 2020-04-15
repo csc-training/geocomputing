@@ -13,18 +13,6 @@ Examples included here are
 * **joblib library** (parallel job)
 * **dask and xarray libraries** (parallel job)
 
-# Scripts
-
-You can download these scripts to **Puhti** with git. You should first navigate to your project's **projappl** or **scratch** folder
-
-`cd /projappl/<YOUR-PROJECT>`
-or
-`cd /scratch/<YOUR-PROJECT>`
-
-And then clone this repository there
-
-`git clone https://github.com/csc-training/geocomputing.git`
-
 # Data 
 
 These examples use a set of three **Sentinel L2A images** from southern Finland. The data is already stored in Puhti. It can be found from the path
