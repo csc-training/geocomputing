@@ -10,26 +10,12 @@ Code for saving all layers of GeoPackage as separate files
 import os
 from osgeo import gdal, ogr
 
-
-#Settings
-#Set working dir and output folder
-wrkDir = '/scratch/<YOUR-PROJECT>/gpkg_example'
-os.chdir(wrkDir)
-
 #OutputFolder
 outFolder='layers'
 
 #Check that the folder exists
 if not os.path.exists(outFolder):
     os.makedirs(outFolder)
-    
-#os.chdir(outFolder)
-    
-#Emtpy the folder
-#files = glob.glob(TKoutFolder + '\*')
-#for f in files:
-#    os.remove(f)
-
 
 #Make error messages visible
 gdal.UseExceptions() #Fail when can't open!
@@ -64,7 +50,8 @@ for layer in ogrDS:
     
     # Generate the name for new file
     layerName = layer.GetName()
-    outFile=os.path.join(outFolder,layerName,'.gpkg')
+    print("Saving layer " + layerName)
+    outFile=os.path.join(outFolder,layerName +'.gpkg')
     
     # Remove output shapefile if it already exists
     outDriver = ogr.GetDriverByName('GPKG')

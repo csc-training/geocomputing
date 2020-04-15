@@ -10,11 +10,13 @@
 * How to parallelize your Python code with different methods for running in Puhti supercomputer
 * Array job and different parallel job examples
 
-### Routing //todo puhti
-* Examples of Routing in Puhti supercomputer
+### Routing
+* Examples of routing in Puhti supercomputer using NetworkX and igraph
+* Serial and Parallel 
 
-### Zonal Stats //todo puhti
-* Examples of running zonal statistics on Puhti supercomputer
+### Zonal Stats
+* Examples of running zonal statistics on Puhti supercomputer using rasterstats
+* Serial and Parallel
 
-### Geopackage //todo puhti
+### Geopackage
 * How to use the large topographic database geopackages on Puhti with Python

@@ -1,12 +1,10 @@
 #!/bin/bash -l
-#SBATCH -a <YOUR-PROJECT-HERE>
+#SBATCH -A <YOUR-PROJECT-HERE>
 #SBATCH -J python_vrt_mp_test
-#SBATCH -o out.txt
-#SBATCH -e err.txt
-#SBATCH -t 00:01:30
-#SBATCH --cpus-per-task=11
-#SBATCH --mem=300
-#SBATCH -p parallel
+#SBATCH -t 00:05:00
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=1000
+#SBATCH -p small
 
 module load geoconda
 python zonal_stats_parallel.py

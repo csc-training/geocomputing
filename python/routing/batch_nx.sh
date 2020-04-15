@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH -a <YOUR-PROJECT-HERE>
+#SBATCH -A <YOUR-PROJECT-HERE>
 #SBATCH -J python_igraph
 #SBATCH -o out_%J.txt
 #SBATCH -e err_%J.txt
@@ -12,7 +12,5 @@
 
 # load needed modules
 module load geoconda
-# move to the directory where the example was downloaded
-cd /scratch/<YOUR-PROJECT-HERE>/routing_example
 #Pass number of cores reserved to python script as argument, so that correct number of processes can be started
 python nx_parallel.py $SLURM_CPUS_PER_TASK
