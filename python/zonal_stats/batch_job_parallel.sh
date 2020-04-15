@@ -1,4 +1,5 @@
 #!/bin/bash -l
+#SBATCH -a <YOUR-PROJECT-HERE>
 #SBATCH -J python_vrt_mp_test
 #SBATCH -o out.txt
 #SBATCH -e err.txt
@@ -7,5 +8,5 @@
 #SBATCH --mem=300
 #SBATCH -p parallel
 
-module load geo-env
+module load geoconda
 python zonal_stats_parallel.py

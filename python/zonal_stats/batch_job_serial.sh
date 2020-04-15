@@ -1,4 +1,5 @@
 #!/bin/bash -l
+#SBATCH -a <YOUR-PROJECT-HERE>
 #SBATCH -J python_vrt_mp_test
 #SBATCH -o out.txt
 #SBATCH -e err.txt
@@ -8,4 +9,4 @@
 #SBATCH -n 1
 
 module load geoconda
-srun python /wrk/ekkylli/geocomputing/python/zonal_stats/zonal_stats_serial.py
+srun python zonal_stats_serial.py

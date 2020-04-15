@@ -13,8 +13,7 @@ from osgeo import gdal, ogr
 
 #Settings
 #Set working dir and output folder
-#wrkDir = '/wrk/ekkylli/paituli'
-wrkDir = '/wrk/ekkylli/mtk/data/vektori/ogiir/data'
+wrkDir = '/scratch/<YOUR-PROJECT>/gpkg_example'
 os.chdir(wrkDir)
 
 #OutputFolder
@@ -57,15 +56,15 @@ def gdal_error_handler(err_class, err_num, err_msg):
  
 # Note, the original GeoPackage is opened with both ogr and gdal.
 # TODO, it might not be necessary actually
-ogrDS = ogr.Open('/wrk/ekkylli/mtk/data/vektori/ogiir/data/MTK-geopackage-test-18-06-07.gpkg')
-gdalDS = gdal.OpenEx('/wrk/ekkylli/mtk/data/vektori/ogiir/data/MTK-geopackage-test-18-06-07.gpkg', gdal.OF_VECTOR)
+ogrDS = ogr.Open('/appl/data/geo/mml/maastotietokanta/2020/gpkg/MTK-vakavesi_20-02-06.gpkg')
+gdalDS = gdal.OpenEx('/appl/data/geo/mml/maastotietokanta/2020/gpkg/MTK-vakavesi_20-02-06.gpkg', gdal.OF_VECTOR)
 
 # get a layer with GetLayer('layername'/layerindex)
 for layer in ogrDS:
     
     # Generate the name for new file
     layerName = layer.GetName()
-    outFile='/wrk/ekkylli/mtk/data/vektori/ogiir/data/layers/'+layerName+'.gpkg'
+    outFile=os.path.join(outFolder,layerName,'.gpkg')
     
     # Remove output shapefile if it already exists
     outDriver = ogr.GetDriverByName('GPKG')
