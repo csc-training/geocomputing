@@ -13,7 +13,7 @@ If you are interested in setting up cloud environments for GIS see:
 
 # Scripts
 
-You can download these scripts to **Puhti** with git. You should first navigate to your project's **projappl** or **scratch** folder
+You can download these scripts to **Puhti** or somewhere else with git. You should first navigate to the destination folder, in Puhti your project's **projappl** or **scratch** folder:
 
 `cd /projappl/<YOUR-PROJECT>`
 or
