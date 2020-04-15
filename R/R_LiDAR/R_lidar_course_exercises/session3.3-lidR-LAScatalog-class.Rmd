@@ -31,7 +31,7 @@ ctg <- catalog("path/to/las/files/big_file.las")
 
 To read a folder of las files and plot their footprint to a map viewer:
 ```{r}
-ctg_subset <- catalog("/wrk/your-username-here/R_lidar_2019/r_lidar_data/las_subset")
+ctg_subset <- catalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/")
 print(ctg_subset)
 plot(ctg_subset, map = TRUE)
 ```
@@ -125,7 +125,7 @@ summary(ctg_subset)
 ```
 
 
-## Creating a Digital Terrain Model as a parallel job in Taito
+## Creating a Digital Terrain Model as a parallel job in Puhti
 lidR catalogs can be set to use a certain number of cpus using the `opt_cores(ctg)`. To assign 16 cpus to your options (it will set the maximun number that your system has):
 ```r
 opt_cores(ctg_subset) <- 16
@@ -135,14 +135,14 @@ The way the catalog work is such that only one task is performed at a time but y
 
 Let's repeat the previous exercise but runing the same DTM computation making use of the catalog object.
 
-Open the file `simple_catalog_lidR.R` and study it. It includes some parts that relate to the batch job you will need to send a request to Taito.
+Open the file `simple_catalog_lidR.R` and study it. It includes some parts that relate to the batch job you will need to send a request to Puhti.
 
 Open also the batch job file `simple_catalog_lidR_batchjob.sh`, it includes some explanations on the contents.
 
-Once you are sure all the parameters are correctly set, open a terminal to Taito (using Putty or you can also open it from NoMachine). Go to the project folder and send your batch job with:
+Once you are sure all the parameters are correctly set, open a terminal to Puhti (using Putty or you can also open it from NoMachine). Go to the project folder and send your batch job with:
 ```bash
 sbatch simple_catalog_lidR_batchjob.sh
 ```
-The input data in those scripts is the same as before `/wrk/your-username-here/R_lidar_2019/r_lidar_data/las_subset`.
+The input data in those scripts is the same as before `las_files.txt`.
 
 The results are written to the `./batch_output` folder, check also the batch jobs' output and error text files.

@@ -1,6 +1,6 @@
 library("lidR")
 # load catalog
-ctg_subset <- catalog("/wrk/your-username-here/R_lidar_2019/r_lidar_data/las_subset")
+ctg_subset <- catalog("las_files.txt")
 # lascheck(ctg_subset)
 # computation options
 outdir <- "batch_output"
