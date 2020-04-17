@@ -1,10 +1,10 @@
-# Function to get LiDAR files from Taito's GIS datasets for a
+# Function to get LiDAR files from Puhti's GIS datasets for a
 # given area of interest
 
-# Make sure that you have Taito's R spatial environment loaded by using module load rspatial-env or by using interactively 
+# Make sure that you have Puhti's R spatial environment loaded by using module load r-env or by using interactively 
 # GIS RStudio in NoMachine.
 
-lidar_files_taito <- function(f_poly){
+lidar_files_puhti <- function(f_poly){
 
   # f_poly - the path to a polygon layer with polygons covering an area from
   #          you want LiDAR files collected
@@ -39,5 +39,5 @@ lidar_files_taito <- function(f_poly){
 }
 
 # Test the function with the example area_of_interest.shp file
-# lidar_files <- lidar_files_taito("./area_of_interest.shp")
+# lidar_files <- lidar_files_puhti("./area_of_interest.shp")
 # print(lidar_files)

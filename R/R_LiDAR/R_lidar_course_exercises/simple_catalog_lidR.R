@@ -6,7 +6,7 @@ ctg_subset <- catalog("las_files.txt")
 outdir <- "batch_output"
 opt_output_files(ctg_subset) <- paste0("./", outdir, "/dtm_ctg_{XLEFT}_{YBOTTOM}_{ID}")
 opt_chunk_size(ctg_subset) <- 100
-# set the number of cores accordingly to your available cpus (e.g. your request to Taito)
+# set the number of cores accordingly to your available cpus (e.g. your request to Puhti)
 opt_cores(ctg_subset) <- 16
 
 # summary(ctg_subset)

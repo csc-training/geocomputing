@@ -31,7 +31,7 @@ model <- glm(formula=pa~., data=v)
 #Serial code for making predictions:
 #r1 <- predict(logo, model, progress='text')
 
-#Run predict function using an mpi cluster. Note that in taito the cluster is already available, you shouldn't start it yourself but use the handle provided by getMPIcluster.
+#Run predict function using an mpi cluster. Note that in Puhti the cluster is already available, you shouldn't start it yourself but use the handle provided by getMPIcluster.
 cl<-getMPIcluster()
 r1 <- clusterR(logo, predict, args=list(model), cl=cl)
 stopCluster(cl)
