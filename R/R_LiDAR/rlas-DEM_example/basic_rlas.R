@@ -6,8 +6,8 @@ library(foreach)
 source("get_lidar_files_function.R")
 
 # Get lidar file names
-lidar_files <- "las_files.txt"
-print (lidar_files)
+lidar_files <- readLines("las_files.txt")
+print(lidar_files)
 
 # Get basic information from the LiDAR files
 headers <- vector("list")
