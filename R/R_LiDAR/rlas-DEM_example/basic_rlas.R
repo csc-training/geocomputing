@@ -6,7 +6,7 @@ library(foreach)
 source("get_lidar_files_function.R")
 
 # Get lidar file names
-lidar_files <- readLines("las_files.txt")
+lidar_files <- lidar_files_puhti("area_of_interest.shp")
 print(lidar_files)
 
 # Get basic information from the LiDAR files
