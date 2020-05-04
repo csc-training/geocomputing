@@ -46,13 +46,15 @@ for (row in 1:nrow(tif_files)) {
 # Writing raster file
 s3write_using(r, FUN = raster::writeRaster,
               bucket = "name_of_your_Allas_bucket",
-              object = "name_of_your_output_raster_file.tif")
+              object = "name_of_your_output_raster_file.tif",
+             region='')
 
 
 # Writing vector file
 s3write_using(v, FUN = sf::st_write, layer='name_of_your_output_layer',
               bucket = "name_of_your_Allas_bucket",
-              object = "name_of_your_output_vector_file.gpkg")
+              object = "name_of_your_output_vector_file.gpkg",
+             region='')
 
 
 
