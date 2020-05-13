@@ -61,7 +61,7 @@ input_data = raster.read()
 with MemoryFile() as mem_file:
     with mem_file.open(**raster.profile) as dataset:
         dataset.write(input_data)
-        conn.put_object(bucket_name, os.path.basename(fp), contents=mem_file)
+    conn.put_object(bucket_name, os.path.basename(fp), contents=mem_file)
 
 
 ### 3. Writing a vector file to Allas using the Swift library
