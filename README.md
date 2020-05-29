@@ -22,3 +22,6 @@ or
 And then clone this repository there
 
 `git clone https://github.com/csc-training/geocomputing.git`
+
+# License
+These examples are free to use with CC 4.0 BY oGIIR license. In your publications please acknowledge oGIIR, for example “The authors wish to acknowledge for instructions CSC – IT Center for Science, Finland (urn:nbn:fi:research-infras-2016072531) and the Open Geospatial Information Infrastructure for Research (oGIIR, urn:nbn:fi:research-infras-2016072513).”
