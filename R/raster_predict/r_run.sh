@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account <YOUR-PROJECT>
+#SBATCH --account=<YOUR-PROJECT>
 #SBATCH -J r_multi_proc
 #SBATCH -o output.txt
 #SBATCH -e errors.txt
@@ -9,6 +9,6 @@
 #SBATCH --mem=1000
 #SBATCH -p small
 
-module load r-env
-srun RMPISNOW --no-save -f rtest.R
+module load r-env-singularity
+srun singularity_wrapper exec RMPISNOW --no-save -f rtest.R
 

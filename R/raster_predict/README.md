@@ -7,4 +7,4 @@ simplified and adapted to be run thorugh batch job system in Puhti.
 
 `r_run.sh` shows how to submit parallel R jobs to Puhti SLURM system.
 
-For further details see comments in script. For general instructions on how to use R in Puhti see https://docs.csc.fi/apps/r-env/
+For further details see comments in script. For general instructions on how to use R in Puhti see https://docs.csc.fi/apps/r-env-singularity/

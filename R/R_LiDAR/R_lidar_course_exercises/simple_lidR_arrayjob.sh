@@ -18,9 +18,9 @@
 #SBATCH --mem-per-cpu=1000
 
 #As the job is not run on the login node where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on the login node before sending the batch job will not help.
-module load r-env
+module load r-env-singularity
 
 #Read the file to be processed from a list of input files. This is done by getting the line corresponding to the $SLURM_ARRAY_TASK_ID from the input file list.
 input=$(sed -n "$SLURM_ARRAY_TASK_ID"p las_files.txt)
 
-srun Rscript --no-save simple_lidR.R $input
+srun singularity_wrapper exec Rscript --no-save simple_lidR.R $input

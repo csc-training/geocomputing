@@ -9,5 +9,6 @@
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=1000
 
-module load r-env
-srun Rscript --no-save Contours_simple.R
+module load r-env-singularity
+
+srun singularity_wrapper exec Rscript --no-save Contours_simple.R

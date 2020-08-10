@@ -16,4 +16,4 @@ module load r-env
 name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../mapsheets.txt)
 
 # run the analysis command
-srun Rscript Contours_array.R $name
+srun singularity_wrapper exec Rscript Contours_array.R $name

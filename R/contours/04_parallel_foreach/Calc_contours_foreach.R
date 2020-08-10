@@ -13,12 +13,12 @@ cl<-startMPIcluster()
 registerDoMPI(cl)
 
 #Set directory for output files (in this case from user's workdirectory): 
-mainDir <- file.path(Sys.getenv("HOME"),'R_parallel_foreach')
+mainDir <- "/scratch/project_2002044/students/training011/R_spatial_exercises/04_parallel_foreach"
 gridFolder <- file.path(mainDir,"1_grid")
 shapeFolder <- file.path(mainDir,"2_shape")
 
 # Read the mapsheets from external file, in this case from user's workdirectory
-mapsheets <- readLines(file.path(Sys.getenv("HOME"),'geocomputing/R/contours/mapsheets.txt'))
+mapsheets <- readLines('../mapsheets.txt')
 
 
 # Set the working directory

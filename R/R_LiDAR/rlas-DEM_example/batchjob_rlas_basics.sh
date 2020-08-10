@@ -8,5 +8,5 @@
 #SBATCH -p small
 #SBATCH -n 1
 
-module load r-env
-srun Rscript --no-save --slave basic_rlas.R
+module load r-env-singularity
+srun singularity_wrapper exec Rscript --no-save --slave basic_rlas.R

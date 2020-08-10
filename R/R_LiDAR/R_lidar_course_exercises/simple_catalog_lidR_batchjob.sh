@@ -19,12 +19,12 @@
 #SBATCH --mem-per-cpu=1000
 
 #As the job is not run on the login node where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on the login node before sending the batch job will not help.
-module load r-env
+module load r-env-singularity
 
 # Remove and creates new output folder
 rm -rf batch_output
 mkdir batch_output
-srun Rscript --no-save simple_catalog_lidR.R
+srun singularity_wrapper exec Rscript --no-save simple_catalog_lidR.R
 
 mv batch_output_$SLURM_JOBID.txt ./batch_output
 mv batch_error_$SLURM_JOBID.txt ./batch_output
