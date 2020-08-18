@@ -10,5 +10,10 @@
 #SBATCH -p small
 
 module load r-env-singularity
+
+if test -f ~/.Renviron; then
+    sed -i '/TMPDIR/d' ~/.Renviron
+fi
+
 srun singularity_wrapper exec RMPISNOW --no-save -f rtest.R
 
