@@ -22,9 +22,9 @@
 module load r-env-singularity
 
 # If you have installed packages this helps resolve problems related to those
-{{if test -f ~/.Renviron; then
-sed -i '/TMPDIR/d' ~/.Renviron
-fi}}
+if test -f ~/.Renviron; then
+    sed -i '/TMPDIR/d' ~/.Renviron
+fi
 
 # Remove and creates new output folder
 rm -rf batch_output
