@@ -10,7 +10,7 @@
 #SBATCH -p small
 
 # load the Puhti module for R
-module load r-env
+module load r-env-singularity
 
 if test -f ~/.Renviron; then
     sed -i '/TMPDIR/d' ~/.Renviron
