@@ -10,4 +10,9 @@
 #SBATCH --mem-per-cpu=1000
 
 module load r-env-singularity
+
+if test -f ~/.Renviron; then
+    sed -i '/TMPDIR/d' ~/.Renviron
+fi
+
 srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_snow.R
