@@ -21,6 +21,11 @@
 #As the job is not run on the login node where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on the login node before sending the batch job will not help.
 module load r-env-singularity
 
+# If you have installed packages this helps resolve problems related to those
+{{if test -f ~/.Renviron; then
+sed -i '/TMPDIR/d' ~/.Renviron
+fi}}
+
 # Remove and creates new output folder
 rm -rf batch_output
 mkdir batch_output
