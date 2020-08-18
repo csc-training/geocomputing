@@ -21,9 +21,9 @@
 module load r-env-singularity
 
 # If you have installed packages this helps resolve problems related to those
-{{if test -f ~/.Renviron; then
-sed -i '/TMPDIR/d' ~/.Renviron
-fi}}
+if test -f ~/.Renviron; then
+    sed -i '/TMPDIR/d' ~/.Renviron
+fi
 
 #Read the file to be processed from a list of input files. This is done by getting the line corresponding to the $SLURM_ARRAY_TASK_ID from the input file list.
 input=$(sed -n "$SLURM_ARRAY_TASK_ID"p las_files.txt)
