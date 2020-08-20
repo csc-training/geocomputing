@@ -38,5 +38,26 @@ Main used libraries:
 * GDAL command-line, rasterio and geopandas for data preparations
 * scikit-learn for shallow learning and some helping functions also for deep learning scripts (Puhti [geoconda](https://docs.csc.fi/apps/geoconda/) module)
 * Keras for deep learning and CNN_keras (Puhti [tensorflow/2.0.0](https://docs.csc.fi/apps/tensorflow/) module)
-* solaris and pytorch for CNN_solaris (Puhti [solaris](https://docs.csc.fi/apps/solaris/) module)
+* solaris and pytorch for CNN_solaris (Puhti [solaris](https://docs.csc.fi/apps/solaris/) module). The course materials have been tested with solaris-0.1.3, Puhti now includes also newer solaris-0.3.0.
 * (There are also some minor libraries used, so check the imports of scripts before doing the installations to your own PC. Conda installation of Python packages is warmly recommended, you can use the [gis.yml](gis.yml) file provided here.)
+
+GIS and machine learning libraries in Puhti:
+In Puhti there are a lot of installations of GIS and machine learning libraries, including [geoconda](https://docs.csc.fi/apps/geoconda/), [keras/tensorflow](https://docs.csc.fi/apps/tensorflow/) and [pytorch](https://docs.csc.fi/apps/pytorch/). But these are all conda installations, so you can choose only one at a time.
+
+Options for using GIS and machine-learning libraries at the same time.
+* [geoconda](https://docs.csc.fi/apps/geoconda/) includes scikit-learn 
+* [solaris](https://docs.csc.fi/apps/solaris/) includes pytorch, the tensorflow in solaris installation is unfortunatelly broken, so do not us it.
+* [tensorflow/2.0.0](https://docs.csc.fi/apps/tensorflow/) includes geopandas and rasterio
+* [pytorch/1.4](https://docs.csc.fi/apps/pytorch/) includes geopandas and rasterio
+* If you want to use some other version of keras/tensorflow, pytorch or some other machine learning library already available in Puhti you can add GIS-libraries with pip. For example for adding geopandas to pytorch/1.3.1:
+
+```
+module load pytorch/1.3.1
+module load gcc/9.1.0 gdal
+export PYTHONUSERBASE='/projappl/project_XXX/python_pip/lib/python3.7/site-packages'
+pip install --user shapely fiona pyproj geopandas
+```
+
+The same first 3 rows must be later included also to your batch job.
+
+GDAL is required by geopandas, if you use some other library it might not be necessary.
