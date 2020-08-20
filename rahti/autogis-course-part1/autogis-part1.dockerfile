@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook
+FROM jupyter/scipy-notebook
 
 MAINTAINER Johannes Nyman <johannes.nyman@csc.fi>
 
