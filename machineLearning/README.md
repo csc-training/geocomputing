@@ -44,7 +44,7 @@ Main used libraries:
 GIS and machine learning libraries in Puhti:
 In Puhti there are a lot of installations of GIS and machine learning libraries, including [geoconda](https://docs.csc.fi/apps/geoconda/), [keras/tensorflow](https://docs.csc.fi/apps/tensorflow/) and [pytorch](https://docs.csc.fi/apps/pytorch/). But these are all conda installations, so you can choose only one at a time.
 
-Options for using GIS and machine-learning libraries at the same time.
+### Options for using GIS and machine-learning libraries at the same time
 * [geoconda](https://docs.csc.fi/apps/geoconda/) includes scikit-learn 
 * [solaris](https://docs.csc.fi/apps/solaris/) includes pytorch, the tensorflow in solaris installation is unfortunatelly broken, so do not us it.
 * [tensorflow/2.0.0](https://docs.csc.fi/apps/tensorflow/) includes geopandas and rasterio
