@@ -48,7 +48,7 @@ In Puhti there are a lot of installations of GIS and machine learning libraries,
 * [geoconda](https://docs.csc.fi/apps/geoconda/) includes scikit-learn 
 * [solaris](https://docs.csc.fi/apps/solaris/) includes pytorch, the tensorflow in solaris installation is unfortunatelly broken, so do not us it.
 * [tensorflow/2.0.0](https://docs.csc.fi/apps/tensorflow/) includes geopandas and rasterio
-* [pytorch/1.4](https://docs.csc.fi/apps/pytorch/) includes geopandas and rasterio
+* [pytorch/1.4](https://docs.csc.fi/apps/pytorch/) and pytorch/nvidia-20.07-py3 include geopandas and rasterio
 * If you want to use some other version of keras/tensorflow, pytorch or some other machine learning library already available in Puhti you can add GIS-libraries with pip. For example for adding geopandas to pytorch/1.3.1:
 
 ```
