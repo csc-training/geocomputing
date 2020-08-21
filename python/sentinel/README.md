@@ -1,18 +1,20 @@
 ### Sentinel download script
 
-This script is an example how to find and download large quantities of Sentinel-2 images using Python and the sentinelsat library.
+This script is an example how to find and download large quantities of Sentinel-2 images using Python and the [sentinelsat library](https://sentinelsat.readthedocs.io).
 
 The script favors the Finnish **Finhub API** over the European **Scihub API** if the same image is found from both. 
 
 ### Running
+On local computer just install the sentinelsat library first.
 
-You can run this in an interactive session that can be started from the login node with
+In Puhti sentinelsat is included in the [geoconda module](https://docs.csc.fi/apps/geoconda/), which must be loaded before running the script.
 
-`sinteractive -i`
 `module load geoconda`
 `python sentinelsat_download_from_finhub_and_scihub.py`
 
-or you can make a batch job file and run it with a batch job
+You can run the script simply on login-node for smaller amounts of data.
+
+For bigger amounts of data you can use [screen](https://linuxize.com/post/how-to-use-linux-screen/) or [interactive session](https://docs.csc.fi/computing/running/interactive-usage/).
 
 ### Unzipping 
 
