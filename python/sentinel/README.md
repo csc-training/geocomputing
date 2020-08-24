@@ -9,8 +9,10 @@ On local computer just install the sentinelsat library first.
 
 In Puhti sentinelsat is included in the [geoconda module](https://docs.csc.fi/apps/geoconda/), which must be loaded before running the script.
 
-`module load geoconda`
-`python sentinelsat_download_from_finhub_and_scihub.py`
+```
+module load geoconda
+python sentinelsat_download_from_finhub_and_scihub.py
+```
 
 You can run the script simply on login-node for smaller amounts of data.
 
