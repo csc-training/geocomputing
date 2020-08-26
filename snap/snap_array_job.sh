@@ -22,7 +22,7 @@ readlink -f /appl/data/geo/sentinel/s2_example_data/S2* > image_path_list.txt
 image_path=$(sed -n ${SLURM_ARRAY_TASK_ID}p image_path_list.txt)
 
 ### Parse image basename to be used in output filename
-image_filename='basename '$image_path
+image_filename="$(basename -- $image_path)"
 
 ### -q is num of cores, -t is target file, -SsourceProduct is the xml inside each SAFE folder
 gpt_array <PROJECT-SCRATCH-FOLDER>/tmp_snap_userdir_"$SLURM_ARRAY_TASK_ID" resample_and_lai.xml -q 4 -t <OUTPUT-FOLDER-HERE>/${image_filename}_LAI.tif -SsourceProduct=${image_path}/MTD_MSIL2A.xml
