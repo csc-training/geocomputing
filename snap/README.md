@@ -1,4 +1,4 @@
-# Array jobs and SNAP
+# SNAP and Puhti Array jobs 
 This is an example of running a SNAP graph for multiple Sentinel-2 Level 2 images with an array job in Puhti supercomputer
 
 # Contents
@@ -13,7 +13,10 @@ More information on creating different kind of SNAP graphs
 * [Bulk Processing with GPT command](https://senbox.atlassian.net/wiki/spaces/SNAP/pages/70503475/Bulk+Processing+with+GPT)
 
 Also the following command is very useful in creating the graphs for different operators (like BiophysicalOp)
-`gpt <snap-operator> -h`
+```
+module load snap
+gpt <snap-operator> -h
+```
 
 ## snap_array_job.sh
 
@@ -24,6 +27,8 @@ This is the batch job script that is submitted to the Puhti queuing system. It c
 # Running
 
 You can run this by modifying the **snap_array_job.sh** and submitting it with 
-`sbatch snap_array_job`
+```
+sbatch snap_array_job
+```
 
 You need to change you project to the batch job file and include correct input/output directories. The **gpt_array** command also needs a path to somewhere (preferably /scratch/<YOUR-PROJECT>) where SNAP can write temporary cache files. 
