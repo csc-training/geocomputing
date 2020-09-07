@@ -57,7 +57,7 @@ with MemoryFile() as mem_file:
         print(dataset.meta)
         dataset.write(input_data)
         #Write to Allas
-        s3.upload_fileobj(mem_file, 'name_of_your_Allas_bucket', 'name_of_your_output_raster_file.tif')
+    s3.upload_fileobj(mem_file, 'name_of_your_Allas_bucket', 'name_of_your_output_raster_file.tif')
 
 # Create the vector file to memory and write to Allas
 tmp = tempfile.NamedTemporaryFile()

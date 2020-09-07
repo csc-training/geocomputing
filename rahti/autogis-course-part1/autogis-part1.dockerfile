@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook
+FROM jupyter/scipy-notebook
 
 MAINTAINER Johannes Nyman <johannes.nyman@csc.fi>
 
@@ -9,7 +9,7 @@ USER 1000
 RUN echo "Upgrading conda" \
 && conda update --yes -n base conda  \
 && conda install --yes -c conda-forge -c patrikhlobil \
-	python=3.7 \
+	python=3.8 \
 	pandas \
 	geopandas \
 	matplotlib \

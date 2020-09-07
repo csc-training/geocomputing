@@ -4,11 +4,11 @@ import geopandas as gpd
 from fiona.crs import from_epsg
 
 #input zones
-zones_in = "/wrk/ekkylli/geocomputing/python/zonal_stats/zones.shp"
+zones_in = "zones.shp"
 #output zonal stats
-zones_out = "/wrk/ekkylli/geocomputing/python/zonal_stats/zonal_stats.shp"
+zones_out = "zonal_stats.shp"
 #Raster you want to use to compute zonal stastics from.
-vrt = "/wrk/project_ogiir-csc/mml/dem10m_vrt/etrs-tm35fin-n2000/whole_finland_direct.vrt"
+vrt = "/appl/data/geo/mml/dem10m/dem10m_direct.vrt"
 #Which statistics to calculate
 statistics = ['count', 'min' ,'mean', 'max','median']        
             

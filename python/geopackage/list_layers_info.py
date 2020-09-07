@@ -10,7 +10,7 @@ This file lists the layers of GeoPackage, the number of features in each layer a
 
 from osgeo import ogr
 
-data = ogr.Open('/wrk/ekkylli/mtk/data/vektori/ogiir/data/MTK-geopackage-test-18-06-07.gpkg hylky')
+data = ogr.Open('/appl/data/geo/mml/maastotietokanta/2020/gpkg/MTK-vakavesi_20-02-06.gpkg')
 
 print('Data Name:', data.GetName())
 

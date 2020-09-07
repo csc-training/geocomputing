@@ -4,7 +4,7 @@ import time
 import sys
 
 #Graphml file containing street network from Hanko, Finland.
-#graph_file="data/hanko.graphml"
+graph_file="data/hanko.graphml"
 g =  igraph.read(graph_file)
 
 #Create edge weights based on length
