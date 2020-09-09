@@ -1,6 +1,6 @@
 name: gis_ml
 dependencies:
-  - python=3.7
+  - python=3.8
   - geopandas
   - rasterio
   - scikit-learn
