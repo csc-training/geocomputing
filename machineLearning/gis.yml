@@ -5,5 +5,3 @@ dependencies:
   - rasterio
   - scikit-learn
   - imbalanced-learn
-  - qgis
-
