@@ -3,18 +3,12 @@ FROM jupyter/minimal-notebook
 WORKDIR /opt/app
 USER 1000
 
+COPY ./gis_ml_environment.yml /usr/local/etc/gis_ml_environment.yml
+
 ### Installing the GIS libraries and jupyter lab extensions. Modify this and make sure the conda spell is working
 RUN echo "Upgrading conda" \
 && conda update --yes -n base conda  \
-&& conda install --yes -c conda-forge \
-	python \
-	geopandas \
-	matplotlib \
-	jupyterlab \
-    rasterio \
-    scikit-learn \
-    imbalanced-learn \
-    rclone
+&& conda env update --file /usr/local/etc/gis_ml_environment.yml
 
 RUN jupyter lab build
 
