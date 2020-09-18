@@ -9,7 +9,7 @@ export GDAL_DATA=/opt/conda/share/gdal
 cd /home/jovyan/work/
 
 git clone https://github.com/csc-training/geocomputing.git
-cd geocomputing/machineLearning/2020/excercises
+cd geocomputing/machineLearning
 
 # backwards compatibility to BOOTSTRAP_* -vars in existing blueprints
 if [ ! -z "$BOOTSTRAP_URL" ]; then
