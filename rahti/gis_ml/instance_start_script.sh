@@ -2,12 +2,14 @@
 
 export JUPYTER_ENABLE_LAB=true
 export OPENBLAS_NUM_THREADS=2
+export PROJ_LIB=/opt/conda/share/proj
+export GDAL_DATA=/opt/conda/share/gdal
 
 # Go to containing folder
 cd /home/jovyan/work/
 
 git clone https://github.com/csc-training/geocomputing.git
-cd geocomputing/machineLearning/2020/excercises
+cd geocomputing/machineLearning
 
 # backwards compatibility to BOOTSTRAP_* -vars in existing blueprints
 if [ ! -z "$BOOTSTRAP_URL" ]; then
