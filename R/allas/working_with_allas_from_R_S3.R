@@ -13,12 +13,19 @@ library("tidyverse")
 #
 # module load allas
 # OR
+# Add to your ~/.Renviron-file a new row
+# AWS_S3_ENDPOINT=a3s.fi
+# OR
 # Sys.setenv("AWS_S3_ENDPOINT" = "a3s.fi")
 # This sets AWS_S3_ENDPOINT environment variable to "a3s.fi".
 # Environment variables are cleaned after session end, so it must be set again in each new session.
+# OR
+# If using some MPI-library some other way may be needed for setting the environment variable, 
+# for example in snow this should be used, so that also workers get it:
+# clusterEvalQ(cl, Sys.setenv("AWS_S3_ENDPOINT" = "a3s.fi"))
 #
 # allas-conf --mode s3cmd
-# This creates [.s3cfg](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
+# This creates [.aws/credentials](https://github.com/cloudyr/aws.signature/) to your home directory
 # The credentials are saved to a file, so they need to be set only once from a new computer or when changing project.
 
 # Reading raster file
