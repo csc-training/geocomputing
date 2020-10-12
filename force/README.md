@@ -22,27 +22,27 @@ relevant parameters in .prm file
 
 ### 4CPU
 
-Nodes: 1
-Cores per node: 4
-CPU Utilized: 01:33:09
-CPU Efficiency: 94.60% of 01:38:28 core-walltime
-Job Wall-clock time: 00:24:37
+* Nodes: 1
+* Cores per node: 4
+* CPU Utilized: 01:33:09
+* CPU Efficiency: 94.60% of 01:38:28 core-walltime
+* Job Wall-clock time: 00:24:37
 
 ### 8CPU
 
-Nodes: 1
-Cores per node: 8
-CPU Utilized: 01:35:51
-CPU Efficiency: 80.05% of 01:59:44 core-walltime
-Job Wall-clock time: 00:14:58
+* Nodes: 1
+* Cores per node: 8
+* CPU Utilized: 01:35:51
+* CPU Efficiency: 80.05% of 01:59:44 core-walltime
+* Job Wall-clock time: 00:14:58
 
 ### 16CPU
 
-Nodes: 1
-Cores per node: 16
-CPU Utilized: 01:37:39
-CPU Efficiency: 42.19% of 03:51:28 core-walltime
-Job Wall-clock time: 00:14:28
+* Nodes: 1
+* Cores per node: 16
+* CPU Utilized: 01:37:39
+* CPU Efficiency: 42.19% of 03:51:28 core-walltime
+* Job Wall-clock time: 00:14:28
 
 # CONCLUSION
 
