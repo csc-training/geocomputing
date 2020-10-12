@@ -46,7 +46,9 @@ relevant parameters in .prm file
 
 # CONCLUSION
 
-From the benchmark runs, it seems that **a good rule of thumb is that the optimal number of CPU cores is in maximum twice the amount of processed images.** In this example we had 4 images and 8 CPU cores produced 80% CPU efficiency, but 16 CPU cores only 42%. Maximum is one node in Puhti so 40 CPU cores. 
+From the benchmark runs, it seems that **a good rule of thumb is that the optimal number of CPU cores is approximately twice the amount of images processed in parallel.** In this example we had 4 images and 8 CPU cores which produced **80% CPU** efficiency, but 16 CPU cores only **42%**. 
 
-This example used approximately 34GB memory while processing 4 images at the same time. 
+Maximum number of available CPU cores for FORCE in Puhti is one full node which is **40 CPU** cores
+
+This example used approximately **34GB** memory while processing 4 images at the same time. 
 
