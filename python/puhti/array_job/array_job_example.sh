@@ -15,7 +15,7 @@ module load geoconda
 # For looping through all the files:
 
 # Make a list of input files
-readlink -f /appl/data/geo/sentinel/s2_example_data/S2* > image_path_list.txt
+readlink -f /appl/data/geo/sentinel/s2_example_data/L2A/S2* > image_path_list.txt
 
 # Select the inputfile from row n to the array job n.
 image_path=$(sed -n ${SLURM_ARRAY_TASK_ID}p image_path_list.txt)

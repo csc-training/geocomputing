@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python joblib_example.py /appl/data/geo/sentinel/s2_example_data
+srun python joblib_example.py /appl/data/geo/sentinel/s2_example_data/L2A

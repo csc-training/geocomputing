@@ -17,7 +17,7 @@ Examples included here are
 
 These examples use a set of three **Sentinel L2A images** from southern Finland. The data is already stored in Puhti. It can be found from the path
 
-`/appl/data/geo/sentinel/s2_example_data`
+`/appl/data/geo/sentinel/s2_example_data/L2A`
 
 # Running the examples 
 
