@@ -13,7 +13,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #The number of cpus used by the lidR task
-#SBATCH --cpus-per-task=16
+#SBATCH --cpus-per-task=9
 
 #Tells the batch job sytem to reserve 1000MB (1GB) of memory for core
 #SBATCH --mem-per-cpu=1000
