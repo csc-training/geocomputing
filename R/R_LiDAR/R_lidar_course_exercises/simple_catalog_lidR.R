@@ -4,8 +4,14 @@ library(future)
 # set the number of cores accordingly to your available cpus (e.g. your request to Puhti)
 # Note the way have defining this has changed from lidR 2.10
 # https://github.com/Jean-Romain/lidR/blob/master/NEWS_v2.md
-plan(multisession , workers = 9)
-#opt_cores(ctg_subset) <- 9
+# https://rdrr.io/cran/lidR/man/lidR-parallelism.html
+# Use 4 workers, each with 2 threads.
+# Workers are used for catalog_sapply chunks
+# Threads are used for functions supporting OpenMP parallelization 
+# Check lidR-parallelism.html page how to see which functions support OpenMP.
+plan(multisession , workers = 4)
+set_lidr_threads(2)
+#opt_cores(ctg_subset) <- 4
 
 #project <- readLAScatalog('/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/U4422H2.laz')
 project <- readLAScatalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/")
@@ -20,5 +26,6 @@ opt_chunk_size(project) <- 1000
 # summary(ctg_subset)
 
 # Calculate DTM for the catalog, note that the files are written by the catalog itself
+# https://rdrr.io/cran/lidR/man/catalog_apply.html
 output  <- catalog_sapply(project, grid_terrain, algorithm = tin())
 writeRaster(output, 'dem.tif', format="GTiff", overwrite=TRUE)
