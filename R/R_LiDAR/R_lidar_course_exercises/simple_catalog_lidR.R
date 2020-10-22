@@ -12,9 +12,9 @@ project <- readLAScatalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442
 # lascheck(ctg_subset)
 # computation options
 outdir <- "batch_output"
-opt_output_files(ctg_subset) <- paste0("./", outdir, "/dtm_ctg_{XLEFT}_{YBOTTOM}_{ID}")
+opt_output_files(project) <- paste0("./", outdir, "/dtm_ctg_{XLEFT}_{YBOTTOM}_{ID}")
 # Internal engine will sequentially process chunks of size 100 x 100 m 
-opt_chunk_size(ctg_subset) <- 100
+opt_chunk_size(project) <- 100
 
 # summary(ctg_subset)
 
