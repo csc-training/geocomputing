@@ -4,8 +4,8 @@ library(future)
 # set the number of cores accordingly to your available cpus (e.g. your request to Puhti)
 # Note the way have defining this has changed from lidR 2.10
 # https://github.com/Jean-Romain/lidR/blob/master/NEWS_v2.md
-plan(multisession , workers = 16)
-#opt_cores(ctg_subset) <- 16
+plan(multisession , workers = 9)
+#opt_cores(ctg_subset) <- 9
 
 #project <- readLAScatalog('/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/U4422H2.laz')
 project <- readLAScatalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/")
@@ -13,8 +13,9 @@ project <- readLAScatalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442
 # computation options
 outdir <- "batch_output"
 opt_output_files(project) <- paste0("./", outdir, "/dtm_ctg_{XLEFT}_{YBOTTOM}_{ID}")
-# Internal engine will sequentially process chunks of size 100 x 100 m 
-opt_chunk_size(project) <- 100
+# Internal engine will sequentially process chunks of size 1000 x 1000 m 
+# Be careful with this, with a lot of files it likely is unnecessary to chank one file internally
+opt_chunk_size(project) <- 1000
 
 # summary(ctg_subset)
 
