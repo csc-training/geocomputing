@@ -16,7 +16,7 @@
 #SBATCH --cpus-per-task=9
 
 #Tells the batch job sytem to reserve 1000MB (1GB) of memory for core
-#SBATCH --mem-per-cpu=1000
+#SBATCH --mem-per-cpu=2000
 
 #As the job is not run on the login node where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on the login node before sending the batch job will not help.
 module load r-env-singularity
