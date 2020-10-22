@@ -7,7 +7,8 @@ library(future)
 plan(multisession , workers = 16)
 #opt_cores(ctg_subset) <- 16
 
-ctg_subset <- catalog("las_files.txt")
+#project <- readLAScatalog('/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/U4422H2.laz')
+project <- readLAScatalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/")
 # lascheck(ctg_subset)
 # computation options
 outdir <- "batch_output"
@@ -18,5 +19,5 @@ opt_chunk_size(ctg_subset) <- 100
 # summary(ctg_subset)
 
 # Calculate DTM for the catalog, note that the files are written by the catalog itself
-# and that a virtual raster is created with name grid_terrain.vrt
-dtm <- grid_terrain(ctg_subset, algorithm = tin())
+output  <- catalog_sapply(project, grid_terrain, algorithm = tin())
+writeRaster(output, 'dem.tif', format="GTiff", overwrite=TRUE)
