@@ -10,7 +10,7 @@ library(future)
 # Use 4 workers, each with 2 threads.
 # Workers are used for catalog_sapply files / chunks
 # All lidR functions support using workers.
-plan(multisession , workers = 4)
+plan("multicore" , workers = 4)
 
 # Threads are used for functions supporting OpenMP parallelization 
 # Only some functions support using OpenMP parallelization
