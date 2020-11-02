@@ -24,18 +24,20 @@ from tensorflow.keras.utils import to_categorical
 
 #Set working directory and input/output file names.
 
-base_folder = r"/scratch/project_2000599/classification"
+data_folder = "/scratch/project_2002044/data/GIS_ML_COURSE_DATA/data/forest"
+
+results_folder = "/scratch/project_2002044/students/<YOUR-STUDENT-NUMBER>"
 
 # Input
-inputImage =  os.path.join(base_folder,'T34VFM_20180829T100019_clipped_scaled.tif')
-labelsImage =  os.path.join(base_folder,'forest_species_reclassified.tif')
+inputImage =  os.path.join(data_folder,'T34VFM_20180829T100019_clipped_scaled.tif')
+labelsImage =  os.path.join(data_folder,'forest_species_reclassified.tif')
 
 # Outputs of the model
 # Saved model and its weights
-fullyConnectedModel = os.path.join(base_folder,'fullyConnectedModel_forest.json')
-fullyConnectedWeights = os.path.join(base_folder,'fullyConnectedWeights_forest.h5')
+fullyConnectedModel = os.path.join(results_folder,'fullyConnectedModel_forest.json')
+fullyConnectedWeights = os.path.join(results_folder,'fullyConnectedWeights_forest.h5')
 # Predicted .tif image
-fullyConnectedImageCropped = os.path.join(base_folder,'T34VFM_20180829T100019_clipped_fullyConnected.tif')
+fullyConnectedImageCropped = os.path.join(results_folder,'T34VFM_20180829T100019_clipped_fullyConnected.tif')
 
 # Read data and shape it to suitable form for keras.
 # (Exactly the same as for scikit-learn classification.)
@@ -210,6 +212,7 @@ def main():
                       
 if __name__ == '__main__':
     ### This part just runs the main method and times it
+    print("Script started!")
     start = time.time()
     main()
     end = time.time()

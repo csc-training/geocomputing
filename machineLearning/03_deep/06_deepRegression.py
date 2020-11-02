@@ -1,6 +1,6 @@
 """
 
-This script reads zip code data produced by vectorDataPreparations.py and creates a deep learning model for
+This script reads zip code data produced by vectorDataPreparations and creates a deep learning model for
 predicting the median income from zip code level population and spatial variables.
 
 It assess the model accuracy with a test dataset but also predicts the number to all zip codes and writes it to a geopackage
@@ -22,15 +22,18 @@ from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import RMSprop
 
 
-### FILL HERE the path where your data is. e.g "/scratch/project_2000599/students/26/data"
-base_folder = "/Users/jnyman/Documents/local/rndm/ml_course_DEV/test"
+### FILL HERE the path to the data in Puhti
+data_folder = "/scratch/project_2002044/data/GIS_ML_COURSE_DATA/data/paavo/"
 
-### Relative path to the zip code geopackage file that was prepared by vectorDataPreparations.py
-input_geopackage_path = os.path.join(base_folder,"zip_code_data_after_preparation.gpkg")
-output_geopackage_path = os.path.join(base_folder,"median_income_per_zipcode_deep_learning.gpkg")
+### FILL HERE the path to YOUR working directory
+results_folder = "/scratch/project_2002044/students/<YOUR-STUDENT-NUMBER>"
+
+### Relative path to the zip code geopackage file that was prepared by vectorDataPreparations
+input_geopackage_path = os.path.join(data_folder,"zip_code_data_after_preparation.gpkg")
+output_geopackage_path = os.path.join(results_folder,"median_income_per_zipcode_deep_learning.gpkg")
 
 def checkGPUavailability():
-    device = tensorflow.config.list_physical_devices('GPU')
+    device = tensorflow.test.is_gpu_available()
     if device:
         print("We have a GPU available!")
     else:
@@ -41,6 +44,7 @@ def trainAndEstimateModel(original_gdf):
 
     ### Split the gdf to x (the predictor attributes) and y (the attribute to be predicted)
     y = original_gdf['hr_mtu'].to_numpy()  # median income
+    
     ### remove geometry, textual fields and the y field
     x = original_gdf.drop(['geometry', 'postinumer', 'nimi', 'hr_mtu'], axis=1).to_numpy()
     num_of_x_columns =  x.shape[1]
@@ -115,6 +119,7 @@ def main():
 
 if __name__ == '__main__':
     ### This part just runs the main method and times it
+    print("Script started!")
     start = time.time()
     main()
     end = time.time()
