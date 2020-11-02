@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=JoblibTest
+#SBATCH --job-name=DaskTest
 #SBATCH --account=<project>
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python joblib_example.py /appl/data/geo/sentinel/s2_example_data/L2A
+srun python dask_example.py /appl/data/geo/sentinel/s2_example_data/L2A
