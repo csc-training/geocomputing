@@ -26,11 +26,11 @@ from tensorflow.keras.utils import to_categorical
 
 data_folder = "/scratch/project_2002044/data/GIS_ML_COURSE_DATA/data/forest"
 
-results_folder = "/scratch/project_2002044/students/<YOUR-STUDENT-NUMBER>"
+results_folder = "/scratch/project_2002044/students/<YOUR-STUDENT-NUMBER>/03_deep"
 
 # Input
 inputImage =  os.path.join(data_folder,'T34VFM_20180829T100019_clipped_scaled.tif')
-labelsImage =  os.path.join(data_folder,'forest_species_reclassified.tif')
+labelsImage =  os.path.join(data_folder,'forest_species_reclassified_clip.tif')
 
 # Outputs of the model
 # Saved model and its weights
@@ -61,7 +61,7 @@ def prepareData(image_dataset, labels_dataset):
 	# For labels only reshape to 1D is enough.
     labels_data = labels_dataset.read()
     input_labels = labels_data.reshape(-1)
-    print ('Labels shape after reshape, 1D: ', pixels.shape)
+    print ('Labels shape after reshape, 1D: ', input_labels.shape)
     
     # The forest classes are very imbalanced in the dataset, so undersample the majority classes
     rus = RandomUnderSampler(random_state=63)
