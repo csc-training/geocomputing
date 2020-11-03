@@ -14,4 +14,4 @@ module load solaris
 tar xf <PATH-TO-YOUR-TILES-TAR> -C $LOCAL_SCRATCH
 
 ### Give the local filesystem dir to the python function as argument
-srun python 08_train.py $LOCAL_SCRATCH
+srun python 08_1_train.py $LOCAL_SCRATCH

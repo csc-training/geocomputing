@@ -13,4 +13,4 @@ tar xf /scratch/project_2002044/test/johannes/tiles/forest.tar -C $LOCAL_SCRATCH
 
 ls $LOCAL_SCRATCH
 
-srun python3 train.py $LOCAL_SCRATCH
+srun python3 09_1_train.py $LOCAL_SCRATCH

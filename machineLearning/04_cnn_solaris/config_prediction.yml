@@ -1,5 +1,5 @@
 model_name: PredictSpruceForestsModel
-model_path: '/Users/jnyman/Documents/local/rndm/solaris/big_training/xdxd_spacenet4_solaris_weights.pth'
+model_path: 'PredictSpruceForestsModel_final.pth'
 
 train: false
 infer: true
