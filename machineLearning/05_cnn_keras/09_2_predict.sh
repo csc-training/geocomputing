@@ -9,4 +9,4 @@
 
 module load tensorflow/2.0.0
 
-srun python3 predict.py
+srun python3 09_2_predict.py
