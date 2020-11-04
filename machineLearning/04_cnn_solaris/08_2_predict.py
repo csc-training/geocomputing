@@ -14,20 +14,22 @@ if len(sys.argv) != 2:
    print('Please give the data directory')
    sys.exit()
 
-base_folder=sys.argv[1]
+local_scratch_folder=sys.argv[1]
+data_folder="/scratch/project_2002044/data/GIS_ML_COURSE_DATA/data/forest"
+user_folder="/scratch/project_2002044/test/student_0000"
 
 ### This is the folder of this file. We use it to fetch the .yml files
 script_folder = os.path.dirname(os.path.realpath(__file__))
 
 ### Rest of the hierarchical subfolder structure
-tile_output_folder = os.path.join(base_folder,"tiles")
+tile_output_folder = os.path.join(local_scratch_folder)
 prediction_image_tile_subfolder = os.path.join(tile_output_folder,"image_prediction_tiles_512")
 
 ### Output path for the predicted image 
-predicted_image_output_path = os.path.join(base_folder,"spruce_prediction_1200_epochs.tif")
+predicted_image_output_path = os.path.join(user_folder,"spruce_prediction.tif")
 
 ### Validation image which will be compared to the predicted one
-test_image_path = os.path.join(base_folder,"validation","forest_spruce_scaled_validation_2.tif")
+test_image_path = os.path.join(data_folder,"forest_spruce_scaled_validation_2.tif")
 
 def checkGPUavailability():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

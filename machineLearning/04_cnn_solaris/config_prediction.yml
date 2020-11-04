@@ -99,12 +99,12 @@ training:
   checkpoint_frequency: 100
   callbacks:
     model_checkpoint:
-      filepath: 'PredictSpruceForestsModel.pth'
+      filepath: ''
       monitor: val_loss
-  model_dest_path: '/Users/jnyman/Documents/local/rndm/solaris/big_training/xdxd_spacenet4_solaris_weights.pth'
+  model_dest_path: ''
   verbose: true
 
 inference:
   window_step_size_x:
   window_step_size_y:
-  output_dir: '/Users/jnyman/Documents/local/rndm/solaris/big_training/tiles/results_PredictBuildingsModel_final/'
+  output_dir: 'tiles/results_PredictBuildingsModel_final/'

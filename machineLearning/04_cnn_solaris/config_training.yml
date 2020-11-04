@@ -97,10 +97,11 @@ training:
   metrics:
     training:
     validation:
-  checkpoint_frequency: 100
+  checkpoint_frequency: 10
   callbacks:
     model_checkpoint:
-      filepath: ''
-      monitor: val_loss
+      filepath: 'model.pth'
+      monitor: 'val_loss'
+      save_best_only: true 
   model_dest_path: 'PredictSpruceForestsModel_final.pth'
   verbose: true
