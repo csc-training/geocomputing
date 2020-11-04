@@ -44,13 +44,12 @@ rm -f tiles/labels_all_classes_tiles_650/*_8_*.tif
 rm -f tiles/labels_all_classes_tiles_650/*_8.tif
 
 # For predicting data we have to remove last column and row of tiles.
-cd tiles/image_prediction_tiles_512/
 rm -f tiles/image_prediction_tiles_512/*_12_*.tif
 rm -f tiles/image_prediction_tiles_512/*_15.tif
-cd ..
 
 ### COMPRESSING 
 ## Lastly let's compress the tiles .tar files. .tar files are very similar than .zip files
 ## This is done so that when we run the training job on Puhti, it can use the fast local disk rather than /scratch
 tar -czvf spruce.tar image_training_tiles_650 label_tiles_650
 tar -czvf forest.tar image_training_tiles_650 labels_all_classes_tiles_650
+tar -czvf spruce_prediction.tar image_prediction_tiles_512

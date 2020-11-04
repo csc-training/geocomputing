@@ -13,13 +13,13 @@ if len(sys.argv) != 2:
    print('Please give the data directory')
    sys.exit()
 
-data_dir=sys.argv[1]
+base_folder=sys.argv[1]
 
 ### This is the folder of this file. We use it to fetch the .yml files
 script_folder = os.path.dirname(os.path.realpath(__file__))
 
 ### Folder where our training, label, prediction and result tiles will be
-tile_output_folder = os.path.join(base_folder,"tiles")
+tile_output_folder = os.path.join(base_folder)
 
 ### This script's training and label tile folders
 training_image_tile_subfolder = os.path.join(tile_output_folder,"image_training_tiles_650")
