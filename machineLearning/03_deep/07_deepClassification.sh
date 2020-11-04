@@ -14,6 +14,6 @@
 # --gres=gpu:v100:1
 # --partition=gpu
 
-module load tensorflow/2.0.0
+module load tensorflow/nvidia-20.03-tf2-py3
 
-srun python 07_deepClassification.py
+srun singularity_wrapper exec python 07_deepClassification.py
