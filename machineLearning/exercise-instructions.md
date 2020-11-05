@@ -25,3 +25,71 @@ All Python code is already in the Notebooks, data will be downloaded during the 
 * Only exercises from folders `01_data_preparation` and `02_shallows` are done using Notebooks.
 
 ## Day 2
+Keras and solaris exercises will be done in CSC Puhti supercomputer in the GPU partition.
+
+* Training account usernames and passwords you receive by email. 
+* Below replace your personal training account number to the username training[XX].
+* Training project is: project_2002044.
+* Our working directory is /scratch/project_2002044
+* /scratch/project_2002044/data has the input data for exercises
+* /scratch/project_2002044/students/training[XX] for your code and results
+* For Tuesday and Wednesday we have Puhti GPU reservation for 3 nodes, so that we do not have to wait in the general queue. Therefore in batch job files there is an extra row, which should be removed if using the file later. 
+`#SBATCH --reservation ml_training`
+
+1)	Download Puhti exercises material from Github to your local computer. Download as zip: https://github.com/csc-training/geocomputing/archive/master.zip or with git. Unzip the file.
+
+2) Login to Puhti with ssh using the training account (do not use your own CSC account because reservation available only for training accounts):
+
+   ```bash
+   ssh trainingXX@puhti.csc.fi
+   ```
+
+Windows: Open Putty. Set `Host name` puhti.csc.fi. Keep `Port` as 22.
+* When typing password no characters will show, but just keep typing.
+
+3)	Open FileZilla/WinSCP and connect to puhti.csc.fi
+* Open the local directory to the left side.
+* On the right side, move to your work directory: /scratch/project_2002044/students
+* Create yourself own working directory with the name of your Puhti account (training0[XX]) 
+* Open your own working directory with double-click.
+* For moving files between Puhti and local machine drag them from the left panel to the one on the right or the other way round.
+
+4)	Go back to Terminal/Putty and change to your directory: 
+```bash
+cd /scratch/project_2002044/students/training0[XX]
+```
+
+
+### Edit and submit jobs
+
+1. Edit files on your local computer with a Python editor or basic text editor.
+* Find places marked with TOFIX. Mostly these are paths, set them correctly according to where you have your files in Puhti.
+* Each exercice has usually 2 files: one .py and one .sh.
+* The .py file includes the Python code.
+* The .sh file includes information for Puhti scheduler, how much resources you need and what script to run.
+* If ready, move the files with FileZilla/WinSCP to Puhti.
+
+2. Submit jobs:
+
+   ```bash
+   sbatch 06_deepRegression.sh 
+   ```
+   
+   Or the other .sh files.
+   The command prints out your job number, the same number is used for output file. 
+
+2. See the status of your jobs or the queue you are using:
+
+   ```bash
+   seff [job_number]
+   squeue -l -u $USER
+   squeue -l -p gpu
+   ```
+
+3. After the job has finished, examine the results:
+
+   ```bash
+   less slurm-[job_number].out
+   ```
+
+4. To see the results on map, move them back to local machine and open with QGIS/ArcGIS.
