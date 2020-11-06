@@ -13,7 +13,7 @@
 module load solaris
 
 ### This uncompresses (unzips) the tar you created from the tiles folder to a local filesystem on the computatation node
-tar xf /scratch/project_2002044/students/<YOUR-STUDENT-NUMBER>/spruce_prediction.tar -C $LOCAL_SCRATCH
+tar xf /scratch/project_2002044/students/<YOUR-STUDENT-NUMBER>/tiles/spruce_prediction.tar -C $LOCAL_SCRATCH
 
 ### Give the local filesystem dir to the python function as argument
 srun python 08_2_predict.py $LOCAL_SCRATCH
