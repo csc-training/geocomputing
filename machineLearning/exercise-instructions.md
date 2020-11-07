@@ -78,12 +78,18 @@ cd /scratch/project_2002044/students/training0[XX]
    Or the other .sh files.
    The command prints out your job number, the same number is used for output file. 
 
-2. See the status of your jobs or the queue you are using:
+2. (See the status of your jobs or the queue you are using:)
 
    ```bash
    seff [job_number]
    squeue -l -u $USER
    squeue -l -p gpu
+   ```
+
+3. See the job output. If the job has not started yet, an error about file not existing will be displayed.
+
+   ```bash
+  tail -f slurm-[job_number].out
    ```
 
 3. After the job has finished, examine the results:
