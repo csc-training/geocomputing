@@ -107,14 +107,9 @@ def estimateModel():
             right = min(prediction_dataset.bounds.right,test_labels_dataset.bounds.right)
             top = min(prediction_dataset.bounds.top,test_labels_dataset.bounds.top)
             
-            common_bbox = {
-                        "type": "Polygon",
-                        "coordinates": [[
-                            [left, bottom],
-                            [left, top],
-                            [right, top],
-                            [right, bottom],
-                            [left, bottom]]]}
+            common_bbox = [{'type': 'Polygon', 'coordinates': [
+                [(left, bottom), (left, top),
+                (right, top), (right, bottom)]]}]
                         
             # Read data from only the overlapping area
             y_pred, transform = rasterio.mask.mask(prediction_dataset, common_bbox, crop=True)
