@@ -25,12 +25,13 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.callbacks import CSVLogger
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import load_model
-from tensorflow import one_hot
+from tensorflow.keras.metrics import Recall
+from tensorflow.keras.metrics import Precision
 
+from tensorflow import one_hot
 
 # The CNN model architecture is in anouther local file:
 import model_solaris
-#import loss_jaccard
 
 #SETTINGS
 
@@ -44,29 +45,33 @@ if len(sys.argv) != 2:
    sys.exit()
 
 data_dir=sys.argv[1]
+#data_dir='C:\\temp\\ML'
 
 # The results are written to Puhti scratch disk
 # TOFIX: Change the path according to your own username
-results_dir='/scratch/project_xx/test/results'
+results_dir='/scratch/project_2002044/students/ekkylli'
+#results_dir='C:\\temp\\ML'
 
 # The number of classes in labels
 # TOFIX: Change the number according to the used data
-no_of_classes=4 #For binary classification
+no_of_classes=2 #For binary classification
 # no_of_classes=4 # n for multiclass
 
-# Folders with data and labels
+# Folders with data and labels and for results and log
+# Model name includes learning rate and epsilon for optimizer
 train_data_dir = os.path.join(data_dir, 'image_training_tiles_650')
 train_data_file_name='T34VFM_20180829T100019_clipped_scaled_'
 if no_of_classes == 2: 
     labels_data_dir = os.path.join(data_dir, 'label_tiles_650')  
-    label_file_name = 'forest_spruce_scaled_'
+    label_file_name = 'forest_spruce_clip_'
+    model_best = os.path.join(results_dir, 'model_best_spruce_05_001.h5')
+    training_log_file = os.path.join(results_dir, 'log_spruce_05_001.csv')
 else:
     labels_data_dir = os.path.join(data_dir, 'labels_all_classes_tiles_650')
-    label_file_name = 'forest_species_reclassified_'
+    label_file_name = 'forest_species_reclassified_clip_'
+    model_best = os.path.join(results_dir, 'model_best_multiclass_05_001.h5')
+    training_log_file = os.path.join(results_dir, 'log_multiclass_05_001.csv')    
 
-# Folders for results and log
-model_best = os.path.join(results_dir, 'model_best_mc_5000_3_2_weighted1_10_50_500.h5')
-training_log_file = os.path.join(results_dir, 'log_mc_5000_3_2_weighted1_10_50_500.csv')
 
 # With more data save some tiles for testing later
 # Not used in the exercise
@@ -92,15 +97,7 @@ batch_size=12
 no_of_epochs = 5000
 # Changing optimizer or its settings could be the first option for trying different models
 # By default Adam epsilon is much smaller, but for image segmentation tasks bigger epsilon like here could work better.
-optimizer = Adam(lr=1E-3, epsilon=0.01)
-
-# Set loss according to the number of classes.
-# For very unbalanced cases it might make sense to use some other loss function,
-# for example SigmoidFocalCrossEntropy, jaccard, dice or some combination.
-if no_of_classes == 2: 
-    loss='binary_crossentropy'  
-else:
-    loss='categorical_crossentropy'
+optimizer = Adam(lr=0.05, epsilon=0.001)
 
 # Class weithts used during model training.
 # Because in example data the classes have very different number of pixels,
@@ -110,16 +107,37 @@ else:
 # The other option could be to use some other loss function.
 # In binary classification the spruce class is simply given 10 time more importance than background.
 if no_of_classes == 2: 
-    class_weight = {0: 1.,
-                    1: 10.}  
+    class_weight = {0: 0.1, 1: 0.9}
 else:
     # Weights are dependent on how many pixels certain class has in the data, smaller classes are given bigger weight:
-    class_weight = {0: 1.,
-                    1: 10.,
-                    2: 50.,
-                    3: 500.}
-    
-metrics=['accuracy']
+    class_weight = {0: 1.,1: 10., 2: 200., 3: 5000.}
+
+# Set loss according to the number of classes.
+# For very unbalanced cases it might make sense to use some other loss function.
+# More suggestions for suitable loss functions: https://neptune.ai/blog/image-segmentation-in-2020
+# Code examples available: https://www.kaggle.com/bigironsphere/loss-function-library-keras-pytorch
+
+if no_of_classes == 2: 
+    loss='binary_crossentropy'  
+else:
+    #loss=FocalLoss
+    loss='categorical_crossentropy'
+
+# Select metrics shown during training. 
+# Accuracy + recall and precision for each class separately
+if no_of_classes == 2: 
+    metrics=['accuracy']
+
+if no_of_classes == 4:
+    p0 = Precision(top_k=1, class_id=0, name='precision_0')
+    p1 = Precision(top_k=1, class_id=1, name='precision_1')
+    p2 = Precision(top_k=1, class_id=2, name='precision_2')
+    p3 = Precision(top_k=1, class_id=3, name='precision_3')
+    r0 = Recall(top_k=1, class_id=0, name='recall_0')
+    r1 = Recall(top_k=1, class_id=1, name='recall_1')  
+    r2 = Recall(top_k=1, class_id=2, name='recall_2')
+    r3 = Recall(top_k=1, class_id=3, name='recall_3')
+    metrics=['accuracy', p0, p1, p2, p3, r0, r1, r2, r3] #, MeanIoU(num_classes=no_of_classes)   
 
 # Read all the training files and randomly assign to training and validation sets
 def prepareData():
@@ -134,7 +152,7 @@ def prepareData():
     # Change to Pandas dataframe
     all_frames_df = pd.DataFrame(all_frames, columns =[data_col]) 
     
-    # Add labels files, labels are expecte to have similar numbering than the data tiles.
+    # Add labels files, labels are expected to have similar numbering than the data tiles.
     all_frames_df[label_col] = all_frames_df[data_col].str.replace(train_data_file_name, label_file_name, case = False)
     all_frames_df[label_col] = all_frames_df[label_col].str.replace(train_data_dir, labels_data_dir, case = False) 
     
@@ -201,7 +219,7 @@ def data_gen(img_df, augment):
           if t > 0:
             train_img_cropped = np.rot90(train_img_cropped, t)    
             train_mask_cropped = np.rot90(train_mask_cropped, t) 
-            # print (train_mask_cropped.shape)
+            #print (train_mask_cropped.shape)
               
       # Stack all images of the batch
       img[i-c] = train_img_cropped #add to array - img[0], img[1], and so on.
@@ -240,18 +258,18 @@ def trainModel(train_gen, val_gen, no_of_training_tiles, no_of_validation_tiles)
     
     # Stop training if model does not get better in patience number of epochs.
     earlystopping = EarlyStopping(monitor = 'val_loss', verbose = 1,
-                                  min_delta = 0.0001, patience = 200, mode = 'min')
+                                  min_delta = 0.0001, patience = 50, mode = 'min')
 
     callbacks_list = [checkpoint, csv_logger, earlystopping] #
 
     # Train the model
     m.fit(train_gen, epochs=no_of_epochs, 
                               steps_per_epoch = (no_of_training_tiles//batch_size),
-                              class_weight=class_weight,
                               verbose=2,
                               validation_data=val_gen, 
-                              validation_steps=(no_of_validation_tiles//batch_size), 
-                              callbacks=callbacks_list)
+                              validation_steps=(no_of_validation_tiles//batch_size),
+                              class_weight=class_weight,
+                              callbacks=callbacks_list) #
     
 def main():
     # Read the files from data folders and divide between traininga, validataion (and testing).
