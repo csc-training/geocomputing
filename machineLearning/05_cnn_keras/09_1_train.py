@@ -45,12 +45,10 @@ if len(sys.argv) != 2:
    sys.exit()
 
 data_dir=sys.argv[1]
-#data_dir='C:\\temp\\ML'
 
 # The results are written to Puhti scratch disk
 # TOFIX: Change the path according to your own username
 results_dir='/scratch/project_2002044/students/ekkylli'
-#results_dir='C:\\temp\\ML'
 
 # The number of classes in labels
 # TOFIX: Change the number according to the used data
@@ -72,11 +70,6 @@ else:
     model_best = os.path.join(results_dir, 'model_best_multiclass_05_001.h5')
     training_log_file = os.path.join(results_dir, 'log_multiclass_05_001.csv')    
 
-
-# With more data save some tiles for testing later
-# Not used in the exercise
-# test_tiles_file = os.path.join(data_dir, 'test_tiles.csv')
-
 #Image sizes
 # Training data size after tiling
 # This size may well be changed, but change your data preparation accordingly.
@@ -97,6 +90,7 @@ batch_size=12
 no_of_epochs = 5000
 # Changing optimizer or its settings could be the first option for trying different models
 # By default Adam epsilon is much smaller, but for image segmentation tasks bigger epsilon like here could work better.
+# Lower learning rate could also be often better. 
 optimizer = Adam(lr=0.05, epsilon=0.001)
 
 # Class weithts used during model training.
@@ -124,7 +118,7 @@ else:
     loss='categorical_crossentropy'
 
 # Select metrics shown during training. 
-# Accuracy + recall and precision for each class separately
+# Accuracy + recall and precision for each class separately for multiclass
 if no_of_classes == 2: 
     metrics=['accuracy']
 
