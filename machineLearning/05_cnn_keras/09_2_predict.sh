@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=project_2002044
-#SBATCH --partition=gputest
+#SBATCH --partition=gpu
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=4G
