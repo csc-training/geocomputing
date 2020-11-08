@@ -12,23 +12,29 @@ Created on Thu Mar 19 18:32:47 2020
 """
 import os
 import rasterio
+import rasterio.mask
 from sklearn.metrics import classification_report, confusion_matrix
 
 # Paths for INPUTS: data and predcition image to evaluate
-data_dir='/scratch/project_xx/data'
-results_dir='/scratch/project_xx/test/results'
+#TOFIX: Set file paths and the number of classes
+data_dir='/scratch/project_2002044/data/GIS_ML_COURSE_DATA/data/forest'
+results_dir='/scratch/project_2002044/students/ekkylli'
 
 no_of_classes = 2
 
-predicted_image_output_path = os.path.join(results_dir, 'predicted_spruce_spruce_5000_3_2_weighted1_10.tif')
- 
+predicted_image_output_path = os.path.join(results_dir, 'T34VFM_20180829T100019_CNN_spruce_05_001.tif')
+#predicted_image_output_path = os.path.join(results_dir, 'T34VFM_20180829T100019_CNN_multiclass_05_001.tif')
+
+#Using the  clipped versions of labels, because of speed.
+#In real case use the validation area. 
 if no_of_classes == 2: 
-    test_image_path = os.path.join(data_dir, 'forest_spruce_scaled.tif')  
+    test_image_path = os.path.join(data_dir, 'forest_spruce_clip.tif')  
 else:
-    test_image_path = os.path.join(data_dir, 'forest_species_reclassified.tif')
+    test_image_path = os.path.join(data_dir, 'forest_species_reclassified_clip.tif')
     
 #Treshold for the binary classification
-prediction_treshold = 0.22    
+#Try to look from map a good value, or just try different ones.
+prediction_treshold = 0.35    
 
 def estimateModel():
     # Open image files of predicted data and test data
@@ -42,14 +48,14 @@ def estimateModel():
             right = min(prediction_dataset.bounds.right,test_labels_dataset.bounds.right)
             top = min(prediction_dataset.bounds.top,test_labels_dataset.bounds.top)
             
-            common_bbox = {
+            common_bbox = [{
                         "type": "Polygon",
                         "coordinates": [[
                             [left, bottom],
                             [left, top],
                             [right, top],
                             [right, bottom],
-                            [left, bottom]]]}
+                            [left, bottom]]]}]
                         
             # Read data from only the overlapping area
             y_pred, transform = rasterio.mask.mask(prediction_dataset, common_bbox, crop=True)
@@ -64,7 +70,8 @@ def estimateModel():
                 y_pred2[(y_pred2 >= prediction_treshold)] = 1
                 y_pred2[(y_pred2 < prediction_treshold)] = 0
                 y_pred2 = y_pred2.astype('int')
-                        
+                print('Prediction_treshold: ', prediction_treshold) 
+                                    
             print('Confusion Matrix')    
             print(confusion_matrix(y_true2, y_pred2))
             print('Classification Report')
