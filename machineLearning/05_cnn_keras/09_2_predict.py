@@ -16,7 +16,6 @@ import rasterio
 import rasterio.merge
 from tensorflow.keras.models import load_model
 
-
 #SETTINGS
 
 # The number of classes in labels
@@ -25,18 +24,21 @@ no_of_classes=2 #For binary classification
 # no_of_classes=4 # n for multiclass
 
 # Paths for INPUTS: data and model
-data_dir='/scratch/project_xx/data'
-results_dir='/scratch/project_xx/test/results'
+data_dir='/scratch/project_2002044/test/student_0000/tiles'
+results_dir='/scratch/project_2002044/students/ekkylli'
 
-
-model_name='mc_5000_3_2_weighted1_10_50_500'
+# TOFIX: Change your model name here or use a pretrained model
+model_name='spruce_05_001'
 prediction_data_dir = os.path.join(data_dir, 'image_prediction_tiles_512')
 model_final = os.path.join(results_dir, 'model_best_'+model_name+'.h5')
+#Pretrained models, that can be used during course
+#model_final = '/scratch/project_2002044/data/GIS_ML_COURSE_DATA/data/forest/model_best_spruce_05_001.h5'
+#model_final = '/scratch/project_2002044/data/GIS_ML_COURSE_DATA/data/forest/model_best_multiclass_05_001.h5'
 
 #Paths for RESULTS
 predicted_tiles_folder = os.path.join(results_dir,'precitions512_'+model_name)
-prediction_image_file = os.path.join(results_dir,'predicted_spruce_'+model_name+'.tif')
-prediction_vrt_file = os.path.join(results_dir,'predicted_spruce_'+model_name+'.vrt')
+prediction_image_file = os.path.join(results_dir,'T34VFM_20180829T100019_CNN_'+model_name+'.tif')
+prediction_vrt_file = os.path.join(predicted_tiles_folder, model_name+'.vrt')
 
 #Setting of the data
 img_size = 512
@@ -83,7 +85,6 @@ def predictTile(model, dataImage):
         with rasterio.open(predictedImageFile, 'w', **outputMeta) as dst:
             dst.write(prediction2, 1)
 
-
                
 # Merge all tiles to one big .tif-image
 def  mergeTiles():
@@ -106,9 +107,10 @@ def  mergeTiles():
         with rasterio.open(prediction_image_file, "w", **out_metafile) as dest:
             dest.write(vrt_in.read())  
 
-def main():
+def main():    
+    
     # Load the previously trained model
-    model = load_model(model_final) 
+    model = load_model(model_final)
     
     # Find all data tiles for prediction
     all_frames = glob.glob(prediction_data_dir+"/*.tif")
