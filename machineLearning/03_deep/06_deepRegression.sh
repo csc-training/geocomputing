@@ -7,7 +7,7 @@
 #SBATCH --time=00:10:00
 #SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
-#SBATCH --reservation=ml_training
+#SBATCH --reservation=ml_training_10
 
 module load tensorflow/2.0.0
 
