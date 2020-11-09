@@ -6,7 +6,7 @@
 #SBATCH --mem=4G
 #SBATCH --time=0:14:00
 #SBATCH --gres=gpu:v100:1
+#SBATCH --reservation ml_training_10
 
-module load tensorflow/2.0.0
-
-srun python3 09_2_predict.py
+module load tensorflow/nvidia-19.11-tf2-py3
+srun singularity_wrapper exec python3 09_2_predict.py
