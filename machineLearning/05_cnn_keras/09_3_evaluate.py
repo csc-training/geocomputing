@@ -8,6 +8,14 @@ For binary classification a treshold must be given for dividing the pixels betwe
 
 Created on Thu Mar 19 18:32:47 2020
 
+This runs on small dataset in a moment so run with
+module laod geoconda
+python 09_3_evaluate.py
+
+OR
+module load tensorflow/nvidia-19.11-tf2-py3
+singularity_wrapper exec python 09_3_evaluate.py
+
 @author: ekkylli
 """
 import os
