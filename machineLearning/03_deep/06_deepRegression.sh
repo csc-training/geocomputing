@@ -5,12 +5,9 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:10:00
-#SBATCH --partition=gputest
+#SBATCH --partition=gpu
 #SBATCH --gres=gpu:v100:1
-
-# Add these later
-# --reservation ml_training
-# --partition=gpu
+#SBATCH --reservation=ml_training_10
 
 module load tensorflow/2.0.0
 
