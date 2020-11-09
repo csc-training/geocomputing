@@ -10,7 +10,6 @@ Created on Fri Mar  6 12:46:58 2020
 @author: ekkylli
 """
 import os, time, glob
-from osgeo import gdal 
 import numpy as np
 import rasterio
 import rasterio.merge
@@ -29,6 +28,7 @@ results_dir='/scratch/project_2002044/students/ekkylli'
 
 # TOFIX: Change your model name here or use a pretrained model
 model_name='spruce_05_001'
+#model_name='multiclass_05_001'
 prediction_data_dir = os.path.join(data_dir, 'image_prediction_tiles_512')
 model_final = os.path.join(results_dir, 'model_best_'+model_name+'.h5')
 #Pretrained models, that can be used during course
@@ -38,11 +38,12 @@ model_final = os.path.join(results_dir, 'model_best_'+model_name+'.h5')
 #Paths for RESULTS
 predicted_tiles_folder = os.path.join(results_dir,'precitions512_'+model_name)
 prediction_image_file = os.path.join(results_dir,'T34VFM_20180829T100019_CNN_'+model_name+'.tif')
-prediction_vrt_file = os.path.join(predicted_tiles_folder, model_name+'.vrt')
 
 #Setting of the data
 img_size = 512
 img_channels = 3
+
+outputMeta = None
 
 # Predict a tile and save it as .tif file
 def predictTile(model, dataImage):
@@ -72,6 +73,7 @@ def predictTile(model, dataImage):
 		
 		# Save the results as .tif file.
 		# Copy the coorindate system information, image size and other metadata from the satellite image 
+        global outputMeta
         outputMeta = image_dataset.meta
 		# Change the data type in file meta.
         if no_of_classes == 2: 
@@ -92,20 +94,20 @@ def  mergeTiles():
     #Find all .tif files in the predicted tiles folder
     tile_files = glob.glob(predicted_tiles_folder+"/*.tif")
     
-    # Make first GDAL virtual raster of the tiles.
-    my_vrt = gdal.BuildVRT(prediction_vrt_file, tile_files)
-    # set my_vrt to None, because only then GDAL writes the file to disk.
-    my_vrt = None    
-       
-    # Save the virtual raster to one file.
-    # If really a lot of tiles, add some logic to output several files.
-    with rasterio.open(prediction_vrt_file, 'r') as vrt_in:
-        out_metafile = vrt_in.meta.copy()
-        out_metafile.update({"driver": "GTiff"})
-        if no_of_classes > 2:
-            out_metafile.update({"compress": "lzw"})
-        with rasterio.open(prediction_image_file, "w", **out_metafile) as dest:
-            dest.write(vrt_in.read())  
+    #Create a mosaic of all files           
+    mosaic, out_trans = rasterio.merge.merge(tile_files)
+        
+    #Set output files metadata correctly
+    outputMeta.update({
+        "height": mosaic.shape[1],
+        "width": mosaic.shape[2],
+        "transform": out_trans
+    })
+    
+    #Write the output file to disk
+    with rasterio.open(prediction_image_file, "w", **outputMeta) as dest:
+        dest.write(mosaic)            
+        
 
 def main():    
     
