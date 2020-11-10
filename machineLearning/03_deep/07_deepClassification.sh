@@ -6,7 +6,8 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:14:00
-#SBATCH --partition=gputest
+#SBATCH --partition=gpu
+#SBATCH --reservation ml10
 
 
 # Add these later
