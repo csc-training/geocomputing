@@ -99,3 +99,49 @@ cd /scratch/project_2002044/students/training0[XX]
    ```
 
 6. To see the results on map, move them back to local machine and open with QGIS/ArcGIS.
+
+## Day 3
+On day 3 we will use the Solaris framework for GIS machine learning by CosmiQ works. Also we will be using PyTorch rather than Tensorflow. 
+
+We edit the files a bit on our local computer, transfer them to Puhti and submit the jobs to the GPU partition.
+
+https://solaris.readthedocs.io/en/latest/
+https://github.com/CosmiQ/solaris
+
+### Excercise
+
+1. Open the **04_solaris** excercise folder on your computer
+
+2. Edit the file **08_1_train.sh** batch job file and replace **<YOUR-STUDENT-NUMBER>** with your training-account (like training068)
+	
+3. Edit the file **08_2_predict.sh** and do the same
+
+4. Now you can submit the training job with 
+
+   ```bash
+   sbatch 08_1_train.sh
+   ```
+   
+   When the job is running you can observe the logs live with the command 
+   
+   ```bash
+   tail -f slurm-job_number.out
+   ```
+   
+5. The training job creates a lot of **model_something_something.pth** files as it saves the model every time an epoch perfoms better than the previous (bug). You can safely delete all files starting with 'model' with
+
+   ```bash
+   rm model*
+   ```
+   
+6. If the training has succeeded, you also have a file called **PredictSpruceForestsModel_final.pth** and you can run the prediction to the whole image by submitting the prediction job with
+
+   ```bash
+   sbatch 08_2_predict.sh
+   ```
+
+7. If it was succesfull you can inspect the performance measures from that job's slurm output file
+
+8. There is now a file called **spruce_predicted.tif**. You can transfer that from Puhti to your local computer and look at the results
+
+	
