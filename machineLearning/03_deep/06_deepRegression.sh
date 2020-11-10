@@ -9,6 +9,6 @@
 #SBATCH --gres=gpu:v100:1
 #SBATCH --reservation=ml_training_10
 
-module load tensorflow/2.0.0
+module load tensorflow/nvidia-19.11-tf2-py3
 
 srun python 06_deepRegression.py
