@@ -105,8 +105,8 @@ On day 3 we will use the Solaris framework for GIS machine learning by CosmiQ wo
 
 We edit the files a bit on our local computer, transfer them to Puhti and submit the jobs to the GPU partition.
 
-https://solaris.readthedocs.io/en/latest/
-https://github.com/CosmiQ/solaris
+* https://solaris.readthedocs.io/en/latest/
+* https://github.com/CosmiQ/solaris
 
 ### Excercise
 
