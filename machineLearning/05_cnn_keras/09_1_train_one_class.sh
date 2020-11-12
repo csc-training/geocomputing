@@ -6,7 +6,6 @@
 #SBATCH --mem=6G
 #SBATCH --time=1:00:00
 #SBATCH --gres=gpu:v100:1,nvme:1 #Local disk in Gb
-#SBATCH --reservation ml10
 
 module load tensorflow/nvidia-19.11-tf2-py3
 #tar cvf spruce.tar image_training_tiles_650 label_tiles_650
