@@ -7,14 +7,6 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:14:00
 #SBATCH --partition=gpu
-#SBATCH --reservation ml10
-
-
-# Add these later
-# --reservation ml_training
-# --gres=gpu:v100:1
-# --partition=gpu
 
 module load tensorflow/nvidia-20.03-tf2-py3
-
 srun singularity_wrapper exec python 07_deepClassification.py
