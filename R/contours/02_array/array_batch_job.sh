@@ -16,6 +16,9 @@ if test -f ~/.Renviron; then
     sed -i '/TMPDIR/d' ~/.Renviron
 fi
 
+# Specify a temp folder path
+echo "TMPDIR=/scratch/<project>" >> ~/.Renviron
+
 # read the file that has filepaths for mapsheets and pick one row according to variable $SLURM_ARRAY_TASK_ID
 name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../mapsheets.txt)
 

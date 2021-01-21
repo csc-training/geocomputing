@@ -29,9 +29,7 @@ funtorun<-function(mapsheet) {
   DEM <- raster(mapsheet)
   shapefile <- file.path(shapeFolder, gsub("tif", "shp", basename(mapsheet)))
   contours<-rasterToContour(DEM)
-  shapefile(contours, filename=shapefile, overwrite=TRUE)
-  plot(DEM)
-  plot(contours, add=TRUE)  
+  shapefile(contours, filename=shapefile, overwrite=TRUE) 
 }
 
 # load raster library

@@ -15,4 +15,7 @@ if test -f ~/.Renviron; then
     sed -i '/TMPDIR/d' ~/.Renviron
 fi
 
+# Specify a temp folder path
+echo "TMPDIR=/scratch/<project>" >> ~/.Renviron
+
 srun singularity_wrapper exec Rscript --no-save --slave Calc_contours_foreach.R
