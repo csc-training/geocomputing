@@ -44,3 +44,6 @@ In this case the R code takes care of dividing the work to 3 processes, one for 
 
 ## Using foreach with doMPI library for parallel processing
 As above the R code takes care of dividing the work. Instead of snow, foreach and doMPI are used.
+
+## Using future library for parallel processing
+As above the R code takes care of dividing the work. Instead of snow, future package is used. Future package is likely easiest to use.
