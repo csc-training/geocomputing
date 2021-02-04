@@ -12,11 +12,13 @@
 
 module load r-env-singularity
 
+# If you have installed packages this helps resolve problems related to those
 if test -f ~/.Renviron; then
     sed -i '/TMPDIR/d' ~/.Renviron
+    sed -i '/OMP_NUM_THREADS/d' ~/.Renviron   
 fi
 
 # Specify a temp folder path
-echo "TMPDIR=/scratch/<project>" >> ~/.Renviron
+echo "TMPDIR=/scratch/<YOUR-PROJECT>" >> ~/.Renviron
 
-srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future.R
+srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R
