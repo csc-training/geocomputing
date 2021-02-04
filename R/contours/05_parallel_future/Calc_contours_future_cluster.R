@@ -12,7 +12,7 @@ library(furrr)
 library(raster)
 
 #Set the names of the folders.
-mainDir <- "/scratch/project_xx/R/04_future"
+mainDir <- "/scratch/project_xx/R/05_parallel_future"
 shapeFolder <- "shape"
 
 # Set the working directory
