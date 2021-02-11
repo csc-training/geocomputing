@@ -11,7 +11,7 @@
 #SBATCH --array=1-3
 
 ### Load SNAP module
-module load snap/8.0
+module load snap
 
 ### For looping through all the files:
 
