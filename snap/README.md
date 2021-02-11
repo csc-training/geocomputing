@@ -12,10 +12,11 @@ More information on creating different kind of SNAP graphs
 * [Creating a GPF Graph](https://senbox.atlassian.net/wiki/spaces/SNAP/pages/70503590/Creating+a+GPF+Graph)
 * [Bulk Processing with GPT command](https://senbox.atlassian.net/wiki/spaces/SNAP/pages/70503475/Bulk+Processing+with+GPT)
 
-Also the following command is very useful in creating the graphs for different operators (like BiophysicalOp)
+Also the following command is very useful in creating the graphs for different operators (like BiophysicalOp). It can be executed in an interactive session
 ```
+sinteractive
 module load snap
-gpt <snap-operator> -h
+singularity_wrapper exec gpt <snap-operator> -h
 ```
 
 ## snap_array_job.sh
