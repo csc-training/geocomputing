@@ -4,6 +4,7 @@ Sets of instructions to install GeoServer in cPouta virtual machines (VM) and so
 Installing GeoServer
 - [Basic GeoServer Jetty installation](basic_geoserver_jetty.md)
 - [Upgrading GeoServer Jetty installation](geoserver_jetty_upgrading.md)
+- [Basic GeoServer Jetty installation with OpenStack tools and Ansible, the scripted way](ansible_geoserver.md)
 
 Use cases of using GeoServer for courses
 - [Single GeoServer course VM used by all students](single_geoserver_for_training.md)
