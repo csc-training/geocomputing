@@ -1,0 +1,102 @@
+- hosts: test
+  become: yes
+
+  tasks:
+    - name: Add EPEL repository
+      yum:
+        name: epel-release
+        state: present
+
+    - name: upgrade all packages
+      yum: name=* state=latest
+      tags: basic
+
+    - name: install basic tools
+      yum: 
+        name:
+          - zip
+          - unzip
+          - tmpwatch
+          - logrotate
+          - nano
+          - java-11-openjdk
+          - yum-cron
+      tags: basic2
+
+    - name: Update system time
+      command: systemctl restart chronyd
+      tags: basic
+      
+    - name: Forward port 80 to 8080
+      ansible.builtin.iptables:
+        table: nat
+        chain: PREROUTING
+        in_interface: eth0
+        protocol: tcp
+        match: tcp
+        destination_port: 80
+        jump: REDIRECT
+        to_ports: 8080
+        comment: Redirect web traffic to port 8080
+      become: yes      
+      tags: basic      
+
+    - name: add group "geoserver"
+      group: name=geoserver
+      tags: geoserver
+
+    - name: add user "geoserver" 
+      user: name=geoserver group=geoserver createhome=no
+      become: True
+      become_method: sudo
+      tags: geoserver
+      
+    - name: Download GeoServer
+      get_url:
+        url: http://sourceforge.net/projects/geoserver/files/GeoServer/2.18.2/geoserver-2.18.2-bin.zip
+        dest: /tmp/geoserver-2.18.2-bin.zip
+        mode: 0550
+      tags: geoserver
+
+    - name: ensure geoserver directory exists
+      file:
+        path: /usr/share/geoserver
+        state: directory
+      tags: geoserver        
+      
+    - name: Copy & unzip geoserver configuration directory
+      unarchive:
+        src: /tmp/geoserver-2.18.2-bin.zip
+        creates: /usr/share/geoserver/data_dir
+        dest: /usr/share/geoserver
+        remote_src: yes
+        owner: geoserver
+        group: geoserver
+        mode: '0770'      
+      tags: geoserver
+      
+    - name: Add env variables
+      lineinfile: 
+        path: /etc/default/geoserver
+        line: 'export GEOSERVER_HOME=/usr/share/geoserver' 
+        create: yes
+      tags: geoserver
+
+    - name: Copy geoserver service description
+      copy:
+        src: geoserver.service2
+        dest: /etc/systemd/system/geoserver.service
+        owner: geoserver
+        group: geoserver
+        mode: '0640'  
+      tags: geoserver2
+
+    - name: enable and start geoserver service
+      systemd: 
+        name: geoserver 
+        enabled: yes
+        state: started          
+        daemon_reload: yes
+      tags: geoserver2                
+      
+    
