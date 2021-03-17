@@ -20,12 +20,25 @@ sh build.sh <dockerfile-name-without-extension>
 Next test your installation steps manually by loggin to your container:
 ```shell
 # to login as root
-docker exec -u root -it <container-name> /bin/bash     
+docker exec -u root -it <container-name> bash     
 # to login as the default "jovyan" user
-docker exec -it <container-name> /bin/bash
+docker exec -it <container-name> bash
 # do your installations, note that the underlying system in Jupyter Notebooks is an Ubuntu system
 
 # Make a record of the installations that you have been doing, you can use "history" command (note that for jovyan and roon the history is different)
 ```
 
 Once you have tested your installations (without having to rebuild your docker image), replicate the installation steps into the dockerfile you are customizing (put your edits before `RUN chgrp -R root /home/...`). When you are done, build the new docker image with the `build.sh` script as earlier. Create a new container and test that the installation is working as expected.
+
+**Some more helpful commands**
+
+Check available images:
+`sudo docker images`
+
+Check running containers:
+`sudo docker ps`
+ 
+Stop a running container:
+ `sudo docker stop <CONTAINER_ID>`
+ 
+ 
