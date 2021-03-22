@@ -43,7 +43,7 @@ openstack server add security group <server_name> <security_group_name>
 geoserver ansible_host=<PUBLIC-IP> ansible_user=cloud-user ansible_ssh_private_key_file=
 ```
   
-* Copy the example scripts from [ansible](geoserver/ansible) folder to the local computer.
+* Copy the example scripts from [ansible](https://github.com/csc-training/geocomputing/tree/master/pouta/geoserver/ansible) folder to the local computer.
 * Run the Ansible play-book on local computer.  
 
 ```
