@@ -8,6 +8,7 @@ After=network.target
 User=geoserver
 #Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 Environment=GEOSERVER_HOME=/usr/share/geoserver
+Environment=GEOSERVER_DATA_DIR=/opt/geoserver
 ExecStart=/usr/share/geoserver/bin/startup.sh
 ExecStop=/usr/share/geoserver/bin/shutdown.sh
 
