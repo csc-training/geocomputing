@@ -1,5 +1,7 @@
-- hosts: test
+- hosts: test, luke
   become: yes
+  vars:
+    geoserver_version: 2.19.0
 
   tasks:
     - name: Add EPEL repository
@@ -53,20 +55,23 @@
       
     - name: Download GeoServer
       get_url:
-        url: http://sourceforge.net/projects/geoserver/files/GeoServer/2.18.2/geoserver-2.18.2-bin.zip
-        dest: /tmp/geoserver-2.18.2-bin.zip
+        url: http://sourceforge.net/projects/geoserver/files/GeoServer/{{geoserver_version}}/geoserver-{{geoserver_version}}-bin.zip
+        dest: /tmp/geoserver-{{geoserver_version}}-bin.zip
         mode: 0550
       tags: geoserver
 
-    - name: ensure geoserver directory exists
+    - name: ensure geoserver directories exists
       file:
-        path: /usr/share/geoserver
+        path: '{{item}}'
         state: directory
+      with_items:
+        - /usr/share/geoserver
+        - /opt/geoserver        
       tags: geoserver        
       
-    - name: Copy & unzip geoserver configuration directory
+    - name: Copy & unzip geoserver installation files
       unarchive:
-        src: /tmp/geoserver-2.18.2-bin.zip
+        src: /tmp/geoserver-{{geoserver_version}}-bin.zip
         creates: /usr/share/geoserver/data_dir
         dest: /usr/share/geoserver
         remote_src: yes
@@ -75,12 +80,15 @@
         mode: '0770'      
       tags: geoserver
       
-    - name: Add env variables
-      lineinfile: 
-        path: /etc/default/geoserver
-        line: 'export GEOSERVER_HOME=/usr/share/geoserver' 
-        create: yes
-      tags: geoserver
+    # - name: Add env variables for GeoServer / set in service file
+      # lineinfile: 
+        # path: /etc/default/geoserver
+        # line: '{{item}}'
+        # create: yes
+      # with_items:
+        # - 'export GEOSERVER_DATA_DIR=/opt/geoserver'
+        # - 'export GEOSERVER_HOME=/usr/share/geoserver'
+      # tags: geoserver
 
     - name: Copy geoserver service description
       copy:
