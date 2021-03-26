@@ -12,6 +12,7 @@ Date: 31.03.2020
 
 import sys
 import os
+import time
 from dask_jobqueue import SLURMCluster
 from dask.distributed import Client
 from dask import delayed
@@ -21,6 +22,7 @@ from dask import compute
 image_folder = sys.argv[1]
 results_folder = '/scratch/project_2000599/dask_slurm/results'
 
+### This is the specifications of one SLURM job
 single_worker = {
     "project" : "project_2000599",
     "queue" : "small",
