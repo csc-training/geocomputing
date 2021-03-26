@@ -13,29 +13,36 @@ Date: 31.03.2020
 import sys
 import os
 import time
+import xarray as xr
 from dask_jobqueue import SLURMCluster
 from dask.distributed import Client
 from dask import delayed
 from dask import compute
 
+### This import exists in a another python file called rasterio_to_xarray.py
+### It is downloaded from here https://github.com/robintw/XArrayAndRasterio/blob/master/rasterio_to_xarray.py
+from rasterio_to_xarray import xarray_to_rasterio
+
 ### Declare the folder with input sentinel SAFE folders and output folder
 image_folder = sys.argv[1]
-results_folder = '/scratch/project_2000599/dask_slurm/results'
+project_name = sys.argv[2]
+output_folder = 'results'
+number_of_workers = 3
 
-### This is the specifications of one SLURM job
+### This is the specifications of one worker SLURM job
 single_worker = {
-    "project" : "project_2000599",
+    "project" : project_name,
     "queue" : "small",
     "nodes" : 1,
     "cores" : 4,
-    "memory" : "12000",
-    "time" : "00:30:00",
+    "memory" : "8G",
+    "time" : "00:10:00",
     "temp_folder" : "/scratch/project_2000599/dask_slurm/temp"
 }
 
 ## Create a results folder to this location
-if not os.path.exists(results_folder):
-    os.makedirs(results_folder)
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
 
 def createSLURMCluster():
     cluster = SLURMCluster(
@@ -47,6 +54,8 @@ def createSLURMCluster():
         interface = 'ib0',
         local_directory = single_worker['temp_folder']
     )
+
+    cluster.scale(number_of_workers)
     client = Client(cluster)
     print(client)
 
@@ -71,14 +80,32 @@ def readImage(image_folder_fp):
 
     return red,nir
 
+
+def calculateNDVI(red,nir):
+    print("Computing NDVI")
+    ### This function calculates NDVI with xarray
+
+    ## NDVI calculation for all pixels where red or nir != 0
+    ndvi = xr.where((nir ==0)  & (red==0), 0, (nir - red) / (nir + red))
+
+    return ndvi
+
+def saveImage(ndvi,image_name):
+    ## Create the output filename and save it with using a function xarray_to_rasterio from a separate python file
+    output_file = image_name.replace(".SAFE", "_NDVI.tif")
+    output_path = os.path.join(output_folder, output_file)
+
+    print("Saving image: %s" % output_path)
+    xarray_to_rasterio(ndvi,  output_path)
+
 def processImage(image_folder_fp):
     ### This is the function that gets parallellized. This gathers all operations we do for one image
 
     ## Read image and get a list of opened bands
-    list_of_band_files = readImage(image_folder_fp)
+    red, nir = readImage(image_folder_fp)
 
     ## Calculate NDVI and save the result file
-    list_of_resampled = resampleBands(list_of_band_files)
+    ndvi = calculateNDVI(red,nir)
 
     ## Get image name and save image
     image_name = os.path.basename(image_folder_fp)

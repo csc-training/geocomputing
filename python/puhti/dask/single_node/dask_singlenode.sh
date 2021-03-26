@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=DaskMulticore
-#SBATCH --account=<project>
+#SBATCH --account=project_2001659
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
@@ -11,4 +11,4 @@
 module load geoconda
 
 ### Run the Dask example. The directory given to the script hosts 3 Sentinel images
-srun python dask_multicore.py /appl/data/geo/sentinel/s2_example_data/L2A
+srun python dask_singlenode.py /appl/data/geo/sentinel/s2_example_data/L2A
