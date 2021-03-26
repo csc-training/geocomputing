@@ -1,31 +1,22 @@
 # This is an spatial analysis example script for using R in CSC Puhti
 # This scipt can be used for serial or array jobs.
-# Here countours are calculated based on a DEM file and saved in Shape format.
+# Here countours are calculated based on a DEM file and saved in GeoPackage format.
 # The file given as input is a 10m DEM file from Finnish NLS.
 
-# load raster library
+# load raster and sp libraries
 library(raster)
-
-#Set the names of the folders.
-mainDir <- "/scratch/project_2002044/students/training011/R_spatial_exercises/01_serial"
-shapeFolder <- "shape"
+library(rgdal)
 
 # Set the working directory
-setwd(mainDir)
+# mainDir <- "/scratch/2004306/students/ekkylli/R_spatial_exercises/01_serial"
+# setwd(mainDir)
 
 mapsheets <- readLines('../mapsheets.txt')
 
-#Make folders for files, do not make, if already exist
-if (!dir.exists(shapeFolder)) {
-  dir.create(shapeFolder)
-}
-
-#Calculate contours and save a shape file
+#Calculate contours and save the results as GeoPackage
 for (mapsheet in mapsheets){
   DEM <- raster(mapsheet)
-  shapefile <- file.path(shapeFolder, gsub("tif", "shp", basename(mapsheet)))
+  file <- gsub("tif", "gpkg", basename(mapsheet))
   contours<-rasterToContour(DEM)
-  shapefile(contours, filename=shapefile, overwrite=TRUE)
-  plot(DEM)
-  plot(contours, add=TRUE)
+  writeOGR(contours, dsn = file, layer = "contours", driver = "GPKG", overwrite_layer=TRUE)
 }

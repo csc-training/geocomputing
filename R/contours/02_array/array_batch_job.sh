@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=<YOUR-PROJECT>
+#SBATCH --account=project_2002044
 #SBATCH -J array_job
 #SBATCH -o array_job_out_%A_%a.txt
 #SBATCH -e array_job_err_%A_%a.txt
@@ -17,7 +17,8 @@ if test -f ~/.Renviron; then
 fi
 
 # Specify a temp folder path
-echo "TMPDIR=/scratch/<project>" >> ~/.Renviron
+# echo "TMPDIR=/scratch/<project>/tmp" >> ~/.Renviron
+echo "TMPDIR=$PWD/tmp" >> ~/.Renviron
 
 # read the file that has filepaths for mapsheets and pick one row according to variable $SLURM_ARRAY_TASK_ID
 name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../mapsheets.txt)

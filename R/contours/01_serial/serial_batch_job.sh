@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=<YOUR-PROJECT>
+#SBATCH --account=project_2002044
 #SBATCH -J rspatial_job
 #SBATCH -o out.txt
 #SBATCH -e err.txt
@@ -11,11 +11,13 @@
 
 module load r-env-singularity
 
+# Clean up .Renviron file in home directory
 if test -f ~/.Renviron; then
     sed -i '/TMPDIR/d' ~/.Renviron
 fi
 
 # Specify a temp folder path
-echo "TMPDIR=/scratch/<project>" >> ~/.Renviron
+# echo "TMPDIR=/scratch/<project>/tmp" >> ~/.Renviron
+echo "TMPDIR=$PWD/tmp" >> ~/.Renviron
 
 srun singularity_wrapper exec Rscript --no-save Contours_simple.R

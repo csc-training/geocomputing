@@ -1,7 +1,6 @@
 # This is an spatial analysis example script for using R in CSC Puhti
 # This script can be used for parallel jobs.
-# Here 3 .tif files are saved to SagaGIS format
-# and then countours are calculated and saved in Shape format.
+# The countours are calculated and saved in GeoPackage format.
 # The file given as input is a 10m DEM file from Finnish NLS.
 # The input files are listed in the mapsheet.txt file
 
@@ -10,18 +9,8 @@
 # load libraries
 library(furrr)
 library(raster)
+library(rgdal)
 
-#Set the names of the folders.
-mainDir <- "/scratch/project_xx/R/05_parallel_future"
-shapeFolder <- "shape"
-
-# Set the working directory
-setwd(mainDir)
-
-#Make folders for files, do not make, if already exist
-if (!dir.exists(shapeFolder)) {
-  dir.create(shapeFolder)
-}
 
 # With plan(multicore) the number of workers is based on batch job reservation details.
 plan("multicore")
@@ -29,9 +18,9 @@ plan("multicore")
 # The function run on each core
 funtorun <- function(mapsheet) {
   DEM <- raster(mapsheet)
-  shapefile <- file.path(shapeFolder, gsub("tif", "shp", basename(mapsheet)))
+  file <- gsub("tif", "gpkg", basename(mapsheet))
   contours<-rasterToContour(DEM)
-  shapefile(contours, filename=shapefile, overwrite=TRUE)
+  writeOGR(contours, dsn = file, layer = "contours", driver = "GPKG", overwrite_layer=TRUE)
 }
 
 # Read the mapsheets from external file

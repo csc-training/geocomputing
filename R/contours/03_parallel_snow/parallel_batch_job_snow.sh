@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=<YOUR-PROJECT>
+#SBATCH --account=project_2002044
 #SBATCH -J r_multi_proc
 #SBATCH -o output_%j.txt
 #SBATCH -e errors_%j.txt
@@ -17,6 +17,7 @@ if test -f ~/.Renviron; then
 fi
 
 # Specify a temp folder path
-echo "TMPDIR=/scratch/<project>" >> ~/.Renviron
+# echo "TMPDIR=/scratch/<project>/tmp" >> ~/.Renviron
+echo "TMPDIR=$PWD/tmp" >> ~/.Renviron
 
 srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_snow.R
