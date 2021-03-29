@@ -1,4 +1,4 @@
-# R Puhti example, calculating contours
+# R Puhti examples, calculating contours
 This is an example for running R code on CSC's Puhti supercluster as four different job styles: interactive, simple serial, array and parellel. For parallel there are three different options with different R libraries: `snow`, `parallel` and `future`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your script. 
 
 The contours are calculated based on a geotiff image with `raster` package. The results are saved in Shape format. 
