@@ -1,9 +1,9 @@
 # R Puhti examples, calculating contours
 This is an example for running R code on CSC's Puhti supercluster as four different job styles: interactive, simple serial, array and parellel. For parallel there are three different options with different R libraries: `snow`, `parallel` and `future`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your script. 
 
-The contours are calculated based on a geotiff image with `raster` package. The results are saved in Shape format. 
+The contours are calculated based on a geotiff image with `raster` package. The results are saved in GeoPackgeformat. 
 
-If you have an R script that is ready on your laptop, and now would like to run that in Puhti, you normally need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env-singularity/#r-package-installations).
+If an R script that is ready on laptop, then for running it in Puhti normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env-singularity/#r-package-installations).
 
 [Puhti batch job system documentation](https://docs.csc.fi/computing/running/creating-job-scripts/)
 
@@ -20,20 +20,19 @@ Files in this example:
 ```
 sinteractive -i
 ```
-* Load R module and open R commandline. Optionally start [RStudio](https://docs.csc.fi/apps/r-env-singularity/#interactive-use-on-a-compute-node), 
-
+* Load R module and open R commandline. Optional, start [RStudio](https://docs.csc.fi/apps/r-env-singularity/#interactive-use-on-a-compute-node), 
 ```
 module load r-env-singularity
 start-r
 ```
-* Check that needed R libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available in RStudio, with (change to correct packages): 
+* Check that needed R libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available: 
 ```
+require(rasterio)
 require(rgdal)
 ```
-* [01_serial/Contours_simple.R](01_serial/Contours_simple.R) file. This is normal R script, which uses a for loop for going through all 3 files. Copy-paste commands to R console (or run them from RStudio). 
+* [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is normal R script, which uses a for loop for going through all 3 files. Copy-paste commands to R console (or run them from RStudio). 
 
-* Check that there are new files in your work directory, check with `ls –l` or click the refresh button in WinSCP:
-  - 3 countour shapefiles in `shape` folder.
+* Check that there are 3 Geopackage files with contours in your work directory: `ls –l` from commandline, refresh WinSCP/FileZilla view or with RStudio.
 * Optional, check your results with **QGIS**
 
 ## Simple batch job
@@ -52,7 +51,7 @@ seff <jobid>
 ```
 
 * Once the job is finished, see output in out.txt and any possible errors in err.txt. 
-* Check that you have new files in the `shape` folder.
+* Check that you have new GeoPackge files in the working folder.
 * Check the resources used in another way. Did you reserve a good amount of memory? 
 ```
 sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
@@ -67,10 +66,10 @@ sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 ## Array job
 [Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context a typical use would be to run some model on study area split into multiple files where output from one file doesn't have an impact on result of an other area. In real use, one the array job should last longer than in this example, at least 10-20 min, because there is always also overhead in starting new jobs.
 
-In the array job example the idea is that the R script will run one process for every given input file as opposed to running a for loop within the script. That means that he R script has to read the given argument in. 
+In the array job example the idea is that the R script will run one process for every given input file as opposed to running a for loop within the script. That means that the R script has to read the file to be processed from commandline  argument. 
 
 * [02_array/array_batch_job.sh](02_array/array_batch_job.sh) array job batch file. Changes compared to simple serial job:
-    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SULRM_ARRAY_TASK_ID` variable will be from 1 to 3, which means we will use sed to read first three lines from our mapsheets.txt file and start three jobs for those files. 
+    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SULRM_ARRAY_TASK_ID` variable will be from 1 to 3, which means we will use sed to read first three lines from our `mapsheets.txt` file and start three jobs for those files. 
 	* Output from each job is written to `array_job_out_<array_job_id>.txt` and `array_job_err_<array_job_id>.txt` files. 
 	* Memory and time allocations are per job.
 	* The mapsheet name is provided as an argument in the batch job script to the R script. 
