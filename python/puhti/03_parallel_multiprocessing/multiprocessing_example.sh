@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=MultiprocessingTest
-#SBATCH --account=<project>
+#SBATCH --account=project_2002044
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3
@@ -8,4 +8,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python multiprocessing_example.py /appl/data/geo/sentinel/s2_example_data/L2A
+srun python multiprocessing_example.py 

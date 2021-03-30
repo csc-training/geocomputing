@@ -1,6 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=SingleCoreTest
-#SBATCH --account=<project>
+#SBATCH --account=project_2004306
+#SBATCH -o out.txt
+#SBATCH -e err.txt
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -8,4 +10,4 @@
 #SBATCH --partition=test
 
 module load geoconda
-srun python single_core_example.py /appl/data/geo/sentinel/s2_example_data/L2A
+srun python single_core_example.py

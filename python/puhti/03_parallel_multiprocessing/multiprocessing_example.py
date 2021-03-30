@@ -16,14 +16,8 @@ import time
 import rasterio
 from multiprocessing import Pool
 
-### The filepath for the input Sentinel image folder and the output filename
-image_folder = sys.argv[1]
-
-## Create a results folder to this location
-if not os.path.exists('results'):
-    os.makedirs('results')
-
-output_folder = "results"
+### The filepath for the input Sentinel image folder
+image_folder = '/appl/data/geo/sentinel/s2_example_data/L2A'
 
 def readImage(image_folder_fp):
     print("Reading Sentinel image from: %s" % (image_folder_fp))
@@ -62,7 +56,6 @@ def calculateNDVI(red,nir):
 def saveImage(ndvi, sentinel_image_path, input_image):
     ## Create output filepath for the image. We use the input name with _NDVI end
     output_file = os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
-    output_path = os.path.join(output_folder,output_file)
     print("Saving image: %s" % output_file)
 
     ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
@@ -74,7 +67,7 @@ def saveImage(ndvi, sentinel_image_path, input_image):
         driver='GTiff')
 
     ## Write the ndvi numpy array to a GeoTiff with the updated metadata
-    with rasterio.open(output_path, 'w', **metadata) as dst:
+    with rasterio.open(output_file, 'w', **metadata) as dst:
         dst.write(ndvi, 1)
 
 def processImage(sentinel_image_path):

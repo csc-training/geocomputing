@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2002044
+#SBATCH --account=project_2004306
 #SBATCH -J rspatial_job
 #SBATCH -o out.txt
 #SBATCH -e err.txt

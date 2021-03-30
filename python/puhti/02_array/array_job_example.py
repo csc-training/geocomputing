@@ -3,7 +3,6 @@ A simple example Python script how to calculate NDVI for three Sentinel satellit
 with an array job.
 This script handles only ONE file, which is given as parameter to the script.
 
-
 Author: Johannes Nyman, CSC
 Date: 31.03.2020
 """
@@ -14,7 +13,6 @@ import sys
 
 ### The filepath for the input Sentinel image that is given as input parameter
 image_folder = sys.argv[1]
-output_folder = os.path.join(image_folder,"results")
 
 def readImage(image_folder_fp):
     print("Reading Sentinel image from: %s" % (image_folder_fp))
@@ -53,8 +51,7 @@ def calculateNDVI(red,nir):
 def saveImage(ndvi, sentinel_image_path, input_image):
 
     output_file = os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
-    output_path = os.path.join(output_folder, output_file)
-    print("Saving image: %s" % output_path)
+    print("Saving image: %s" % output_file)
     ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
     metadata = input_image.profile
 
@@ -63,9 +60,8 @@ def saveImage(ndvi, sentinel_image_path, input_image):
         dtype=rasterio.float64,
         driver='GTiff')
 
-
     ## Write the ndvi numpy array to a GeoTiff with the updated metadata
-    with rasterio.open(output_path, 'w', **metadata) as dst:
+    with rasterio.open(output_file, 'w', **metadata) as dst:
         dst.write(ndvi, 1)
 
 def processImage(sentinel_image_path):
