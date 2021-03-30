@@ -69,14 +69,14 @@ sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 In the array job example the idea is that the R script will run one process for every given input file as opposed to running a for loop within the script. That means that the R script has to read the file to be processed from commandline  argument. 
 
 * [02_array/array_batch_job.sh](02_array/array_batch_job.sh) array job batch file. Changes compared to simple serial job:
-    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SULRM_ARRAY_TASK_ID` variable will be from 1 to 3, which means we will use sed to read first three lines from our `mapsheets.txt` file and start three jobs for those files. 
+    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SULRM_ARRAY_TASK_ID` variable will be from 1 to 3. With `sed` read first three lines from `mapsheets.txt` file and start a job for each input file. 
 	* Output from each job is written to `array_job_out_<array_job_id>.txt` and `array_job_err_<array_job_id>.txt` files. 
 	* Memory and time allocations are per job.
-	* The mapsheet name is provided as an argument in the batch job script to the R script. 
+	* The image name is provided as an argument in the batch job script to the Python script. 
 	
 * [02_array/Contours_array.R](02_array/Contours_array.R). 
-    * R script reads the input DEM file from a parameter, which is set inside the batch job file. 
-	* For looped has been removed, because now each job calculates one file.
+    * R script reads the input DEM file from the argument, which is set inside the batch job file. 
+	* For looped has been removed, each job calculates only one file.
 	
 * Submit the array job
 ```
@@ -93,7 +93,7 @@ In this case the R code takes care of dividing the work to 3 processes, one for 
 	* `srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts RMPISNOW which enables using several nodes. RMPISNOW can not be tested from Rstudio.
 *  [05_parallel_future/Calc_contours_future_cluster.R](05_parallel_future/Calc_contours_future_cluster.R)
 	* Note how cluster is started, processes divided to workers (`future-map()`) and cluster is stopped.
-	* For looped has been removed, because now each job calculates one file.
+	* For looped has been removed, each job calculates only one file.
 	* Optional compare to [03_parallel_snow/Calc_contours_snow.R](03_parallel_snow/Calc_contours_snow.R). `future` package takes care of exporting variables and libraries to workers itself, in `snow` and `parallel` it is user's responsibility.
 
 * Submit the parallel job to Puhti
