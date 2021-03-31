@@ -5,7 +5,7 @@
 For hosting your own notebook container in notebooks.csc.fi, you need at least
 
 - a CSC project and a Rahti project (create them in my.csc.fi and rahti.csc.fi)
-- Group ownership rights on notebooks.csc.fi (e-mail to servicedesk)
+- Group ownership rights on notebooks.csc.fi (e-mail to servicedesk@csc.fi)
 - docker and openshift command line tools installed to your computer 
 
 ## Windows machine
