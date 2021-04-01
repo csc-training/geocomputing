@@ -3,6 +3,7 @@
 **GDAL** provides many useful tools. In this example, we will reproject the coordinate system of multiple files in a folder, and add overviews to the same files. 
 We do not use R nor Python, but GDAL commands from a simple Linux bash script.
 
+## Interactive working 
 * Start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/)
 ```
 sinteractive -i
@@ -26,6 +27,10 @@ chmod 770 gdal.sh
 ```
 * Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 * [gdal_batch_job.sh](gdal_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
+
+## Simple batch job
+For simple 1 core batch job, use the same bash-script as for interactive working.
+
 * Run the script as batch file: 
 ```
 sbatch gdal_batch_job.sh
