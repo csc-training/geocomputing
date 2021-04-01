@@ -25,3 +25,24 @@ chmod 770 gdal.sh
 ./gdal.sh
 ```
 * Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
+* [gdal_batch_job.sh](gdal_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
+* Run the script as batch file: 
+```
+sbatch gdal_batch_job.sh
+```
+* `sbatch` prints out a job id, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory?
+```
+seff <jobid>
+```
+* Once the job is finished, see output in out.txt and err.txt for any possible errors and other outputs. 
+* Check that you have new GeoTiff files in working folder.
+* Check the resources used in another way. 
+```
+sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
+```
+
+	- elapsed – time used by the job
+	- TotalCPU – time used by all cores together
+	- reqmem – amount of requested memory
+	- maxrss – maximum resident set size of all tasks in job.
+	- AllocCPUS – how many CPUs were reserved
