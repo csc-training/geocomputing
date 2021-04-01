@@ -7,7 +7,6 @@ Author: Johannes Nyman, Kylli Ek CSC
 Date: 2020-2021
 """
 import os
-import sys
 import time
 import rasterio
 

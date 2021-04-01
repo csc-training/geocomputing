@@ -7,8 +7,8 @@
 library(raster)
 library(rgdal)
 
-# Set the working directory
-# mainDir <- "/scratch/2004306/students/ekkylli/R_spatial_exercises/01_serial"
+# Set the working directory with RStudio
+# mainDir <- "/scratch/project_2002044/students/ekkylli/geocomputing/R/puhti/01_serial"
 # setwd(mainDir)
 
 mapsheets <- readLines('../mapsheets.txt')
