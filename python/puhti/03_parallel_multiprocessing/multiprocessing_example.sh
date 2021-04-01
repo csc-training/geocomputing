@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=MultiprocessingTest
-#SBATCH --account=project_2002044
+#SBATCH --account=project_2004306
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3

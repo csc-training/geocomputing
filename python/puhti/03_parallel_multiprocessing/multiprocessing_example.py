@@ -11,7 +11,6 @@ Date: 31.03.2020
 """
 
 import os
-import sys
 import time
 import rasterio
 from multiprocessing import Pool

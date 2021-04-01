@@ -2,7 +2,7 @@
 #SBATCH --job-name=ArrayJobTest
 #SBATCH --output=array_job_out_%A_%a.txt
 #SBATCH --error=array_job_err_%A_%a.txt
-#SBATCH --account=project_2002044
+#SBATCH --account=project_2004306
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1

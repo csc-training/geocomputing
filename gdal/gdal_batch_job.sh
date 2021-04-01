@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=project_2002044
-#SBATCH -J rspatial_job
+#SBATCH -J gdal_job
 #SBATCH -o out.txt
 #SBATCH -e err.txt
 #SBATCH -t 0:05:00

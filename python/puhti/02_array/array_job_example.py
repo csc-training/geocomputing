@@ -9,7 +9,6 @@ Date: 31.03.2020
 import os
 import time
 import rasterio
-import sys
 
 ### The filepath for the input Sentinel image that is given as input parameter
 image_folder = sys.argv[1]
