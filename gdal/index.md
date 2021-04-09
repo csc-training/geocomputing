@@ -22,7 +22,7 @@ gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 
 * Change file permission to be executable:
 ```
-chmod 770 gdal_batch_job_serial.sh
+chmod 770 gdal_serial.sh
 ```
 
 * Run the script as batch file: 
