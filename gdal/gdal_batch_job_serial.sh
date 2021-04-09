@@ -11,4 +11,4 @@
 
 module load gcc/9.1.0 gdal
 
-srun ./gdal.sh
+srun bash gdal_serial.sh
