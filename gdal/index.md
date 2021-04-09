@@ -12,13 +12,18 @@ module load gcc/9.1.0 gdal
 ```
 * Check a file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 ```
-gdalinfo /appl/data/geo/mml/dem10m/etrs-tm35fin-n2000/W3/W33/W3333.tif
+gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 ```
 
 ## Serial batch job
 
 * [gdal_serial.sh](gdal_serial.sh) includes GDAL commands to be executed. For handling several files a for loop is used.
 * [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
+
+* Change file permission to be executable:
+```
+chmod 770 gdal_serial.sh
+```
 
 * Run the script as batch file: 
 ```
