@@ -12,7 +12,7 @@ module load gcc/9.1.0 gdal
 ```
 * Check a file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 ```
-gdalinfo /appl/data/geo/mml/dem10m/etrs-tm35fin-n2000/W3/W33/W3333.tif
+gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 ```
 
 ## Serial batch job
