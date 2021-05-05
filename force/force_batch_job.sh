@@ -8,4 +8,4 @@
 #SBATCH --mem=40G
 
 module load force
-singularity_wrapper exec force-level2 /users/johannes/force/LEVEL2_parameters.prm
+force-level2 /users/johannes/force/LEVEL2_parameters.prm
