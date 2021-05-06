@@ -160,12 +160,15 @@ open vnc://localhost:5901
 #### Option 2. In Mac by using TurboVNC
 Install if necessary VNC client from https://sourceforge.net/projects/turbovnc/files/
 1 Install TurboVNC (at the time of writing version 2.2.5) to your local desktop PC
+
 2 Open encrypted SSH tunnel for the VNC connection between your PC and the VM
+
 3 The port used by TurboVNC server is shown when TurboVNC starts:
 ```
 "TurboVNC started on display name-of-VM:1"
 ```
 4 At your PC, choose unused port, e.g. 5911
+
 5 After establishing SSH tunnel
 ```
 vncviewer -via user@host localhost:n
@@ -253,7 +256,7 @@ sudo apt install -y libxcb-xinerama0
 
 ### Running program through VNC remote desktop
 
-1. Run program by opening terminal by right-click
+Run program by opening terminal by right-click
 ```
 vglrun /path/to/application/metashape.sh
 ```
