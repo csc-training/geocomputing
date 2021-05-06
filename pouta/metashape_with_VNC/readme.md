@@ -143,50 +143,36 @@ sudo ufw status verbose
  
 
 ### Configuration of locale (your PC)
+Open an encrypted SSH tunnel for the VNC connection between PC and VM
 
- 
+#### Option 1. In Mac by built-in SHH and VNC clients
 
-1. Install if necessary VNC client from sourceforge.net/projects/turbovnc/files
-
-2. Open an encrypted SSH tunnel for the VNC connection between PC and VM
-
-2.1 In Mac by built-in SHH and VNC clients
-
-2.1.1 open encrypted SSH tunnel to VM
+1 open encrypted SSH tunnel to VM
 ```
 ssh -L 5901:localhost:5901 cloud-user@86.50.253.165 -i .ssh/your_private_key.pem
 ```
-2.1.2 leave ssh tunnel window open and write following on new window
+2 leave ssh tunnel window open and write following on new window
 ```
 open vnc://localhost:5901
 ```
 - password window is prompt and after that remote desktop is up and running
 
-2.2 In Mac by using TurboVNC
-
-2.2.1 Install TurboVNC (at the time of writing version 2.2.5) to your local desktop PC
-
-2.2.2 Open encrypted SSH tunnel for the VNC connection between your PC and the VM
-
--> see separate instructions below for Windows
-
-2.2.3 The port used by TurboVNC server is shown when TurboVNC starts:
-
-                "TurboVNC started on display name-of-VM:1"
-
-2.2.4 at your PC, choose unused port, e.g. 5911
-
-2.2.5 after establishing SSH tunnel
+#### Option 2. In Mac by using TurboVNC
+Install if necessary VNC client from https://sourceforge.net/projects/turbovnc/files/
+1 Install TurboVNC (at the time of writing version 2.2.5) to your local desktop PC
+2 Open encrypted SSH tunnel for the VNC connection between your PC and the VM
+3 The port used by TurboVNC server is shown when TurboVNC starts:
+```
+"TurboVNC started on display name-of-VM:1"
+```
+4 At your PC, choose unused port, e.g. 5911
+5 After establishing SSH tunnel
 ```
 vncviewer -via user@host localhost:n
 ```
 <- where n is display number
 
- 
-
-### Useful commands for VNC clients and X server
-
- 
+ ### Useful commands for VNC clients and X server
 
 - Find out TurboVNC server display number and process ID
 ```
@@ -208,7 +194,7 @@ sudo killall Xorg (Ubuntu)
 ```
 sudo lsof -i -P | grep -o "listen"
 ```
-- port is something 590*
+- port is 590*
 
 
 ### Installation of Agisoft Metashape
