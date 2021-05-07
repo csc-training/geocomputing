@@ -12,7 +12,7 @@ Useful documentation:
 
 ## Configuration of Virtual machine
 
-Create a GPU VM in pouta.csc.fi using Cuda image. For Cuda image username is cloud-user. Set up firewalls as you like.
+Create a GPU VM in pouta.csc.fi using Cuda image. For Cuda image username is cloud-user. Set up firewalls as you like. 
 
 ## Setting up remote desktop
 
@@ -170,7 +170,7 @@ sudo lsof -i -P | grep -o "listen"
 - port is 590*
 
 
-### Installation of Agisoft Metashape
+### Installation of Agisoft Metashape (cPouta)
 
 ```
 sudo apt-get update
@@ -199,7 +199,7 @@ QT_DEBUG_PLUGINS=1 ./metashape.sh
 sudo apt install -y libxcb-xinerama0
 ```
                
-### Activation and deactivation of Agisoft Metashape
+### Activation and deactivation of Agisoft Metashape (cPouta)
 
 - Metashape have node-locked licence and it allows the software on one machine at a time
 - Standard activation requires the machine to be connected to the Internet
@@ -215,23 +215,15 @@ sudo apt install -y libxcb-xinerama0
 ```
  
 
-### Useful commands for Agisoft Metashape
+### Useful commands for Agisoft Metashape (cPouta)
 
 ```
 ./metashape.sh --help
 ```
  
-
-
-
 ### Running program through VNC remote desktop
 
 Run program by opening terminal by right-click
 ```
 vglrun /path/to/application/metashape.sh
 ```
- 
-### Ubuntu upgrade
-
-* Ubuntu running on VM should upgrade regularly
-* Follow notifications when new releases of Ubuntu are available
