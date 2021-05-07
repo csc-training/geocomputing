@@ -12,7 +12,7 @@ Useful documentation:
 
 ## Configuration of Virtual machine
 
-Create a GPU VM in pouta.csc.fi using Cuda image. For Cuda image username is cloud-user.
+Create a GPU VM in pouta.csc.fi using Cuda image. For Cuda image username is cloud-user. Set up firewalls as you like.
 
 ## Setting up remote desktop
 
@@ -111,36 +111,6 @@ export DISPLAY=:0
  
 NOTE: IF VM IS REBOOTED, RUN STEPS 6 AND 7. AGAIN
 
-
-### Ubuntu Firewall configuration
-
-It is good practice to activate firewall!
-
-
-1.1 check if firewall is active
-```
-sudo ufw status verbose
-```
-1.2 if active proceed to step 2. otherwise skip firewall configuration
-
- 
-2. allow SSH
-```
-sudo ufw allow OpenSSH
-```
-3.1 to allow a single port 5901
-```
-sudo ufw allow 5901/tcp
-```
-3.2 to allow series of ports from 5901 to 5910
-```
-sudo ufw allow 5901:5910/tcp
-```
-4. check that intended firewall rules has taken place
-```
-sudo ufw status verbose
-```
- 
 
 ### Configuration of locale (your PC)
 Open an encrypted SSH tunnel for the VNC connection between PC and VM
