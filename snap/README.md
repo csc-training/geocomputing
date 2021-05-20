@@ -2,8 +2,8 @@
 
 Examples:
 
-* [Simple job with one GPT graph](simple_job). This example is S1 stacking with several input files.
-* [Array job with one GPT graph for 3 images](array_job). This is an example of running the SNAP graph for multiple Sentinel-2 Level 3 images with an [array job](https://docs.csc.fi/computing/running/array-jobs/). It resamples the bands and calculates LAI (Leaf area index) for one image.
+* [Simple job with one GPT graph](01_simple_job). This example is S1 stacking with several input files.
+* [Array job with one GPT graph for 3 images](02_array_job). This is an example of running the SNAP graph for multiple Sentinel-2 Level 3 images with an [array job](https://docs.csc.fi/computing/running/array-jobs/). It resamples the bands and calculates LAI (Leaf area index) for one image.
 
 
 Both examples include 2 files:
