@@ -1,35 +1,18 @@
-# SNAP and Puhti Array jobs 
-This is an example of running a SNAP graph for multiple Sentinel-2 Level 2 images with an array job in Puhti supercomputer
+# SNAP GPT in Puhti
 
-# Contents
+Examples:
 
-## resample_and_lai.xml
+* [Simple job with one GPT graph](simple_job). This example is S1 stacking with several input files.
+* [Array job with one GPT graph for 3 images](array_job). This is an example of running the SNAP graph for multiple Sentinel-2 Level 3 images with an [array job](https://docs.csc.fi/computing/running/array-jobs/). It resamples the bands and calculates LAI (Leaf area index) for one image.
 
-This file is the SNAP Graph that dictates the processes that will be computed for each image. In this example it resamples the bands and calculates LAI (Leaf area index) for each image
 
-More information on creating different kind of SNAP graphs
+Both examples include 2 files:
 
-* [Creating a GPF Graph](https://senbox.atlassian.net/wiki/spaces/SNAP/pages/70503590/Creating+a+GPF+Graph)
-* [Bulk Processing with GPT command](https://senbox.atlassian.net/wiki/spaces/SNAP/pages/70503475/Bulk+Processing+with+GPT)
+* .xml-file - the SNAP Graph that defines the processing workflow.  
+* .sh-file - the batch job script that makes resource (time, memory, cores) reservations to Puhti and starts the gpt command. The batch job file [is submitted to the Puhti queuing system](https://docs.csc.fi/computing/running/submitting-jobs/)
 
-Also the following command is very useful in creating the graphs for different operators (like BiophysicalOp). It can be executed in an interactive session
 ```
-sinteractive
-module load snap
-singularity_wrapper exec gpt <snap-operator> -h
+sbatch snap_batch_job.sh
+OR
+sbatch snap_array_job.sh
 ```
-
-## snap_array_job.sh
-
-This is the batch job script that is submitted to the Puhti queuing system. It creates a list of all the Sentinel SAFE-folder paths, spawns jobs for each of them (3) and runs the gpt_array command for each SAFE-folder path.
-
-**gpt_array** command is a slightly modified version of the gpt-command. It makes sure that when several SNAP jobs are running at the same time, they don't use the same cache folder for temporary files. If you're using array jobs, use gpt_array rather than gpt 
-
-# Running
-
-You can run this by modifying the **snap_array_job.sh** and submitting it with 
-```
-sbatch snap_array_job
-```
-
-You need to change you project to the batch job file and include correct input/output directories. The **gpt_array** command also needs a path to somewhere (preferably /scratch/<YOUR-PROJECT>) where SNAP can write temporary cache files. 
