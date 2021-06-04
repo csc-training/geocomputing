@@ -9,7 +9,7 @@ Additional info: [Puhti batch job system documentation](https://docs.csc.fi/comp
 
 Files in this example:
 * [mapsheets.txt](mapsheets.txt) file - list of mapsheets to process. Open the file. How many mapsheets (=files) there is?
-* The input NLS 10m DEM is already available in **Puhti&#39;s GIS data folder** : `/appl/data/geo/mml/dem10m/etrs-tm35fin-n2000/` If you want to preview the files with [QGIS](https://docs.csc.fi/apps/qgis/), open one or a few DEM files from [mapsheets.txt](mapsheets.txt) file. For seeing all Finland you can open `/appl/data/geo/mml/dem10m/vrt/etrs-tm35fin-n2000/whole_finland_hierarchical.vrt`.
+* The input NLS 10m DEM is already available in **Puhti&#39;s GIS data folder** : `/appl/data/geo/mml/dem10m/2019/` If you want to preview the files with [QGIS](https://docs.csc.fi/apps/qgis/), open one or a few DEM files from [mapsheets.txt](mapsheets.txt) file. For seeing all Finland you can open `/appl/data/geo/mml/dem10m/dem10m_hierarchical.vrt`.
 * In each of the subfolders here are files for one job type or parallel library. Each subfolder has 2 files:
     * An .R file for defining the tasks to be done.
     * A batch job .sh file for submitting the job to Puhti SLURM.
