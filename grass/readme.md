@@ -4,7 +4,7 @@ GRASS commands can be run in HPC batch jobs with:
 
 * [GRASS shell scripts](https://grasswiki.osgeo.org/wiki/GRASS_Python_Scripting_Library). [Example](01_serial_cli)
 * [GRASS Python Scripting Library](https://grasswiki.osgeo.org/wiki/GRASS_Python_Scripting_Library). [Example](02_python_scripting_serial)
-* [PyGRASS](https://grasswiki.osgeo.org/wiki/Python/pygrass). Examples: [basic serial](03_pygrass_serial) and [parallel with GridModule](03_pygrass_parallel)
+* [PyGRASS](https://grasswiki.osgeo.org/wiki/Python/pygrass). Examples: [basic serial](03_pygrass_serial) and [parallel with GridModule](04_pygrass_parallel)
 
 Useful links:
 * [GRASS database, location, mapset and region](https://grass.osgeo.org/grass79/manuals/grass_database.html), the basic concepts always needed with GRASS GIS. 
