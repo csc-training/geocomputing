@@ -12,6 +12,7 @@ library(future)
 library("lidR")
 #Enabling this will print out a little bit more info about the parallelization plan used.
 options(lidR.verbose = TRUE)
+options(future.availableCores.methods = "Slurm")
 
 # With plan(cluster) the number of workers is based on batch job reservation details: ntasks or ntasks-per-node.
 cl<-getMPIcluster()
