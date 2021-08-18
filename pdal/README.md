@@ -1,14 +1,34 @@
 # PDAL
+[PDAL](https://www.pdal.io/) is an open source command line application for point cloud translations and processing. PDAL's functionality is available via [pdal commandline commands](https://pdal.io/apps/index.html) or [pdal Python library](https://pdal.io/python.html#extend). 
+
+[Puhti PDAL documentation](https://docs.csc.fi/apps/pdal/)
+
+Often same PDAL pipelines (=workflows) need to be applied to a lot of file, options in Puhti for doing that in parallel are:
+
+* GNU parallel in one node (max 40 cores)
+* Array jobs
+* [GNU parellel + array jobs](https://docs.csc.fi/support/tutorials/many/)
+* [Python parallezation options](https://github.com/csc-training/geocomputing/tree/master/python/puhti)
+
+## Interactive working 
+With `pdal info` it is often helpful to check the files, this is a light-weight task, so it can be done from login-node without interactive session.
+
+* Load [PDAL module](https://docs.csc.fi/apps/pdal/)
+```
+module load geoconda
+```
+* Check a file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
+```
+pdal info /appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz
+```
+
+For computationally more demanding interactive working, use [interactive partition](https://docs.csc.fi/computing/running/interactive-usage/)
+
+## Batch jobs
+### Serial
 
 ## Exercise 1. Extracting smaller area from .laz file
-Throughout these exercises we'll use ALS data from National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Taito as part of shared gis data and can be found in ```/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz```. In this exercise we'll use a ready made script to extract four smaller pieces from the tile.
-
-1. Login to Taito-shell
-2. Load necessary modules (module load geo-env)
-3. Go to your exercise directory (/wrk/$USER/lidar/pdal\_exercise)
-4. Make split\_.laz.sh executable (chmod +x split_laz.sh)
-5. Run the split\_laz.sh script (./split_laz.sh)
-6. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
+Throughout these exercises we'll use lidar data from Finnish National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Puhti as part of shared GIS data and can be found in `/appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz`. In this exercise we'll use a ready made script to extract four smaller pieces from the tile.
 
 In order to extract smaller pieces we will use PDAL's crop filter. We have two necessary files for this exercise: crop\_pipeline.json and split\_laz.sh. Crop\_pipeline.json defines a pdal pipeline for cropping a .laz file and split\_laz.sh runs the pipeline 4 times changing the crop area and output file.
 
@@ -16,7 +36,7 @@ _crop\_pipeline.json_
 ``` json
 {
   "pipeline":[
-    "/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz",
+    "/appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz",
     {
       "type":"filters.crop",
       "bounds":"([379591,379978],[6673858,6674143])"
@@ -99,8 +119,6 @@ When you want to run your pipeline on multiple files it can be done easily in Ta
  7. Modify the arrayjob.sh and filelist.csv files to only process part00.laz and part10.laz files and save the outputs in a new folder.
 
 A batch job script containts two parts, first are the instructions to the batch job system marked with #SBATCH. After these rest of the file is normal shell script (same commands you would write to the terminal). Each #SBATCH option used is explained in the example [arrayjob.sh](arrayjob.sh) script. 
-
- 
 
 ## Exercise 4. PDAL translate, Filtering example
 
