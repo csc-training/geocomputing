@@ -1,6 +1,7 @@
 #!/bin/bash -l
 #Name of the job, this makes it easier to identify your job
 #SBATCH -J batch_job_array
+#SBATCH --account=project_XXXX
 
 #Outputfile. Everything that would normally be printed into to the terminal when you run a program gets printed to this file. The %j refers to job number so that you don't overwrite the same file for each job
 #SBATCH -o arrayjob_output/output_%j.txt
@@ -9,7 +10,7 @@
 #SBATCH -e arrayjob_output/error_%j.txt
 
 #Partition you want to submit your job to. Possible values are serial, parallel, longrun, hugemem and test. In this excerecise we use test as it is for testing, but it shouldn't be used for serious work. See [Taito user guide](https://research.csc.fi/taito-constructing-a-batch-job-file) for details. 
-#SBATCH -p test
+#SBATCH -p small
 
 #Time limit for the job in hh:mm:ss, Once this amount of time has passed the job will be terminated regardless of weather it has finished.
 #SBATCH -t 00:05:00
@@ -24,10 +25,10 @@
 #SBATCH --mem-per-cpu=1000
 
 #As the job is not run on the login where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on login node will not help.
-module load geo-env
+module load geoconda
 #Change to the directory where you have the files
 
-cd $WRKDIR/pdal_exercise
+cd /scrach/project_XXXX/pdal_exercise
 #Read the file to be processed from a list of input files. This is done by getting the line corresponding to the $SLURM_ARRAY_TASK_ID from the input file list.
 input=$(sed -n "$SLURM_ARRAY_TASK_ID"p filelist.csv)
 

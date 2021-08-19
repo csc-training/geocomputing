@@ -1,14 +1,33 @@
 # PDAL
+[PDAL](https://www.pdal.io/) is an open source command line application for point cloud translations and processing. PDAL's functionality is available via [pdal commandline commands](https://pdal.io/apps/index.html) or [pdal Python library](https://pdal.io/python.html#extend). 
 
+[Puhti PDAL documentation](https://docs.csc.fi/apps/pdal/)
+
+Often same PDAL pipelines (=workflows) need to be applied to a lot of file, options in Puhti for doing that in parallel are:
+
+* GNU parallel in one node (max 40 cores)
+* Array jobs
+* [GNU parellel + array jobs](https://docs.csc.fi/support/tutorials/many/)
+* [Python parallezation options](https://github.com/csc-training/geocomputing/tree/master/python/puhti)
+
+## Interactive working 
+With `pdal info` it is often helpful to check the files, this is a light-weight task, so it can be done from login-node without interactive session.
+
+* Load [PDAL module](https://docs.csc.fi/apps/pdal/)
+```
+module load geoconda
+```
+* Check a file with `pdal info`. 
+```
+pdal info /appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz
+```
+
+For computationally more demanding interactive working, use [interactive partition](https://docs.csc.fi/computing/running/interactive-usage/)
+
+## Batch jobs
+### Serial
 ## Exercise 1. Extracting smaller area from .laz file
-Throughout these exercises we'll use ALS data from National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Taito as part of shared gis data and can be found in ```/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz```. In this exercise we'll use a ready made script to extract four smaller pieces from the tile.
-
-1. Login to Taito-shell
-2. Load necessary modules (module load geo-env)
-3. Go to your exercise directory (/wrk/$USER/lidar/pdal\_exercise)
-4. Make split\_.laz.sh executable (chmod +x split_laz.sh)
-5. Run the split\_laz.sh script (./split_laz.sh)
-6. Check that smaller tiles were created in the data folder with ls command. You can also take a look at the files with ccViewer
+Throughout these exercises we'll use lidar data from Finnish National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Puhti as part of shared GIS data and can be found in `/appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz`. In this exercise we'll use a ready made script to extract four smaller pieces from the tile.
 
 In order to extract smaller pieces we will use PDAL's crop filter. We have two necessary files for this exercise: crop\_pipeline.json and split\_laz.sh. Crop\_pipeline.json defines a pdal pipeline for cropping a .laz file and split\_laz.sh runs the pipeline 4 times changing the crop area and output file.
 
@@ -16,7 +35,7 @@ _crop\_pipeline.json_
 ``` json
 {
   "pipeline":[
-    "/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz",
+    "/appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz",
     {
       "type":"filters.crop",
       "bounds":"([379591,379978],[6673858,6674143])"
@@ -98,53 +117,7 @@ When you want to run your pipeline on multiple files it can be done easily in Ta
  6. Verify that all DEM files were successfully created
  7. Modify the arrayjob.sh and filelist.csv files to only process part00.laz and part10.laz files and save the outputs in a new folder.
 
-A batch job script containts two parts, first are the instructions to the batch job system marked with #SBATCH. After these rest of the file is normal shell script (same commands you would write to the terminal). Each #SBATCH option used is explained in the example script below. 
-
-_arrayjob.sh_ 
-``` bash
-
-#!/bin/bash -l
-#Name of the job, this makes it easier to identify your job
-#SBATCH -J batch_job_array
-
-#Outputfile. Everything that would normally be printed into to the terminal when you run a program gets printed to this file. The %j refers to job number so that you don't overwrite the same file for each job
-#SBATCH -o arrayjob_output/output_%j.txt
-
-#As above but for error messages. It's however always not so clear what messages go to errors and what to output so it's always best to check both.
-#SBATCH -e arrayjob_output/error_%j.txt
-
-#Partition you want to submit your job to. Possible values are serial, parallel, longrun, hugemem and test. In this excerecise we use test as it is for testing, but it shouldn't be used for serious work. See [Taito user guide](https://research.csc.fi/taito-constructing-a-batch-job-file) for details. 
-#SBATCH -p test
-
-#Time limit for the job in hh:mm:ss, Once this amount of time has passed the job will be terminated regardless of weather it has finished.
-#SBATCH -t 00:05:00
-
-#Tells the batch job system that this is an array job that should be run 4 times. During each run the $SLURM_ARRAY_TASK_ID variable will get different value ranging from 1 to 4. This will be used to select different input files.
-#SBATCH --array=1-4
-
-#Tells the batch job system that this is not a parallel task and only one task should be used. Note that this is one task per job, but array job will actually launch 3 simultaneous jobs.
-#SBATCH --ntasks=1
-
-#Tells the batch job sytem to reserve 1000MB (1GB) of memory for each of the 3 jobs.
-#SBATCH --mem-per-cpu=1000
-
-#As the job is not run on the login where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on login node will not help.
-module load geo-env
-#Change to the directory where you have the files
-
-cd $WRKDIR/lidar/pdal_exercise
-#Read the file to be processed from a list of input files. This is done by getting the line corresponding to the $SLURM_ARRAY_TASK_ID from the input file list.
-input=$(sed -n "$SLURM_ARRAY_TASK_ID"p filelist.csv)
-
-#Create output name from input by exchanging .laz to .tif and changing "data" to "outputs" in path.
-name=$(echo "$input" | cut -f 1 -d '.')
-output=outputs/$(echo "$name" | cut -f 2 -d '/').tif
-
-
-#Run the pipeline as in previous exercise. Note that it is possible to override input and output files in your pipeline json from the commandline.
-pdal pipeline --readers.las.filename=$input --writers.gdal.filename=$output pipeline.json
-```
-
+A batch job script containts two parts, first are the instructions to the batch job system marked with #SBATCH. After these rest of the file is normal shell script (same commands you would write to the terminal). Each #SBATCH option used is explained in the example [arrayjob.sh](arrayjob.sh) script. 
 
 ## Exercise 4. PDAL translate, Filtering example
 
