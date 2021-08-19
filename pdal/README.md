@@ -17,7 +17,7 @@ With `pdal info` it is often helpful to check the files, this is a light-weight 
 ```
 module load geoconda
 ```
-* Check a file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
+* Check a file with `pdal info`. 
 ```
 pdal info /appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz
 ```
@@ -26,7 +26,6 @@ For computationally more demanding interactive working, use [interactive partiti
 
 ## Batch jobs
 ### Serial
-
 ## Exercise 1. Extracting smaller area from .laz file
 Throughout these exercises we'll use lidar data from Finnish National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Puhti as part of shared GIS data and can be found in `/appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz`. In this exercise we'll use a ready made script to extract four smaller pieces from the tile.
 
