@@ -1,5 +1,5 @@
 # PDAL
-[PDAL](https://www.pdal.io/) is an open source command line application for point cloud translations and processing. PDAL's functionality is available via [pdal commandline commands](https://pdal.io/apps/index.html) or [pdal Python library](https://pdal.io/python.html#extend). 
+[PDAL](https://www.pdal.io/) is an open source command line application for point cloud translations and processing. PDAL's functionality is available via [PDAL commandline commands](https://pdal.io/apps/index.html) or [PDAL Python library](https://pdal.io/python.html#extend). 
 
 [Puhti PDAL documentation](https://docs.csc.fi/apps/pdal/)
 
