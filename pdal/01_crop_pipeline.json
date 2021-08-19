@@ -3,7 +3,7 @@
 
 {
   "pipeline":[
-    "/proj/ogiir-csc/mml/laserkeilaus/2008_17/2008/L413/1/L4131H3.laz",
+    "/appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz",
     {
       "type":"filters.crop",
       "bounds":"([379591,379978],[6673858,6674143])"

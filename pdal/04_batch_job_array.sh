@@ -1,13 +1,13 @@
 #!/bin/bash -l
 #Name of the job, this makes it easier to identify your job
 #SBATCH -J batch_job_array
-#SBATCH --account=project_XXXX
+#SBATCH --account=project_2000599
 
 #Outputfile. Everything that would normally be printed into to the terminal when you run a program gets printed to this file. The %j refers to job number so that you don't overwrite the same file for each job
-#SBATCH -o arrayjob_output/output_%j.txt
+#SBATCH -o output_%j.txt
 
 #As above but for error messages. It's however always not so clear what messages go to errors and what to output so it's always best to check both.
-#SBATCH -e arrayjob_output/error_%j.txt
+#SBATCH -e error_%j.txt
 
 #Partition you want to submit your job to. Possible values are serial, parallel, longrun, hugemem and test. In this excerecise we use test as it is for testing, but it shouldn't be used for serious work. See [Taito user guide](https://research.csc.fi/taito-constructing-a-batch-job-file) for details. 
 #SBATCH -p small
@@ -28,16 +28,16 @@
 module load geoconda
 #Change to the directory where you have the files
 
-cd /scrach/project_XXXX/pdal_exercise
+cd /scratch/project_2000599/geocomputing/pdal
 #Read the file to be processed from a list of input files. This is done by getting the line corresponding to the $SLURM_ARRAY_TASK_ID from the input file list.
-input=$(sed -n "$SLURM_ARRAY_TASK_ID"p filelist.csv)
+input=$(sed -n "$SLURM_ARRAY_TASK_ID"p 04_filelist.csv)
 
-#Create output name from input by exchanging .laz to .tif and changing "data" to "outputs" in path.
+#Create output name from input by exchanging .laz to .tif.
 name=$(echo "$input" | cut -f 1 -d '.')
-output=outputs/$(echo "$name" | cut -f 2 -d '/').tif
+output=data/$(echo "$name" | cut -f 2 -d '/').tif
 
 
 #Run the pipeline as in previous exercise. Note that it is possible to override input and output files in your pipeline json from the commandline.
-pdal pipeline --readers.las.filename=$input --writers.gdal.filename=$output pipeline.json
+pdal pipeline --readers.las.filename=$input --writers.gdal.filename=$output 02_pipeline.json
 
 

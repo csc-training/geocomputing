@@ -14,7 +14,7 @@
         },
         {
             "type":"writers.gdal",
-            "filename":"outputs/exercise1.tif",
+            "filename":"data/exercise2.tif",
             "output_type":"min",
             "resolution":1.0
         }
