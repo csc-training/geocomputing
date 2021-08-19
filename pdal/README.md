@@ -44,7 +44,7 @@ bash 01_split_laz.sh
 ### Exercise 2. DEM creation with ground identification using SMRF for one file
 In this exercise we'll detect ground returns using simple morphological filter (SMRF) and construct a DEM from the ground points. The workflow / pipeline is in [02_pipeline.json](02_pipeline.json) 
 
-1. Run the pipeline in an interactive session: `pdal pipeline pipeline.json`
+1. Run the pipeline in an interactive session: `pdal pipeline 02_pipeline.json`
 2. Optinal, check resulting DEM with [QGIS](https://docs.csc.fi/apps/qgis/).
 
 ### Excercise 3. DEM creation for several files in parallel with GNU parallel
