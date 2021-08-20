@@ -6,7 +6,7 @@
 ## Interactive working 
 With `pdal info` it is often helpful to check the files, this is a light-weight task, so it can be done from login-node without interactive session.
 
-* Load [PDAL module](https://docs.csc.fi/apps/pdal/)
+* Make PDAL commands available with [geoconda module](https://docs.csc.fi/apps/pdal/)
 ```
 module load geoconda
 ```
@@ -23,7 +23,7 @@ Often the same PDAL pipelines (=workflows) need to be applied to a lot of files,
 * GNU parallel in one node (max 40 cores), GNU parallel should be favoured if processing one file takes less than 20 minutes. See exercise 3 below.
 * Array jobs, could be favoured if processing one files takes several hours. See exercise 4 below
 * If thousands of files need to be processed and processing of one file is relatively slow, it is possible to combine [GNU parallel with array jobs](https://docs.csc.fi/support/tutorials/many/)
-* [Python parallezation options](https://github.com/csc-training/geocomputing/tree/master/python/puhti)
+* Python with `multiprocessing` package, see Exercise 7 below. Python has also other [parallezation options](https://github.com/csc-training/geocomputing/tree/master/python/puhti).  
 
 ## PDAL exercises from a CSC course in 2019
 (Updated to Puhti in 2021)
@@ -103,8 +103,13 @@ File pattern means that all files matching the pattern will be included in the i
 
 PDAL can also be used from a Python script. The advantage is that it enables to easily do some preprocessing with PDAL and then load the data into Python for further analysis or for example plotting. In this exercise we'll do just that by first doing ground classification using PDAL, after which we'll read the result into a Pandas data frame and plot the points. 
 
-* File: [07_pdal_ground.py](07_pdal_ground.py)
+The script processes 4 files in parallel, with Python `multiprocessing` library.
 
-1. Run the pipeline in an interactive session: `python 07_pdal_ground.py`
+Files: 
+* [07_pdal_ground.py](07_pdal_ground.py)
+* [07_batch_job_python.sh](07_batch_job_python.sh)
 
+1. Run the pipeline with batch job: `sbatch 07_batch_job_python.sh`
+2. Check computational resources used by your arrayjob: `seff <Job ID>`
+3. Verify that all plot images were successfully created.
 
