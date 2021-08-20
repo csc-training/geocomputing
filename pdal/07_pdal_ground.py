@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pdal
+import json
 import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -24,9 +25,8 @@ def pdal2df(pipelineJson):
 
 input_file="data/part_00.laz"
 
-pipe_json="""
-[
-    "data/part_00.laz",
+pipe = [
+    input_file,
     {
         "type":"filters.smrf",
         "window":33,
@@ -35,9 +35,9 @@ pipe_json="""
         "cell":1.0
     }
 ]
-"""
 
-df = pdal2df(pipe_json)
+
+df = pdal2df(json.dumps(pipe))
 print(df)
 
 #Plot as 3d plot, green if ground red if not.
