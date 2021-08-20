@@ -6,7 +6,7 @@
 ## Interactive working 
 With `pdal info` it is often helpful to check the files, this is a light-weight task, so it can be done from login-node without interactive session.
 
-* Make PDAL commands available with [geoconda module](https://docs.csc.fi/apps/pdal/)
+* Make PDAL commands available with [geoconda module](https://docs.csc.fi/apps/geoconda/)
 ```
 module load geoconda
 ```
@@ -18,12 +18,12 @@ pdal info /appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz
 For computationally more demanding interactive working, use [interactive partition](https://docs.csc.fi/computing/running/interactive-usage/)
 
 ## Batch jobs
-Often the same PDAL pipelines (=workflows) need to be applied to a lot of files, then the [batch jobs](https://docs.csc.fi/computing/running/creating-job-scripts-puhti/) should be used. Main options in Puhti for working with a lot of files in parallel are:
+Often the same PDAL pipelines (=workflows) need to be applied to a lot of files, then [batch jobs](https://docs.csc.fi/computing/running/creating-job-scripts-puhti/) should be used. Main options in Puhti for working with a lot of files in parallel are:
 
 * GNU parallel in one node (max 40 cores), GNU parallel should be favoured if processing one file takes less than 20 minutes. See exercise 3 below.
-* Array jobs, could be favoured if processing one files takes several hours. See exercise 4 below
+* Array jobs, could be favoured if processing one files takes several hours. See exercise 4 below.
 * If thousands of files need to be processed and processing of one file is relatively slow, it is possible to combine [GNU parallel with array jobs](https://docs.csc.fi/support/tutorials/many/)
-* Python with `multiprocessing` package, see Exercise 7 below. Python has also other [parallezation options](https://github.com/csc-training/geocomputing/tree/master/python/puhti).  
+* Python with `multiprocessing` package, see Exercise 7 below. Python has also other [parallelization options](https://github.com/csc-training/geocomputing/tree/master/python/puhti).  
 
 ## PDAL exercises from a CSC course in 2019
 (Updated to Puhti in 2021)
@@ -110,6 +110,6 @@ Files:
 * [07_batch_job_python.sh](07_batch_job_python.sh)
 
 1. Run the pipeline with batch job: `sbatch 07_batch_job_python.sh`
-2. Check computational resources used by your arrayjob: `seff <Job ID>`
+2. Check computational resources used by your job: `seff <Job ID>`
 3. Verify that all plot images were successfully created.
 
