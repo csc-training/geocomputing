@@ -17,7 +17,7 @@ Files in this example:
 ## Interactive working 
 
 * Open [Puhti web interface]((https://puhti.csc.fi) and log in with CSC user account.
-* Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio. Apps -> RStudio
+* Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio. `Apps -> RStudio`
   * Project: project_2002044
   * Partition: interactive
   * CPU cores: 3
@@ -26,15 +26,12 @@ Files in this example:
   * Time: 2:00:00
   * R version: [r-env-singularity/4.0.5](https://docs.csc.fi/apps/r-env-for-gis/)
 
-* Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: File -> New project -> Version control -> Git
+* Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
   * Project directory name: geocomputing
-  * Create project ast subdirectory of -> Browse -> ... (in upper right corner) -> Path to folder: /scratch/project_2002044/students/<your_account_name> 
-```
-git clone https://github.com/csc-training/geocomputing.git
-```
+  * Create project ast subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_2002044/students/<your_account_name> 
 * Move to folder `R/puhti`.
-* Set the working directory. Session -> Set working directory -> To Files Pane location
+* Set the working directory. `Session -> Set working directory -> To Files Pane location`
 
 * Open [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is basic R script, which uses a **for loop** for going through all 3 files. 
 * Check that needed R libraries are available in Puhti. Which libraries are used in this script? Run the libraries loading part in RStudio. 
@@ -47,7 +44,7 @@ For simple 1 core batch job, use the same R-script as for interactive working.
 
 * [01_serial/serial_batch_job.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
 
-* Open another web tab with Puhti shell (Tools -> Puhti shell access) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
+* Open another web tab with Puhti shell (`Tools -> Puhti shell access`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
 cd /scratch/project_2002044/students/<your_account_name>/geocomputing/R/puhti/01_serial
 sbatch serial_batch_job.sh
