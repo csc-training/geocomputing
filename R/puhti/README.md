@@ -16,7 +16,7 @@ Files in this example:
 
 ## Interactive working 
 
-* Open [Puhti web interface]((https://puhti.csc.fi) and log in with CSC user account.
+* Open [Puhti web interface](https://puhti.csc.fi) and log in with CSC user account.
 * Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio. `Apps -> RStudio`
   * Project: project_2002044
   * Partition: interactive
