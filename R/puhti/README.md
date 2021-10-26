@@ -16,36 +16,40 @@ Files in this example:
 
 ## Interactive working 
 
-* Start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/)
+* Open [Puhti web interface]((https://puhti.csc.fi) and log in with CSC user account.
+* Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio. Apps -> RStudio
+** Project: project_2002044
+** Partition: interactive
+** CPU cores: 3
+** Memory: 4
+** Local disk: 2
+** Time: 2:00:00
+** R version: [r-env-singularity/4.0.5](https://docs.csc.fi/apps/r-env-for-gis/)
+
+* Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: File -> New project -> Version control -> Git
+** Repository URL: https://github.com/csc-training/geocomputing.git
+** Project directory name: geocomputing
+** Create project ast subdirectory of -> Browse -> ... (in upper right corner) -> Path to folder: /scratch/project_2002044/students/<your_account_name> 
 ```
-sinteractive --account project_2004306 --time 03:00:00 --mem 4000 --tmp 4
+git clone https://github.com/csc-training/geocomputing.git
 ```
-* Load [`r-env-singularity`](https://docs.csc.fi/apps/r-env-for-gis/) module and open R commandline. Optional, start [RStudio](https://docs.csc.fi/apps/r-env-singularity/#interactive-use-on-a-compute-node), if you have set up [SSH keys to Puhti](https://docs.csc.fi/computing/connecting/#setting-up-ssh-keys) already. 
-```
-module load r-env-singularity
-start-r
-# start-rstudio-server
-```
-* Check that needed R libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available: 
-```
-require(rasterio)
-require(rgdal)
-```
-* [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is basic R script, which uses a **for loop** for going through all 3 files. Copy-paste commands to R console (or run them from RStudio). With RStudio you have to set also the working directory, see commented out code.
-* Close Python commandline
-```
-quit()
-```
-* Check that there are 3 Geopackage files with contours in your work directory: `ls –l` from commandline, refresh WinSCP/FileZilla view or with RStudio.
-* Optional, check your results with **QGIS**
+* Move to folder `R/puhti`.
+* Set the working directory. Session -> Set working directory -> To Files Pane location
+
+* Open [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is basic R script, which uses a **for loop** for going through all 3 files. 
+* Check that needed R libraries are available in Puhti. Which libraries are used in this script? Run the libraries loading part in RStudio. 
+* Run the rest of the commands from RStudio. 
+* Check that there are 3 Geopackage files with contours in your work directory in RStudio.
+* Optional, check your results with **[QGIS](https://docs.csc.fi/apps/qgis/)**
 
 ## Simple batch job
 For simple 1 core batch job, use the same R-script as for interactive working.
 
 * [01_serial/serial_batch_job.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
 
-* Submit batch job. 
+* Open another web tab with Puhti shell (Tools -> Puhti shell access) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
+cd /scratch/project_2002044/students/<your_account_name>/geocomputing/R/puhti/01_serial
 sbatch serial_batch_job.sh
 ``` 
 * `sbatch` prints out a job id, use it to check the state and the efficiency of the batch job. Did you reserve a good amount of memory?
@@ -65,6 +69,24 @@ sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 	- maxrss – maximum resident set size of all tasks in job.
 	- AllocCPUS – how many CPUs were reserved
 
+## Parallel job 
+In this case the R code takes care of dividing the work to parallel processes, one for each input file.  R has several packages for code parallelization, here examples for `snow`, `parallel` and `future` are provided. `future` package is likely easiest to use. `future` has also two internal optins `multicore` and `cluster`. `parallel` and `future` with `multicore` can be used in one node, so max 40 cores. `snow` and`future` with `cluster` can be used on several nodes. 
+
+* [05_parallel_future/parallel_batch_job_future_cluster.sh](05_parallel_future/parallel_batch_job_future_cluster.sh) batch job file for `future` with `cluster`.
+	* `--ntasks=4` reserves 4 cores: `snow` and `future` with `cluster` option require one additional process for master process, so that if there are 3 mapsheets to process 4 cores have to be reserved
+	* `--mem-per-cpu=1000` reserves memory per core
+	* `srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
+*  [05_parallel_future/Calc_contours_future_cluster.R](05_parallel_future/Calc_contours_future_cluster.R)
+	* Note how cluster is started, processes divided to workers with `future-map()` and cluster is stopped.
+	* For looped has been removed, each worker calculates one file.
+	* Optional, compare to [03_parallel_snow/Calc_contours_snow.R](03_parallel_snow/Calc_contours_snow.R). `future` package takes care of exporting variables and libraries to workers itself, in `snow` and `parallel` it is user's responsibility.
+
+* Submit the parallel job to Puhti
+```
+sbatch parallel_batch_job_future_cluster.sh
+```
+* Check with `seff` and `sacct` how much time and resources you used?
+
 ## Array job
 [Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context a typical use case would be to run some model on study area split into multiple files where output from one file doesn't have an impact on result of an other area. 
 
@@ -83,23 +105,5 @@ In the array job example the idea is that the R script will run one process for 
 * Submit the array job
 ```
 sbatch array_job.sh
-```
-* Check with `seff` and `sacct` how much time and resources you used?
-
-## Parallel job 
-In this case the R code takes care of dividing the work to parallel processes, one for each input file.  R has several packages for code parallelization, here examples for `snow`, `parallel` and `future` are provided. `future` package is likely easiest to use. `future` has also two internal optins `multicore` and `cluster`. `parallel` and `future` with `multicore` can be used in one node, so max 40 cores. `snow` and`future` with `cluster` can be used on several nodes. 
-
-* [05_parallel_future/parallel_batch_job_future_cluster.sh](05_parallel_future/parallel_batch_job_future_cluster.sh) batch job file for `future` with `cluster`.
-	* `--ntasks=4` reserves 4 cores: `snow` and `future` with `cluster` option require one additional process for master process, so that if there are 3 mapsheets to process 4 cores have to be reserved
-	* `--mem-per-cpu=1000` reserves memory per core
-	* `srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
-*  [05_parallel_future/Calc_contours_future_cluster.R](05_parallel_future/Calc_contours_future_cluster.R)
-	* Note how cluster is started, processes divided to workers with `future-map()` and cluster is stopped.
-	* For looped has been removed, each worker calculates one file.
-	* Optional, compare to [03_parallel_snow/Calc_contours_snow.R](03_parallel_snow/Calc_contours_snow.R). `future` package takes care of exporting variables and libraries to workers itself, in `snow` and `parallel` it is user's responsibility.
-
-* Submit the parallel job to Puhti
-```
-sbatch parallel_batch_job_future_cluster.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
