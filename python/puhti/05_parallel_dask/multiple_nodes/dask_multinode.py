@@ -30,6 +30,7 @@ output_folder = 'results'
 number_of_workers = 3
 
 ### This is the specifications of one worker SLURM job
+### Pay attention to the time option here, especially if you have more jobs than workers, the worker lifetime should be long enough to handle all jobs of that worker.
 single_worker = {
     "project" : project_name,
     "queue" : "small",
