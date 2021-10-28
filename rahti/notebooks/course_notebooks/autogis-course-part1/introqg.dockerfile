@@ -9,15 +9,15 @@ USER 1000
 RUN echo "Upgrading conda" \
 && conda update --yes -n base conda  \
 && conda install --yes -c conda-forge -c patrikhlobil \
-	python=3.8 \
-	xarray \
-        pandas \
-	matplotlib \
-	nose \
-        pip \
-	jupyterlab \
-	jupyterlab-git \
-        ipykernel>=6
+    python=3.8 \
+    xarray \
+    pandas \
+    matplotlib \
+    nose \
+    pip \
+    jupyterlab \
+    jupyterlab-git \
+    ipykernel>=6
 
 #RUN jupyter lab build
 RUN jupyter lab build --dev-build=False --minimize=False
