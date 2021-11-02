@@ -20,7 +20,7 @@ Files in this example:
 * Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio. `Apps -> RStudio`
   * Project: project_2002044
   * Partition: interactive
-  * CPU cores: 3
+  * CPU cores: 1
   * Memory: 4
   * Local disk: 2
   * Time: 2:00:00
