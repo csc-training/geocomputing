@@ -29,8 +29,8 @@ Files in this example:
 * Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
   * Project directory name: geocomputing
-  * Create project ast subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_2002044/students/<your_account_name> 
-* Move to folder `R/puhti`.
+  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_2002044/students/<your_account_name>  (if you do not yet have a directory there, use /scratch/project_2002044/students/ as path to folder and create a new directory with your account name and enter it)
+* Move to folder `R/puhti/01_serial`.
 * Set the working directory. `Session -> Set working directory -> To Files Pane location`
 
 * Open [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is basic R script, which uses a **for loop** for going through all 3 files. 
