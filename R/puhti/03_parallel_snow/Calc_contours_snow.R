@@ -13,15 +13,14 @@ cl<-getMPIcluster()
 # The R modules need to be loaded inside the functions.
 # The variables from outside of this function are not visible.
 funtorun<-function(mapsheet) {
-  DEM <- raster(mapsheet)
+  DEM <- rast(mapsheet)
   file <- gsub("tif", "gpkg", basename(mapsheet))
-  contours<-rasterToContour(DEM)
-  writeOGR(contours, dsn = file, layer = "contours", driver = "GPKG", overwrite_layer=TRUE)
+  contours <- as.contour(DEM)
+  writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
 }
 
 # load raster library
-clusterEvalQ(cl, library(raster))
-clusterEvalQ(cl, library(rgdal))
+clusterEvalQ(cl, library(terra))
 
 # Read the mapsheets from external file
 mapsheets <- readLines('../mapsheets.txt')

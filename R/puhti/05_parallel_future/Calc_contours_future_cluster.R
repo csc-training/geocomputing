@@ -8,8 +8,7 @@
 
 # load libraries
 library(furrr)
-library(raster)
-library(rgdal)
+library(terra)
 
 options(future.availableCores.methods = "Slurm")
 
@@ -19,10 +18,10 @@ plan(cluster, workers = cl)
 
 # The function run on each core
 funtorun <- function(mapsheet) {
-  DEM <- raster(mapsheet)
+  DEM <- rast(mapsheet)
   file <- gsub("tif", "gpkg", basename(mapsheet))
-  contours<-rasterToContour(DEM)
-  writeOGR(contours, dsn = file, layer = "contours", driver = "GPKG", overwrite_layer=TRUE)
+  contours <- as.contour(DEM)
+  writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
 }
 
 # Read the mapsheets from external file

@@ -1,7 +1,7 @@
 # R Puhti examples, calculating contours
 Here are examples for running R code on CSC's Puhti supercluster as four different job styles: interactive, simple serial, array and parellel. For parallel there are 3 options with different R libraries: `snow`, `parallel` and `future`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your script. 
 
-The contours are calculated based on NLS 10m DEM data in geotiff format with `raster` package. The results are saved in GeoPackge format. 
+The contours are calculated based on NLS 10m DEM data in geotiff format with `terra` package. The results are saved in GeoPackge format. 
 
 If an R script is ready on laptop, then for running it in Puhti normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env-singularity/#r-package-installations).
 

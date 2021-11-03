@@ -19,16 +19,16 @@ mapsheets <- readLines('../mapsheets.txt')
 # The variables from outside of this function are not visible.
 
 funtorun<-function(mapsheet) {
-  DEM <- raster(mapsheet)
+  DEM <- rast(mapsheet)
   file <- gsub("tif", "gpkg", basename(mapsheet))
-  contours<-rasterToContour(DEM)
-  writeOGR(contours, dsn = file, layer = "contours", driver = "GPKG", overwrite_layer=TRUE)
+  contours <- as.contour(DEM)
+  writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
 }
 
 # Run funtorun function in parallel for each mapsheet. .export passes variables and .packages the necessary packages.
 # If return value is used .combine can be used to specify which function to use for combining results.
 
-a<-foreach(i=1:3, .packages=c("raster","rgdal"), .combine="c") %dopar% {
+a<-foreach(i=1:3, .packages=c("terra"), .combine="c") %dopar% {
 	funtorun(mapsheets[i])
 }
 #Print combined return values. In this case names of created shapefiles.

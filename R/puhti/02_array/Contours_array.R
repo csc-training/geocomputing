@@ -5,8 +5,7 @@
 # The file given as input is a 10m DEM file from Finnish NLS.
 
 # Load the necessary libraries
-library(raster)
-library(rgdal)
+library(terra)
 
 # Read the command line argument, which is the path of the .tif file.
 args = commandArgs(trailingOnly=TRUE)
@@ -20,8 +19,8 @@ if (length(args)==0) {
 print(mapsheet)
 
 # Calculate contours 
-DEM <- raster(mapsheet)
+DEM <- rast(mapsheet)
 file <- gsub("tif", "gpkg", basename(mapsheet))
-contours<-rasterToContour(DEM)
+contours <- as.contour(DEM)
 # Save the results as GeoPackage
-writeOGR(contours, dsn = file, layer = "contours", driver = "GPKG", overwrite_layer=TRUE)
+writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
