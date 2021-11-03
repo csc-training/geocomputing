@@ -1,8 +1,8 @@
 #!/bin/bash -l
 #SBATCH --account=project_2002044
 #SBATCH -J r_multi_proc
-#SBATCH -o output.txt
-#SBATCH -e errors.txt
+#SBATCH -o output_cluster.txt
+#SBATCH -e errors_cluster.txt
 #SBATCH -t 00:05:00
 #Reserve cores for 1 master + 3 workers
 #SBATCH --ntasks=4

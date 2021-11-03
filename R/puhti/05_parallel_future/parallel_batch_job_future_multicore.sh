@@ -1,8 +1,8 @@
 #!/bin/bash -l
 #SBATCH --account=project_2002044
 #SBATCH -J r_multi_proc
-#SBATCH -o output.txt
-#SBATCH -e errors.txt
+#SBATCH -o output_multicore.txt
+#SBATCH -e errors_multicore.txt
 #SBATCH -t 00:05:00
 #SBATCH --ntasks=1
 #SBATCH -p test
