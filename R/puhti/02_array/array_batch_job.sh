@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2004306
+#SBATCH --account=project_2002044
 #SBATCH -J array_job
 #SBATCH -o array_job_out_%A_%a.txt
 #SBATCH -e array_job_err_%A_%a.txt
