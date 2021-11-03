@@ -3,7 +3,7 @@
 # Here countours are calculated based on a DEM file and saved in GeoPackage format.
 # The file given as input is a 10m DEM file from Finnish NLS.
 
-# load raster and sp libraries
+# load terra library
 library(terra)
 
 # Set the working directory with RStudio

@@ -19,7 +19,7 @@ funtorun<-function(mapsheet) {
   writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
 }
 
-# load raster library
+# load terra library
 clusterEvalQ(cl, library(terra))
 
 # Read the mapsheets from external file
