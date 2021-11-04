@@ -7,7 +7,7 @@
 #Reserve cores for 1 master + 3 workers
 #SBATCH --ntasks=4
 #Test partition is used for testing, for real jobs use either serial or parallel depending on how many nodes you need.
-#SBATCH -partition=test
+#SBATCH --partition=test
 #SBATCH --mem-per-cpu=1000
 
 module load r-env-singularity
