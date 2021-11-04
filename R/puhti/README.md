@@ -80,6 +80,7 @@ In this case the R code takes care of dividing the work to parallel processes, o
 
 * Submit the parallel job to Puhti
 ```
+cd ../05_parallel_future
 sbatch parallel_batch_job_future_cluster.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
