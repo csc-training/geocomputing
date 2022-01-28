@@ -1,67 +1,93 @@
+"""
+A simple example Python script for parallization of zonal_stats Python function with multiprocessing.
+https://pythonhosted.org/rasterstats/
+
+zonal_stats calculates statistics for each zone (=polygon) separately, so it is easy to parallelize
+with deviding zones to different cores with multiprocessing map() function.
+
+More info about Python multiprocessing library can be found from:
+https://docs.python.org/3/library/multiprocessing.html
+https://www.machinelearningplus.com/python/parallel-processing-python/
+
+Some notes about input datasets:
+Raster:
+* If all zones together cover almost all raster data and the raster data is not too big, then the fastest is to read raster dataset to memory 
+in the beginning of the script. Just make sure to reserve enogh memory. This causes also least disk readings and is in general the preferred way.
+* If the zones cover only some part raster data or if the raster is too big for memory, then direct read from disk might be better. 
+See the commented out parts of code. In this case, consider also moving the raster to local disk on the computing node:
+https://docs.csc.fi/computing/disk/#compute-nodes
+
+Author: Elias Annila, Kylli Ek, CSC
+Date: 27.01.2022
+"""
+
+from multiprocessing import Pool
 from rasterstats import zonal_stats
+import geopandas
+import rasterio
 import time
-import fiona
-import multiprocessing as mp
-from shapely.geometry import mapping, shape
-
-#input zones
-zone_f = "zones.shp"
-#output zonal stats
-zonal_f = "zonal_stats.shp"
-#Raster you want to use to compute zonal stastics from, here the 10m DEM of whole Finland
-vrt = "/appl/data/geo/mml/dem10m/dem10m_direct.vrt"
-
-statistics = ['count', 'min' ,'mean', 'max','median']
-
-#yields n sized chunks from list l (used for splitting task to multiple processes)
-def chunks(l, n):
-    for i in range(0, len(l), n):
-        yield l[i:i + n]
 
 
-#calculates zonal stats and adds results to a dictionary
-def worker(z,vrt,d):	
-	z_stats = zonal_stats(z,vrt, stats=statistics)	
-	for i in range(0,len(z_stats)):
-		d[z[i]['id']]=z_stats[i]
+#input zones file
+zones_file = "zones.shp"
+#output zonal stats file
+zonal_file = "/scratch/project_2000599/python_multiprocessing_rasterstats/zonal_stats.shp"
+#Raster you want to use to compute zonal stastics from, CORINE 2018
+raster_file = '/appl/data/geo/mml/dem10m/dem10m_direct.vrt'
+# Statistics calculated for each zone
+statistics = ['count', 'min' ,'mean', 'max','majority']        
 
-#write output polygon
-def write_output(zones, zonal_f,d):
-	#copy schema and crs from input and add new fields for each statistic			
-	schema = zones.schema.copy()
-	crs = zones.crs
-	for stat in statistics:			
-		schema['properties'][stat] = 'float'
-		
-	with fiona.open(zonal_f, 'w', 'ESRI Shapefile', schema, crs) as output:
-		for elem in zones:
-			for stat in statistics:			
-				elem['properties'][stat]=d[elem['id']][stat]
-			output.write({'properties':elem['properties'],'geometry': mapping(shape(elem['geometry']))})
+# This works inside one node in Puhti, so max 40.
+parallel_processes = 4
+    
+# The task for one worker
+def calculate_n(n):
+    return zonal_stats(zones.at[n,'geometry'], data_array, affine=affine, stats=statistics)[0]
+    # Use this if raster data is not read to memory in the main function
+    #return zonal_stats(zones.at[n,'geometry'], raster_file, stats=statistics)[0]    
+
 def main():
-	with fiona.open(zone_f) as zones:
-		jobs = []
+    print(datetime.now().time())
+    # Read data
+    # Worker function needs access to data, so these need to be global variables.
+    global zones
+    zones = geopandas.read_file(zones_file) 
+    # Uncomment next 5 rows, if you need to read the file from disk.
+    # zonal_stats does not directly work with rasterio opened file, but needs data and transformation variables 
+    global data_array
+    global affine      
+    raster = rasterio.open(raster_file)    
+    affine = raster.transform
+    data_array = raster.read(1)
 
-		#create manager dictionary (polygon ids=keys, stats=entries) where multiple processes can write without conflicts
-		man = mp.Manager()	
-		d = man.dict()	
+    # Create a sequence of numbers for each zone
+    n = range(0, len(zones))
+    
+    # Create a pool of workers and run the function calculate_n for each zone
+    # map() function creates in background batches
+    # Often the default batch size is likely good,
+    # but if the zones have very different sizes,
+    # then it might be good to manually set smaller batch size (15 here).
+    pool = Pool(parallel_processes)
+    results = pool.map(calculate_n, n, 15)
+    
+    # Close the pool
+    pool.close()    
+        
+    # Join the results back to geopandas dataframe
+    for stat in statistics:
+        results_as_list = [d[stat] for d in results]
+        zones[stat] = results_as_list  
+        
+    # Write the results to file
+    zones.to_file(zonal_file)
 
-		#split zone polygons into 10 chunks for parallel processing and call worker() for each. 
-		# Adjust 10 to be number of cores you want to use for optimal performance.
-		split = chunks(zones, len(zones)//10)
-		for z in split:
-			p = mp.Process(target=worker,args=(z, vrt,d))
-			p.start()
-			jobs.append(p)
-
-		#wait that all chunks are finished
-		[j.join() for j in jobs]
-
-		write_output(zones,zonal_f,d)		
-		
 if __name__ == '__main__':
-	t0 = time.time()
-	main()	
-	t1 = time.time()
-	total = t1-t0
-	print("Everything done, took: " + str(total)+"s")
+    t0 = time.time()
+    main()	
+    t1 = time.time()
+    total = t1-t0
+    print(datetime.now().time())
+    print("Everything done, took: " + str(round(total, 0))+"s")
+
+
