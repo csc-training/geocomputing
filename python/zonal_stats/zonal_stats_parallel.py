@@ -66,11 +66,13 @@ def main():
     
     # Create a pool of workers and run the function calculate_n for each zone
     # map() function creates in background batches
+
+    pool = Pool(parallel_processes)
+    results = pool.map(calculate_n, n)
     # Often the default batch size is likely good,
     # but if the zones have very different sizes,
-    # then it might be good to manually set smaller batch size (15 here).
-    pool = Pool(parallel_processes)
-    results = pool.map(calculate_n, n, 15)
+    # then it might be good to manually set smaller batch size (15 here):  
+    # results = pool.map(calculate_n, n, 15)    
     
     # Close the pool
     pool.close()    
