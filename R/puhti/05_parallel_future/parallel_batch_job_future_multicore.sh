@@ -1,11 +1,11 @@
 #!/bin/bash -l
 #SBATCH --account=project_2002044
-#SBATCH -J r_multi_proc
-#SBATCH -o output_multicore.txt
-#SBATCH -e errors_multicore.txt
-#SBATCH -t 00:05:00
+#SBATCH --job-name=r_multi_proc
+#SBATCH --output=output.txt
+#SBATCH --error=errors.txt
+#SBATCH --time=00:05:00
 #SBATCH --ntasks=1
-#SBATCH -p test
+#SBATCH --partition test
 #SBATCH --mem-per-cpu=1000
 #Equal to number of workers. Max 40 in Puhti.
 #SBATCH --cpus-per-task=3
