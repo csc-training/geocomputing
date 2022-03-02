@@ -38,7 +38,7 @@ The shallow learning exercises can well be run on any PC, likely also the deep l
 * GDAL command-line, rasterio and geopandas for data preparations
 * scikit-learn for shallow learning and some helping functions also for deep learning scripts (Puhti [geoconda](https://docs.csc.fi/apps/geoconda/) module)
 * Keras for deep learning and CNN_keras (Puhti [tensorflow/2.0.0](https://docs.csc.fi/apps/tensorflow/) module)
-* solaris and pytorch for CNN_solaris (Puhti [solaris](https://docs.csc.fi/apps/solaris/) module). The course materials have been tested with solaris-0.1.3, Puhti now includes also newer solaris-0.3.0.
+* solaris and pytorch for CNN_solaris (solaris has been removed from Puhti). 
 * (There are also some minor libraries used, so check the imports of scripts before doing the installations to your own PC. Conda installation of Python packages is warmly recommended, you can use the [gis.yml](gis.yml) file provided here.)
 
 ### GIS and machine learning libraries in Puhti:
