@@ -34,28 +34,29 @@ Files in this example:
 	
 ## Interactive job
 
-Start [VSCode](https://docs.csc.fi/computing/webinterface/vscode/) in an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) with [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
+As interactive job it is possible to run parts of the script and edit the script, so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
 
-* Open VSCode start page from front page: `Apps -> Visual Studio code`
-* Choose settings for VSCode:
-    * Project: project_2000745
-    * Particion: interactive
-    * Number of CPU cores: 1
-    * Memory: 4 Gb
-    * Local disk: 0
-    * Time: 2:00:00
-    * Modules: geoconda
-    * `Launch`
-* Wait a moment -> Connect to Visual studio code
-* VSCode opens up in the browser
-* Open folder with exercise files: File -> Open folder -> /scratch/project_2000745/students/[your_username]/geocomputing/python/puhti -> OK
-
+* Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) with [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
+    * Open VSCode start page from front page: Apps -> Visual Studio code
+    * Choose settings for VSCode:
+        * Project: project_2000745
+        * Particion: interactive
+        * Number of CPU cores: 1
+        * Memory: 4 Gb
+        * Local disk: 0
+        * Time: 2:00:00
+        * Modules: geoconda
+        * `Launch`
+    * Wait a moment -> Connect to Visual studio code
+    * VSCode opens up in the browser
+* Open folder with exercise files: 
+    * File -> Open folder -> /scratch/project_2000745/students/[your_username]/geocomputing/python/puhti -> OK
 * Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is basic Python script, which uses a **for loop** for going through all 3 files.  
-* Check that needed Python libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available. Select all import rows and press `Shift+Enter`. The import commands are run in Terminal. If no error messages are visible, the packages are available.
-* Optional, for more advanced option for running Python code in VSCode, see for example [VSCode's Python Interactive mode is AMAZING!](https://www.youtube.com/watch?v=lwN4-W1WR84) and [How to Debug Python with VSCode](https://www.youtube.com/watch?v=w8QHoVam1-I&t=19s) videos.
+* Check that needed Python libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available. Select all import rows and press `Shift+Enter`. The import commands are run in Terminal. If no error messages are visible, the packages are available. The same way also other parts of the script can be tested.
+* Optional, for more advanced options for running Python code in VSCode, see for example [VSCode's Python Interactive mode is AMAZING!](https://www.youtube.com/watch?v=lwN4-W1WR84) and [How to Debug Python with VSCode](https://www.youtube.com/watch?v=w8QHoVam1-I&t=19s) videos.
 * Run the full script: 
     * Exit Python console in Terminal: `exit()`
-	* Click green arrow above script (Run Python File in Terminal)
+    * Click green arrow above script (Run Python File in Terminal)
     * Wait, it takes a few minutes for complete. The printouts will appear during the process.
     * Check that there are 3 new GeoTiff files in your work directory in the Files pane of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
@@ -65,7 +66,7 @@ Start [VSCode](https://docs.csc.fi/computing/webinterface/vscode/) in an [intera
 For simple 1 core batch job, use the same Python-script as for interactive working.
 
 * Open [01_serial/single_core_example.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
-* Submit batch job from SSH terminal
+* Submit batch job from SSH terminal (in Puhti web interface the login node shell, not VSCode Terminal)
 ```
 cd /scratch/project_2000745/students/[your_username]/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
