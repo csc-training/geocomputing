@@ -34,13 +34,13 @@ Files in this example:
 	
 ## Interactive job
 
-As interactive job it is possible to run parts of the script and edit the script, so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+As [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to run parts of the script and edit the script, so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
 
-* Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) with [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
+* Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio code
     * Choose settings for VSCode:
         * Project: project_2000745
-        * Particion: interactive
+        * Partition: interactive
         * Number of CPU cores: 1
         * Memory: 4 Gb
         * Local disk: 0
