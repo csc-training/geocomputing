@@ -25,7 +25,6 @@ Files in this example:
 * Log in to Puhti web interface: https://puhti.csc.fi
 * Create a folder for yourself. 
     * From front page: Files -> /scratch/project_2000745/
-	* Move to students folder: click the folder name
     * Create new own folder: New Directory ->  [your_username] -> OK
 	* Open your own folder: click the name of your folder
 * Download exercise files from Github to Puhti 
@@ -50,7 +49,7 @@ As [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) i
     * Wait a moment -> Connect to Visual studio code
     * VSCode opens up in the browser
 * Open folder with exercise files: 
-    * File -> Open folder -> /scratch/project_2000745/students/[your_username]/geocomputing/python/puhti -> OK
+    * File -> Open folder -> /scratch/project_2000745/[your_username]/geocomputing/python/puhti -> OK
 * Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is basic Python script, which uses a **for loop** for going through all 3 files.  
 * Check that needed Python libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available. Select all import rows and press `Shift+Enter`. The import commands are run in Terminal. If no error messages are visible, the packages are available. The same way also other parts of the script can be tested.
 * Optional, for more advanced options for running Python code in VSCode, see for example [VSCode's Python Interactive mode is AMAZING!](https://www.youtube.com/watch?v=lwN4-W1WR84) and [How to Debug Python with VSCode](https://www.youtube.com/watch?v=w8QHoVam1-I&t=19s) videos.
@@ -68,7 +67,7 @@ For simple 1 core batch job, use the same Python-script as for interactive worki
 * Open [01_serial/single_core_example.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
 * Submit batch job from SSH terminal (in Puhti web interface the login node shell, not VSCode Terminal)
 ```
-cd /scratch/project_2000745/students/[your_username]/geocomputing/python/puhti/01_serial
+cd /scratch/project_2000745/[your_username]/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
 ``` 
 * `sbatch` prints out a job ID, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory?
