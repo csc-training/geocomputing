@@ -83,7 +83,8 @@ def processImage(sentinel_image_path):
 
 def main():
     ## How many parallel processes do we want to use
-    parallel_processes = 3
+    ## Take all that were reserved from batch job
+    parallel_processes = int(os.environ['SLURM_CPUS_PER_TASK'])
     
     ## Make a list of the full filepaths of the sentinel image folders
     list_of_sentinel_folders = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith('.SAFE')]
