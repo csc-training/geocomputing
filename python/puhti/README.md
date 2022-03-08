@@ -51,7 +51,7 @@ As [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) i
 * Open folder with exercise files: 
     * File -> Open folder -> /scratch/project_2000745/[your_username]/geocomputing/python/puhti -> OK
 * Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is basic Python script, which uses a **for loop** for going through all 3 files.  
-* Check that needed Python libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available. Select all import rows and press `Shift+Enter`. The import commands are run in Terminal. If no error messages are visible, the packages are available. The same way also other parts of the script can be tested.
+* Check that needed Python libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available. Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal. If no error messages are visible, the packages are available. The same way also other parts of the script can be tested.
 * Optional, for more advanced options for running Python code in VSCode, see for example [VSCode's Python Interactive mode is AMAZING!](https://www.youtube.com/watch?v=lwN4-W1WR84) and [How to Debug Python with VSCode](https://www.youtube.com/watch?v=w8QHoVam1-I&t=19s) videos.
 * Run the full script: 
     * Exit Python console in Terminal: `exit()`
@@ -74,7 +74,7 @@ sbatch single_core_example.sh
 ```
 seff [jobid]
 ```
-* Once the job is finished, see output in out.txt and err.txt for any possible errors and other outputs. 
+* Once the job is finished, see output in out.txt and err.txt for any possible errors and other outputs. Open the files with VSCode. 
 * Check that you have new GeoTiff files in working folder.
 * Check the resources used in another way. 
 ```
@@ -122,7 +122,8 @@ In the array job example the idea is that the Python script will run one process
 	
 * Submit the array job
 ```
-sbatch array_job_example.py
+cd ../02_array
+sbatch array_job_example.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
 
