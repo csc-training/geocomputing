@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=SingleCoreTest
-#SBATCH --account=project_2004306
+#SBATCH --account=project_2000745
 #SBATCH -o out.txt
 #SBATCH -e err.txt
 #SBATCH --time=00:05:00
