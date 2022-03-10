@@ -10,7 +10,7 @@ Basic idea behind the script is to:
 - Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index.
 - Save output as GeoTiff with `rasterio`.
 
-A Python script that was written and run on your own computer and that does not have any hard-coded file dependecies, can also be run on Puhti. If you call any absolute filepaths (= hard-coded dependency, auch as `/my/home/dir/file.txt`; not recommended!) within your script, you need to update these paths and copy the files to Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda).
+A Python script that was written and run on your own computer and that does not have any hard-coded file dependecies, can also be run on Puhti. If you call any absolute filepaths (= hard-coded dependency, auch as `/my/home/dir/file.txt`; not recommended!) within your script, you need to update these paths and copy the files to Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
 
 Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
 
