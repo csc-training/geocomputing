@@ -6,34 +6,36 @@ The example calculate NDVI (Normalized Difference Vegetation Index) from the Sen
 
 Basic idea behind the script is to:
 
-- Find red and infrared channels of Sentinel 2A images from SAFE folder and open the files.
-- Read the data as `numpy` array with `rasterio`, scale the values back to real reflectance values and calculate NDVI index.
+- Find red and near infrared channels of Sentinel L2A products from its `SAFE` folder and open the `jp2` files.
+- Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index.
 - Save output as GeoTiff with `rasterio`.
 
-If a Python script is ready on laptop, then for running it in Puhti normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new Python libraries](https://docs.csc.fi/apps/geoconda/#adding-more-python-packages-to-geoconda).
+A Python script that was written and run on your own computer and that does not have any hard-coded file dependecies, can also be run on Puhti. If you call any absolute filepaths (= hard-coded dependency, auch as `/my/home/dir/file.txt`; not recommended!) within your script, you need to update these paths and copy the files to Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
 
-Additional info: [Puhti batch job system documentation](https://docs.csc.fi/computing/running/creating-job-scripts/)
+Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
 
 Files in this example:
 
 * The input **ESA Sentinel L2A images** are in JPG2000 format and are already stored in Puhti: `/appl/data/geo/sentinel/s2_example_data/L2A`. Puhti has only these example images, more [Sentinel L2A images are available from CSC Allas](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-allas).
 * The example scripts are in subfolders by job type and used parallel library. Each subfolder has 2 files:
     * A **.py** file for defining the tasks to be done.
-    * A batch job **.sh** file for submitting the job to Puhti SLURM.
+    * A batch job **.sh** file for submitting the job to Puhti batch job scheduler (SLURM).
 
-## Setting up - copying files to Puhti
+## Let's get started 
+### Get example scripts to Puhti
+
 * Log in to Puhti web interface: https://puhti.csc.fi
 * Create a folder for yourself. 
-    * From front page: Files -> /scratch/project_2000745/
+    * From front page upper toolbar: Files -> /scratch/project_2000745/
     * Create new own folder: New Directory ->  [your_username] -> OK
 	* Open your own folder: click the name of your folder
 * Download exercise files from Github to Puhti 
-    * Open SSH terminal in side your own folder: Open in Terminal
+    * Open terminal inside your own folder: from mid left toolbar, find the button: Open in Terminal
     * Clone this repository: `git clone https://github.com/csc-training/geocomputing`
 	
 ## Interactive job
 
-As [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to run parts of the script and edit the script, so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to run parts of the script and edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
 
 * Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio code
@@ -51,13 +53,13 @@ As [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) i
 * Open folder with exercise files: 
     * File -> Open folder -> /scratch/project_2000745/[your_username]/geocomputing/python/puhti -> OK
 * Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is basic Python script, which uses a **for loop** for going through all 3 files.  
-* Check that needed Python libraries are available in Puhti. Which libraries are used in this script? Check whether those libraries are available. Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal. If no error messages are visible, the packages are available. The same way also other parts of the script can be tested.
+* Check that needed Python libraries are available in Puhti. If it is not your own script you can see which libraries are used in this script by checking the imports. To check whether those libraries are available: Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
 * Optional, for more advanced options for running Python code in VSCode, see for example [VSCode's Python Interactive mode is AMAZING!](https://www.youtube.com/watch?v=lwN4-W1WR84) and [How to Debug Python with VSCode](https://www.youtube.com/watch?v=w8QHoVam1-I&t=19s) videos.
 * Run the full script: 
-    * Exit Python console in Terminal: `exit()`
+    * Exit Python console in Terminal: type `exit()` in the terminal
     * Click green arrow above script (Run Python File in Terminal)
     * Wait, it takes a few minutes for complete. The printouts will appear during the process.
-    * Check that there are 3 new GeoTiff files in your work directory in the Files pane of VSCode.
+    * Check that there are 3 new GeoTiff files in your work directory in the Files panel of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
 
 
