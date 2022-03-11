@@ -84,7 +84,7 @@ def processImage(sentinel_image_path):
 def main():
     ## How many parallel processes do we want to use
     ## Take all that were reserved from batch job
-    parallel_processes = os.sched_getaffinity(0)
+    parallel_processes = len(os.sched_getaffinity(0))
    
     ## Make a list of the full filepaths of the sentinel image folders
     list_of_sentinel_folders = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith('.SAFE')]
