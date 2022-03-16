@@ -14,4 +14,4 @@ Installing Docker to a Windows machine can be cumbersome and you need admin priv
 
 ## Creating a notebooks image
 
-Detailed tutorial how to create a notebooks docker image can be found in the [course_notebooks folder](course_notebooks/creating_csc_notebooks_image.md)
+Detailed tutorial how to create a notebooks docker image can be found in the [course_notebooks folder](creating_csc_notebooks_image.md)
