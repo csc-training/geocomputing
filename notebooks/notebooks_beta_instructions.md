@@ -1,8 +1,10 @@
 # Custom notebooks image for Notebooks beta
 
+These instructions guide you throught the process of creating Jupyter notebooks for a course with custom conda packages installed. 
+
 Requirements: 
 * own CSC user account with Rahti access
-* docker
+* docker installed (own computer or Pouta instance)
 
 ## Step-by-step
 
@@ -15,12 +17,15 @@ Send your CSC user account name to `notebooks@csc.fi` to request Notebooks works
 It worked, if you see 'Manage workspaces' tab in the left panel
 
 4. Create custom notebooks image
-If you cannot use any of the [provided images](https://github.com/CSCfi/notebook-images/tree/master/builds) but want to use your own notebooks image, you will need to create an image using Docker and host it on Rahti. 
+If you cannot use any of the [provided images](https://github.com/CSCfi/notebook-images/tree/master/builds) but want to use your own notebooks image, you will need to create an image using Docker and host it on Rahti.
+
 4.1 Create Docker file
 
 For Jupyter Lab with some conda packages use the following as minimal example:
 
-```text xxcourse.dockerfile
+xxcourse.dockerfile:
+
+```text 
 # use jupyter minimal notebook as base for your image, it has eg conda already installed
 FROM jupyter/minimal-notebook
 
@@ -81,28 +86,44 @@ CMD ["/usr/local/bin/autodownload_and_start.sh"]
 `docker build -t "<yourimagename>" -f <yourimagename>.dockerfile .`
 
 4.3 Send your image to Rahti registry
-4.3.1 Login to https://registry-console.rahti.csc.fi/ 
-4.3.2 Find the `login commands` on the `Overview` page and use one of them to login to Rahti registry from command line
-4.3.3 Create a new project on Rahti webpage (or re-use one that you already have)
-4.3.4 Tag your docker image, eg based on versions (here: v0.1)
+
+* Login to https://registry-console.rahti.csc.fi/ 
+
+* Find the `login commands` on the `Overview` page and use one of them to login to Rahti registry from command line
+
+* Create a new project on Rahti webpage (or re-use one that you already have)
+
+* Tag your docker image, eg based on versions (here: v0.1):
+
 `sudo docker tag <yourimagename> docker-registry.rahti.csc.fi/<yourrahtiproject>/<yourimagename>:v0.1`
-4.3.5 Push your docker image to Rahti registry
+
+* Push your docker image to Rahti registry:
+
 `sudo docker push docker-registry.rahti.csc.fi/<yourrahtiproject>/<yourimagename>`
 
 4.4 In Notebooks: Create a workspace and within that, create new application
 Notebooks > Manage workspaces using the `Application wizard` or `Application form`
 
-4.4.1 Choose any `Application template` (check for different basic settings (lifetime and memory))
-4.4.2 Give a meaningful `Application name` , eg `Geospatial Python course 2022`, this is the name under which participants will see the notebook in the list of notebooks
-4.4.3 Add a short `Description`
-4.4.4 Add/remove `Category labels` that fit with your notebook
-4.4.5 Choose if you want Jupyter Lab or Jupyter Notebooks interface
-4.4.6 Fill in the link to your image on Rahti under `Container image` ( You can find the link from Rahti web interface > projectname > imagename > Pulling repository, e.g. `docker-registry.rahti.csc.fi/<yourprojectname>/<yourimagename>:<tagyouwanttouse>`
-4.4.7 Choose a `download method` if you want to download files at notebook startup directly into students home directory, e.g. code used during the course that is available on github
-4.4.8 Choose if you want to have a persistent my-work folder for each student (nice for multiday courses, when students create files during the course)
-4.4.9 Choose if you want to publish or save as draft for testing. Publish means that everyone with a join code could find it, but it will never appear for every notebooks user on the home page.
+* Choose any `Application template` (check for different basic settings (lifetime and memory))
+
+* Give a meaningful `Application name` , eg `Geospatial Python course 2022`, this is the name under which participants will see the notebook in the list of notebooks
+
+* Add a short `Description`
+
+* Add/remove `Category labels` that fit with your notebook
+
+* Choose if you want Jupyter Lab or Jupyter Notebooks interface
+
+* Fill in the link to your image on Rahti under `Container image` ( You can find the link from Rahti web interface > projectname > imagename > Pulling repository, e.g. `docker-registry.rahti.csc.fi/<yourprojectname>/<yourimagename>:<tagyouwanttouse>`
+
+* Choose a `download method` if you want to download files at notebook startup directly into students home directory, e.g. code used during the course that is available on github
+
+* Choose if you want to have a persistent my-work folder for each student (nice for multiday courses, when students create files during the course)
+
+* Choose if you want to publish or save as draft for testing. Publish means that everyone with a join code could find it, but it will never appear for every notebooks user on the home page.
 
 4.5 Test your application
+
 4.6 Share the join code (Notebooks > Manage Workspaces > Join code) with course participants
 
 
