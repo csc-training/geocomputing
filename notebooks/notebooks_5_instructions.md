@@ -1,4 +1,4 @@
-# Custom notebooks image for Notebooks beta
+# Custom notebooks image for Notebooks 5 (currently in beta)
 
 These instructions guide you throught the process of creating Jupyter notebooks for a course with custom conda packages installed. 
 
