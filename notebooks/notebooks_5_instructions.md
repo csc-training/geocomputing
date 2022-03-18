@@ -48,6 +48,7 @@ USER $NB_USER
 
 ### Installing the needed conda packages  and jupyter lab extensions . And run conda clean afterwards in same layer to keep image size lower
 RUN conda install --yes -c conda-forge \
+  your-packages-here \
   && conda clean -afy
 
 ```
