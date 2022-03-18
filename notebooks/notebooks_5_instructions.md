@@ -62,7 +62,7 @@ RUN conda install --yes -c conda-forge \
 
 * Find the `login commands` on the `Overview` page and use one of them to login to Rahti registry from command line
 
-* Create a new project on Rahti webpage (or re-use one that you already have)
+* Create a new project on Rahti webpage (or re-use one that you already have), set the Access policy to 'Anonymous', to allow Notebooks to access your image.
 
 * Tag your docker image, eg based on versions (here: v0.1):
 
