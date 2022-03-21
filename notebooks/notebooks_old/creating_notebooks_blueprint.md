@@ -1,3 +1,10 @@
+
+:::note
+
+This is only needed for the old Notebooks, for Notebooks beta, check the [creating Notebooks beta images](notebooks_beta_instructions.md).
+
+:::
+
 # Creating the notebooks Blueprint
 
 ## Prequisites 
