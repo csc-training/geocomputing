@@ -18,6 +18,10 @@ RUN apt-get update \
 # the user set here will be the user that students will use when working in the notebook
 USER $NB_USER
 
+# an example on how other software/package specific environment variables can be set
+# geopandas needs to know where proj can be found
+ENV PROJ_LIB=/opt/conda/share/proj
+
 ### Installing the needed conda packages (geopandas and rasterio as example) and jupyter lab extensions (git extension as example). And run conda clean afterwards in same layer to keep image size lower
 RUN conda install --yes -c conda-forge \
   geopandas \
