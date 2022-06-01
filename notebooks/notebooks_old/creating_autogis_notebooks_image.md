@@ -1,3 +1,5 @@
+:warning: **This applies to older Notebooks version.**
+
 # How to setup a notebooks environment for a course
 
 The example here is a GIS Python course from the University of Helsinki. Change the container and project names to reflect your setup
