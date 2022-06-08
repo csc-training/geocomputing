@@ -16,7 +16,7 @@ It is recommended to use a computer with a Linux operating system. Most of the i
 
 ### Ansible tools
 
-You need to have an environment with the necessary tools to run an ansible script (python, openstack-client, ansible and shade). Instructions how to install these: https://research.csc.fi/pouta-install-client.
+You need to have an environment with the necessary tools to run an ansible script: python, [openstack-client](https://docs.csc.fi/cloud/pouta/install-client), ansible and shade. 
 
 
 ### Setting up automatic access to keypairs and servers
