@@ -5,8 +5,10 @@ Usually in a Windows machine, you would install ArcGIS Desktop which will instal
 
 **Important**: ArcGIS is a licensed software. You must have an ArcGIS Server license provisioning file and the corresponding installation package. Universities with ArcGIS campus license (inc. ArcGIS Server licenses) are listed [here](https://research.csc.fi/web/research/-/arcgis).
 
+**Important**: The instructions here are from 2018 and can inlcude outdated information. Partly they still could be still useful. After 2018t ESRI has realeased [ArcPy also as conda package](https://enterprise.arcgis.com/en/server/latest/develop/linux/linux-python.htm). Using the conda installation is likely easier, but installing the ArcGIS Server is still also needed to get the license.
+
 ## Prerequisites
-In order to follow these instructions you will need to have a cPouta account and a project. You should also have some basic skills in managing cPouta, see the [Pouta User Guide](https://research.csc.fi/pouta-user-guide).
+In order to follow these instructions you will need to have a cPouta account and a project. You should also have some basic skills in managing cPouta, see the [Pouta User Guide](https://docs.csc.fi/cloud/pouta/).
 
 
 ## Manual installation
