@@ -16,7 +16,7 @@ Security recommendations:
   - security groups for firewall rules for ports 22 and 8080.
   - restrict the access to limited ip addresses to avoid risks.
 
-For more details on using cPouta, visit the [Pouta User Guide](https://research.csc.fi/pouta-user-guide) site.
+For more details on using cPouta, see [Pouta User Guide](https://docs.csc.fi/cloud/pouta/).
 
 ## Basic platform-independent GeoServer installation
 These installation steps differ from the official basic installation in the following:
@@ -27,7 +27,7 @@ The installation of the platform-independent binary include a self contained
 Jetty server with the GeoServer application already installed.
 
 To run these instructions you neet:
-- a cPouta VM with Ubuntu 16.04 OS running
+- a cPouta VM with Ubuntu OS running
 - a public IP assigned to your VM
 
 ### Install Java and set server's time
