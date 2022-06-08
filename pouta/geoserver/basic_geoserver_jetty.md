@@ -8,7 +8,7 @@ http://docs.geoserver.org/maintain/en/user/installation/linux.html). You can rea
 You need to have a basic virtual machine (VM) with a ready Ubuntu OS. These instructions have been tested in a CSC's cPouta environment and with a Ubuntu 16.04 OS.
 
 Hardware requirements:
-- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes (tested with cPouta's hpc-gen1.1core flavour, see about [cPouta flavours](https://docs.csc.fi/cloud/pouta/vm-flavors-and-billing/))
+- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes, see available options from [cPouta flavours](https://docs.csc.fi/cloud/pouta/vm-flavors-and-billing/).
 
 Security recommendations:
 - Define the VM's security settings carefully (for cPouta, see [Security Guidelines for cPouta](https://docs.csc.fi/cloud/pouta/security/)):
