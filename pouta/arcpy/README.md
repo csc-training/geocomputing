@@ -3,8 +3,7 @@ If you need to run [ArPy scripts](http://desktop.arcgis.com/en/arcmap/latest/ana
 
 Usually in a Windows machine, you would install ArcGIS Desktop which will install the necessary ArcPy libraries. In cPouta, virtual machines often use Linux operating systems. ArcGIS Desktop does not have a linux version but the ArcGIS Server does and installing it, will also install the necessary ArcPy libraries allowing you to run your ArcPy scripts. Please notice that ArcGIS Pro ArcPy scripts have slightly different syntax, and are unlikely to run with ArcGIS Server ArcPy.
 
-* ArcGIS is a **licensed software**. You must have an ArcGIS Server license provisioning file and the corresponding installation package. Universities with ArcGIS campus license (inc. ArcGIS Server licenses) are listed [here](https://research.csc.fi/web/research/-/arcgis).
-
+* ArcGIS is a **licensed software**. You must have an ArcGIS Server license provisioning file and the corresponding installation package. Universities with ArcGIS campus license (inc. ArcGIS Server licenses) are listed [here](https://docs.csc.fi/apps/arcgis/).
 * The instructions here are from 2018 and **can inlcude outdated information**. Partly they still could be still useful. After 2018t ESRI has realeased [ArcPy also as conda package](https://enterprise.arcgis.com/en/server/latest/develop/linux/linux-python.htm). Using the conda installation is likely easier, but installing the ArcGIS Server is still also needed to get the license.
 
 ## Prerequisites
