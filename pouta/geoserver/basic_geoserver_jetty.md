@@ -8,15 +8,15 @@ http://docs.geoserver.org/maintain/en/user/installation/linux.html). You can rea
 You need to have a basic virtual machine (VM) with a ready Ubuntu OS. These instructions have been tested in a CSC's cPouta environment and with a Ubuntu 16.04 OS.
 
 Hardware requirements:
-- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes (tested with cPouta's hpc-gen1.1core flavour, see about [cPouta flavours](https://research.csc.fi/pouta-flavours))
+- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes, see available options from [cPouta flavours](https://docs.csc.fi/cloud/pouta/vm-flavors-and-billing/).
 
 Security recommendations:
-- Define the VM's security settings carefully (for cPouta, see [Security Guidelines for cPouta](https://research.csc.fi/pouta-security)):
+- Define the VM's security settings carefully (for cPouta, see [Security Guidelines for cPouta](https://docs.csc.fi/cloud/pouta/security/)):
   - VM ssh access is secured with a keypair.
   - security groups for firewall rules for ports 22 and 8080.
   - restrict the access to limited ip addresses to avoid risks.
 
-For more details on using cPouta, visit the [Pouta User Guide](https://research.csc.fi/pouta-user-guide) site.
+For more details on using cPouta, see [Pouta User Guide](https://docs.csc.fi/cloud/pouta/).
 
 ## Basic platform-independent GeoServer installation
 These installation steps differ from the official basic installation in the following:
@@ -27,7 +27,7 @@ The installation of the platform-independent binary include a self contained
 Jetty server with the GeoServer application already installed.
 
 To run these instructions you neet:
-- a cPouta VM with Ubuntu 16.04 OS running
+- a cPouta VM with Ubuntu OS running
 - a public IP assigned to your VM
 
 ### Install Java and set server's time

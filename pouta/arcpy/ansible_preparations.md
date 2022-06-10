@@ -6,24 +6,24 @@ Below you will find some information and hints on how to preapre a working envir
 ## cPouta account
 These are the minimum requirements before you can start using example Ansible playbooks:
 
-- You need to have set up a pouta project with key-pairs and security groups to make connecting from your local machine possible. Instructions: https://research.csc.fi/pouta-getting-started
+- A pouta project with key-pairs and security groups to make connecting from your local machine possible. Instructions: https://docs.csc.fi/cloud/pouta/launch-vm-from-web-gui/
 
-- You will need to download and source your cPouta project's API access file (see section 3.4.1.3 in [Configure your terminal environment for OpenStack](https://research.csc.fi/pouta-install-client)).
+- cPouta project's API access file, see [Configure your terminal environment for OpenStack](https://docs.csc.fi/cloud/pouta/install-client/#configure-your-terminal-environment-for-openstack)
 
 ## Computer environment
 
-It is recommended to use a computer with a Linux operating system. Most of the instructions you will find here assume that you are working with a Linux computer. Note, that you can create a Linux virtual machine in cPouta and install the necessary tools and settings into it as necessary.
+It is recommended to use a computer with a Linux operating system. Most of the instructions you will find here assume that you are working with a Linux computer. Note, that you can create a Linux virtual machine in cPouta and install the necessary tools and settings into it as necessary OR use Windows Linux Subsystem.
 
 ### Ansible tools
 
-You need to have an environment with the necessary tools to run an ansible script (python, openstack-client, ansible and shade). Instructions how to install these: https://research.csc.fi/pouta-install-client.
+You need to have an environment with the necessary tools to run an ansible script: python, [openstack-client](https://docs.csc.fi/cloud/pouta/install-client), ansible and shade. 
 
 
 ### Setting up automatic access to keypairs and servers
 
 In order for the ansible scripts to run smoothly, you will need to make sure that
 the processes don't need interaction from the user and that the necessary keypairs
-are readly loaded.
+are loaded.
 
 Some hints that may help:
 - make sure that the key pair Ansible is using to contact the remote server is

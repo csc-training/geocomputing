@@ -6,10 +6,10 @@ The following instructions describe the steps to install PostGIS in an Ubuntu 16
 You need to have a basic virtual machine (VM) with a ready Ubuntu OS. These instructions have been tested in a CSC's cPouta environment and with a Ubuntu 16.04 OS.
 
 Hardware requirements:
-- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes. For cPouta virtual machines' configurations, see [cPouta flavours](https://research.csc.fi/pouta-flavours)).
+- a machine with 1 core and 4 Gb of RAM is enough for testing and not demanding purposes. For cPouta virtual machines' configurations, see [cPouta flavours](https://docs.csc.fi/cloud/pouta/vm-flavors-and-billing/)).
 
 Security recommendations:
-- Define the VM's security settings carefully (for cPouta, see [Security Guidelines for cPouta](https://research.csc.fi/pouta-security)):
+- Define the VM's security settings carefully (for cPouta, see [Security Guidelines for cPouta](https://docs.csc.fi/cloud/pouta/security/)):
   - VM ssh access is secured with a keypair.
   - security groups for firewall rules for ports 22 and 5432.
   - restrict the access to limited ip addresses to avoid risks.

@@ -19,11 +19,7 @@ Create a user for the students to log in and give it read permissions to the sch
 - `GRANT SELECT ON ALL TABLES IN SCHEMA public TO geostudent;`
 
 ## Student access to PostGIS
-The virtual machine's security groups need to be set to allow access to port 5432 from the machines the students will be using. To improve security, it is recommended that you would open access to a limited IP range, for example to the IP range of the university's computer (for cPouta, see [Security Guidelines for cPouta](https://research.csc.fi/pouta-security)).
-
-See an example on setting a connection from pgAdmin:
-
-<img src="postgis_student_connection.png" width="400">
+The virtual machine's security groups need to be set to allow access to port 5432 from the machines the students will be using. To improve security, it is recommended that you would open access to a limited IP range, for example to the IP range of the university's computer (for cPouta, see [Security Guidelines for cPouta](https://docs.csc.fi/cloud/pouta/security/)).
 
 Set also the SSL mode to `SSL mode:prefer`
 
