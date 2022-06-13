@@ -1,0 +1,9 @@
+name: gis_ml
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.7
+  - geopandas
+  - rasterio
+  - scikit-learn
+  - imbalanced-learn
