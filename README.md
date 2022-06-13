@@ -2,10 +2,10 @@
 
 In this repository you can find:
 
-* exercises from some of the previous courses offered by CSC (./course_materials)
-* examples for running geocomputing applications on CSC's supercomputer Puhti (./application_examples)
-* some miscellaneous information, such as test reports, benchmarks and outdated material (./misc_info)
-* setup instructions for custom CSC Notebooks images and Geospatial applications on cPouta (./setup_instructions)
+* exercises from some of the previous courses offered by CSC in [course_materials](./course_materials)
+* examples for running geocomputing applications on CSC's supercomputer Puhti in [application_examples](./application_examples)
+* some miscellaneous information, such as test reports, benchmarks and outdated material in [misc_info](./misc_info)
+* setup instructions for custom CSC Notebooks images and Geospatial applications on cPouta in [setup_instructions](./setup_instructions)
 
 ## Scripts
 
