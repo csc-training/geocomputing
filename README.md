@@ -1,19 +1,15 @@
-# geocomputing
-Examples for doing spatial analysis in CSC computing environment with:
-* [Python](python)
-* [R](R)
+# CSC's geocomputing repository
 
-Examples include also batch job scripts suitable for Taito.
-Some of the examples include samples for serial, array and parallel jobs.
+In this repository you can find:
 
-If you are interested in setting up cloud environments for GIS see:
-- cPouta virtual machines we have some [cPouta GIS examples and instructions](./pouta)
-- running containers in [Rahti Containers platform](./rahti)
+* exercises from some of the previous courses offered by CSC (./course_materials)
+* examples for running geocomputing applications on CSC's supercomputer Puhti (./application_examples)
+* some miscellaneous information, such as test reports, benchmarks and outdated material (./misc_info)
+* setup instructions for custom CSC Notebooks images and Geospatial applications on cPouta (./setup_instructions)
 
+## Scripts
 
-# Scripts
-
-You can download these scripts to **Puhti** or somewhere else with git. You should first navigate to the destination folder, in Puhti your project's **projappl** or **scratch** folder:
+You can download ('clone') these scripts to **Puhti** or somewhere else with git.First, navigate to the destination folder, in Puhti your project's **projappl** or **scratch** folder:
 
 `cd /projappl/<YOUR-PROJECT>`
 or
@@ -23,14 +19,10 @@ And then clone this repository there
 
 `git clone https://github.com/csc-training/geocomputing.git`
 
-# License
-These examples are free to use with CC 4.0 BY oGIIR license. In your publications please acknowledge oGIIR, for example “The authors wish to acknowledge for instructions CSC – IT Center for Science, Finland (urn:nbn:fi:research-infras-2016072531) and the Open Geospatial Information Infrastructure for Research (oGIIR, urn:nbn:fi:research-infras-2016072513).”
+## License
 
 
-# Rahti container cloud
+These examples are licensed under CC 4.0 BY, if not indicated otherwise. 
+If you used any of the tools or examples for published research, please acknowledge CSC and Geoportti in your publications, it is important for project continuation and funding reports. As an example, you can write "The authors wish to thank CSC - IT Center for Science, Finland (urn:nbn:fi:research-infras-2016072531) and the Open Geospatial Information Infrastructure for Research (Geoportti, urn:nbn:fi:research-infras-2016072513) for computational resources and support".
 
-Rahti is used to host web services or any sort of containers. Notebooks are perhaps the most commonly hosted GIS application but you can also host e.g. Geoserver or a database (with some caveats).
 
-* [Rahti web user interface](https://rahti.csc.fi:8443/)
-* [Rahti container registry](https://registry-console.rahti.csc.fi/)
-* [Rahti documentation](https://docs.csc.fi/cloud/rahti/)
