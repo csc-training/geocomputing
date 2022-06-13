@@ -1,0 +1,20 @@
+# --- start of geoserver.service file ---
+# Edit the parts with the Java and GeoServer paths to match your system
+[Unit]
+Description=GeoServer Jetty container starter (metadata service crawler)
+After=network.target
+
+[Service]
+User=geoserver
+#Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+Environment=GEOSERVER_HOME=/usr/share/geoserver
+Environment=GEOSERVER_DATA_DIR=/opt/geoserver
+ExecStart=/usr/share/geoserver/bin/startup.sh
+ExecStop=/usr/share/geoserver/bin/shutdown.sh
+
+# Output needs to appear in instance console output
+StandardOutput=journal+console
+
+[Install]
+WantedBy=multi-user.target
+# --- end of geoserver.service file ---

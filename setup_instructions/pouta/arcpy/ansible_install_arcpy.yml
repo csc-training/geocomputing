@@ -1,0 +1,140 @@
+# Ansible demo for creating a virtual machine and installing ArcGIS Server as a
+# means to using ArcPy. The virtual machine is created in CSC's cPouta as a
+# reusable permanent volume (see ansible_run_arcpy.yml playbook).
+#
+# You'll need to download and source your credentials before this will work:
+#  https://research.csc.fi/pouta-credentials as well as set up keypairs for your machine
+#
+# Modify with your own values the variables:
+#    - NAME_OF_YOUR_KEY: the name of the key pair as seen in your cPouta project
+#    - NAME_OF_YOUR_SECURITY_GROUP: the name of a security group as seen in your cPouta project
+#    - NAME_OF_YOUR_PROVISION_FILE: the name of your ArcGIS Server provision file
+#    - NAME_OF_YOUR_ARCGIS_SERVER_INSTALLATION_PACKAGE: the name of your ArcGIS Server installation package file
+#
+# You have the installation package and provision file in the home directory of
+# the machine from which you are running the ansible scripts
+---
+- name: Create virtual machine and install ArcGIS for Server on cPouta
+  hosts: localhost # The OpenStack modules run on your local machine.
+  connection: local
+  vars:
+    demo_key: NAME_OF_YOUR_KEY
+    demo_sg: NAME_OF_YOUR_SECURITY_GROUP
+    demo_security_groups: default,{{ demo_sg }}
+    arcgis_server_vol: arcpy-volume # the name of the permanent ArcGIS Server volume
+    demo_instance: test-arcpy # the name of the temporary cPouta instance
+    cpouta_flavor: standard.tiny # the flavor of the cPouta instance
+
+  tasks:
+    - name: Create a bootable volume
+      os_volume:
+        state: present
+        size: 80
+        display_name: "{{ arcgis_server_vol }}"
+        image: CentOS-7
+
+    - name: Create a virtual machine
+      register: result
+      os_server:
+        name: "{{ demo_instance }}"
+        flavor: "{{ cpouta_flavor }}"
+        key_name: "{{ demo_key }}"
+        security_groups: "{{ demo_security_groups }}"
+        boot_volume: "{{ arcgis_server_vol }}"
+
+    - name: Add new host to inventory
+      add_host: name={{ result.server.public_v4 }} groups=arcpy_nodes
+
+    - name: clear ssh known_hosts
+      known_hosts: name={{ result.server.public_v4 }} state=absent
+      when: result | changed
+
+    - name: Wait for instance to be ready
+      wait_for: host={{ result.server.public_v4 }} port=22 search_regex=OpenSSH delay=3
+
+- name: Set up ArcGIS Server virtual machine
+  hosts: arcpy_nodes
+  remote_user: cloud-user
+  environment:
+    ANSIBLE_HOST_KEY_CHECKING: False
+  vars:
+    arcgis_prvc: NAME_OF_YOUR_PROVISION_FILE
+    arcgis_install_pckg: NAME_OF_YOUR_ARCGIS_SERVER_INSTALLATION_PACKAGE
+
+  tasks:
+    - name: Install dependencies
+      yum: name={{ item }} state=present update_cache=yes
+      with_items:
+       - fontconfig
+       - mesa-libGL
+       - mesa-libGLU
+       - libXtst
+       - libXext
+       - libX11
+       - libXi
+       - libXdmcp
+       - libXrender
+       - libXau
+       - xorg-x11-server-Xvfb
+       - libXfont
+       - unzip
+       - nfs-utils
+      become: true
+
+    - name: Copy provision file from local machine.
+      copy:
+        src: ~/{{ arcgis_prvc }}  # your local copy of the provision file
+        dest: ~/{{ arcgis_prvc }}
+        owner: cloud-user
+        group: cloud-user
+        mode: 0755
+
+    - name: Copy ArcGISServer installer from local machine.
+      copy:
+        src: ~/{{ arcgis_install_pckg }}  # your local copy of the installation package
+        dest: ~/{{ arcgis_install_pckg }}
+        owner: cloud-user
+        group: cloud-user
+        mode: 0755
+
+    - name: Unarchive ArcGIS Server installation package
+      unarchive:
+        src: ~/{{ arcgis_install_pckg }}
+        dest: ~/
+        remote_src: yes
+
+    - name: Increase number of files allowed to be open
+      pam_limits:
+        domain: cloud-user
+        limit_type: '-'
+        limit_item: nofile
+        value: 65535
+      become: true
+
+    - name: Increase number of processes
+      pam_limits:
+        domain: cloud-user
+        limit_type: '-'
+        limit_item: nproc
+        value: 25059
+      become: true
+
+    - name: Kill SSH (logout and login for settings to be updated)
+      shell: sleep 1; pkill -u cloud-user sshd
+      async: 3
+      poll: 2
+
+    - name: Install ArcGIS Server
+      shell: ~/ArcGISServer/Setup -m silent -l Yes -a ~/{{ arcgis_prvc }}
+
+- name: Destroy the computing ArcGIS Server instance (the ArcGIS Server volume remains)
+  hosts: localhost
+  vars:
+    demo_instance: test-arcpy
+
+  tasks:
+    - name: Destroy a VM
+      os_server:
+        name: "{{ demo_instance }}"
+        state: absent
+...
