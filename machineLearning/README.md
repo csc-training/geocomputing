@@ -12,7 +12,7 @@
     * In CNN_solaris only spurce.
     * In CNN_keras all classes and only spruce.
 
-* Models: [shallow](02_shallows/05_classification.py), [deep](03_deep/07_deepClassification.py), [CNN_solaris](04_cnn_solaris), [CNN_keras](05_cnn_keras)
+* Models: [shallow](02_shallows/05_classification.py), [deep](03_deep/07_deepClassification.py), [CNN_keras](05_cnn_keras)
 
 ### Classification2
 * Data: NLS infrared orthoimage + NLS topographic database (maastotietokanta) buildings for labels.
@@ -38,7 +38,6 @@ The shallow learning exercises can well be run on any PC, likely also the deep l
 * GDAL command-line, rasterio and geopandas for data preparations
 * scikit-learn for shallow learning and some helping functions also for deep learning scripts (Puhti [geoconda](https://docs.csc.fi/apps/geoconda/) module)
 * Keras for deep learning and CNN_keras (Puhti [tensorflow/2.0.0](https://docs.csc.fi/apps/tensorflow/) module)
-* solaris and pytorch for CNN_solaris (solaris has been removed from Puhti). 
 * (There are also some minor libraries used, so check the imports of scripts before doing the installations to your own PC. Conda installation of Python packages is warmly recommended, you can use the [gis.yml](gis.yml) file provided here.)
 
 ### GIS and machine learning libraries in Puhti:
