@@ -24,3 +24,7 @@ The batch job file launches basically a master job that does not require much re
 
 When the worker jobs finish, they will be displayd as CANCELLED on Puhti which is intended, the master job cancels them.
 
+### Dask arrays in STAC example
+[STAC example](../../STAC) shows how to use Dask arrays via xarray.
+
+
