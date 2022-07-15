@@ -4,6 +4,8 @@ This script is an example how to find and download large quantities of Sentinel-
 
 The script favors the Finnish **Finhub API** over the European **Scihub API** if the same image is found from both. 
 
+Another option for similar task is to use [STAC ](../STAC).
+ 
 ### Running
 On local computer just install the sentinelsat library first.
 
