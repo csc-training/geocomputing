@@ -1,5 +1,7 @@
 # Geocomputing using CSC resources
 
+This repository contains examples for use of different geospatial applications. Many of the examples are for [CSC supercomputer Puhti](https://docs.csc.fi/computing/systems-puhti/) but may also be helpful for other systems (or your own computer). Please find a list of all geospatial software that is available on Puhti in [CSC docs](https://docs.csc.fi/apps/#geosciences). 
+
 ## Examples
 
 ### [Gecomputing with R on Puhti](./R/README.md) 
@@ -55,7 +57,8 @@ References for CSC's R spatial tools:
 * [geopackage handling in Python](./python/geopackage/README.md)
 * [GRASS multiprocessing from Python](./python/grass_multiprocessing_with_python/README.md)
 
-### [Usage of SNAP graph processing tool (gpt) in Puhti](./snap/README.md)
+### SNAP
+* [Usage of SNAP graph processing tool (gpt) in Puhti](./snap/README.md)
 
 
 ## Scripts
