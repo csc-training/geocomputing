@@ -12,9 +12,10 @@ This repository contains examples for use of different geospatial applications. 
 * [using R with LiDAR data](./R/R_LiDAR) - examples and exercises
 * [how to read and write data to Allas from R](./R/allas)
 
-References for CSC's R spatial tools:
+References for CSC's R spatial tools and course material:
 * [Puhti's R for GIS documentation](https://docs.csc.fi/apps/r-env-for-gis/)
 * [Puhti's R documentation](https://docs.csc.fi/apps/r-env-singularity/)
+* [Spatial R course material, 2021](https://github.com/csc-training/r-spatial-course)
 
 ### FORCE
 * [Examples for using FORCE on Puhti](./force/README.md) 
