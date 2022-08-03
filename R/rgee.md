@@ -17,7 +17,7 @@ Please follow below steps to initialize RGEE on Puhti:
 
   * use miniconda or venv for the Python installation or manually provide the path to a Python where earthengine-api and numpy are installed (`EARTHENGINE_PYTHON=/path/to/python` in `.Renviron`)
   * this creates some files under `$HOME/.config/earthengine` ,
-  * copy full earthengine directory to your `$HOME/.config` (`/users/<username>/.config`) directory on Puhti (e.g. via Puhti webinterface, scp or FileZilla)
+  * copy full earthengine directory to your `$HOME/.config` (`/users/<username>/.config`) directory on Puhti (e.g. via Puhti webinterface, scp or FileZilla) ( in this step, if you know what you are doing you can also copy just the configuration files to Puhti; but do this AFTER running ee_Install() on Puhti.)
 
 
 
