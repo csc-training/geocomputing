@@ -2,6 +2,8 @@
 
 This repository contains examples for use of different geospatial applications. Many of the examples are for [CSC supercomputer Puhti](https://docs.csc.fi/computing/systems-puhti/) but may also be helpful for other systems (or your own computer). Please find a list of all geospatial software that is available on Puhti in [CSC docs](https://docs.csc.fi/apps/#geosciences). 
 
+If you are using [Jupyter lab](https://jupyter.org/) on your own computer, the [Jupyter-github](https://github.com/jupyterlab/jupyterlab-github) extension provides you with the possibility to browse public github repositories within Jupyter. Install the extension, click on the little github/cat icon in the left bar and fill `csc-training/geocomputing` into the search field and press enter. This lets you open and run all python files and notebooks within this repository on your own computer.
+
 ## Examples
 
 ### [Gecomputing with R on Puhti](./R/README.md) 
