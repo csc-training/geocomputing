@@ -35,3 +35,5 @@ STAC main concepts:
 In this repository we provide to examples to work using Python with:
 * [STAC API](stac_xarray_dask_example.ipynb)
 * [Static STAC](static_stac.ipynb)
+
+The examples mainly cover data search and download, for analyzing data Xarray and xarray-spatial(https://xarray-spatial.org/) can be used.
