@@ -16,8 +16,8 @@ STAC main concepts:
 
 ## Static STAC and STAC API
 
-* Static STAC - a set of linked JSON files representing each catalog, collection and item.
-* STAC API - enables search of STAC Items. Not all catalogues offer STAC API, but all bigger ones usually have it.
+* **Static STAC** - a set of linked JSON files representing each catalog, collection and item.
+* **STAC API** - enables search of STAC Items. Not all catalogues offer STAC API, but all bigger ones usually have it.
 
 ## STAC catalogues
 
