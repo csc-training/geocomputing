@@ -5,5 +5,5 @@ Examples for doing spatial analysis with **R** in CSC computing environment:
 * [using R with LiDAR data](R_LiDAR) - examples and exercises
 
 References for CSC's R spatial tools:
-* [Puhti's R for GIS documentation](https://docs.csc.fi/apps/r-env-for-gis/)
+* [Puhti's R for GIS documentation](https://docs.csc.fi/apps/r-env-for-gis/), at the end of page are several links to good learning materials about R for spatial data analysis.
 * [Puhti's R documentation](https://docs.csc.fi/apps/r-env-singularity/)
