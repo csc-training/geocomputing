@@ -1,22 +1,10 @@
 # CSC geocomputing Python examples
 
-## Topics
-
-### Allas
-* How to download, upload and use data with Allas and Python
-* Examples with S3 and Swift technologies
-
-### Puhti
-* How to parallelize your Python code with different methods for running in Puhti supercomputer
-* Array job and different parallel job examples
-
-### Routing
-* Examples of routing in Puhti supercomputer using NetworkX and igraph
-* Serial and Parallel 
-
-### Zonal Stats
-* Examples of running zonal statistics on Puhti supercomputer using rasterstats
-* Serial and Parallel
-
-### Geopackage
-* How to use the large topographic database geopackages on Puhti with Python
+* [Puhti](./puhti/README.md) - serial/array/parallel processing with Python.  How to parallelize your Python code with different methods for running in Puhti supercomputer.
+* [Working with Allas data from Python](./allas). Examples with S3 and Swift APIs
+* [Reading NLS topographic database geopackage with Python](./geopackage/README.md)
+* [GRASS multiprocessing from Python](./grass_multiprocessing_with_python/README.md)
+* [Routing](./routing/readme.md) Examples using NetworkX and igraph, serial and parallel.
+* [Sentinel data download from Finhub and Scihub using sentinelsat](./sentinel/README.md)
+* [STAC, xarray and dask for downloading and processing data](./STAC/stac_xarray_dask_example.ipynb)
+* [Zonal statistics in parallel](./zonal_stats/README.md) using rasterstats, serial and parallel.
