@@ -29,7 +29,9 @@ This repository contains examples for use of different geospatial applications. 
 * [GRASS](./grass/readme.md)
 * [PDAL](./pdal/README.md) 
 * [SNAP graph processing tool gpt](./snap/README.md)
-* [Routing tools, both for HPC and cPouta](routing.md)
+
+### Use cases / longer examples
+* [GeoPortti share Github repository](https://github.com/geoporttishare?tab=repositories) includes several longer examples of HPC usage.
 
 ## CSC Notebooks
 * [Setting up geospatial Python Jupyter environment](./notebooks/README.md)
