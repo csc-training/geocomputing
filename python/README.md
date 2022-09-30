@@ -8,3 +8,6 @@
 * [Sentinel data download from Finhub and Scihub using sentinelsat](./sentinel/README.md)
 * [STAC, xarray and dask for downloading and processing data](./STAC/stac_xarray_dask_example.ipynb)
 * [Zonal statistics in parallel](./zonal_stats/README.md) using rasterstats, serial and parallel.
+
+
+> **_NOTE:_**  If you are using [Jupyter lab](https://jupyter.org/) on your own computer, the [Jupyter-github](https://github.com/jupyterlab/jupyterlab-github) extension provides you with the possibility to browse public github repositories within Jupyter. Install the extension, click on the little github/cat icon in the left bar and fill `csc-training/geocomputing` into the search field and press enter. This lets you open and run all python files and notebooks within this repository on your own computer.
