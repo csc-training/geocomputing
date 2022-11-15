@@ -9,7 +9,7 @@
 #SBATCH -p test
 #SBATCH --mem-per-cpu=1000
 
-module load r-env-singularity
+module load r-env
 
 if test -f ~/.Renviron; then
     sed -i '/TMPDIR/d' ~/.Renviron
@@ -19,4 +19,4 @@ fi
 # echo "TMPDIR=/scratch/<project>/tmp" >> ~/.Renviron
 echo "TMPDIR=$PWD/tmp" >> ~/.Renviron
 
-srun singularity_wrapper exec Rscript --no-save --slave Calc_contours_foreach.R
+srun apptainer_wrapper exec Rscript --no-save --slave Calc_contours_foreach.R
