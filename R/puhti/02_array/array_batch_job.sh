@@ -10,7 +10,7 @@
 #SBATCH -p small
 
 # load the Puhti module for R
-module load r-env-singularity
+module load r-env
 
 if test -f ~/.Renviron; then
     sed -i '/TMPDIR/d' ~/.Renviron
@@ -24,4 +24,4 @@ echo "TMPDIR=$PWD/tmp" >> ~/.Renviron
 name=$(sed -n "$SLURM_ARRAY_TASK_ID"p ../mapsheets.txt)
 
 # run the analysis command
-srun singularity_wrapper exec Rscript Contours_array.R $name
+srun apptainer_wrapper exec Rscript Contours_array.R $name
