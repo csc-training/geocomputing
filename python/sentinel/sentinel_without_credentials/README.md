@@ -1,6 +1,6 @@
-## Sentinel bucket content without AWS credentials
+## Allas Sentinel bucket content without AWS credentials
 
-This is an example script of how to get contents from an open bucket without AWS credentials.
+This is an example script of how to get contents from open Sentinel buckets in Allas without AWS credentials.
 
 ### Running 
 
