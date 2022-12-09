@@ -11,6 +11,6 @@ On Puhti, you can use the [geoconda module](https://docs.csc.fi/apps/geoconda/) 
 module load geoconda
 python get_open_sentinel_buckets.py
 ```
-### The Script
+### Results
 
-The script prints out the first bucket's name, and the contents of the first 5 SAFEs in that bucket.
+The script prints out the first bucket's name, and the contents of the first 5 SAFEs in that bucket. The bucket's contents are accessible in the get_contents function.
