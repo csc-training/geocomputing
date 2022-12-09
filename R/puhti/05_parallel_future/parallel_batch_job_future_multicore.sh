@@ -10,7 +10,7 @@
 #Equal to number of workers. Max 40 in Puhti.
 #SBATCH --cpus-per-task=3
 
-module load r-env-singularity
+module load r-env
 
 # If you have installed packages this helps resolve problems related to those
 if test -f ~/.Renviron; then
@@ -22,4 +22,4 @@ fi
 # echo "TMPDIR=/scratch/<project>/tmp" >> ~/.Renviron
 echo "TMPDIR=$PWD/tmp" >> ~/.Renviron
 
-srun singularity_wrapper exec Rscript --no-save Calc_contours_future_multicore.R
+srun apptainer_wrapper exec Rscript --no-save Calc_contours_future_multicore.R

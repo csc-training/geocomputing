@@ -4,4 +4,4 @@ A collection of instructions to setup virtual machines in [CSC's cPouta environm
 - [GeoServer](./geoserver) 
 - [PostGIS](./postgis)
 - [ArcPy](./arcpy) 
-- [MetaShape](./metashape_with_VNC) 
+- [MetaShape](./metashape_with_VNC)  - installing other Desktop tools could be rather similar.

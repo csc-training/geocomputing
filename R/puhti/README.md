@@ -3,7 +3,7 @@ Here are examples for running R code on CSC's Puhti supercluster as four differe
 
 The contours are calculated based on NLS 10m DEM data in geotiff format with `terra` package. The results are saved in GeoPackge format. 
 
-If an R script is ready on laptop, then for running it in Puhti normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env-singularity/#r-package-installations).
+If an R script is ready on laptop, then for running it in Puhti normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env/#r-package-installations).
 
 Additional info: [Puhti batch job system documentation](https://docs.csc.fi/computing/running/creating-job-scripts/)
 
@@ -17,14 +17,14 @@ Files in this example:
 ## Interactive working 
 
 * Open [Puhti web interface](https://puhti.csc.fi) and log in with CSC user account.
-* Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio. `Apps -> RStudio`
+* Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio, from front page or `Apps -> RStudio`
   * Project: project_2002044
   * Partition: interactive
   * CPU cores: 1
   * Memory: 4
   * Local disk: 2
   * Time: 2:00:00
-  * R version: [r-env-singularity/4.0.5](https://docs.csc.fi/apps/r-env-for-gis/)
+  * R version: [r-env/4.2.1](https://docs.csc.fi/apps/r-env-for-gis/)
 
 * Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
@@ -44,7 +44,7 @@ For simple 1 core batch job, use the same R-script as for interactive working.
 
 * [01_serial/serial_batch_job.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
 
-* Open another web tab with Puhti shell (`Tools -> Puhti shell access`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
+* Open another web tab with Puhti shell (`Tools -> _Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
 cd /scratch/project_2002044/students/<your_account_name>/geocomputing/R/puhti/01_serial
 sbatch serial_batch_job.sh
@@ -72,7 +72,7 @@ In this case the R code takes care of dividing the work to parallel processes, o
 * [05_parallel_future/parallel_batch_job_future_cluster.sh](05_parallel_future/parallel_batch_job_future_cluster.sh) batch job file for `future` with `cluster`.
 	* `--ntasks=4` reserves 4 cores: `snow` and `future` with `cluster` option require one additional process for master process, so that if there are 3 mapsheets to process 4 cores have to be reserved
 	* `--mem-per-cpu=1000` reserves memory per core
-	* `srun singularity_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
+	* `srun apptainer_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
 *  [05_parallel_future/Calc_contours_future_cluster.R](05_parallel_future/Calc_contours_future_cluster.R)
 	* Note how cluster is started, processes divided to workers with `future-map()` and cluster is stopped.
 	* For looped has been removed, each worker calculates one file.
