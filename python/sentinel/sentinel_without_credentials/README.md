@@ -1,4 +1,4 @@
-### Sentinel bucket content without AWS credentials
+## Sentinel bucket content without AWS credentials
 
 This is an example script of how to get contents from an open bucket without AWS credentials.
 
