@@ -6,6 +6,9 @@ This is an example script of how to get contents from open Sentinel buckets in A
 
 On local machine install the required library: boto3
 
+```
+pip install boto3
+
 On Puhti, you can use the [geoconda module](https://docs.csc.fi/apps/geoconda/) which includes the boto3 library:
 ```
 module load geoconda
