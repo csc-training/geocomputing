@@ -53,3 +53,4 @@ The examples mainly cover data search and download, for analyzing data Xarray an
 	* Working directory: /scratch/project_2002044 during course, own project scratch later
 * Click launch and wait until granted resources 
 * Click "Connect to Jupyter" 
+* If you want to use Dask extension in JupyterLab, see [Dask instructions in docs.csc.fi](https://docs.csc.fi/support/tutorials/dask-python/#dask-with-jupyter)
