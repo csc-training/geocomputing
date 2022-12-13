@@ -37,3 +37,19 @@ In this repository we provide to examples to work using Python with:
 * [Static STAC](static_stac.ipynb)
 
 The examples mainly cover data search and download, for analyzing data Xarray and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started.
+
+### Jupyter set up for CSC examples
+* Open [Puhti web interface](https://www.puhti.csc.fi/)
+* Click "Jupyter" on dashboard
+* Select following settings:
+	* Project: project_2002044 during course, own project later 
+	* Partition: interactive
+	* CPU cores: 1
+	* Memory (Gb): 8 
+	* Local disk: 0
+	* Time: 1:00:00 (or adjust to reasonable)
+	* Python: geoconda 
+	* Jupyter type: Lab
+	* Working directory: /scratch/project_2002044 during course, own project scratch later
+* Click launch and wait until granted resources 
+* Click "Connect to Jupyter" 
