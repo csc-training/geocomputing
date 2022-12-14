@@ -10,8 +10,9 @@ STAC main concepts:
 * **Catalog** - general metadata and links to available Collections.
 * **Collection** - collection specific general metadata and links to available Items. In one collection are similar items.
 * **Item** - the core atomic unit, representing a single spatiotemporal asset as a GeoJSON feature plus datetime, bbox and links to data file(s).
+* **Asset** - Files and links related to an Item, can be data files or links to metadata etc.
 
-[<img src="./STAC2.png"  width="600"/>](image.png)
+[<img src="./STAC2.png"  width="700"/>](image.png)
 
 
 ## Static STAC and STAC API
