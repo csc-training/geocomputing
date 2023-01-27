@@ -8,7 +8,7 @@ With `gdalinfo` and `ogrinfo` it is often helpful to check the files, this is a 
 
 * Load [GDAL module](https://docs.csc.fi/apps/gdal/)
 ```
-module load gcc/9.1.0 gdal
+module geoconda
 ```
 * Check a file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 ```
