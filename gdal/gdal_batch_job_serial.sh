@@ -9,6 +9,6 @@
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=300
 
-module load change module name
+module load geoconda
 
 srun bash gdal_serial.sh
