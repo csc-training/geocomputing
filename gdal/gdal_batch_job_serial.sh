@@ -9,6 +9,6 @@
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=300
 
-module load gcc/9.1.0 gdal
+module load change module name
 
 srun bash gdal_serial.sh
