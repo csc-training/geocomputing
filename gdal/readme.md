@@ -1,7 +1,11 @@
-# Change coordinate system of many files with GDAL and bash script.
+# Using commandline tools with bash scripts and batch jobs
 
-**GDAL** provides many useful tools. In this example, we will reproject the coordinate system of multiple files in a folder, and add overviews to the same files. 
-We do not use R nor Python, but GDAL commands from a simple Linux bash script.
+GDAL reprents here a commandline tool that is used via Linux bash scripts. The example includes:
+
+* A basic serial batch job, where several files are handled in a for loop, one after the other. Only 1 core is used.
+* Parallel batch job, where different files are handled in parallel with GNU-parallel. Up to one node can be used, in Puhti that is up to 40 cores.
+
+GDAL includes many other useful [commanline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder, and add overviews to the same files. We do not use R nor Python, but GDAL commands from a simple Linux bash script.
 
 ## Interactive working 
 With `gdalinfo` and `ogrinfo` it is often helpful to check the files, this is a light-weight task, so it can be done from login-node without interactive session.
