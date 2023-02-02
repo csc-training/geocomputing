@@ -35,7 +35,7 @@ sbatch gdal_batch_job_serial.sh
 ```
 * Check that you have new GeoTiff files in working folder. Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 
-* `sbatch` prints out a job id, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory?
+* `sbatch` prints out a job id, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory? How long did the script run?
 ```
 seff <jobid>
 ```
@@ -54,11 +54,13 @@ sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 
 ## Parallel job
 
+GNU parallel is used for handling several files in parallel. In this way max one node (= 40 cores in Puhti) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. 
+
 * [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.
-* [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. GNU parallel is used for handling several files. In this way max one node (= 40 cores) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. How many cores are reserved? How much memory? Which modules are used? 
+* [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. How many cores are reserved? How much memory? Which modules are used? 
 
 * Run the script as batch file: 
 ```
 sbatch gdal_batch_job_parallel.sh
 ```
-* Check the parallel batch job results with seff. Did you reserve a good amount of memory? What was the CPU-efficiency?
+* Check the parallel batch job results with seff. Did you reserve a good amount of memory? What was the CPU-efficiency? How long did the script run?
