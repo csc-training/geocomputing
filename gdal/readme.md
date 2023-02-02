@@ -1,8 +1,8 @@
-# Using commandline tools with bash scripts and batch jobs
+# GDAL, using commandline tools with bash scripts and batch jobs
 
 GDAL reprents here a commandline tool that is used via Linux bash scripts. The example includes:
 
-* A basic serial batch job, where several files are handled in a for loop, one after the other. Only 1 core is used.
+* A basic serial batch job, where several files are handled in a bash script for loop, one after the other. Only 1 core is used.
 * Parallel batch job, where different files are handled in parallel with GNU-parallel. Up to one node can be used, in Puhti that is up to 40 cores.
 
 GDAL includes many other useful [commanline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder, and add overviews to the same files. We do not use R nor Python, but GDAL commands from a simple Linux bash script.
@@ -21,8 +21,8 @@ gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 
 ## Serial batch job
 
-* [gdal_serial.sh](gdal_serial.sh) includes GDAL commands to be executed. For handling several files a for loop is used.
-* [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
+* [gdal_serial.sh](gdal_serial.sh) - the bash script, includes GDAL commands to be executed. For handling several files a for loop is used.
+* [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
 
 * Change file permission to be executable:
 ```
@@ -54,11 +54,11 @@ sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 
 ## Parallel job
 
-* [gdal_parallel.sh](gdal_parallel.sh) includes GDAL commands to be executed for one file. The for loop is removed.
-* [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh). How many cores are reserved? How much memory? Which modules are used? GNU parallel is used for handling several files. In this way max one node (= 40 cores) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs.
+* [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.
+* [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. GNU parallel is used for handling several files. In this way max one node (= 40 cores) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. How many cores are reserved? How much memory? Which modules are used? 
 
 * Run the script as batch file: 
 ```
 sbatch gdal_batch_job_parallel.sh
 ```
-* Check the parallel batch job results with seff.
+* Check the parallel batch job results with seff. Did you reserve a good amount of memory? What was the CPU-efficiency?
