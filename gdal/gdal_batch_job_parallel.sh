@@ -9,6 +9,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=300
 
+# Load geoconda module to have GDAL commandline tools available.
 module load parallel geoconda
 
 # Find the files that have .tif ending, we do not want to process the .tif.aux.xml files in the same folders.
