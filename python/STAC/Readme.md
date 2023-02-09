@@ -29,7 +29,7 @@ STAC main concepts:
 * [List of many STAC related tools](https://stacindex.org/ecosystem#/)
 * Main Python packages for using STAC data in Python: [pystac-client](https://pystac-client.readthedocs.io/en/latest), [stackstac](https://stackstac.readthedocs.io/), 
 [xarray](https://xarray.dev/) and [dask](https://www.dask.org/).
-* End-user tools are available also for [QGIS](https://stac-utils.github.io/qgis-stac-plugin/) and [R](https://cran.r-project.org/web/packages/rstac/index.html).
+* End-user tools are available also for [QGIS](https://stac-utils.github.io/qgis-stac-plugin/), [R](https://cran.r-project.org/web/packages/rstac/index.html) and [Julia](https://github.com/JuliaClimate/STAC.jl).
 
 
 ## CSC examples
