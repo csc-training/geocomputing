@@ -38,7 +38,7 @@ single_worker = {
     "cores" : 4,
     "memory" : "8G",
     "time" : "00:10:00",
-    "temp_folder" : "/scratch/project_2000599/dask_slurm/temp"
+    "temp_folder" : f"/scratch/{project_name}/dask_slurm/temp"
 }
 
 ## Create a results folder to this location
