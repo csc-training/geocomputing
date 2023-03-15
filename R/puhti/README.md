@@ -69,18 +69,18 @@ sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 ## Parallel job 
 In this case the R code takes care of dividing the work to parallel processes, one for each input file.  R has several packages for code parallelization, here examples for `snow`, `parallel` and `future` are provided. `future` package is likely easiest to use. `future` has also two internal optins `multicore` and `cluster`. `parallel` and `future` with `multicore` can be used in one node, so max 40 cores. `snow` and`future` with `cluster` can be used on several nodes. 
 
-* [05_parallel_future/parallel_batch_job_future_cluster.sh](05_parallel_future/parallel_batch_job_future_cluster.sh) batch job file for `future` with `cluster`.
+* [02_parallel_future/parallel_batch_job_future_cluster.sh](02_parallel_future/parallel_batch_job_future_cluster.sh) batch job file for `future` with `cluster`.
 	* `--ntasks=4` reserves 4 cores: `snow` and `future` with `cluster` option require one additional process for master process, so that if there are 3 mapsheets to process 4 cores have to be reserved
 	* `--mem-per-cpu=1000` reserves memory per core
 	* `srun apptainer_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
-*  [05_parallel_future/Calc_contours_future_cluster.R](05_parallel_future/Calc_contours_future_cluster.R)
+*  [02_parallel_future/Calc_contours_future_cluster.R](02_parallel_future/Calc_contours_future_cluster.R)
 	* Note how cluster is started, processes divided to workers with `future-map()` and cluster is stopped.
 	* For looped has been removed, each worker calculates one file.
 	* Optional, compare to [03_parallel_snow/Calc_contours_snow.R](03_parallel_snow/Calc_contours_snow.R). `future` package takes care of exporting variables and libraries to workers itself, in `snow` and `parallel` it is user's responsibility.
 
 * Submit the parallel job to Puhti
 ```
-cd ../05_parallel_future
+cd ../02_parallel_future
 sbatch parallel_batch_job_future_cluster.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
@@ -90,13 +90,13 @@ sbatch parallel_batch_job_future_cluster.sh
 
 In the array job example the idea is that the R script will run one process for every given input file as opposed to running a for loop within the script. That means that the R script has to read the file to be processed from commandline  argument. 
 
-* [02_array/array_batch_job.sh](02_array/array_batch_job.sh) array job batch file. Changes compared to simple serial job:
+* [05_array/array_batch_job.sh](05_array/array_batch_job.sh) array job batch file. Changes compared to simple serial job:
     * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SULRM_ARRAY_TASK_ID` variable will be from 1 to 3. With `sed` read first three lines from `mapsheets.txt` file and start a job for each input file. 
 	* Output from each job is written to `array_job_out_<array_job_id>.txt` and `array_job_err_<array_job_id>.txt` files. 
 	* Memory and time allocations are per job.
 	* The image name is provided as an argument in the batch job script to the R script. 
 	
-* [02_array/Contours_array.R](02_array/Contours_array.R). 
+* [05_array/Contours_array.R](05_array/Contours_array.R). 
     * R script reads the input DEM file from the argument, which is set inside the batch job file. 
 	* For looped has been removed, each job calculates only one file.
 	
