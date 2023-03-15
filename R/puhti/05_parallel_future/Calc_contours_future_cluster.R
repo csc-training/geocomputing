@@ -10,8 +10,6 @@
 library(furrr)
 library(terra)
 
-options(future.availableCores.methods = "Slurm")
-
 # Start the snow cluster and create a plan with future package
 cl<-getMPIcluster()
 plan(cluster, workers = cl)
