@@ -10,8 +10,6 @@
 library(furrr)
 library(terra)
 
-options(future.availableCores.methods = "Slurm")
-
 # With plan(multicore) the number of workers is based on batch job reservation details.
 plan("multicore")
 
