@@ -23,6 +23,7 @@ STAC main concepts:
 ## STAC catalogues
 
 * [List of international STAC catalogues](https://stacindex.org/catalogs)
+* [CSC STAC catalog](https://paituli-test.csc.fi/geoserver/ogc/stac), currently a selection of Finnish Sentinel2 L2A images. Soon all data from FMI STAC catalog will be added and more data coming later. Supports STAC API.
 * First Finnish STAC: [FMI Tuulituhohaukka catalog](https://pta.data.lit.fmi.fi/stac/root.json). Only static catalogue, but includes several useful datasets.
 
 ## STAC tools
@@ -34,6 +35,7 @@ STAC main concepts:
 
 ## CSC examples
 In this repository we provide to examples to work using Python with:
+* [CSC STAC example](STAC_CSC_example.ipynb)
 * [STAC API](stac_xarray_dask_example.ipynb)
 * [Static STAC](static_stac.ipynb)
 
