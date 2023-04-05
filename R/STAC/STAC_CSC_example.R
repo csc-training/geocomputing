@@ -1,15 +1,12 @@
-# Example how to use CSC STAC API from R, with rstac, gdalcubes and terra libraries.
+# Example how to use Paituli STAC API from R, with rstac, gdalcubes and terra libraries.
 
-# This example shows how to use CSC STAC (Spatio-Temporal Asset Catalog) from R, with rstac, gdalcubes and terra libraries
+# This example shows how to use Paituli STAC (Spatio-Temporal Asset Catalog) from R, with rstac, gdalcubes and terra libraries
 # for processing big raster datasets, also with good support for time series. 
 # The main idea is to first define the search and processing as process graph. 
 # The downloading and processing is done lazily at the end, 
 # so that only needed data (good enough cloud-free image, only needed bands and area) is downloaded. 
 # The libraries take care of data download, so you do not need to know about file paths. 
 # These tools work best when data is provided as Cloud-optimized GeoTiffs (COGs).
-
-# For trying out this example, it is recommended to start interactive RStudio session with Puhti web interface, 
-# for example with 1 cores and 8 Gb memory. 
 
 # The main steps:
 
@@ -20,9 +17,14 @@
 # * Finally, calculate the result and plot it or save it to file.
 # * Additional example is given, how to get data URLs and use them with terra package.
 
-# CSC STAC catalog is at the moment beta testing phase. 
+# This example can be run on any computer with R installation, 
+# see the required libraries from imports. 
+# For using data in JP2000 format, GDAL must be installed with JP2000-support.
 
-# This example works with r-env/421 module in Puhti, the required libraries can be seen from imports.
+# It is possible to try this script also in CSC Puhti supercomputer. The easiest option
+# is to start RStudio in Puhti web interface. 
+# For learning STAC, it is recommended to reserve 1 core and 8 Gb memory. 
+# Data analysis part with gdalcubes would benefit from more cores.
 # Currently Puhti r-env does not support JP2000 format, so sentinel2-l2a can not be used with gdalcubes
 # Searching all collections works.
 
@@ -38,6 +40,9 @@ library(gdalcubes) # For 4D spatial data cube in R
 library(sf) # For plotting index map
 library(tidyverse) # For plotting
 library(terra) # For opening single raster datasets
+
+# Set first R working directory, select any suitable directory for you.
+setwd('/scratch/project_2000XXX/yyy')
 
 # Set up STAC API endpoint
 stac_URL <- "https://paituli.csc.fi/geoserver/ogc/stac"
@@ -77,7 +82,7 @@ stac_gs |>
   get_request()
 
 # What kind of data (=assets) does a collection have?
-# CSC STAC provides as default html as result, therefore result type has to manually be added
+# Paituli STAC provides as default html as result, therefore result type has to manually be added
 # to this and several other requests.
 stac_gs |>
   stac_search(
@@ -191,8 +196,7 @@ plot(cube, key.pos=4, zlim=c(-40,30), t = 1:2, ncol = 1)
 
 # Write files, gdalcubes writes automatically each time period to own file.
 # More options: https://gdalcubes.github.io/source/reference/ref/write_tif.html
-# Set first R working directory.
-setwd('/scratch/project_2000XXX/yyy')
+
 write_tif(cube, dir='tifs', prefix='monthly_mean_bbox_')
 
 # The same for whole Finland.
