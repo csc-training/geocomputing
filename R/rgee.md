@@ -1,3 +1,6 @@
+> These instructions have been written in August 2022. If you need to use the library, but it does not work as described, please contact servicedesk@csc.fi
+
+
 # Using R library rgee in Puhti
 
 → https://github.com/r-spatial/rgee
