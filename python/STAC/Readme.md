@@ -1,51 +1,26 @@
-# STAC - Spatio Temporal Asset Catalogue
+# STAC Python examples
 
 The [STAC](https://stacspec.org/en/) is a specification to describe geospatial information, so it can easily **searched and downloaded**. 
-STAC includes metadata of datasets and links to actual files, the data files are usually stored in the cloud. 
-For raster data Cloud-Optimized GeoTiff is the best option. 
-STAC is most often used for raster data, but it can be used also for vector and lidar data. The most common use case is remote sensing images.
+STAC includes metadata of datasets and links to actual files, the data files are usually stored in the cloud. See [Paituli STAC page](https://paituli.csc.fi/stac.html) for general introduction about STAC and what Collections (=datasets) are included in Paituli STAC.
 
-STAC main concepts:
+In this repository we provide examples to work with:
 
-* **Catalog** - general metadata and links to available Collections.
-* **Collection** - collection specific general metadata and links to available Items. In one collection are similar items.
-* **Item** - the core atomic unit, representing a single spatiotemporal asset as a GeoJSON feature plus datetime, bbox and links to data file(s).
-* **Asset** - Files and links related to an Item, can be data files or links to metadata etc.
+* STAC API:
+    * [Paituli STAC API](STAC_CSC_example.ipynb)
+    * [Element84 STAC API](stac_xarray_dask_example.ipynb)
+* Static STAC: 
+    * [FMI STAC](static_stac.ipynb)
 
-[<img src="./STAC2.png"  width="700"/>](image.png)
+The examples mainly cover data search and download, for analyzing data [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasts, xarray supports also parallelization with [dask](https://www.dask.org/).
 
+The examples can be run on any computer with Python installation, the required Python packages can be seen from beginning of the notebooks. The examples download all data from cloud storage, so relatively good internet connection is needed.
 
-## Static STAC and STAC API
+In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](https://docs.csc.fi/apps/geoconda/), which includes all necessary Python packages. The easiest is to use Jupyter with Puhti web interface:
 
-* **Static STAC** - a set of linked JSON files representing each catalog, collection and item.
-* **STAC API** - enables search of STAC Items. Not all catalogues offer STAC API, but all bigger ones usually have it.
-
-## STAC catalogues
-
-* [List of international STAC catalogues](https://stacindex.org/catalogs)
-* [CSC STAC catalog](https://paituli-test.csc.fi/geoserver/ogc/stac), currently a selection of Finnish Sentinel2 L2A images. Soon all data from FMI STAC catalog will be added and more data coming later. Supports STAC API.
-* First Finnish STAC: [FMI Tuulituhohaukka catalog](https://pta.data.lit.fmi.fi/stac/root.json). Only static catalogue, but includes several useful datasets.
-
-## STAC tools
-* [List of many STAC related tools](https://stacindex.org/ecosystem#/)
-* Main Python packages for using STAC data in Python: [pystac-client](https://pystac-client.readthedocs.io/en/latest), [stackstac](https://stackstac.readthedocs.io/), 
-[xarray](https://xarray.dev/) and [dask](https://www.dask.org/).
-* End-user tools are available also for [QGIS](https://stac-utils.github.io/qgis-stac-plugin/), [R](https://cran.r-project.org/web/packages/rstac/index.html) and [Julia](https://github.com/JuliaClimate/STAC.jl).
-
-
-## CSC examples
-In this repository we provide to examples to work using Python with:
-* [CSC STAC example](STAC_CSC_example.ipynb)
-* [STAC API](stac_xarray_dask_example.ipynb)
-* [Static STAC](static_stac.ipynb)
-
-The examples mainly cover data search and download, for analyzing data Xarray and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started.
-
-### Jupyter set up for CSC examples
 * Open [Puhti web interface](https://www.puhti.csc.fi/)
 * Click "Jupyter" on dashboard
 * Select following settings:
-	* Project: project_2002044 during course, own project later 
+	* Project: project_2002044 during course, own project otherwise 
 	* Partition: interactive
 	* CPU cores: 1
 	* Memory (Gb): 8 
@@ -53,7 +28,7 @@ The examples mainly cover data search and download, for analyzing data Xarray an
 	* Time: 1:00:00 (or adjust to reasonable)
 	* Python: geoconda 
 	* Jupyter type: Lab
-	* Working directory: /scratch/project_2002044 during course, own project scratch later
+	* Working directory: /scratch/project_2002044 during course, own project scratch otherwise
 * Click launch and wait until granted resources 
 * Click "Connect to Jupyter" 
 * If you want to use Dask extension in JupyterLab, see [Dask instructions in docs.csc.fi](https://docs.csc.fi/support/tutorials/dask-python/#dask-with-jupyter)
