@@ -10,8 +10,9 @@ In this repository we provide examples to work with:
     * [Element84 STAC API](stac_xarray_dask_example.ipynb)
 * Static STAC: 
     * [FMI STAC](static_stac.ipynb)
+* See, also similar [R STAC examples](../../R/STAC)
 
-The examples mainly cover data search and download, for analyzing data [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasts, xarray supports also parallelization with [dask](https://www.dask.org/).
+The examples mainly cover data search and download, using [pystac-client](https://pystac-client.readthedocs.io/en/stable/) and [stackstac](https://stackstac.readthedocs.io/en/latest/).  For analyzing data [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasts, xarray supports also parallelization with [dask](https://www.dask.org/).
 
 The examples can be run on any computer with Python installation, the required Python packages can be seen from beginning of the notebooks. The examples download all data from cloud storage, so relatively good internet connection is needed.
 
