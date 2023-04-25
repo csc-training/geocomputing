@@ -9,7 +9,7 @@ from grass.pygrass.modules.grid import GridModule
 file='/appl/data/geo/mml/dem10m/2019/W3/W33/W3331.tif'
 grassfile='W3331'
 grasscontoursfile='W3331_contours'
-contoursfile="/scratch/project_2000599/grass/output/V4132.gpkg"
+aspectfile="/scratch/project_2000599/grass/output/aspect.tif"
 cpus=4
 
 # Register external GeoTIFF in current mapset:
@@ -22,16 +22,24 @@ g.region(raster=grassfile)
 region = gscript.region()
 width = region['cols'] // 2 + 1
 height = region['rows'] // 2 + 1
-    
-grd = GridModule('r.contour',
-    width=width, height=height, overlap=20,
-    processes=cpus, input=grassfile,
-    output=grasscontoursfile, 
-    minlevel=200, maxlevel=800, step=10, overwrite=True)    
+
+grd = GridModule('r.slope.aspect',
+    width=width, height=height, overlap=2,
+    processes=cpus, split=False,
+    elevation=grassfile,
+    aspect='aspect', overwrite=True)
 grd.run()
+    
+# grd = GridModule('r.contour',
+    # width=width, height=height, overlap=20,
+    # processes=cpus, input=grassfile,
+    # output=grasscontoursfile, 
+    # minlevel=200, maxlevel=800, step=10, overwrite=True)    
+# grd.run()
 
 #Write output to file
-v.out_ogr(input=grasscontoursfile, output=contoursfile, overwrite=True)
+r.out_gdal(input='aspect', output=aspectfile, overwrite=True)
+#r.out_ogr(input=grasscontoursfile, output=outfile, overwrite=True)
 
 # These can be left out, just debug info
 print( "\n\n ***DEBUG INFO***")

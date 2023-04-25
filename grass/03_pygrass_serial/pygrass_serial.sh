@@ -22,7 +22,7 @@ mkdir -p $GRASS_DB_DIR/db
 grass -c epsg:3067 $GRASS_LOCATION_DIR -e
 
 # now use this new location and run the job
-grass --exec python pygrass_serial.py 
+grass --exec python3 pygrass_serial.py 
 
 # Optional, delete temporary location 
 rm -rf $GRASS_LOCATION_DIR

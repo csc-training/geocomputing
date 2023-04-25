@@ -8,13 +8,13 @@
 #SBATCH --ntasks=1
 #SBATCH --mem-per-cpu=4000
 
-#module load grassgis
 module load qgis
 
 GRASS_DIR=/scratch/project_2000599/grass
 GRASS_DB_DIR=$GRASS_DIR/db
 GRASS_LOCATION_DIR=$GRASS_DB_DIR/3067
 MAPSET_DIR=$GRASS_LOCATION_DIR/PERMANENT/
+SCRIPTS_DIR=/scratch/project_2000599/geocomputing/grass/01_serial_cli
 
 # create a directory to hold the location used for processing
 mkdir -p $GRASS_DB_DIR/db
@@ -23,7 +23,8 @@ mkdir -p $GRASS_DB_DIR/db
 grass -c epsg:3067 $GRASS_LOCATION_DIR -e
 
 # define job file as environmental variable
-export GRASS_BATCH_JOB=$GRASS_DIR/grass_cli.sh
+# Make sure first that job file has executing rights, use chmod command for fixing
+export GRASS_BATCH_JOB=$SCRIPTS_DIR/grass_cli.sh
 
 # now we can use this new location and run the job defined via GRASS_BATCH_JOB
 grass $MAPSET_DIR
