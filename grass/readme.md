@@ -5,3 +5,4 @@
 * [PyGRASS](https://grasswiki.osgeo.org/wiki/Python/pygrass). Examples: [basic serial](03_pygrass_serial) and [parallel with GridModule](04_pygrass_parallel)
 
 Python Scripting suits simpler cases when chaining existing tools is enough, PyGRASS enables data access from Python.
+See [GRASS page in CSC Docs](https://docs.csc.fi/apps/grass/#references), for addtional external references.
