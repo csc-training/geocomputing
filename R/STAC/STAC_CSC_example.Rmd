@@ -91,7 +91,7 @@ endDate <- "2021-09-30"
 ```
 
 
-## STAC BASICS
+## STAC basics
 
 Get connection to STAC catalog
 
@@ -129,7 +129,7 @@ stac_gs |>
   items_assets()
 ```
 
-## SEARCH ITEMS
+## Search items
 ### Basic search.
 
 ```{r}
@@ -151,7 +151,7 @@ stac_items
 items_matched(stac_items)
 ```
 
-### ADVANCED SEARCH WITH FILTER
+### Advanced search with filter
 
 Basic search supports only limiting by collection name, location and time. `sentinel2-l2a` collection has also information about cloud coverage. This can be searched with filter search.
 
@@ -172,7 +172,7 @@ items_matched(stac_items2)
 ```
 
 
-## PLOTTING index map of search results
+## Plotting index map of search results
 
 Convert search results to sf geodataframe
 
@@ -188,7 +188,7 @@ ggplot() + geom_sf(data = stac_items_sf, fill=alpha("violet",0.1)) +
   geom_sf(data = helsinki_wgs)
 ```
 
-## CREATE DATA CUBE AND ANALYZE THE DATA
+## Create data cube and analyze the data
 
 `gdalcubes` is the package to use for 4D spatial data cubes in R. It is somewhat different than `xarray` in Python, and it likely has less features (and other users).
 
@@ -293,7 +293,7 @@ raster_cube(col, v) |>
 ```
 
 
-## USING DATA FROM STAC WITH TERRA
+## Using data from STAC with terra
 
 Sometimes it might be useful to open the files with `terra` or some other R package for analysis not supported with `gdalcubes`. Terra does not support time dimension, so handling that must be done manually.
 
