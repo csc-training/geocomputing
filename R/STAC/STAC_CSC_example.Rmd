@@ -51,7 +51,6 @@ library(terra) # For opening single raster datasets
 Set first R working directory, select any suitable directory for you.
 
 ```{r}
-setwd('~/my-work/stac')
 #setwd('/scratch/project_2000XXX/yyy')
 ```
 
@@ -107,7 +106,7 @@ stac_gs |>
   get_request()
 ```
 
-Define our the colleciton used in this example
+Define the collection used in this example
 
 ```{r}
 collectionName <- 'sentinel_1_11_days_mosaics_at_fmi'
