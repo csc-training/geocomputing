@@ -4,13 +4,11 @@ editor_options:
     wrap: 72
 ---
 
-# Example how to use Paituli STAC API from R, with rstac, gdalcubes and terra libraries.
+# Example how to use Paituli STAC API from R
 
-This example shows how to use Paituli STAC (Spatio-Temporal Asset Catalog) from R, with rstac, gdalcubes and terra libraries for processing big raster datasets, also with good support for time series.
+This example shows how to use Paituli STAC (Spatio-Temporal Asset Catalog) from R, with rstac, gdalcubes and terra libraries. This workflow is suitable for processing big raster datasets, inc time series.
 
-The main idea is to first define the search and processing as process graph.
-
-The downloading and processing is done lazily at the end, so that only needed data (good enough cloud-free image, only needed bands and area) is downloaded.
+The main idea is to first define the search and processing as process graph. The data downloading and processing is done lazily at the end, so that only needed data (good enough cloud-free image, only needed bands and area) is downloaded.
 
 The libraries take care of data download, so you do not need to know about file paths.
 
@@ -18,16 +16,12 @@ These tools work best when data is provided as Cloud-optimized GeoTiffs (COGs).
 
 The main steps:
 
-* Query STAC catalog, to see which data collections are available
-* Query STAC catalogue to find data from area and time of interest
-* Plot search results as index map to see their coverage
+* Query STAC catalog, to see which data collections are available.
+* Query STAC catalogue to find data from area and time of interest.
+* Plot search results as index map to see their coverage.
 * Create datacube, defining required bands and bbox, and time step for aggregation.
-* Finally, calculate the result and plot it or save it to file.
+* Finally, calculate the result and plot it and save it to file.
 * Additional example is given, how to get data URLs and use them with terra package.
-
-This example can be run on any computer with R installation, see the required libraries from imports. For using data in JP2000 format, GDAL must be installed with JP2000-support.
-
-It is possible to try this script also in CSC Puhti supercomputer. The easiest option is to start RStudio in Puhti web interface. For learning STAC, it is recommended to reserve 1 core and 8 Gb memory. Data analysis part with gdalcubes would benefit from more cores. Currently Puhti r-env does not support JP2000 format, so sentinel2-l2a can not be used with gdalcubes. Searching all collections works.
 
 This example is partly based on:
 
@@ -40,7 +34,8 @@ This example is partly based on:
 
 ```{r}
 library(rstac) # For working with STAC catalogs, rstac docs: <https://rdrr.io/cran/rstac/> 
-library(httr) # For adding response type to STAC requests library(gdalcubes) \# For 4D spatial data cube in R
+library(httr) # For adding response type to STAC requests 
+library(gdalcubes) \# For 4D spatial data cube in R
 library(sf) # For plotting index map 
 library(tidyverse) # For plotting
 library(ggplot2) # For plotting data
@@ -75,14 +70,14 @@ bbox <- c(hki_wgs_x-0.1, hki_wgs_y-0.1, hki_wgs_x+0.1, hki_wgs_y+0.1)
 area_of_interest <- cql2_bbox_as_geojson(bbox)
 ```
 
-Convert to SF dataframe, used for plotting and later creating data cube
+Convert to SF dataframe, used for plotting and later creating data cube.
 
 ```{r}
 helsinki_wgs <- data.frame(x = hki_wgs_x, y = hki_wgs_y) |>
   st_as_sf(coords = 1:2, crs = 4326)
 ```
 
-Define time period for search
+Define time period for search.
 
 ```{r}
 startDate <-"2021-08-01" 
@@ -92,13 +87,13 @@ endDate <- "2021-09-30"
 
 ## STAC basics
 
-Get connection to STAC catalog
+Get connection to STAC catalog.
 
 ```{r}
 stac_gs <- stac(stac_URL, force_version = '1.0.0')
 ```
 
-List all collections
+List all collections.
 
 ```{r}
 stac_gs |> 
@@ -106,13 +101,13 @@ stac_gs |>
   get_request()
 ```
 
-Define the collection used in this example
+Define the collection used in this example.
 
 ```{r}
 collectionName <- 'sentinel_1_11_days_mosaics_at_fmi'
 ```
 
-Get info about a specific catalog
+Get info about a specific catalog.
 
 ```{r}
 stac_gs |> 
@@ -173,7 +168,7 @@ items_matched(stac_items2)
 
 ## Plotting index map of search results
 
-Convert search results to sf geodataframe
+Convert search results to sf geodataframe.
 
 ```{r}
 stac_items_sf <- items_as_sf(stac_items2)
@@ -287,8 +282,8 @@ v <- cube_view(srs = paste("EPSG:",data_crs, sep=""),
 Calculate and save to files. With one core this takes a few minutes.
 
 ```{r}
-raster_cube(col, v) |> 
-  write_tif( dir='tifs', prefix='monthly_mean_Finland')
+#raster_cube(col, v) |> 
+#  write_tif( dir='tifs', prefix='monthly_mean_Finland')
 ```
 
 
@@ -296,7 +291,7 @@ raster_cube(col, v) |>
 
 Sometimes it might be useful to open the files with `terra` or some other R package for analysis not supported with `gdalcubes`. Terra does not support time dimension, so handling that must be done manually.
 
-Get the URL of data of second asset found. Add vsicurl to URL, so that terra could use it. 
+Get the data URL of second item found. Add vsicurl to URL, so that terra could use it. 
 
 ```{r}
 href <- stac_items$features[[2]]$assets$mean_vv$href # 
