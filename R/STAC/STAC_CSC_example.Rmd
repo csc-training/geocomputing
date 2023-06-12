@@ -35,7 +35,7 @@ This example is partly based on:
 ```{r}
 library(rstac) # For working with STAC catalogs, rstac docs: <https://rdrr.io/cran/rstac/> 
 library(httr) # For adding response type to STAC requests 
-library(gdalcubes) \# For 4D spatial data cube in R
+library(gdalcubes) # For 4D spatial data cube in R
 library(sf) # For plotting index map 
 library(tidyverse) # For plotting
 library(ggplot2) # For plotting data
@@ -80,7 +80,7 @@ helsinki_wgs <- data.frame(x = hki_wgs_x, y = hki_wgs_y) |>
 Define time period for search.
 
 ```{r}
-startDate <-"2021-08-01" 
+startDate <- "2021-08-01" 
 endDate <- "2021-09-30"
 ```
 
@@ -172,6 +172,7 @@ Convert search results to sf geodataframe.
 
 ```{r}
 stac_items_sf <- items_as_sf(stac_items2)
+stac_items_sf
 ```
 
 
