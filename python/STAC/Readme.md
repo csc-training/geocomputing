@@ -33,3 +33,15 @@ In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](http
 * Click launch and wait until granted resources 
 * Click "Connect to Jupyter" 
 * If you want to use Dask extension in JupyterLab, see [Dask instructions in docs.csc.fi](https://docs.csc.fi/support/tutorials/dask-python/#dask-with-jupyter)
+
+
+## Running the STAC example Jupyter Notebook on your own computer
+
+You can also run the STAC example notebook on your own computer.
+If you have [Conda](https://conda.io/projects/conda/en/latest/index.html) installed, you can for example create a new environment and use the provided `environment.yml` file to create a new Python environment with all needed packages:
+
+```
+conda env create -f environment.yml
+```
+
+
