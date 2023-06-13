@@ -1,0 +1,14 @@
+name: STAC-workshop
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - jupyterlab
+  - pyproj
+  - requests
+  - dask
+  - stackstac
+  - pystac-client
+  - pystac
+  - geopandas
+  - gdal
