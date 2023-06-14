@@ -39,7 +39,6 @@ library(gdalcubes) # For 4D spatial data cube in R
 library(sf) # For plotting index map 
 library(tidyverse) # For plotting
 library(ggplot2) # For plotting data
-library(gdalcubes) # For time-series raster data
 library(terra) # For opening single raster datasets
 ```
 
