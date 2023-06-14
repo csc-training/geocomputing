@@ -33,3 +33,18 @@ In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](http
 * Click launch and wait until granted resources 
 * Click "Connect to Jupyter" 
 * If you want to use Dask extension in JupyterLab, see [Dask instructions in docs.csc.fi](https://docs.csc.fi/support/tutorials/dask-python/#dask-with-jupyter)
+
+
+## Running the STAC example Jupyter Notebook on your own computer
+
+You can also run the STAC example notebook on your own computer.
+
+Download the example code to your computer (either by copying the whole repository to your computer with git (`git clone https://github.com/csc-training/geocomputing.git`) or by downloading only the needed files via github webinterface (find `python/STAC/environment.yml` and `python/STAC/STAC_CSC_example.ipynb` and in the upper right corner of the file "Download raw file button"). 
+
+If you have [Conda](https://conda.io/projects/conda/en/latest/index.html) installed, you can for example create a new environment and use the provided `environment.yml` file to create a new Python environment with all needed packages:
+
+```
+conda env create -f path/to/your/downloaded/environment.yml
+```
+
+
