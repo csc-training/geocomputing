@@ -1,4 +1,4 @@
-name: STAC-workshop
+name: stac
 channels:
   - conda-forge
   - defaults
