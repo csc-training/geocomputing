@@ -30,3 +30,5 @@ In CSC Puhti supercomputer, the examples can be run with [r-env module](https://
 
 
 If you want to run the example on your own computer, you'll need RStudio installed, along witht the following packages: ```geojsonsf, sf, terra, tidyverse, rstac, httr, gdalcubes```. Note that depending on your own setup you might also need to install further base packages. You can check out the R/STAC/install_stac.sh for possibly needed further installations, which is based on the [rocker/geospatial container and adjusted for this example](https://hub.docker.com/r/rocker/geospatial).
+
+Download the example code to your computer (either by copying the whole repository to your computer with git (`git clone https://github.com/csc-training/geocomputing.git`) or by downloading only the needed files via github webinterface (find R/STAC/STAC_CSC_example.Rmd` and in the upper right corner of the file "Download raw file button"). 
