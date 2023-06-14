@@ -29,4 +29,4 @@ In CSC Puhti supercomputer, the examples can be run with [r-env module](https://
 * Click "Connect to RStudio Server" 
 
 
-If you want to run the example on your own computer, you'll need RStudio installed, along witht the following packages: ```geojsonsf, sf, terra, tidyverse, rstac, httr, gdalcubes```. Note that depending on your own setup you might also need to install further base packages. You can check out the R/STAC/install_stac.sh for possibly needed further installations.
+If you want to run the example on your own computer, you'll need RStudio installed, along witht the following packages: ```geojsonsf, sf, terra, tidyverse, rstac, httr, gdalcubes```. Note that depending on your own setup you might also need to install further base packages. You can check out the R/STAC/install_stac.sh for possibly needed further installations, which is based on the [rocker/geospatial container and adjusted for this example](https://hub.docker.com/r/rocker/geospatial).
