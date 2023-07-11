@@ -57,4 +57,8 @@ And then clone this repository there
 `git clone https://github.com/csc-training/geocomputing.git`
 
 ## License
-These examples are free to use under CC 4.0 BY license. Please acknowledge CSC and Geoportti in your publications, it is important for project continuation and funding reports. As an example, you can write "The authors wish to thank CSC - IT Center for Science, Finland (urn:nbn:fi:research-infras-2016072531) and the Open Geospatial Information Infrastructure for Research (Geoportti, urn:nbn:fi:research-infras-2016072513) for computational resources and support
+These examples are free to use under CC 4.0 BY license unless marked otherwise.
+
+## Acknowledgement
+
+Please acknowledge CSC and Geoportti in your publications, it is important for project continuation and funding reports. As an example, you can write "The authors wish to thank CSC - IT Center for Science, Finland (urn:nbn:fi:research-infras-2016072531) and the Open Geospatial Information Infrastructure for Research (Geoportti, urn:nbn:fi:research-infras-2016072513) for computational resources and support
