@@ -1,5 +1,4 @@
 #!/bin/bash -l
-#SBATCH --job-name=snap_array_job
 #SBATCH --output=out_%A_%a.txt
 #SBATCH --error=err_%A_%a.txt
 #SBATCH --account=project_2000599

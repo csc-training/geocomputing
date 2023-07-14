@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=DaskMulticore
 #SBATCH --account=project_2001659
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1

@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=deepRegression
 #SBATCH --account=<your_project>
 #SBATCH --mem=16G
 #SBATCH --ntasks=1

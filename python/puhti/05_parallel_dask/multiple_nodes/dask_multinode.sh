@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=DaskMultinode
 #SBATCH --account=project_2001659
 #SBATCH --time=00:15:00
 #SBATCH --ntasks=1

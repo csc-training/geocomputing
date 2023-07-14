@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --account=project_2002044
-#SBATCH --job-name=rspatial_job
 #SBATCH --output=out.txt
 #SBATCH --error=err.txt
 #SBATCH --time=0:05:00

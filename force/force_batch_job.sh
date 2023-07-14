@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=force_batch
 #SBATCH --account=<YOUR-PROJECT>
 #SBATCH --partition=small
 #SBATCH --time=01:00:00

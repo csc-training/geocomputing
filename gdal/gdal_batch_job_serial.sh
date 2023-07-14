@@ -1,6 +1,5 @@
 #!/bin/bash
 #SBATCH --account=project_2004306
-#SBATCH --job-name gdal_job
 #SBATCH --output out.txt
 #SBATCH --error err.txt
 #SBATCH --time 0:05:00

@@ -1,6 +1,5 @@
 #!/bin/bash -l
 #SBATCH --account=project_2002044
-#SBATCH --job-name=r_multi_proc
 #SBATCH --output=output.txt
 #SBATCH --error=errors.txt
 #SBATCH --time=00:05:00

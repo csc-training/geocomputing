@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=SingleCoreTest
 #SBATCH --account=project_2000745
 #SBATCH --output out.txt
 #SBATCH --error err.txt

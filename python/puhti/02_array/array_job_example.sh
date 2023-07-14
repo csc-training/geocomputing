@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=ArrayJobTest
 #SBATCH --output=array_job_out_%A_%a.txt
 #SBATCH --error=array_job_err_%A_%a.txt
 #SBATCH --account=project_2004306

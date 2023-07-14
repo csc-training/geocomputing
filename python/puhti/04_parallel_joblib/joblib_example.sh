@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=JoblibTest
 #SBATCH --account=<project>
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1

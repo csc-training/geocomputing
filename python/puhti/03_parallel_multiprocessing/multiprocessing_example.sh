@@ -1,5 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=MultiprocessingTest
 #SBATCH --account=project_2000745
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
