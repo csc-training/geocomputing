@@ -2,9 +2,9 @@
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --output=output.txt
 #SBATCH --error=errors.txt
-#SBATCH --time=00:05:00
+#SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --ntasks=1
-#SBATCH --partition test
+#SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --mem-per-cpu=1000
 #Equal to number of workers. Max 40 in Puhti.
 #SBATCH --cpus-per-task=3

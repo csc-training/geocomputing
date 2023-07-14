@@ -2,11 +2,11 @@
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --output=output.txt
 #SBATCH --error=errors.txt
-#SBATCH --time=00:05:00
+#SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
 #Reserve cores for 1 master + 3 workers
 #SBATCH --ntasks=4
 #Test partition is used for testing, for real jobs use either serial or parallel depending on how many nodes you need.
-#SBATCH --partition=test
+#SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --mem-per-cpu=1000
 
 module load r-env
