@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account <YOUR-PROJECT>
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH -J basic_rlas
 #SBATCH --output out_R.txt
 #SBATCH --error err_R.txt

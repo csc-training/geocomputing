@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2002044
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --partition=gpu
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=5

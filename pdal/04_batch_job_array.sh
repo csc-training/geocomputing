@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #Name of the job, this makes it easier to identify your job
 #SBATCH -J batch_job_array
-#SBATCH --account=project_2000599
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 
 #Outputfile. Everything that would normally be printed into to the terminal when you run a program gets printed to this file. The %j refers to job number so that you don't overwrite the same file for each job
 #SBATCH --output output_%j.txt

@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH --output=out_%A_%a.txt
 #SBATCH --error=err_%A_%a.txt
-#SBATCH --account=project_2000599
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --partition=small
 #SBATCH --time=02:00:00
 #SBATCH --ntasks=1

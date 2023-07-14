@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=project_2002044
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH -J r_multi_proc
 #SBATCH --output output_%j.txt
 #SBATCH --error errors_%j.txt

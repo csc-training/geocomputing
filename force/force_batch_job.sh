@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=<YOUR-PROJECT>
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --partition=small
 #SBATCH --time=01:00:00
 #SBATCH --ntasks=1

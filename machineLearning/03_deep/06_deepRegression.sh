@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=<your_project>
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --mem=16G
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2

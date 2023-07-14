@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2002044
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH -J array_job
 #SBATCH --output array_job_out_%A_%a.txt
 #SBATCH --error array_job_err_%A_%a.txt

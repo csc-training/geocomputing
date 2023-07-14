@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --output=array_job_out_%A_%a.txt
 #SBATCH --error=array_job_err_%A_%a.txt
-#SBATCH --account=project_2004306
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1

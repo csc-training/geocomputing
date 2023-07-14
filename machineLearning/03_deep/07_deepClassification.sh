@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2002044
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --gres=gpu:v100:1
 #SBATCH --mem=16G
 #SBATCH --ntasks=1

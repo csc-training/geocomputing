@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2000745
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=3

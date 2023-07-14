@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=project_2002044
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --output=output.txt
 #SBATCH --error=errors.txt
 #SBATCH --time=00:05:00
