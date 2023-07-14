@@ -1,8 +1,8 @@
 #!/bin/bash -l
 #SBATCH -A <YOUR-PROJECT-HERE>
 #SBATCH -J python_igraph
-#SBATCH -o out_%J.txt
-#SBATCH -e err_%J.txt
+#SBATCH --output out_%J.txt
+#SBATCH --error err_%J.txt
 #SBATCH -t 00:15:00
 #Number of reserved cores, this number can be later accessed with $SLURM_CPUS_PER_TASK
 #SBATCH --cpus-per-task=4

@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH --account=project_2000599
-#SBATCH -o out.txt
-#SBATCH -e err.txt
+#SBATCH --output out.txt
+#SBATCH --error err.txt
 
 #Partition you want to submit your job to.
 #SBATCH -p test

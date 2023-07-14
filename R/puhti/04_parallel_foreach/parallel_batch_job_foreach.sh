@@ -1,8 +1,8 @@
 #!/bin/bash -l
 #SBATCH --account=project_2002044
 #SBATCH -J r_multi_proc
-#SBATCH -o output.txt
-#SBATCH -e errors.txt
+#SBATCH --output output.txt
+#SBATCH --error errors.txt
 #SBATCH -t 00:05:00
 #SBATCH --ntasks=3
 #Test partition is used for testing, for real jobs use either serial or parallel depending on how many nodes you need.

@@ -1,8 +1,8 @@
 #!/bin/bash -l
 #SBATCH --account <YOUR-PROJECT>
 #SBATCH -J basic_rlas
-#SBATCH -o out_R.txt
-#SBATCH -e err_R.txt
+#SBATCH --output out_R.txt
+#SBATCH --error err_R.txt
 #SBATCH -t 00:15:00
 #SBATCH --mem-per-cpu=4000
 #SBATCH -p small

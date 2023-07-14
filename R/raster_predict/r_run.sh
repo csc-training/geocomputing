@@ -1,8 +1,8 @@
 #!/bin/bash -l
 #SBATCH --account=<YOUR-PROJECT>
 #SBATCH -J r_multi_proc
-#SBATCH -o output.txt
-#SBATCH -e errors.txt
+#SBATCH --output output.txt
+#SBATCH --error errors.txt
 #SBATCH -t 00:10:00
 #SBATCH --ntasks=4
 #SBATCH --nodes=1

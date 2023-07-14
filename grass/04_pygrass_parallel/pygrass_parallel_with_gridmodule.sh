@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=project_2001659
-#SBATCH -o out.txt
-#SBATCH -e err.txt
+#SBATCH --output out.txt
+#SBATCH --error err.txt
 #SBATCH -t 0:05:00
 #SBATCH -p test
 #SBATCH --nodes=1

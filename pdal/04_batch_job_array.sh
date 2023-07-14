@@ -4,10 +4,10 @@
 #SBATCH --account=project_2000599
 
 #Outputfile. Everything that would normally be printed into to the terminal when you run a program gets printed to this file. The %j refers to job number so that you don't overwrite the same file for each job
-#SBATCH -o output_%j.txt
+#SBATCH --output output_%j.txt
 
 #As above but for error messages. It's however always not so clear what messages go to errors and what to output so it's always best to check both.
-#SBATCH -e error_%j.txt
+#SBATCH --error error_%j.txt
 
 #Partition you want to submit your job to. Possible values are serial, parallel, longrun, hugemem and test. In this excerecise we use test as it is for testing, but it shouldn't be used for serious work. See [Taito user guide](https://research.csc.fi/taito-constructing-a-batch-job-file) for details. 
 #SBATCH -p small

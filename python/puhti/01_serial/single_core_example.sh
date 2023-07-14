@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=SingleCoreTest
 #SBATCH --account=project_2000745
-#SBATCH -o out.txt
-#SBATCH -e err.txt
+#SBATCH --output out.txt
+#SBATCH --error err.txt
 #SBATCH --time=00:05:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
