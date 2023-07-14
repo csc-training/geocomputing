@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH -J array_job
-#SBATCH --output array_job_out_%A_%a.txt
-#SBATCH --error array_job_err_%A_%a.txt
+#SBATCH --output=array_job_out_%A_%a.txt  # File to write the standard output to.
+#SBATCH --error=array_job_err_%A_%a.txt  # File to write the standard error to.
 #SBATCH -t 00:02:00
-#SBATCH --mem-per-cpu=1000
-#SBATCH --array=1-3
+#SBATCH --mem-per-cpu=1000  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
+#SBATCH --array=1-3  # Indices to specify what array index values should be used. Multiple values may be specified using a comma separated list or a range of values separated by -.
 #SBATCH -n 1
 #SBATCH -p small
 

@@ -1,14 +1,14 @@
 #!/bin/bash -l
-#SBATCH --output=out_%A_%a.txt
-#SBATCH --error=err_%A_%a.txt
+#SBATCH --output=out_%A_%a.txt  # File to write the standard output to.
+#SBATCH --error=err_%A_%a.txt  # File to write the standard error to.
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --time=02:00:00  # Maximum duration of the job. Upper limit depends on partition.
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=8000
-#SBATCH --array=1-3
-#SBATCH --gres=nvme:10
+#SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
+#SBATCH --cpus-per-task=4  # How many processors work on one task. Upper limit depends on number of CPUs per node.
+#SBATCH --mem=8000  # Real memory required per node.
+#SBATCH --array=1-3  # Indices to specify what array index values should be used. Multiple values may be specified using a comma separated list or a range of values separated by -.
+#SBATCH --gres=nvme:10  # How much local disk to reserve. Default units are gigabytes. 
 
 ### Load SNAP module
 module load snap

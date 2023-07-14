@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
-#SBATCH --output out.txt
-#SBATCH --error err.txt
+#SBATCH --output=out.txt  # File to write the standard output to.
+#SBATCH --error=err.txt  # File to write the standard error to.
 
 #Partition you want to submit your job to.
 #SBATCH -p test
@@ -10,11 +10,11 @@
 #SBATCH -t 00:05:00
 
 #Tells the batch job system that this is not a parallel task and only one task should be used. Note that this is one task per job, but array job will actually launch 3 simultaneous jobs.
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
+#SBATCH --cpus-per-task=4  # How many processors work on one task. Upper limit depends on number of CPUs per node.
 
 #Tells the batch job sytem to reserve 1000MB (1GB) of memory for each of the 3 jobs.
-#SBATCH --mem-per-cpu=1000
+#SBATCH --mem-per-cpu=1000  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 
 #As the job is not run on the login where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on login node will not help.
 module load parallel geoconda
