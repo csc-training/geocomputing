@@ -1,14 +1,13 @@
 #!/bin/bash -l
 #SBATCH -A <YOUR-PROJECT-HERE>
-#SBATCH -J python_igraph
 #SBATCH --output=out_%J.txt  # File to write the standard output to.
 #SBATCH --error=err_%J.txt  # File to write the standard error to.
-#SBATCH -t 00:10:00
+#SBATCH --time=00:10:00  # Maximum duration of the job. Upper limit depends on partition.
 #Number of reserved cores, this number can be later accessed with $SLURM_CPUS_PER_TASK
 #SBATCH --cpus-per-task=4  # How many processors work on one task. Upper limit depends on number of CPUs per node.
 #We're operating with shared memory so reserve total amount of memory, not per cpu
 #SBATCH --mem=6000  # Real memory required per node.
-#SBATCH -p test
+#SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
 # load needed modules
 module load geoconda

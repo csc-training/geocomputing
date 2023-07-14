@@ -1,13 +1,12 @@
 #!/bin/bash
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
-#SBATCH -J array_job
 #SBATCH --output=array_job_out_%A_%a.txt  # File to write the standard output to.
 #SBATCH --error=array_job_err_%A_%a.txt  # File to write the standard error to.
-#SBATCH -t 00:02:00
+#SBATCH --time=00:02:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --mem-per-cpu=1000  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 #SBATCH --array=1-3  # Indices to specify what array index values should be used. Multiple values may be specified using a comma separated list or a range of values separated by -.
-#SBATCH -n 1
-#SBATCH -p small
+#SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
+#SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
 # load the Puhti module for R
 module load r-env
