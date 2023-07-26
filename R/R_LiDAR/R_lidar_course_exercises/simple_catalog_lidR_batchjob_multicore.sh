@@ -11,7 +11,7 @@
 #Time limit for the job in hh:mm:ss, Once this amount of time has passed the job will be terminated regardless of weather it has finished.
 #SBATCH --time=00:10:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --nodes=1  # Number of compute nodes. Upper limit depends on partition.
-#SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.  # Number of tasks. Upper limit depends on partition.
+#SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
 #The number of cpus used by the lidR task, equal to number of workers. Max 40 in Puhti.
 #SBATCH --cpus-per-task=5  # How many processors work on one task. Upper limit depends on number of CPUs per node.
 

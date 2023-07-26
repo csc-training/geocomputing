@@ -12,7 +12,7 @@
 #SBATCH --time=00:10:00  # Maximum duration of the job. Upper limit depends on partition.
 #Reserve 5 cores: 1 for master and 4 for workers
 #Compared to multicore version, use --ntasks setting, not --cpus-per-task
-#SBATCH --ntasks=5  # Number of tasks. Upper limit depends on partition.  # Number of tasks. Upper limit depends on partition.
+#SBATCH --ntasks=5  # Number of tasks. Upper limit depends on partition.
 #Reserve 10000MB (10GB) of memory per node
 #SBATCH --mem=10000  # Real memory required per node.
 
