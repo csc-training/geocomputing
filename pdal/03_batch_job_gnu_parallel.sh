@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
-#SBATCH --output=out.txt  # File to write the standard output to.
-#SBATCH --error=err.txt  # File to write the standard error to.
+#SBATCH --output=slurm-%j.out  # File to write the standard output to. %j is replaced by the job ID.
+#SBATCH --error=slurm-%j.err  # File to write the standard error to. %j is replaced by the job ID. Defaults to slurm-%j.out if not provided. 
 
 #Partition you want to submit your job to.
 #SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job

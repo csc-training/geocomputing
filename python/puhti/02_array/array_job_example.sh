@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --output=array_job_out_%A_%a.txt  # File to write the standard output to.
-#SBATCH --error=array_job_err_%A_%a.txt  # File to write the standard error to.
+#SBATCH --output=slurm-%A_%a.out  # File to write the standard output to. %A is replaced by the job ID and %a with the array index.
+#SBATCH --error=slurm-%A_%a.err  # File to write the standard error to. %A is replaced by the job ID and %a with the array index. Defaults to slurm-%A_%a.out if not provided.
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
