@@ -1,11 +1,11 @@
 #!/bin/bash -l
-#SBATCH --account=project_200XXXX
-#SBATCH --partition=small
-#SBATCH --time=04:00:00
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=2
-#SBATCH --mem=60000
-#SBATCH --gres=nvme:50
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
+#SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
+#SBATCH --time=04:00:00  # Maximum duration of the job. Upper limit depends on partition.
+#SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
+#SBATCH --cpus-per-task=2  # How many processors work on one task. Upper limit depends on number of CPUs per node.
+#SBATCH --mem=60000  # Real memory required per node.
+#SBATCH --gres=nvme:50  # How much local disk to reserve. Default units are gigabytes. 
 
 #The last row resrves 50G of local fast disk on the compute node, it will be used for SNAP and JAVA cache, set by snap_add_userdir.
 

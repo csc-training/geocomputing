@@ -1,13 +1,12 @@
 #!/bin/bash -l
-#SBATCH --account=<YOUR-PROJECT>
-#SBATCH -J r_multi_proc
-#SBATCH -o output.txt
-#SBATCH -e errors.txt
-#SBATCH -t 00:10:00
-#SBATCH --ntasks=4
-#SBATCH --nodes=1
-#SBATCH --mem=1000
-#SBATCH -p small
+#SBATCH --account=project_200xxxx    # Choose the project to be billed
+#SBATCH --output=output.txt  # File to write the standard output to.
+#SBATCH --error=errors.txt  # File to write the standard error to.
+#SBATCH --time=00:10:00  # Maximum duration of the job. Upper limit depends on partition.
+#SBATCH --ntasks=4  # Number of tasks. Upper limit depends on partition.
+#SBATCH --nodes=1  # Number of compute nodes. Upper limit depends on partition.
+#SBATCH --mem=1000  # Real memory required per node.
+#SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
 module load r-env-singularity
 
