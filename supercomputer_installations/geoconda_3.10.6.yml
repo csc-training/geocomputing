@@ -9,7 +9,7 @@ dependencies:
   - bottleneck
   - cartopy
   - cfgrib
-  - copc-lib
+#  - copc-lib
   - dask
   - dask-geopandas
   - dask-jobqueue
@@ -19,19 +19,15 @@ dependencies:
   - earthengine-api
   - geoalchemy2
   - geopandas
-  - geopy
   - graphviz
   - gstools
   - hvplot
-  - imageio
   - imbalanced-learn
   - jinja2
   - jupyterlab
-  - jupyterlab-git
-  - keplergl
+  - jupyter-git
   - laspy
   - laxpy
-  - leafmap
   - lidar
   - lxml
   - metpy
@@ -44,9 +40,7 @@ dependencies:
   - pdal
   - pip
   - plotly
-  - psy-view  
   - py6S
-  - pydeck
   - pygmt
   - pyicu
   - pyntcloud
@@ -66,21 +60,18 @@ dependencies:
   - rioxarray
   - rtree
   - satpy
-  - scalene  
   - scikit-image
   - scikit-learn
   - sentinelsat
   - shapely
   - spyder
   - stackstac
-  - tifffile
   - wrf-python
   - xarray
   - xarray-spatial
-  - xarray_leaflet
   - xesmf
   - pip:
     - laszip
-    - open3d
-    - git+https://github.com/ernstste/landsatlinks.git
-    - git+https://github.com/pangeo-data/xesmf.git
+#    - open3d
+    
+    

@@ -1,0 +1,8 @@
+channels:
+  - nasa-ames-stereo-pipeline
+  - usgs-astrogeology
+  - conda-forge
+  - defaults
+dependencies:
+  - stereo-pipeline
+    
