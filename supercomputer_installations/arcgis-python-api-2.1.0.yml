@@ -1,0 +1,6 @@
+channels:
+  - esri
+dependencies:
+  - arcgis_learn=2.1.0
+  - python=3.9
+
