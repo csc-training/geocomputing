@@ -1,9 +1,9 @@
 # Example script for using Allas directly from an R script:
-# - Reading raster and vector files
+# - Reading and wrtiing raster and vector files
 # - Looping over all files of certain type in a bucket
-# - Writing raster and vector files (not working properly)
+# - Writing raster and vector files (not working properly) Older version
 
-library("raster")
+library("terra")
 library("sf")
 library("aws.s3")
 library("tidyverse")
@@ -28,11 +28,20 @@ library("tidyverse")
 # This creates [.aws/credentials](https://github.com/cloudyr/aws.signature/) to your home directory
 # The credentials are saved to a file, so they need to be set only once from a new computer or when changing project.
 
+# If you want to WRITE files with terra/sf directly to Allas, set also this.
+Sys.setenv("CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE" = "YES")
+
 # Reading raster file
-r <- raster('/vsis3/name_of_your_Allas_bucket/name_of_your_input_raster_file.tif')
+r <- rast('/vsis3/name_of_your_Allas_bucket/name_of_your_input_raster_file.tif')
+
+# This should work, but has had some bugs in terra code, so does not work with any R version in Puhti (8.8.2023)
+writeRaster(r, filename='/vsis3/name_of_your_Allas_bucket/name_of_your_output_raster_file.tif')
 
 # Reading vector file
 v <- st_read('/vsis3/name_of_your_Allas_bucket/name_of_your_input_vector_file.gpkg')
+
+# Writing vector file
+st_write(v, '/vsis3/name_of_your_Allas_bucket/name_of_your_output_vector_file.gpkg')
 
 # Looping through all files in a bucket, having the same file type (tif).
 # First get list of all objects in the bucket
@@ -47,7 +56,8 @@ for (row in 1:nrow(tif_files)) {
   print (extent(r))
 }
 
-# Writing files.
+# *****        
+# Older option to write files that likely is not needed any more.
 # Note, for some reason R can not read these files back again, during the same R session.
 
 # Writing raster file

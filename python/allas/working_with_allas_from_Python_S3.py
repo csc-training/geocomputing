@@ -9,6 +9,7 @@ Created on Wed Dec  4 13:57:52 2019
 # - Reading raster and vector files
 # - Writing raster and vector files
 # - Looping over all files of certain type in a bucket
+# - Older option to write files that likely is not needed any more.
 
 # The required packages depend on the task
 # For working with rasters
@@ -17,12 +18,8 @@ import rasterio
 import geopandas as gpd
 # For listing files and writing to Allas
 import boto3
-# For reading data from Allas, raster and vector
 import os
-# For writing rasters to Allas
-from rasterio.io import MemoryFile
-# For writing vectors to Allas
-import tempfile
+
 
 # Before starting to use Allas with S3 set up your connection to Allas.
 # In Puhti run:
@@ -37,17 +34,43 @@ import tempfile
 # This creates [.aws/credentials-file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
 # The credentials are saved to a file, so they need to be set only once from a new computer.
 
-
-# READING data from Allas
+# If you want to WRITE files with rasterio/geopandas directly to Allas, set also this.
+os.environ["CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE"] = "YES"
 
 # Reading raster file
 r = rasterio.open('/vsis3/name_of_your_Allas_bucket/name_of_your_input_raster_file.tif')
 input_data = r.read()
 
+# Writing raster file
+with rasterio.open('/vsis3/name_of_your_Allas_bucket/name_of_your_output_raster_file.tif', 'w', **r.profile) as dst:
+    dst.write(input_data)
+
 # Reading vector file
 v = gpd.read_file('/vsis3/name_of_your_Allas_bucket/name_of_your_input_vector_file.gpkg')
 
+# Writing vector file
+v.to_file('/vsis3/name_of_your_Allas_bucket/name_of_your_output_vector_file.gpkg', layer='layername', driver="GPKG")
+
+# Looping through all files in a bucket, find ones that are tifs.
+# Then just print the extent of each file as example.
+
+for key in s3.list_objects_v2(Bucket='name_of_your_Allas_bucket')['Contents']:
+    if (key['Key'].endswith('.tif')):
+        filePath = '/vsis3/name_of_your_Allas_bucket/' + key['Key']
+        print(filePath)
+        r = rasterio.open(filePath)
+        print(r.bounds)
+        
+# *****        
+# Older option to write files that likely is not needed any more.
 # Writing raster file using boto3 library
+
+
+# For writing rasters to Allas (older option)
+from rasterio.io import MemoryFile
+# For writing vectors to Allas (older option)
+import tempfile
+
 # Set the end-point correctly for boto3
 s3 = boto3.client("s3", endpoint_url='https://a3s.fi')
 
@@ -68,13 +91,3 @@ tmp.seek(0)
 s3.upload_fileobj(tmp, 'name_of_your_Allas_bucket', 'name_of_your_output_vector_file.gpkg')
 
 
-# Looping through all files in a bucket, find ones that are tifs.
-# Then just print the extent of each file as example.
-
-for key in s3.list_objects_v2(Bucket='name_of_your_Allas_bucket')['Contents']:
-    if (key['Key'].endswith('.tif')):
-        filePath = '/vsis3/name_of_your_Allas_bucket/' + key['Key']
-        print(filePath)
-        r = rasterio.open(filePath)
-        print(r.bounds)
-        
