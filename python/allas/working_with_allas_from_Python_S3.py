@@ -54,6 +54,9 @@ v.to_file('/vsis3/name_of_your_Allas_bucket/name_of_your_output_vector_file.gpkg
 # Looping through all files in a bucket, find ones that are tifs.
 # Then just print the extent of each file as example.
 
+# Set the end-point correctly for boto3
+s3 = boto3.client("s3", endpoint_url='https://a3s.fi')
+
 for key in s3.list_objects_v2(Bucket='name_of_your_Allas_bucket')['Contents']:
     if (key['Key'].endswith('.tif')):
         filePath = '/vsis3/name_of_your_Allas_bucket/' + key['Key']
@@ -70,9 +73,6 @@ for key in s3.list_objects_v2(Bucket='name_of_your_Allas_bucket')['Contents']:
 from rasterio.io import MemoryFile
 # For writing vectors to Allas (older option)
 import tempfile
-
-# Set the end-point correctly for boto3
-s3 = boto3.client("s3", endpoint_url='https://a3s.fi')
 
 # Create the raster file to memory and write to Allas
 with MemoryFile() as mem_file:
