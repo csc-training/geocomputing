@@ -51,7 +51,7 @@ Set first R working directory, select any suitable directory for you.
 Set up STAC API endpoint
 
 ```{r}
-stac_URL <- "https://paituli.csc.fi/geoserver/ogc/stac"
+stac_URL <- "https://paituli.csc.fi/geoserver/ogc/stac/v1"
 ```
 
 Define the center of area of interest, in this case Helsinki.
