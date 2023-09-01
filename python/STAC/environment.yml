@@ -3,12 +3,13 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - gdal
+  - geopandas
+  - dask
   - jupyterlab
   - pyproj
-  - requests
-  - dask
-  - stackstac
   - pystac-client
-  - pystac
-  - geopandas
-  - gdal
+  - pystac  
+  - requests  
+  - rioxarray
+  - stackstac
