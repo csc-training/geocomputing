@@ -13,3 +13,4 @@ To launch this notebook in Puhti, you need JupyterLab with at least 5GB of memor
 - [Dask-geopandas documentation](https://dask-geopandas.readthedocs.io/en/stable/)
 - [CSC Dask tutorial](https://docs.csc.fi/support/tutorials/dask-python/)
 - [Jupyter in Puhti supercomputer](https://docs.csc.fi/computing/webinterface/jupyter/)
+- [Dask batch jobs with Puhti](https://github.com/csc-training/geocomputing/tree/master/python/puhti/05_parallel_dask)
