@@ -22,6 +22,7 @@ This repository contains examples for use of different geospatial applications. 
 * [Sentinel data download from Finhub and Scihub using sentinelsat](python/sentinel/README.md)
 * [STAC, xarray and dask for downloading and processing data](./python/STAC/stac_xarray_dask_example.ipynb)
 * [Zonal statistics in parallel](./python/zonal_stats/README.md)
+* [Python Dask-geopandas](./python/dask_geopandas/README.md)
 
 ### Other tools
 * [FORCE ](./force/README.md)  
