@@ -1,18 +1,22 @@
 # Python Puhti examples, calculate NDVI
 
-Here are examples for running Python code on CSC's Puhti supercluster as four different job styles: interactive, simple serial, array and parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
+Here are examples for running Python code on CSC's Puhti supercluster as four different job styles: interactive, serial, array and embarrasingly/delightfully/naturally parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`.  We'll take a look at `multiprocessing`,`dask` and `GNUParallel`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
+
+## Example case
 
 The example calculate NDVI (Normalized Difference Vegetation Index) from the Sentinel2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask example) and only the method of parallelisation changes (the code in the main function). 
 
 Basic idea behind the script is to:
 
-- Find red and near infrared channels of Sentinel L2A products from its `SAFE` folder and open the `jp2` files.
-- Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index.
-- Save output as GeoTiff with `rasterio`.
+- Find red and near infrared channels of Sentinel L2A products from its `SAFE` folder and open the `jp2` files. -> `readImage`
+- Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index. -> `calculateNDVI`
+- Save output as GeoTiff with `rasterio`. -> `saveImage`
 
-A Python script that was written and run on your own computer and that does not have any hard-coded file dependecies, can also be run on Puhti. If you call any absolute filepaths (= hard-coded dependency, auch as `/my/home/dir/file.txt`; not recommended!) within your script, you need to update these paths and copy the files to Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
+> [!NOTE]
+> A Python script that was written and run on your own computer and that does not have any hard-coded file dependecies, can also be run on Puhti. If you call any absolute filepaths (= hard-coded dependency, auch as `/my/home/dir/file.txt`; not recommended!) within your script, you need to update these paths and copy the files to Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
+> Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
 
-Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
+
 
 Files in this example:
 
@@ -31,7 +35,8 @@ Files in this example:
 	* Open your own folder: click the name of your folder
 * Download exercise files from Github to Puhti 
     * Open terminal inside your own folder: from mid left toolbar, find the button: Open in Terminal
-    * Clone this repository: `git clone https://github.com/csc-training/geocomputing`
+    * Clone this repository: 
+    `git clone https://github.com/csc-training/geocomputing`
 	
 ## Interactive job
 
@@ -129,6 +134,23 @@ sbatch array_job_example.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
 
+## GNU parallel
+
+GNU parallel can help parallelizing a script which otherwise is not parallelized. In this example we want to run the same script on three different inputfiles which we can read into a textfile and use as argument to the parallel tool.
+
+This is similar to array jobs (see [Geocomputing array job example](https://github.com/csc-training/geocomputing/tree/master/python/puhti/02_array)), with the advantage that we do not start and need to monitor multiple jobs.
+
+[gnu_parallel/gnu_parallel_example.sh](gnu_parallel/gnu_parallel_example.sh).
+The only difference to serial job is that we do not loop through the directory inside the Python script but let GNU parallel handle that step.
+
+> To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` to count everything within the data directory before writing the batch job script. 
+
+Submit the gnu_parallel job
+```
+cd ../gnu_parallel
+sbatch gnu_parallel_example.sh
+```
+* Check with `seff` how much time and resources you used?
 
 ## Example benchmarks 
 
@@ -141,3 +163,4 @@ These are just to demonstrate the difference between single core vs. some kind o
 | joblib          | 1    | 3               | 01:12      | 86.57%         |
 | dask            | 1    | 3               | 01:22      | 78.46%         |
 | array job       | 3    | 1               | 01:03      | 95.16%         |
+| GNU parallel    | 1    | 3               | 00:55      | 15.15%         |
