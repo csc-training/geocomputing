@@ -9,5 +9,7 @@
 ### Load the geoconda module which has Python and Dask installed
 module load geoconda
 
+datadir=/appl/data/geo/sentinel/s2_example_data/L2A
+
 ### Run the Dask example. The directory given to the script hosts 3 Sentinel images
-srun python dask_singlenode.py /appl/data/geo/sentinel/s2_example_data/L2A
+srun python dask_singlenode.py $datadir

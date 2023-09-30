@@ -1,13 +1,12 @@
 """
-A simple example Python script how to calculate NDVI for three Sentinel satellite images
+An example Python script how to calculate NDVI for three Sentinel satellite images
 in parallel with the dask and xarray library.
 
 All the files are worked in parallel with the help of Dask delayed functions, see main()-function.
 More info about Python Dask library can be found from:
 https://docs.dask.org/en/latest/why.html
 
-Author: Johannes Nyman, CSC
-Date: 31.03.2020
+Author: Johannes Nyman, Samantha Wittke, CSC
 """
 
 import os
@@ -25,10 +24,10 @@ from rasterio_to_xarray import xarray_to_rasterio
 image_folder = sys.argv[1]
 
 ## Create a results folder to this location
-if not os.path.exists('results'):
-    os.makedirs('results')
+output_folder = "output"
 
-output_folder = "results"
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
 
 def readImage(image_folder_fp):
     print("Reading Sentinel image from: %s" % (image_folder_fp))
