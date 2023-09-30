@@ -1,20 +1,21 @@
 """
 A simple example Python script how to calculate NDVI for three Sentinel satellite images
 using just 1 process.
-For going through all the files a simple for-loop is used in the main()-method.
+For going through all the files, a for-loop is used in the main()- function
 
-Author: Johannes Nyman, Kylli Ek CSC
-Date: 2020-2021
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke CSC
+
 """
 import os
+import sys
 import time
 import rasterio
 
-### The filepath for the input Sentinel image folder
-image_folder = '/appl/data/geo/sentinel/s2_example_data/L2A'
+### The filepath for the input Sentinel image folder is an input argument to the script
+image_folder = sys.argv[1]
 
 def readImage(image_folder_fp):
-    print("Reading Sentinel image from: %s" % (image_folder_fp))
+    print(f"Reading Sentinel image from: {image_folder_fp}")
     ### Rather than figuring out what the filepath inside SAFE folder is, this is just finding the red and nir files with correct endings
     for subdir, dirs, files in os.walk(image_folder_fp):
         for file in files:
@@ -42,9 +43,13 @@ def calculateNDVI(red,nir):
     return ndvi
 
 def saveImage(ndvi, sentinel_image_path, input_image):
+    ## Create an output folder to this location, if it does not exist
+    outputdir = 'output'
+    if not os.path.exists(outputdir):
+        os.makedirs(outputdir)
     ## Create output filepath for the image. We use the input name with _NDVI end
-    output_file = os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
-    print("Saving image: %s" % output_file)
+    output_file = os.path.join(outputdir, os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif"))
+    print(f"Saving image: {output_file}")
     ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
     metadata = input_image.profile
     ## Change the data type from integer to float and file type from jp2 to GeoTiff
@@ -69,13 +74,13 @@ def main():
     for directory in os.listdir(image_folder):
         sentinel_image_path = os.path.join(image_folder, directory)
         if os.path.isdir(sentinel_image_path):
-            print("\nProcess started")
+            print(f"\nProcess of {sentinel_image_path} started")
             processImage(sentinel_image_path)
-            print("Processing done\n")
+            print(f"Processing of {sentinel_image_path} done\n")
 
 if __name__ == '__main__':
     ## This part is the first to execute when script is ran. It times the execution time and rans the main function
     start = time.time()
     main()
     end = time.time()
-    print("Script completed in " + str(end - start) + " seconds")
+    print(f"Script completed in {str(end - start)} seconds")

@@ -9,4 +9,7 @@
 #SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
 module load geoconda
-srun python single_core_example.py
+
+datadir=/appl/data/geo/sentinel/s2_example_data/L2A
+
+srun python single_core_example.py $datadir
