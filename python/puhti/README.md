@@ -32,21 +32,25 @@ Files in this example:
 * Start a `Login node shell`
 * Create a folder for yourself:
     * Switch to your projects scratch directory: `cd /scratch/project_200xxxx/` (fill in your project number for x)
-    * Create new own folder:`mkdir yyy` (fill in your user name for y)
-    * Switch into your own folder: `cd yyy` (fill in your username for y)
+    * Create new own folder:`mkdir <your_username>` (fill in your user name for y)
+    * Switch into your own folder: `cd <your_username>` (fill in your username for y)
     * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
-    * Switch to the directory with example files: `cd puhti_python_example`.
-    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/yyy/puhti_python_example`.
+    * Switch to the directory with example files: `cd python/puhti`.
+    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/<your_username>/python/puhti`.
     
     
 ## Interactive job
 
-Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to run parts of the script and edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+
+### Visual Studio Code
+
+With Visual Studio Code you can also just run parts of the script.
 
 * Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio code
     * Choose settings for VSCode:
-        * Project: project_2000745
+        * Project: project_200xxxx
         * Partition: interactive
         * Number of CPU cores: 1
         * Memory: 4 Gb
@@ -57,16 +61,16 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Wait a moment -> Connect to Visual studio code
     * VSCode opens up in the browser
 * Open folder with exercise files: 
-    * File -> Open folder -> /scratch/project_2000745/[your_username]/geocomputing/python/puhti -> OK
-* Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is basic Python script, which uses a **for loop** for going through all 3 files.  
+    * File -> Open folder -> /scratch/project_200xxxx/<your_username>/geocomputing/python/puhti -> OK
+* Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is a Python script, which uses a **for loop** for going through all 3 files.  
 * Check that needed Python libraries are available in Puhti. If it is not your own script you can see which libraries are used in this script by checking the imports. To check whether those libraries are available: Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
-* Optional, for more advanced options for running Python code in VSCode, see for example [VSCode's Python Interactive mode is AMAZING!](https://www.youtube.com/watch?v=lwN4-W1WR84) and [How to Debug Python with VSCode](https://www.youtube.com/watch?v=w8QHoVam1-I&t=19s) videos.
 * Run the full script: 
     * Exit Python console in Terminal: type `exit()` in the terminal
     * Click green arrow above script (Run Python File in Terminal)
     * Wait, it takes a few minutes for complete. The printouts will appear during the process.
     * Check that there are 3 new GeoTiff files in your work directory in the Files panel of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
+
 
 
 ## Serial job
