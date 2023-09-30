@@ -29,15 +29,16 @@ Files in this example:
 ### Get example scripts to Puhti
 
 * Log in to Puhti web interface: https://puhti.csc.fi
-* Create a folder for yourself. 
-    * From front page upper toolbar: Files -> /scratch/project_2000745/
-    * Create new own folder: New Directory ->  [your_username] -> OK
-	* Open your own folder: click the name of your folder
-* Download exercise files from Github to Puhti 
-    * Open terminal inside your own folder: from mid left toolbar, find the button: Open in Terminal
-    * Clone this repository: 
-    `git clone https://github.com/csc-training/geocomputing`
-	
+* Start a `Login node shell`
+* Create a folder for yourself:
+    * Switch to your projects scratch directory: `cd /scratch/project_200xxxx/` (fill in your project number for x)
+    * Create new own folder:`mkdir yyy` (fill in your user name for y)
+    * Switch into your own folder: `cd yyy` (fill in your username for y)
+    * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
+    * Switch to the directory with example files: `cd puhti_python_example`.
+    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/yyy/puhti_python_example`.
+    
+    
 ## Interactive job
 
 Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to run parts of the script and edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
