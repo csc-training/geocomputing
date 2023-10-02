@@ -1,18 +1,22 @@
 # Python Puhti examples, calculate NDVI
 
-Here are examples for running Python code on CSC's Puhti supercluster as four different job styles: interactive, simple serial, array and parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
+Here are examples for running Python code on CSC's Puhti supercomputer as four different job styles: interactive, serial, array and embarrasingly/delightfully/naturally parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`.  We'll take a look at these three and `GNUParallel`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
+
+## Example case
 
 The example calculate NDVI (Normalized Difference Vegetation Index) from the Sentinel2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask example) and only the method of parallelisation changes (the code in the main function). 
 
 Basic idea behind the script is to:
 
-- Find red and near infrared channels of Sentinel L2A products from its `SAFE` folder and open the `jp2` files.
-- Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index.
-- Save output as GeoTiff with `rasterio`.
+- Find red and near infrared channels of Sentinel L2A products from its `SAFE` folder and open the `jp2` files. -> `readImage`
+- Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index. -> `calculateNDVI`
+- Save output as GeoTiff with `rasterio`. -> `saveImage`
 
-A Python script that was written and run on your own computer and that does not have any hard-coded file dependecies, can also be run on Puhti. If you call any absolute filepaths (= hard-coded dependency, auch as `/my/home/dir/file.txt`; not recommended!) within your script, you need to update these paths and copy the files to Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
+> [!NOTE]
+> When moving a Python script from your own computer to Puhti, take care of any hard-coded file dependencies (e.g.  `/my/home/dir/file.txt` ). It is not recommended to have hard-coded file paths in your scripts, instead, provide them as command line input to your script or make use of configuration files. No matter where you input your file paths, always make sure that you have the actual data files also available on Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
+> Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
 
-Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
+
 
 Files in this example:
 
@@ -25,22 +29,28 @@ Files in this example:
 ### Get example scripts to Puhti
 
 * Log in to Puhti web interface: https://puhti.csc.fi
-* Create a folder for yourself. 
-    * From front page upper toolbar: Files -> /scratch/project_2000745/
-    * Create new own folder: New Directory ->  [your_username] -> OK
-	* Open your own folder: click the name of your folder
-* Download exercise files from Github to Puhti 
-    * Open terminal inside your own folder: from mid left toolbar, find the button: Open in Terminal
-    * Clone this repository: `git clone https://github.com/csc-training/geocomputing`
-	
+* Start a `Login node shell`
+* Create a folder for yourself:
+    * Switch to your projects scratch directory: `cd /scratch/project_200xxxx/` (fill in your project number for x)
+    * Create new own folder:`mkdir <your_username>` (fill in your user name for y)
+    * Switch into your own folder: `cd <your_username>` (fill in your username for y)
+    * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
+    * Switch to the directory with example files: `cd python/puhti`.
+    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/<your_username>/python/puhti`.
+    
+    
 ## Interactive job
 
-Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to run parts of the script and edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+
+### Visual Studio Code
+
+With Visual Studio Code you can also just run parts of the script.
 
 * Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio code
     * Choose settings for VSCode:
-        * Project: project_2000745
+        * Project: project_200xxxx
         * Partition: interactive
         * Number of CPU cores: 1
         * Memory: 4 Gb
@@ -51,10 +61,9 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Wait a moment -> Connect to Visual studio code
     * VSCode opens up in the browser
 * Open folder with exercise files: 
-    * File -> Open folder -> /scratch/project_2000745/[your_username]/geocomputing/python/puhti -> OK
-* Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is basic Python script, which uses a **for loop** for going through all 3 files.  
+    * File -> Open folder -> /scratch/project_200xxxx/<your_username>/geocomputing/python/puhti -> OK
+* Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is a Python script, which uses a **for loop** for going through all 3 files.  
 * Check that needed Python libraries are available in Puhti. If it is not your own script you can see which libraries are used in this script by checking the imports. To check whether those libraries are available: Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
-* Optional, for more advanced options for running Python code in VSCode, see for example [VSCode's Python Interactive mode is AMAZING!](https://www.youtube.com/watch?v=lwN4-W1WR84) and [How to Debug Python with VSCode](https://www.youtube.com/watch?v=w8QHoVam1-I&t=19s) videos.
 * Run the full script: 
     * Exit Python console in Terminal: type `exit()` in the terminal
     * Click green arrow above script (Run Python File in Terminal)
@@ -62,14 +71,39 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Check that there are 3 new GeoTiff files in your work directory in the Files panel of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
 
+### Jupyter
+
+If you prefer prototyping and testing in a Jupyter Notebook, you can also do that in a similar manner than using Visual Studio Code. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
+
+### Command line
+
+If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti webinterface. Choose settings for the interactive session:
+* Project: project_200xxxx
+* Number of CPU cores: 1
+* Memory: 4 Gb
+* Local disk: 0
+* Time: 2:00:00
+
+You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) by starting a login node shell from Tools tab in Puhti webinterface or by connecting to Puhti via ssh connection with `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0`. Which gives you a compute node shell (you can see "where" you are from your terminal prompt [<username>@puhti-loginXX] -> login node, [<username>@rXXcXX] (XX being some numbers) -> compute node). 
+
+For both of above:
+
+After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer", excluding graphical access.
+```
+module load geoconda
+cd 01_serial
+python single_core_example.py /appl/data/geo/sentinel/s2_example_data/L2A
+```
+
 
 ## Serial job
-For simple 1 core batch job, use the same Python-script as for interactive working.
+
+For a one core batch job, use the same Python-script as for interactive working. **Latest now, we have to move to the terminal.**
 
 * Open [01_serial/single_core_example.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
-* Submit batch job from SSH terminal (in Puhti web interface the login node shell, not VSCode Terminal)
+* Submit batch job from **login node shell**
 ```
-cd /scratch/project_2000745/[your_username]/geocomputing/python/puhti/01_serial
+cd /scratch/project_200xxxx/<your_username>/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
 ``` 
 * `sbatch` prints out a job ID, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory?
@@ -91,7 +125,10 @@ sacct -j [jobid] -o JobName,elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 
 
 ## Parallel job
-In this case the Python code takes care of dividing the work to 3 processes, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely easiest to use and in inlcuded in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). `dask` is the most versatile has several optins for parallelization, the examples here include both single-node (max 40 cores) and multi-node example.
+
+In this case the Python code takes care of dividing the work to 3 processes, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely easiest to use and in inlcuded in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
+
+### Multiprocessing
 
 * [03_parallel_multiprocessing/multiprocessing_example.sh](03_parallel_multiprocessing/multiprocessing_example.sh) batch job file for `multiprocessing`.
 	* `--ntasks=1` + `--cpus-per-task=3` reserves 3 cores - one for each file
@@ -107,7 +144,28 @@ sbatch multiprocessing_example.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
 
+### dask
+
+`dask` is versatile and has several options for parallelization, this example is for single-node (max 40 cores)- usage, but `dask` can also be used for multi-node jobs. This example uses [delayed functions](https://docs.dask.org/en/latest/delayed.html) from Dask to parallelize the workload. Typically, if a workflow contains a for-loop, it can benefit from delayed. [Dask delayed tutorial](https://tutorial.dask.org/03_dask.delayed.html)
+
+* [05_parallel_dask/single_node/dask_singlenode.sh](05_parallel_dask/single_node/dask_singlenode.sh) batch job file for `dask`.
+	* `--ntasks=1` + `--cpus-per-task=3` reserves 3 cores - one for each file
+	* `--mem-per-cpu=4G` reserves memory per core
+
+* [05_parallel_dask/single_node/dask_singlenode.py](05_parallel_dask/single_node/dask_singlenode.py)
+
+
+* Submit the parallel job to Puhti from Puhti login node shell:
+```
+cd ../parallel_dask
+sbatch dask_singlenode.sh
+```
+
+* Check with `seff` how much time and resources you used?
+
+
 ## Array job
+
 [Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context a typical use case would be to run some model on study area split into multiple files where output from one file doesn't have an impact on result of an other area. 
 
 In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script. That means that the Python script has to read the file to be processed from commandline  argument. 
@@ -129,6 +187,23 @@ sbatch array_job_example.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
 
+## GNU parallel
+
+GNU parallel can help parallelizing a script which otherwise is not parallelized. In this example we want to run the same script on three different inputfiles which we can read into a textfile and use as argument to the parallel tool.
+
+This is similar to array jobs (see [Geocomputing array job example](https://github.com/csc-training/geocomputing/tree/master/python/puhti/02_array)), with the advantage that we do not start and need to monitor multiple jobs.
+
+[06_gnu_parallel/gnu_parallel_example.sh](06_gnu_parallel/gnu_parallel_example.sh).
+The only difference to serial job is that we do not loop through the directory inside the Python script but let GNU parallel handle that step.
+
+> To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` to count everything within the data directory before writing the batch job script. 
+
+Submit the gnu_parallel job
+```
+cd ../06_gnu_parallel
+sbatch gnu_parallel_example.sh
+```
+* Check with `seff` how much time and resources you used?
 
 ## Example benchmarks 
 
@@ -141,3 +216,4 @@ These are just to demonstrate the difference between single core vs. some kind o
 | joblib          | 1    | 3               | 01:12      | 86.57%         |
 | dask            | 1    | 3               | 01:22      | 78.46%         |
 | array job       | 3    | 1               | 01:03      | 95.16%         |
+| GNU parallel    | 1    | 3               | 00:55      | 15.15%         |
