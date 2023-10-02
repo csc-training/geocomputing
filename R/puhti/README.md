@@ -13,6 +13,9 @@ Files in this example:
 * In each of the subfolders here are files for one job type or parallel library. Each subfolder has 2 files:
     * An .R file for defining the tasks to be done.
     * A batch job .sh file for submitting the job to Puhti SLURM.
+ 
+> [!IMPORTANT]  
+> In these scripts project_2002044 has been used as example project name. If you do not belong to that project change the project name in batch scripts and interactive session start up settings.
 
 ## Interactive working 
 
