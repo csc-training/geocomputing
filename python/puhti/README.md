@@ -1,6 +1,6 @@
 # Python Puhti examples, calculate NDVI
 
-Here are examples for running Python code on CSC's Puhti supercluster as four different job styles: interactive, serial, array and embarrasingly/delightfully/naturally parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`.  We'll take a look at these three and `GNUParallel`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
+Here are examples for running Python code on CSC's Puhti supercomputer as four different job styles: interactive, serial, array and embarrasingly/delightfully/naturally parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`.  We'll take a look at these three and `GNUParallel`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
 
 ## Example case
 
@@ -13,7 +13,7 @@ Basic idea behind the script is to:
 - Save output as GeoTiff with `rasterio`. -> `saveImage`
 
 > [!NOTE]
-> A Python script that was written and run on your own computer and that does not have any hard-coded file dependecies, can also be run on Puhti. If you call any absolute filepaths (= hard-coded dependency, auch as `/my/home/dir/file.txt`; not recommended!) within your script, you need to update these paths and copy the files to Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
+> When moving a Python script from your own computer to Puhti, take care of any hard-coded file dependencies (e.g.  `/my/home/dir/file.txt` ). It is not recommended to have hard-coded file paths in your scripts, instead, provide them as command line input to your script or make use of configuration files. No matter where you input your file paths, always make sure that you have the actual data files also available on Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
 > Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
 
 
@@ -193,14 +193,14 @@ GNU parallel can help parallelizing a script which otherwise is not parallelized
 
 This is similar to array jobs (see [Geocomputing array job example](https://github.com/csc-training/geocomputing/tree/master/python/puhti/02_array)), with the advantage that we do not start and need to monitor multiple jobs.
 
-[06_gnu_parallel/gnu_parallel_example.sh](gnu_parallel/gnu_parallel_example.sh).
+[06_gnu_parallel/gnu_parallel_example.sh](06_gnu_parallel/gnu_parallel_example.sh).
 The only difference to serial job is that we do not loop through the directory inside the Python script but let GNU parallel handle that step.
 
 > To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` to count everything within the data directory before writing the batch job script. 
 
 Submit the gnu_parallel job
 ```
-cd ../gnu_parallel
+cd ../06_gnu_parallel
 sbatch gnu_parallel_example.sh
 ```
 * Check with `seff` how much time and resources you used?
