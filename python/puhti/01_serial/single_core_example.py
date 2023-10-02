@@ -1,5 +1,5 @@
 """
-A simple example Python script how to calculate NDVI for three Sentinel satellite images
+An example Python script how to calculate NDVI for three Sentinel satellite images
 using just 1 process.
 For going through all the files, a for-loop is used in the main()- function
 
