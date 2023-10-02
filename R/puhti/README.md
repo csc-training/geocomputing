@@ -30,7 +30,7 @@ Files in this example:
   * Repository URL: https://github.com/csc-training/geocomputing.git
   * Project directory name: geocomputing
   * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_2002044/students/<your_account_name>  (if you do not yet have a directory there, use /scratch/project_2002044/students/ as path to folder and create a new directory with your account name and enter it)
-* Move to folder `R/puhti/01_serial`.
+* In the files window in lower right, move to folder `R/puhti/01_serial`.
 * Set the working directory. `Session -> Set working directory -> To Files Pane location`
 
 * Open [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is basic R script, which uses a **for loop** for going through all 3 files. 
@@ -44,7 +44,7 @@ For simple 1 core batch job, use the same R-script as for interactive working.
 
 * [01_serial/serial_batch_job.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
 
-* Open another web tab with Puhti shell (`Tools -> _Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
+* Open another web tab and open puhti.csc.fi main page.  Open Puhti shell (`Tools -> _Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
 cd /scratch/project_2002044/students/<your_account_name>/geocomputing/R/puhti/01_serial
 sbatch serial_batch_job.sh
@@ -74,7 +74,7 @@ In this case the R code takes care of dividing the work to parallel processes, o
 	* `--mem-per-cpu=1000` reserves memory per core
 	* `srun apptainer_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
 *  [02_parallel_future/Calc_contours_future_cluster.R](02_parallel_future/Calc_contours_future_cluster.R)
-	* Note how cluster is started, processes divided to workers with `future-map()` and cluster is stopped.
+	* Note in the end of the script how cluster is started, processes divided to workers with `future-map()` and cluster is stopped.
 	* For looped has been removed, each worker calculates one file.
 	* Optional, compare to [03_parallel_snow/Calc_contours_snow.R](03_parallel_snow/Calc_contours_snow.R). `future` package takes care of exporting variables and libraries to workers itself, in `snow` and `parallel` it is user's responsibility.
 
@@ -102,6 +102,6 @@ In the array job example the idea is that the R script will run one process for 
 	
 * Submit the array job
 ```
-sbatch array_job.sh
+sbatch array_batch_job.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
