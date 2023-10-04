@@ -39,7 +39,7 @@ With `gdalinfo` and `ogrinfo` it is often helpful to check the files, this is a 
 * Open login node shell: `Tools -> Login node shell`
 * To have GDAL tools available, load [geoconda module](https://docs.csc.fi/apps/geoconda/). Also several other modules include GDAL tools, see [CSC Docs: GDAL page](https://docs.csc.fi/apps/gdal/) for details.
 ```
-module geoconda
+module load geoconda
 ```
 * Check a file with `gdalinfo`. What is the coordinate system? Is the file internally tiled? Does it have overviews?
 ```
