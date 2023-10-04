@@ -32,7 +32,7 @@ Files in this example:
 * Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
   * Project directory name: geocomputing
-  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_200xxxx/students/<your_account_name>
+  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_200xxxx/students/cscusername
   	* If you do not yet have such directory, move to /scratch/project_200xxxx or /scratch/project_200xxxx/students/ as path to folder and create a new directory and enter it)
 * In the files window in lower right, move to folder `R/puhti/01_serial`.
 * Set the working directory. `Session -> Set working directory -> To Files Pane location`
@@ -56,7 +56,7 @@ For simple 1 core batch job, use the same R-script as for interactive working.
 
 * Open another web tab and open puhti.csc.fi main page.  Open Puhti shell (`Tools -> _Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
-cd /scratch/project_200xxxx/students/<your_account_name>/geocomputing/R/puhti/01_serial
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/R/puhti/01_serial
 sbatch serial_batch_job.sh
 ``` 
 * `sbatch` prints out a job id, use it to check the state and the efficiency of the batch job. Did you reserve a good amount of memory?
