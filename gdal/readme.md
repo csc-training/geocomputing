@@ -59,7 +59,7 @@ We will use Puhti web interface simple file editor for editing the files in this
 
 Open the files with Edit under the menu behind the file name. 
 * [gdal_serial.sh](gdal_serial.sh) - the bash script, includes GDAL commands to be executed. For handling several files a for loop is used.
-	* Change the project name and username to your's in both GDAL commands. Save.
+	* Change the project name and username to yours in both GDAL commands. Save.
 * [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
 	* Change the project name in SLURM settings. Save.
 
