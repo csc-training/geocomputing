@@ -69,6 +69,11 @@ sbatch gdal_batch_job_serial.sh
 ```
 * Check that you have new GeoTiff files in the working folder. Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 
+* See how to job is progressing with following the output file contents update.
+```
+tail -f slurm-<jobid>.out
+```
+
 * `sbatch` prints out a job id, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory? How long did the script run?
 ```
 seff <jobid>
