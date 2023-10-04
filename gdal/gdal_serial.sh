@@ -9,9 +9,5 @@ do
 	out=$(basename $i)
 	#Change the coordinate system to EPSG:2393, which is the old Finnish YKJ (=KKJ3)
 	# ToDo: change project name and username in the row below
-    gdalwarp $i /scratch/project_200xxxx/students/cscusername/geocomputing/gdal/$i -co compress=deflate -co tiled=yes -t_srs EPSG:2393
-	# Add overviews
-	# ToDo: change project name and username in the row below
-    gdaladdo --config COMPRESS_OVERVIEW JPEG --config PHOTOMETRIC_OVERVIEW YCBCR --config \
-	INTERLEAVE_OVERVIEW PIXEL /scratch/project_200xxxx/students/cscusername/geocomputing/gdal/$i 4 16 64
+    gdalwarp $i /scratch/project_200xxxx/students/cscusername/geocomputing/gdal/$out -of COG -t_srs EPSG:2393
 done
