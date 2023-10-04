@@ -41,7 +41,7 @@ With `gdalinfo` and `ogrinfo` it is often helpful to check the files, this is a 
 ```
 module geoconda
 ```
-* Check a file with `gdalinfo`. What is the coordinate system? Is the file internally tiled? Do it have overviews?
+* Check a file with `gdalinfo`. What is the coordinate system? Is the file internally tiled? Does it have overviews?
 ```
 gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 ```
