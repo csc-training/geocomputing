@@ -15,7 +15,8 @@ Files in this example:
     * A batch job .sh file for submitting the job to Puhti SLURM.
  
 > [!IMPORTANT]  
-> In these scripts project_200xxxx has been used as example project name. Change the project name to your own CSC project name.
+> In these scripts `project_200xxxx` has been used as example project name. Change the project name to your own CSC project name.
+> `cscusername` is example username, replace with your username.
 
 ## Interactive working 
 
