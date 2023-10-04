@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Find the files that have .tif ending, we do not want to process the .tif.aux.xml files in the same folders.
-for i in $(find /appl/data/geo/mml/dem10m/2019/V5/V53 -name '*.tif')
+for i in $(find /appl/data/geo/mml/dem10m/2019/W3/W33 -name '*.tif')
 
 #Process the files
 do
