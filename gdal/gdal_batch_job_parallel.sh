@@ -1,4 +1,5 @@
 #!/bin/bash
+# ToDo: change project name in the row below
 #SBATCH --account=project_200xxxx    # Choose the project to be billed
 #SBATCH --output=slurm-%j.out  # File to write the standard output to. %j is replaced by the job ID.
 #SBATCH --error=slurm-%j.err  # File to write the standard error to. %j is replaced by the job ID. Defaults to slurm-%j.out if not provided. 
@@ -14,5 +15,5 @@ module load parallel geoconda
 # Find the files that have .tif ending, we do not want to process the .tif.aux.xml files in the same folders.
 # Run the GDAL script for each found file.
 
-find find /appl/data/geo/mml/dem10m/2019/W3/W33 -name '*.tif' | \
+find /appl/data/geo/mml/dem10m/2019/W3/W33 -name '*.tif' | \
     parallel -j $SLURM_CPUS_PER_TASK bash gdal_parallel.sh {}
