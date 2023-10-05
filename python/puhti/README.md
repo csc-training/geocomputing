@@ -12,12 +12,6 @@ Basic idea behind the script is to:
 - Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index. -> `calculateNDVI`
 - Save output as GeoTiff with `rasterio`. -> `saveImage`
 
-> [!NOTE]
-> When moving a Python script from your own computer to Puhti, take care of any hard-coded file dependencies (e.g.  `/my/home/dir/file.txt` ). It is not recommended to have hard-coded file paths in your scripts, instead, provide them as command line input to your script or make use of configuration files. No matter where you input your file paths, always make sure that you have the actual data files also available on Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
-> Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
-
-
-
 Files in this example:
 
 * The input **ESA Sentinel L2A images** are in JPG2000 format and are already stored in Puhti: `/appl/data/geo/sentinel/s2_example_data/L2A`. Puhti has only these example images, more [Sentinel L2A images are available from CSC Allas](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-allas).
@@ -42,6 +36,23 @@ Files in this example:
 ## Interactive job
 
 Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+
+### Jupyter
+
+If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
+
+* Choose settings for Jupyter:
+    * Project: project_200xxxx
+    * Partition: interactive
+    * Number of CPU cores: 1
+    * Memory: 4 Gb
+    * Local disk: 0
+    * Time: 2:00:00
+    * Python: geoconda
+    * `Launch`
+* Wait a moment -> Connect to Jupyter
+* Jupyter opens up in the browser
+* Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/cscusername>/geocomputing/python/puhti` and find the file ending with `.ipynb`. Execute each code cell one after the other with `shift` +`enter`.
 
 ### Visual Studio Code
 
@@ -71,9 +82,7 @@ With Visual Studio Code you can also just run parts of the script.
     * Check that there are 3 new GeoTiff files in your work directory in the Files panel of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
 
-### Jupyter
 
-If you prefer prototyping and testing in a Jupyter Notebook, you can also do that in a similar manner than using Visual Studio Code. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
 
 ### Command line
 
