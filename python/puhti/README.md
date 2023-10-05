@@ -10,12 +10,7 @@ Basic idea behind the script is to:
 
 - Find red and near infrared channels of Sentinel L2A products from its `SAFE` folder and open the `jp2` files. -> `readImage`
 - Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index. -> `calculateNDVI`
-- Save output as GeoTiff with `rasterio`. -> `saveImage`
-
-> [!NOTE]
-> When moving a Python script from your own computer to Puhti, take care of any hard-coded file dependencies (e.g.  `/my/home/dir/file.txt` ). It is not recommended to have hard-coded file paths in your scripts, instead, provide them as command line input to your script or make use of configuration files. No matter where you input your file paths, always make sure that you have the actual data files also available on Puhti. Also check that all used Python packages are available on Puhti, eg within the [geoconda module](https://docs.csc.fi/apps/geoconda). If needed, you can [add Python packages for your own usage](https://docs.csc.fi/apps/python/#installing-python-packages-to-existing-modules) also yourself.
-> Also read the [Puhti batch job system documentation](https://docs.csc.fi/computing/running/getting-started/)
-
+- Save output as GeoTiff with `rasterio`. -> `saveImage
 
 
 Files in this example:
@@ -31,12 +26,12 @@ Files in this example:
 * Log in to Puhti web interface: https://puhti.csc.fi
 * Start a `Login node shell`
 * Create a folder for yourself:
-    * Switch to your projects scratch directory: `cd /scratch/project_200xxxx/` (fill in your project number for x)
+    * Switch to your projects scratch directory and further int the students directory: `cd /scratch/project_200xxxx/students` (fill in your project number for x)
     * Create new own folder:`mkdir <your_username>` (fill in your user name for y)
     * Switch into your own folder: `cd <your_username>` (fill in your username for y)
     * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
     * Switch to the directory with example files: `cd python/puhti`.
-    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/<your_username>/python/puhti`.
+    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/students/cscusername>/python/puhti`.
     
     
 ## Interactive job
@@ -61,7 +56,7 @@ With Visual Studio Code you can also just run parts of the script.
     * Wait a moment -> Connect to Visual studio code
     * VSCode opens up in the browser
 * Open folder with exercise files: 
-    * File -> Open folder -> /scratch/project_200xxxx/<your_username>/geocomputing/python/puhti -> OK
+    * File -> Open folder -> /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti -> OK
 * Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is a Python script, which uses a **for loop** for going through all 3 files.  
 * Check that needed Python libraries are available in Puhti. If it is not your own script you can see which libraries are used in this script by checking the imports. To check whether those libraries are available: Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
 * Run the full script: 
@@ -73,7 +68,7 @@ With Visual Studio Code you can also just run parts of the script.
 
 ### Jupyter
 
-If you prefer prototyping and testing in a Jupyter Notebook, you can also do that in a similar manner than using Visual Studio Code. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
+If you prefer prototyping and testing in a Jupyter Notebook, you can also do that in a similar manner as when using Visual Studio Code. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
 
 ### Command line
 
@@ -84,7 +79,7 @@ If you prefer working in the terminal, you can also start an interactive job the
 * Local disk: 0
 * Time: 2:00:00
 
-You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) by starting a login node shell from Tools tab in Puhti webinterface or by connecting to Puhti via ssh connection with `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0`. Which gives you a compute node shell (you can see "where" you are from your terminal prompt [<username>@puhti-loginXX] -> login node, [<username>@rXXcXX] (XX being some numbers) -> compute node). 
+You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) by starting a login node shell from Tools tab in Puhti webinterface or by connecting to Puhti via ssh connection with `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0`. Which gives you a compute node shell (you can see "where" you are from your terminal prompt [cscusername@puhti-loginXX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node). 
 
 For both of above:
 
@@ -100,19 +95,36 @@ python single_core_example.py /appl/data/geo/sentinel/s2_example_data/L2A
 
 For a one core batch job, use the same Python-script as for interactive working. **Latest now, we have to move to the terminal.**
 
-* Open [01_serial/single_core_example.sh](01_serial/serial_batch_job.sh). Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which module is used?
+* Open [01_serial/single_core_example.sh](01_serial/serial_batch_job.sh).
+
+> [!NOTE]
+> * Where are output and error messages written?
+> * How many cores and for how long time are reserved?
+> * How much memory?
+> * Which partition is used?
+> * Which module is used?
+
+
 * Submit batch job from **login node shell**
 ```
-cd /scratch/project_200xxxx/<your_username>/geocomputing/python/puhti/01_serial
+cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
 ``` 
-* `sbatch` prints out a job ID, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory?
+* `sbatch` prints out a job ID
+*
+> [!NOTE]
+> Use the job ID to check state and efficiency of the batch job.
+> Did you reserve a good amount of memory?
+
 ```
 seff [jobid]
 ```
-* Once the job is finished, see output in out.txt and err.txt for any possible errors and other outputs. Open the files with VSCode. 
+* Once the job is finished, see output in out.txt and err.txt for any possible errors and other outputs. 
 * Check that you have new GeoTiff files in working folder.
-* Check the resources used in another way. 
+
+> [!NOTE]
+> Check the resources used in another way.
+
 ```
 sacct -j [jobid] -o JobName,elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 ```
@@ -137,12 +149,16 @@ In this case the Python code takes care of dividing the work to 3 processes, one
 * [03_parallel_multiprocessing/multiprocessing_example.py](03_parallel_multiprocessing/multiprocessing_example.py)
 	* Note how pool of workers is started and processes divided to workers with `pool.map()`. This replaces the for loop in simple serial job.
 
-* Submit the parallel job to Puhti from SSH terminal
+> [!NOTE]
+> Submit the parallel job to Puhti from login node shell
+
 ```
 cd ../03_parallel_multiprocessing
 sbatch multiprocessing_example.sh
 ```
-* Check with `seff` and `sacct` how much time and resources you used?
+
+> [!NOTE]
+> Check with `seff`: How much time and resources did you use?
 
 ### dask
 
@@ -155,18 +171,21 @@ sbatch multiprocessing_example.sh
 * [05_parallel_dask/single_node/dask_singlenode.py](05_parallel_dask/single_node/dask_singlenode.py)
 
 
-* Submit the parallel job to Puhti from Puhti login node shell:
+> [!NOTE]
+> Submit the parallel job to Puhti from login node shell
+
 ```
 cd ../parallel_dask
 sbatch dask_singlenode.sh
 ```
 
-* Check with `seff` how much time and resources you used?
+> [!NOTE]
+> Check with `seff`: How much time and resources did you use?
 
 
 ## Array job
 
-[Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context a typical use case would be to run some model on study area split into multiple files where output from one file doesn't have an impact on result of an other area. 
+[Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are one way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters without the need to change the Python code. In GIS context a typical use case would be to run some model on study area split into multiple files where output from one file doesn't have an impact on result of an other area. 
 
 In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script. That means that the Python script has to read the file to be processed from commandline  argument. 
 
@@ -180,12 +199,15 @@ In the array job example the idea is that the Python script will run one process
     * Python script reads the input image file from the argument, which is set inside the batch job file. 
 	* For looped has been removed, each job calculates only one file.
 	
-* Submit the array job
+> [!NOTE]
+> Submit the array job to Puhti from login node shell
 ```
 cd ../02_array
 sbatch array_job_example.sh
 ```
-* Check with `seff` and `sacct` how much time and resources you used?
+> [!NOTE]
+> Check with `seff`: How much time and resources did you use?
+
 
 ## GNU parallel
 
@@ -198,12 +220,16 @@ The only difference to serial job is that we do not loop through the directory i
 
 > To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` to count everything within the data directory before writing the batch job script. 
 
-Submit the gnu_parallel job
+> [!NOTE]
+> Submit the job to Puhti from login node shell
+
 ```
 cd ../06_gnu_parallel
 sbatch gnu_parallel_example.sh
 ```
-* Check with `seff` how much time and resources you used?
+> [!NOTE]
+> Check with `seff`: How much time and resources did you use?
+
 
 ## Example benchmarks 
 
