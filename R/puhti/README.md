@@ -22,7 +22,9 @@ Files in this example:
 
 * Open [Puhti web interface](https://puhti.csc.fi) and log in with CSC user account.
 * Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio, from front page or `Apps -> RStudio`
-  * Project: your CSC project name, usually in style `project_200xxxx`
+  * (Reservation: `geocomputing_fri`, only during course)
+  * Project: `project_200xxxx`
+  * Partition: `interactive` (`small` during course)
   * Partition: interactive
   * CPU cores: 1
   * Memory: 4
