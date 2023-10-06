@@ -54,6 +54,8 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
 * Jupyter opens up in the browser
 * Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/cscusername>/geocomputing/python/puhti` and find the file ending with `.ipynb`. Execute each code cell one after the other with `shift` +`enter`.
 
+Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it. This means for example to put parts into functions so that they can be reused. You can find one such cleaned up and generalized script in `01_serial/single_core_example.py`. Let's take a look at how it differs and what we can do with it.
+
 ### Visual Studio Code
 
 With Visual Studio Code you can also just run parts of the script.
@@ -74,8 +76,12 @@ With Visual Studio Code you can also just run parts of the script.
 * Open folder with exercise files: 
     * File -> Open folder -> /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti -> OK
 * Open [01_serial/single_core_example.py](01_serial/single_core_example.py). This is a Python script, which uses a **for loop** for going through all 3 files.  
-* Check that needed Python libraries are available in Puhti. If it is not your own script you can see which libraries are used in this script by checking the imports. To check whether those libraries are available: Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
-* Run the full script: 
+* Check that needed Python libraries are available in Puhti.
+
+> [!NOTE]
+> If it is not your own script you can see which libraries are used in this script by checking the imports. To check whether those libraries are available: Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
+
+* We can then run the full script by following these steps: 
     * Exit Python console in Terminal: type `exit()` in the terminal
     * Click green arrow above script (Run Python File in Terminal)
     * Wait, it takes a few minutes for complete. The printouts will appear during the process.
@@ -85,6 +91,7 @@ With Visual Studio Code you can also just run parts of the script.
 ### Command line
 
 If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti webinterface. Choose settings for the interactive session:
+
 * Project: project_200xxxx
 * Number of CPU cores: 1
 * Memory: 4 Gb
@@ -103,11 +110,10 @@ cd 01_serial
 python single_core_example.py /appl/data/geo/sentinel/s2_example_data/L2A
 ```
 
-
-
 ### Command line
 
 If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti webinterface. Choose settings for the interactive session:
+
 * Project: project_200xxxx
 * Number of CPU cores: 1
 * Memory: 4 Gb
