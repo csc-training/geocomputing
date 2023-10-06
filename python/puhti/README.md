@@ -4,7 +4,7 @@ Here are examples for running Python code on CSC's Puhti supercomputer as four d
 
 ## Example case
 
-The example calculate NDVI (Normalized Difference Vegetation Index) from the Sentinel2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask example) and only the method of parallelisation changes (the code in the main function). 
+The example calculates NDVI (Normalized Difference Vegetation Index) from the Sentinel2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask example) and only the method of parallelization changes (the code in the main function). 
 
 Basic idea behind the script is to:
 
@@ -39,7 +39,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 
 ### Jupyter
 
-If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
+If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface.
 
 * Choose settings for Jupyter:
     * Project: project_200xxxx
@@ -52,7 +52,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * `Launch`
 * Wait a moment -> Connect to Jupyter
 * Jupyter opens up in the browser
-* Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/cscusername>/geocomputing/python/puhti` and find the file ending with `.ipynb`. Execute each code cell one after the other with `shift` +`enter`.
+* Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/cscusername>/geocomputing/python/puhti` and find the file ending with `.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
 
 Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it. This means for example to put parts into functions so that they can be reused. You can find one such cleaned up and generalized script in `01_serial/single_core_example.py`. Let's take a look at how it differs and what we can do with it.
 
@@ -90,7 +90,7 @@ With Visual Studio Code you can also just run parts of the script.
 
 ### Command line
 
-If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti webinterface. Choose settings for the interactive session:
+If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti web interface. Choose settings for the interactive session:
 
 * Project: project_200xxxx
 * Number of CPU cores: 1
@@ -110,37 +110,15 @@ cd 01_serial
 python single_core_example.py /appl/data/geo/sentinel/s2_example_data/L2A
 ```
 
-### Command line
-
-If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti webinterface. Choose settings for the interactive session:
-
-* Project: project_200xxxx
-* Number of CPU cores: 1
-* Memory: 4 Gb
-* Local disk: 0
-* Time: 2:00:00
-
-You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) by starting a login node shell from Tools tab in Puhti webinterface or by connecting to Puhti via ssh connection with `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0`. Which gives you a compute node shell (you can see "where" you are from your terminal prompt [<username>@puhti-loginXX] -> login node, [<username>@rXXcXX] (XX being some numbers) -> compute node). 
-
-For both of above:
-
-After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer", excluding graphical access.
-```
-module load geoconda
-cd 01_serial
-python single_core_example.py /appl/data/geo/sentinel/s2_example_data/L2A
-```
-
-
 ## Serial job
 
 For a one core batch job, use the same Python-script as for interactive working. **Latest now, we have to move to the terminal.**
 
-* Open [01_serial/single_core_example.sh](01_serial/serial_batch_job.sh).
+* Open [01_serial/single_core_example.sh](01_serial/single_core_example.sh).
 
 > [!NOTE]
 > * Where are output and error messages written?
-> * How many cores and for how long time are reserved?
+> * How many cores are reserved, and for how long a time? 
 > * How much memory?
 > * Which partition is used?
 > * Which module is used?
@@ -181,7 +159,7 @@ sacct -j [jobid] -o JobName,elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 ## External parallelization
 ### GNU parallel
 
-GNU parallel can help parallelizing a script which otherwise is not parallelized. In this example we want to run the same script on three different inputfiles which we can read into a textfile and use as argument to the parallel tool.
+GNU parallel can help parallelizing a script which otherwise is not parallelized. In this example we want to run the same script on three different inputfiles which we can read into a textfile and use as argument for the parallel tool.
 
 This is similar to array jobs (see [Geocomputing array job example](https://github.com/csc-training/geocomputing/tree/master/python/puhti/02_array)), with the advantage that we do not start and need to monitor multiple jobs.
 
@@ -202,17 +180,17 @@ sbatch gnu_parallel_example.sh
 
 ### Array job
 
-In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script. That means that the Python script has to read the file to be processed from commandline  argument. 
+In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script. That means that the Python script has to read the file to be processed from commandline argument. 
 
 * [02_array/array_job_example.sh](02_array/array_job_example.sh) array job batch file. Changes compared to simple serial job:
-    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SULRM_ARRAY_TASK_ID` variable will be from 1 to 3. We can use `sed` to read the first three lines from our `image_path_list.txt` file and start a job for each input file. 
+    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SLURM_ARRAY_TASK_ID` variable will be from 1 to 3. We can use `sed` to read the first three lines from our `image_path_list.txt` file and start a job for each input file. 
 	* Output from each job is written to `array_job_out_<array_job_id>.txt` and `array_job_err_<array_job_id>.txt` files. 
 	* Memory and time allocations are per job.
 	* The image name is provided as an argument in the batch job script to the Python script. 
 	
 * [02_array/array_job_example.py](02_array/array_job_example.py). 
     * Python script reads the input image file from the argument, which is set inside the batch job file. 
-	* For looped has been removed, each job calculates only one file.
+	* For loop has been removed, each job calculates only one file.
 	
 > [!NOTE]
 > Submit the array job to Puhti from login node shell
@@ -226,7 +204,7 @@ sbatch array_job_example.sh
 
 ## Internal parallelization
 
-We can also paralellize within Python. In this case the Python code takes care of dividing the work to 3 processes, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely easiest to use and in inlcuded in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
+We can also paralellize within Python. In this case the Python code takes care of dividing the work to 3 processes, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely easiest to use and is included in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
 
 ### Multiprocessing
 
@@ -235,7 +213,7 @@ We can also paralellize within Python. In this case the Python code takes care o
 	* `--mem-per-cpu=4G` reserves memory per core
 
 * [03_parallel_multiprocessing/multiprocessing_example.py](03_parallel_multiprocessing/multiprocessing_example.py)
-	* Note how pool of workers is started and processes divided to workers with `pool.map()`. This replaces the for loop in simple serial job.
+	* Note how the pool of workers is started and processes divided to workers with `pool.map()`. This replaces the for loop in simple serial job.
 
 > [!NOTE]
 > Submit the parallel job to Puhti from login node shell
