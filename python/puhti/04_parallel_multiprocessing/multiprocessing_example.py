@@ -1,16 +1,22 @@
 """
 A simple example Python script how to calculate NDVI for three Sentinel satellite images
-with an array job.
-This script handles only ONE file, which is given as parameter to the script.
+in parallel with the multiprocessing library.
+
+All the files are worked in parallel with the help of a multiprocessin Pool, see main()-function.
+More info about Python multiprocessing library can be found from:
+https://sebastianraschka.com/Articles/2014_multiprocessing.html
 
 Author: Johannes Nyman, CSC
 Date: 31.03.2020
 """
+
 import os
 import time
+import sys
 import rasterio
+from multiprocessing import Pool
 
-### The filepath for the input Sentinel image that is given as input parameter
+### The filepath for the input Sentinel image folder and the output filename
 image_folder = sys.argv[1]
 
 def readImage(image_folder_fp):
@@ -21,7 +27,7 @@ def readImage(image_folder_fp):
         for file in files:
             if file.endswith("_B04_10m.jp2"):
                 red_fp = os.path.join(subdir,file)
-            if file.endswith("_B08_10m.jp2"):
+            elif file.endswith("_B08_10m.jp2"):
                 nir_fp = os.path.join(subdir,file)
 
     ### Read the red and nir (near-infrared) band files with Rasterio
@@ -48,9 +54,10 @@ def calculateNDVI(red,nir):
     return ndvi
 
 def saveImage(ndvi, sentinel_image_path, input_image):
-
+    ## Create output filepath for the image. We use the input name with _NDVI end
     output_file = os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
     print("Saving image: %s" % output_file)
+
     ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
     metadata = input_image.profile
 
@@ -76,9 +83,17 @@ def processImage(sentinel_image_path):
     saveImage(ndvi,sentinel_image_path,red)
 
 def main():
-    print("\nProcess started")
-    processImage(image_folder)
-    print("Processing done\n")
+    ## How many parallel processes do we want to use
+    ## Take all that were reserved from batch job
+    parallel_processes = len(os.sched_getaffinity(0))
+   
+    ## Make a list of the full filepaths of the sentinel image folders
+    list_of_sentinel_folders = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith('.SAFE')]
+
+    ## Create a pool of workers and run the function processImage for each filepath in the list
+    pool = Pool(parallel_processes)
+    pool.map(processImage, list_of_sentinel_folders)
+
 
 if __name__ == '__main__':
     ## This part is the first to execute when script is ran. It times the execution time and rans the main function

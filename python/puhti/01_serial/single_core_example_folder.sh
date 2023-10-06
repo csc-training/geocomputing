@@ -10,6 +10,6 @@
 
 module load geoconda
 
-ones2file=/appl/data/geo/sentinel/s2_example_data/L2A/S2B_MSIL2A_20190530T094039_N0212_R036_T36VUR_20190530T113343.SAFE
+data_folder=/appl/data/geo/sentinel/s2_example_data/L2A/
 
-srun python single_core_example.py $ones2file
+srun python single_core_example.py $data_folder

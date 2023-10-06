@@ -92,7 +92,7 @@ def main():
         folder_path = os.path.join(image_folder, directory)
         if os.path.isdir(folder_path):
             print(folder_path)
-            ### add delayed processImage function for one image to a list
+            ### add delayed processImage function for one image to a list instead of running the process directly
             list_of_delayed_functions.append(delayed(processImage)(folder_path))
 
     ## After constructing the Dask graph of delayed functions, run them with the resources available
