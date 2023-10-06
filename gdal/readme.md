@@ -59,14 +59,17 @@ We will use Puhti web interface simple file editor for editing the files in this
 
 Open the files with Edit under the menu behind the file name. 
 * [gdal_serial.sh](gdal_serial.sh) - the bash script, includes GDAL commands to be executed. For handling several files a for loop is used.
-	* Change the project name and username to yours in both GDAL commands. Save.
+	* Change the project name and username to yours in the GDAL command. Save.
 * [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
-	* Change the project name in SLURM settings. Save.
+	* Change the project name in `#SBATCH --account` setting. Save.
 
 * Run the script as batch file: 
 ```
 sbatch gdal_batch_job_serial.sh
 ```
+* See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
+	* For seeing the files use Puhti web interface or Linux `less <filename>`
+ 	* With `tail -f <filename>` it is possible to see also how the output files are written during the job.
 * Check that you have new GeoTiff files in the working folder. Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 
 * See how to job is progressing with following the output file contents update.
@@ -102,7 +105,7 @@ Open the files with Edit:
 * [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.
 	* No edits are needed, for only viewing the file, click the file name in Files page.
 * [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. How many cores are reserved? How much memory? Which modules are used? 
-	* Change the project name in SLURM settings. Save.
+	* Change the project name in `#SBATCH --account` setting. Save.
    
 * Run the script as batch file: 
 ```
