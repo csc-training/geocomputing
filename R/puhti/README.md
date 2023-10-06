@@ -105,7 +105,9 @@ In the array job example the idea is that the R script will run one process for 
 
 * [05_array/array_batch_job.sh](05_array/array_batch_job.sh) array job batch file. Changes compared to simple serial job:
     * Fix the project name in the beginning of the file to match your CSC project name.
-    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SLURM_ARRAY_TASK_ID` variable will be from 1 to 3. With `sed` read first three lines from `mapsheets.txt` file and start a job for each input file. 
+    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SLURM_ARRAY_TASK_ID` variable will be from 1 to 3.
+    	* `sed` is used to read the lines from `mapsheets.txt` file and make the lines available as bash script variables.
+     	* The R script is started with file name as argument.
 	* Output from each job is written to slurm-<job_id>_<array_id>.out and slurm-<array_id>_%a.err files. 
 	* Memory and time allocations are per job.
 	* The image name is provided as an argument in the batch job script to the R script. 
