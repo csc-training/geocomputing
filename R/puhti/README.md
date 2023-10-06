@@ -64,7 +64,8 @@ sbatch serial_batch_job.sh
 ```
 seff <jobid>
 ```
-* Once the job is finished, see output in out.txt and err.txt for any possible errors and other outputs. 
+* Once the job is finished, see output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
+	* For seeing the files use RStudio or Linux `less <filename>` or `tail -f <filename>`, the last shows the output as it is written to the file.
 * Check that you have 3 new GeoPackge files in the working folder.
 * Check the resources used in another way. 
 ```
@@ -105,7 +106,7 @@ In the array job example the idea is that the R script will run one process for 
 * [05_array/array_batch_job.sh](05_array/array_batch_job.sh) array job batch file. Changes compared to simple serial job:
     * Fix the project name in the beginning of the file to match your CSC project name.
     * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SULRM_ARRAY_TASK_ID` variable will be from 1 to 3. With `sed` read first three lines from `mapsheets.txt` file and start a job for each input file. 
-	* Output from each job is written to `array_job_out_<array_job_id>.txt` and `array_job_err_<array_job_id>.txt` files. 
+	* Output from each job is written to slurm-<job_id>_<array_id>.out and slurm-<array_id>_%a.err files. 
 	* Memory and time allocations are per job.
 	* The image name is provided as an argument in the batch job script to the R script. 
 	
@@ -115,6 +116,7 @@ In the array job example the idea is that the R script will run one process for 
 	
 * Submit the array job
 ```
+cd ../05_array
 sbatch array_batch_job.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
