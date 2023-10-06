@@ -64,8 +64,9 @@ sbatch serial_batch_job.sh
 ```
 seff <jobid>
 ```
-* Once the job is finished, see output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
-	* For seeing the files use RStudio or Linux `less <filename>` or `tail -f <filename>`, the last shows the output as it is written to the file.
+* See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
+	* For seeing the files use RStudio or Linux `less <filename>`
+ 	* With `tail -f <filename>` it is possible to see also how the output files are written during the job.
 * Check that you have 3 new GeoPackge files in the working folder.
 * Check the resources used in another way. 
 ```
