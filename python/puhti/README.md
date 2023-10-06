@@ -10,8 +10,7 @@ Basic idea behind the script is to:
 
 - Find red and near infrared channels of Sentinel L2A products from its `SAFE` folder and open the `jp2` files. -> `readImage`
 - Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index. -> `calculateNDVI`
-- Save output as GeoTiff with `rasterio`. -> `saveImage
-
+- Save output as GeoTiff with `rasterio`. -> `saveImage`
 
 Files in this example:
 
@@ -37,6 +36,23 @@ Files in this example:
 ## Interactive job
 
 Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
+
+### Jupyter
+
+If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
+
+* Choose settings for Jupyter:
+    * Project: project_200xxxx
+    * Partition: interactive
+    * Number of CPU cores: 1
+    * Memory: 4 Gb
+    * Local disk: 0
+    * Time: 2:00:00
+    * Python: geoconda
+    * `Launch`
+* Wait a moment -> Connect to Jupyter
+* Jupyter opens up in the browser
+* Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/cscusername>/geocomputing/python/puhti` and find the file ending with `.ipynb`. Execute each code cell one after the other with `shift` +`enter`.
 
 ### Visual Studio Code
 
@@ -66,10 +82,6 @@ With Visual Studio Code you can also just run parts of the script.
     * Check that there are 3 new GeoTiff files in your work directory in the Files panel of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
 
-### Jupyter
-
-If you prefer prototyping and testing in a Jupyter Notebook, you can also do that in a similar manner as when using Visual Studio Code. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti webinterface.
-
 ### Command line
 
 If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti webinterface. Choose settings for the interactive session:
@@ -85,6 +97,28 @@ For both of above:
 
 After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer", excluding graphical access.
 
+```
+module load geoconda
+cd 01_serial
+python single_core_example.py /appl/data/geo/sentinel/s2_example_data/L2A
+```
+
+
+
+### Command line
+
+If you prefer working in the terminal, you can also start an interactive job there by starting a compute node shell directly from Tools tab in Puhti webinterface. Choose settings for the interactive session:
+* Project: project_200xxxx
+* Number of CPU cores: 1
+* Memory: 4 Gb
+* Local disk: 0
+* Time: 2:00:00
+
+You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) by starting a login node shell from Tools tab in Puhti webinterface or by connecting to Puhti via ssh connection with `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0`. Which gives you a compute node shell (you can see "where" you are from your terminal prompt [<username>@puhti-loginXX] -> login node, [<username>@rXXcXX] (XX being some numbers) -> compute node). 
+
+For both of above:
+
+After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer", excluding graphical access.
 ```
 module load geoconda
 cd 01_serial
@@ -229,7 +263,6 @@ sbatch dask_singlenode.sh
 
 > [!NOTE]
 > Check with `seff`: How much time and resources did you use?
-
 
 ## Example benchmarks 
 
