@@ -1,6 +1,6 @@
 """
 An example Python script how to calculate NDVI for three Sentinel satellite images
-in parallel with the dask.
+in parallel with the dask and xarray library.
 
 All the files are worked in parallel with the help of Dask delayed functions, see main()-function.
 More info about Python Dask library can be found from:
@@ -11,14 +11,23 @@ Author: Johannes Nyman, Samantha Wittke, CSC
 
 import os
 import sys
-import rasterio
+import xarray as xr
 import time
 from dask import delayed
 from dask import compute
 
+### This import exists in a another python file called rasterio_to_xarray.py
+### It is downloaded from here https://github.com/robintw/XArrayAndRasterio/blob/master/rasterio_to_xarray.py
+from rasterio_to_xarray import xarray_to_rasterio
+
 ### Declare the folder with input sentinel SAFE folders and output folder
 image_folder = sys.argv[1]
 
+## Create a results folder to this location
+output_folder = "output"
+
+if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
 
 def readImage(image_folder_fp):
     print("Reading Sentinel image from: %s" % (image_folder_fp))
@@ -31,59 +40,47 @@ def readImage(image_folder_fp):
             if file.endswith("_B08_10m.jp2"):
                 nir_fp = os.path.join(subdir,file)
 
-    ### Read the red and nir (near-infrared) band files with Rasterio
-    red = rasterio.open(red_fp)
-    nir = rasterio.open(nir_fp)
+    ### Read the red and nir band files to xarray and with the chunk-option to dask
+    red = xr.open_rasterio(red_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
+    nir = xr.open_rasterio(nir_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
 
-    ### Return the rasterio objects as a list
+    ### Scale the image values back to real reflectance values
+    red = red /10000
+    nir = nir /10000
+
     return red,nir
 
 def calculateNDVI(red,nir):
     print("Computing NDVI")
-    ### This function calculates NDVI from the red and nir bands
+    ### This function calculates NDVI with xarray
 
-    ## Read the rasterio objects pixel information to numpy arrays
-    red = red.read(1)
-    nir = nir.read(1)
+    ## NDVI calculation for all pixels where red or nir != 0
+    ndvi = xr.where((nir ==0)  & (red==0), 0, (nir - red) / (nir + red))
 
-    ### Scale the image values back to real reflectance values (sentinel pixel values have been multiplied by 10000)
-    red = red /10000
-    nir = nir /10000
-
-    ### the NDVI formula
-    ndvi = (nir - red) / (nir + red)
     return ndvi
 
+def processImage(image_folder_fp):
+    ### This is the function that gets parallellized. This gathers all operations we do for one image
 
+    ## Read image and get a list of opened bands
+    red,nir = readImage(image_folder_fp)
 
-def saveImage(ndvi, sentinel_image_path, input_image):
-    ## Create output filepath for the image. We use the input name with _NDVI end
-    output_file = os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
-    print("Saving image: %s" % output_file)
-
-    ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
-    metadata = input_image.profile
-
-    ## Change the data type from integer to float and file type from jp2 to GeoTiff
-    metadata.update(
-        dtype=rasterio.float64,
-        driver='GTiff')
-
-    ## Write the ndvi numpy array to a GeoTiff with the updated metadata
-    with rasterio.open(output_file, 'w', **metadata) as dst:
-        dst.write(ndvi, 1)
-
-def processImage(sentinel_image_path):
-    ### This function processes one image (read, compute, save)
-
-    ## Read the image and get rasterio objects from the red nir bands
-    red, nir = readImage(sentinel_image_path)
-
-    ## Calculate NDVI and get the resulting numpy array
+    ## Calculate NDVI and save the result file
     ndvi = calculateNDVI(red,nir)
 
-    ## Write the NDVI numpy array to file to the same extent as the red input band
-    saveImage(ndvi,sentinel_image_path,red)
+    ## Get image name and save image
+    image_name = os.path.basename(image_folder_fp)
+    saveImage(ndvi,image_name)
+
+    return image_name
+
+def saveImage(ndvi,image_name):
+    ## Create the output filename and save it with using a function xarray_to_rasterio from a separate python file
+    output_file = image_name.replace(".SAFE", "_NDVI.tif")
+    output_path = os.path.join(output_folder, output_file)
+
+    print("Saving image: %s" % output_path)
+    xarray_to_rasterio(ndvi,  output_path)
 
 def main():
 

@@ -67,7 +67,6 @@ As mentioned, Jupyter is nice for prototyping and testing, however if we want to
 
 ### Interactive job with Python script
 
-
 #### Visual Studio Code
 
 Visual Studio Code or VSCode is a source code editor by Microsoft. In addition to being able to run the full script within Visual Studio Code, it also possible to run parts of a script step by step.
@@ -96,7 +95,6 @@ Visual Studio Code or VSCode is a source code editor by Microsoft. In addition t
     * Wait, it takes a few minutes for complete. The printouts will appear  in the terminal during the process.
     * Check that there is one new GeoTiff file in your work directory in the Files panel of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
-
 
 #### Command line
 
@@ -183,11 +181,8 @@ sacct -j jobid -o JobName,elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 > [!NOTE]
 > What if we want to run the same process for not only one, but all Sentinel-2 files within a folder? We could run the same script with different input one after another from the sbatch file, or adjust the Python script to take in the data folder instead of just one Sentinel-2 "file" and loop through all files in the main function (see `01_serial/single_core_example_folder.sh` and `01_serial/single_core_example_folder.py`). 
 
-## External parallelization
 
-For external parallelization, we can use the same Python file as before with one file input, only the batch job script needs to be adjusted. You can find an example file in `03_gnu_parallel/gnu_parallel_example.sh`.
-
-### GNU parallel
+## GNU parallel
 
 GNU parallel can help parallelizing a script which otherwise is not parallelized. In this example we want to run the same script on three different inputfiles which we can read into a textfile and use as argument for the parallel tool.
 
@@ -237,7 +232,7 @@ sbatch array_job_example.sh
 > Check with `seff`: How much time and resources did you use?
 
 
-## Internal parallelization
+## Parallelization within Python
 
 We can also paralellize within Python. In this case there is no for loop to process them one after another, but the Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely easiest to use and is included in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
 
@@ -288,6 +283,8 @@ sbatch dask_singlenode.sh
 
 > [!NOTE]
 > Check with `seff`: How much time and resources did you use?
+
+Another example using xarray in addition to dask is provided in [06_parallel_dask/single_node/dask_singlenode_xr.sh](06_parallel_dask/single_node/dask_singlenode_xr.sh).
 
 ## Example benchmarks 
 
