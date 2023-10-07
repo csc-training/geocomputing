@@ -286,6 +286,9 @@ sbatch dask_singlenode.sh
 
 Another example using xarray in addition to dask is provided in [06_parallel_dask/single_node/dask_singlenode_xr.sh](06_parallel_dask/single_node/dask_singlenode_xr.sh).
 
+Check out also [CSC dask tutorial](https://docs.csc.fi/support/tutorials/dask-python/).
+Dask can do so much more than delay function computation. Check out the [dask documentation](https://docs.dask.org/en/stable/)and for example [NCAR dask tutorial](https://ncar.github.io/dask-tutorial/README.html).
+
 ## Example benchmarks 
 
 These are just to demonstrate the difference between single core vs. some kind of parallelism. Depending on the issue, some library might be faster or slower.
