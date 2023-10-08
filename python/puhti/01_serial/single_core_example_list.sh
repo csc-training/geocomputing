@@ -10,6 +10,10 @@
 
 module load geoconda
 
-ones2file=/appl/data/geo/sentinel/s2_example_data/L2A/S2B_MSIL2A_20190530T094039_N0212_R036_T36VUR_20190530T113343.SAFE
+#collect all filepaths in a text file
+readlink -f /appl/data/geo/sentinel/s2_example_data/L2A/S2* > image_path_list.txt
 
-srun python single_core_example.py $ones2file
+#loop through files in txtfile
+while read ones2file; do
+  srun python single_core_example.py $ones2file
+done <image_path_list.txt
