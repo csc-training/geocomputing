@@ -70,11 +70,10 @@ def processImage(sentinel_image_path):
     saveImage(ndvi,sentinel_image_path,red)
 
 def main():
-    ## run the process on input dir if it is a directory
-    if os.path.isdir(sentinel_image_path):
-        print(f"\nProcess of {sentinel_image_path} started")
-        processImage(sentinel_image_path)
-        print(f"Processing of {sentinel_image_path} done\n")
+
+    print(f"\nProcess of {sentinel_image_path} started")
+    processImage(sentinel_image_path)
+    print(f"Processing of {sentinel_image_path} done\n")
 
 if __name__ == '__main__':
     ## This part is the first to execute when script is ran. It times the execution time and rans the main function
