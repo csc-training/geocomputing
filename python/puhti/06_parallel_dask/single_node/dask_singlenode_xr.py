@@ -12,6 +12,7 @@ Author: Johannes Nyman, Samantha Wittke, CSC
 import os
 import sys
 import xarray as xr
+import rioxarray
 import time
 from dask import delayed
 from dask import compute
@@ -41,8 +42,8 @@ def readImage(image_folder_fp):
                 nir_fp = os.path.join(subdir,file)
 
     ### Read the red and nir band files to xarray and with the chunk-option to dask
-    red = xr.open_rasterio(red_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
-    nir = xr.open_rasterio(nir_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
+    red = rioxarray.open_rasterio(red_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
+    nir = rioxarray.open_rasterio(nir_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
 
     ### Scale the image values back to real reflectance values
     red = red /10000
