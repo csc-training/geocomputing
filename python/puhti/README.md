@@ -108,9 +108,7 @@ If you prefer working in the command line, you can also start a compute node she
 
 > [!NOTE]
 > You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) from a login node (by starting a login node shell from tools tab in Puhti webinterface or by connecting to Puhti via ssh in your own computers terminal) with:
-
 >  `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
-
 > This gives you a compute node shell; you can see "where" you are from your terminal prompt [cscusername@puhti-loginXX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node. 
 
 For both of the above:
@@ -195,10 +193,11 @@ Submit the job to Puhti from login node shell:
 
 >[!NOTE]
 > Remember to change the project name and your CSC user name in the paths below.
-> ```
-> cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/02_gnu_parallel
-> sbatch gnu_parallel_example.sh
-> ```
+
+```
+cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/02_gnu_parallel
+sbatch gnu_parallel_example.sh
+```
 
 > [!NOTE]
 > Check with `seff jobid`: How much time and resources did you use?
