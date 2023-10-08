@@ -195,11 +195,11 @@ Submit the job to Puhti from login node shell:
 
 >[!NOTE]
 > Remember to change the project name and your CSC user name in the paths below.
+> ```
+> cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/02_gnu_parallel
+> sbatch gnu_parallel_example.sh
+> ```
 
-```
-cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/02_gnu_parallel
-sbatch gnu_parallel_example.sh
-```
 > [!NOTE]
 > Check with `seff jobid`: How much time and resources did you use?
 
