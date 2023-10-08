@@ -1,10 +1,13 @@
-# Python Puhti examples, calculate NDVI
+# Python Puhti examples
 
 Here are examples for running Python code on CSC's Puhti supercomputer as four different job styles: interactive, serial, array and embarrasingly/delightfully/naturally parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`.  We'll take a look at these three and `GNUParallel`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
 
 ## Example case
 
-The example calculates NDVI (Normalized Difference Vegetation Index) from Sentinel-2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask example) and only the method of parallelization changes (the code in the main function). 
+![NDVI of dead and green leaf](ndvi.png)
+From [ECE Montana](https://ece.montana.edu/seniordesign/archive/SP15/OpticalWeedMapping/ndvi.html)
+
+The example calculates NDVI (Normalized Difference Vegetation Index) from Sentinel-2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask - xarray example) and only the method of parallelization changes (the code in the main function). 
 
 Basic idea behind the script is to:
 
@@ -50,7 +53,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Project: project_200xxxx
     * Partition: interactive
     * Number of CPU cores: 1
-    * Memory: 4 Gb
+    * Memory: 2 Gb
     * Local disk: 0
     * Time: 1:00:00
     * Python: geoconda
@@ -76,7 +79,7 @@ Visual Studio Code or VSCode is a source code editor by Microsoft. In addition t
         * Project: project_200xxxx
         * Partition: interactive
         * Number of CPU cores: 1
-        * Memory: 4 Gb
+        * Memory: 2 Gb
         * Local disk: 0
         * Time: 1:00:00
         * Code version and compiler: leave default
@@ -102,7 +105,7 @@ If you prefer working in the command line, you can also start a compute node she
 
 * Project: project_200xxxx
 * Number of CPU cores: 1
-* Memory: 4 Gb
+* Memory: 2 Gb
 * Local disk: 0
 * Time: 1:00:00
 
