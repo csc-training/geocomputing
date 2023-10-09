@@ -136,7 +136,7 @@ python interactive_single_core_example.py
 
 ## Serial job
 
-What if we don't want the execution of the script blocking our command line? We need to start writing batch job scripts and separate the submission of the job on the login node from the execution of the job on a compute node -> We go non-interactive. **Latest from this point onwards we will have to work from the command line.**
+What if we don't want the execution of the script blocking our command line? We need to start writing batch job scripts and separate the submission of the job on the login node from the execution of the job on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
 
 * Open `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` (replace your project number and CSC username in path) with your favorite editor (e.g. `nano` in login node shell or open the file editor via the three dots next to the filename in the webinterface -> Files section or VSCode).
 
