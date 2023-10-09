@@ -53,10 +53,11 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Project: project_200xxxx
     * Partition: interactive
     * Number of CPU cores: 1
-    * Memory: 2 Gb
+    * Memory: 4 Gb
     * Local disk: 0
     * Time: 1:00:00
     * Python: geoconda
+    * Working directory: `/scratch/project_200xxxx/students/cscusername`
     * `Launch`
 
 * Wait a moment -> Connect to Jupyter
@@ -135,7 +136,7 @@ python interactive_single_core_example.py
 
 ## Serial job
 
-What if we don't want the execution of the script blocking our command line? We need to start writing batch job scripts and separate the submission of the job on the login node from the execution of the job on a compute node -> We go non-interactive. **Latest now, we have to move to the terminal.**
+What if we don't want the execution of the script blocking our command line? We need to start writing batch job scripts and separate the submission of the job on the login node from the execution of the job on a compute node -> We go non-interactive. **Latest from this point onwards we will have to work from the command line.**
 
 * Open `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` (replace your project number and CSC username in path) with your favorite editor (e.g. `nano` in login node shell or open the file editor via the three dots next to the filename in the webinterface -> Files section or VSCode).
 
