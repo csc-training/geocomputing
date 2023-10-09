@@ -53,7 +53,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Project: project_200xxxx
     * Partition: interactive
     * Number of CPU cores: 1
-    * Memory: 4 Gb
+    * Memory: 3 Gb
     * Local disk: 0
     * Time: 1:00:00
     * Python: geoconda
