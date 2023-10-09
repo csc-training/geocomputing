@@ -47,7 +47,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 
 ### Jupyter
 
-If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson. I
+If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
 
 * Settings for Jupyter:
     * Project: project_200xxxx
@@ -61,7 +61,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
 
 * Wait a moment -> Connect to Jupyter
 * Jupyter opens up in the browser
-* Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/cscusername/geocomputing/python/puhti` and find the file `interactive.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
+* Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti` and find the file `interactive.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
 
 As mentioned, Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it and put the code in a Python script. This means for example to put parts into functions, so that they can be reused. You can find one such cleaned up and generalized script with much more comments in `00_interactive/interactive_single_core_example.py`. Let's take a look at it: 
 
@@ -89,7 +89,7 @@ Visual Studio Code or VSCode is a source code editor by Microsoft. In addition t
     * VSCode opens up in the browser
 * Open folder with exercise files: 
     * Click three lines up left -> File -> Open folder -> `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti` -> OK
-* Open [00_interactive/interactive_single_core_example.py](01_serial/single_core_example.py). This is a Python script, which calculates NDVI for one input Sentinel-2 "file". 
+* Open [00_interactive/interactive_single_core_example.py](00_interactive/interactive_single_core_example.py). This is a Python script, which calculates NDVI for one input Sentinel-2 "file". 
 * Check that needed Python libraries are available in Puhti:
     * Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
 * We can also run the full script by following these steps: 
@@ -123,7 +123,7 @@ After getting access to the compute node shell, you can load modules and run scr
 
 ```
 module load geoconda
-cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/00_interactive
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/00_interactive
 python interactive_single_core_example.py 
 ```
 
@@ -137,7 +137,7 @@ python interactive_single_core_example.py
 
 What if we don't want the execution of the script blocking our command line? We need to start writing batch job scripts and separate the submission of the job on the login node from the execution of the job on a compute node -> We go non-interactive. **Latest now, we have to move to the terminal.**
 
-* Open `/scratch/project_200xxxx/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` (replace your project number and CSC username in path) with your favorite editor (e.g. `nano` in login node shell or open the file editor via the three dots next to the filename in the webinterface -> Files section or VSCode).
+* Open `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` (replace your project number and CSC username in path) with your favorite editor (e.g. `nano` in login node shell or open the file editor via the three dots next to the filename in the webinterface -> Files section or VSCode).
 
 * Check out the changes in the Python file compared to the `00_interactive/interactive_single_core_example.py`:
     * Python script reads one input image file from the argument, which is set inside the batch job file. 
@@ -158,7 +158,7 @@ What if we don't want the execution of the script blocking our command line? We 
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/01_serial
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
 ```
 
@@ -182,7 +182,7 @@ What if we want to run the same process for not only one, but all Sentinel-2 fil
 
 ## GNU parallel
 
-GNU parallel can help parallelizing a script which otherwise is not parallelized. Instead of looping through the three files available within the batch job or the Python script, we let GNU Parallel handle that step. Checkout how it is used in[02_gnu_parallel/gnu_parallel_example.sh](02_gnu_parallel/gnu_parallel_example.sh) with your favorite editor and adapt the project number.
+GNU parallel can help parallelizing a script which otherwise is not parallelized. Instead of looping through the three files available within the batch job or the Python script, we let GNU Parallel handle that step. Checkout how it is used in [02_gnu_parallel/gnu_parallel_example.sh](02_gnu_parallel/gnu_parallel_example.sh) with your favorite editor and adapt the project number.
 
 * Changes in the batch job file compared to the `01_serial/single_core_example_list.sh`:
     * `--cpus-per-task` parameter is used to reserve 3 CPUs for the job
@@ -198,7 +198,7 @@ Submit the job to Puhti from login node shell:
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/02_gnu_parallel
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/02_gnu_parallel
 sbatch gnu_parallel_example.sh
 ```
 
@@ -222,7 +222,7 @@ In the array job example the idea is that the Python script will run one process
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/03_array
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/03_array
 sbatch array_job_example.sh
 ```
 
@@ -232,7 +232,7 @@ sbatch array_job_example.sh
 
 ## Parallelization within Python
 
-We can also paralellize within Python. In this case there is no for loop to process them one after another, but the Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely easiest to use and is included in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
+We can also paralellize within Python. In this case there is no for loop to process them one after another, but the Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely the easiest to use and is included in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
 
 ### Multiprocessing
 
@@ -250,7 +250,7 @@ We can also paralellize within Python. In this case there is no for loop to proc
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/04_parallel_multiprocessing
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/04_parallel_multiprocessing
 sbatch multiprocessing_example.sh
 ```
 
@@ -275,7 +275,7 @@ sbatch multiprocessing_example.sh
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_200xxxx/cscusername/geocomputing/python/puhti/parallel_dask
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/06_parallel_dask/single_node
 sbatch dask_singlenode.sh
 ```
 
