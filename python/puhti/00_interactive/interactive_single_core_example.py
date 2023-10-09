@@ -76,7 +76,7 @@ def main():
         print(f"Processing of {sentinel_image_path} done\n")
 
 if __name__ == '__main__':
-    ## This part is the first to execute when script is ran. It times the execution time and rans the main function
+    ## This part is the first to execute when script is ran. It times the execution time and runs the main function
     start = time.time()
     main()
     end = time.time()
