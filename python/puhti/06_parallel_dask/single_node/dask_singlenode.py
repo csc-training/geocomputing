@@ -1,21 +1,28 @@
 """
-An example Python script how to calculate NDVI for one Sentinel satellite image
-using just 1 process.
+An example Python script how to calculate NDVI for three Sentinel satellite images
+in parallel with the dask.
 
-Author: Johannes Nyman, Kylli Ek, Samantha Wittke CSC
+All the files are worked in parallel with the help of Dask delayed functions, see main()-function.
+More info about Python Dask library can be found from:
+https://docs.dask.org/en/latest/why.html
 
+Author: Johannes Nyman, Samantha Wittke, CSC
 """
+
 import os
 import sys
-import time
 import rasterio
+import time
+from dask import delayed
+from dask import compute
 
+### Declare the folder with input sentinel SAFE folders and output folder
+image_folder = sys.argv[1]
 
-### The filepath for the input Sentinel image that is given as input parameter
-sentinel_image_path = sys.argv[1]
 
 def readImage(image_folder_fp):
-    print(f"Reading Sentinel image from: {image_folder_fp}")
+    print("Reading Sentinel image from: %s" % (image_folder_fp))
+
     ### Rather than figuring out what the filepath inside SAFE folder is, this is just finding the red and nir files with correct endings
     for subdir, dirs, files in os.walk(image_folder_fp):
         for file in files:
@@ -23,24 +30,31 @@ def readImage(image_folder_fp):
                 red_fp = os.path.join(subdir,file)
             if file.endswith("_B08_10m.jp2"):
                 nir_fp = os.path.join(subdir,file)
+
     ### Read the red and nir (near-infrared) band files with Rasterio
     red = rasterio.open(red_fp)
     nir = rasterio.open(nir_fp)
+
     ### Return the rasterio objects as a list
     return red,nir
 
 def calculateNDVI(red,nir):
     print("Computing NDVI")
     ### This function calculates NDVI from the red and nir bands
+
     ## Read the rasterio objects pixel information to numpy arrays
     red = red.read(1)
     nir = nir.read(1)
+
     ### Scale the image values back to real reflectance values (sentinel pixel values have been multiplied by 10000)
     red = red /10000
     nir = nir /10000
+
     ### the NDVI formula
     ndvi = (nir - red) / (nir + red)
     return ndvi
+
+
 
 def saveImage(ndvi, sentinel_image_path, input_image):
     ## Create an output folder to this location, if it does not exist
@@ -62,22 +76,35 @@ def saveImage(ndvi, sentinel_image_path, input_image):
 
 def processImage(sentinel_image_path):
     ### This function processes one image (read, compute, save)
+
     ## Read the image and get rasterio objects from the red nir bands
     red, nir = readImage(sentinel_image_path)
+
     ## Calculate NDVI and get the resulting numpy array
     ndvi = calculateNDVI(red,nir)
+
     ## Write the NDVI numpy array to file to the same extent as the red input band
     saveImage(ndvi,sentinel_image_path,red)
 
 def main():
 
-    print(f"\nProcess of {sentinel_image_path} started")
-    processImage(sentinel_image_path)
-    print(f"Processing of {sentinel_image_path} done\n")
+    ## This list hosts the delayed functions which are then ran with compute()
+    list_of_delayed_functions = []
+
+    ## Iterate through the Sentinel SAFE folders
+    for directory in os.listdir(image_folder):
+        folder_path = os.path.join(image_folder, directory)
+        if os.path.isdir(folder_path):
+            print(folder_path)
+            ### add delayed processImage function for one image to a list instead of running the process directly
+            list_of_delayed_functions.append(delayed(processImage)(folder_path))
+
+    ## After constructing the Dask graph of delayed functions, run them with the resources available
+    compute(list_of_delayed_functions)
+
 
 if __name__ == '__main__':
-    ## This part is the first to execute when script is ran. It times the execution time and rans the main function
     start = time.time()
     main()
     end = time.time()
-    print(f"Script completed in {str(end - start)} seconds")
+    print("Script completed in " + str(end - start) + " seconds")

@@ -1,19 +1,22 @@
 """
-An example Python script how to calculate NDVI for one satellite image
+A simple example Python script how to calculate NDVI for three Sentinel satellite images
+with an array job.
+This script handles only ONE file, which is given as parameter to the script.
 
-Author: Johannes Nyman, Kylli Ek, Samantha Wittke CSC
-
+Author: Johannes Nyman, CSC
+Date: 31.03.2020
 """
 import os
 import sys
 import time
 import rasterio
 
-### The filepath to the input Sentinel image folder is an input argument to the script
+### The filepath for the input Sentinel image that is given as input parameter
 sentinel_image_path = sys.argv[1]
 
 def readImage(image_folder_fp):
-    print(f"Reading Sentinel image from: {image_folder_fp}")
+    print("Reading Sentinel image from: %s" % (image_folder_fp))
+
     ### Rather than figuring out what the filepath inside SAFE folder is, this is just finding the red and nir files with correct endings
     for subdir, dirs, files in os.walk(image_folder_fp):
         for file in files:
@@ -21,21 +24,26 @@ def readImage(image_folder_fp):
                 red_fp = os.path.join(subdir,file)
             if file.endswith("_B08_10m.jp2"):
                 nir_fp = os.path.join(subdir,file)
+
     ### Read the red and nir (near-infrared) band files with Rasterio
     red = rasterio.open(red_fp)
     nir = rasterio.open(nir_fp)
+
     ### Return the rasterio objects as a list
     return red,nir
 
 def calculateNDVI(red,nir):
     print("Computing NDVI")
     ### This function calculates NDVI from the red and nir bands
+
     ## Read the rasterio objects pixel information to numpy arrays
     red = red.read(1)
     nir = nir.read(1)
+
     ### Scale the image values back to real reflectance values (sentinel pixel values have been multiplied by 10000)
     red = red /10000
     nir = nir /10000
+
     ### the NDVI formula
     ndvi = (nir - red) / (nir + red)
     return ndvi
@@ -60,23 +68,24 @@ def saveImage(ndvi, sentinel_image_path, input_image):
 
 def processImage(sentinel_image_path):
     ### This function processes one image (read, compute, save)
+
     ## Read the image and get rasterio objects from the red nir bands
     red, nir = readImage(sentinel_image_path)
+
     ## Calculate NDVI and get the resulting numpy array
     ndvi = calculateNDVI(red,nir)
+
     ## Write the NDVI numpy array to file to the same extent as the red input band
     saveImage(ndvi,sentinel_image_path,red)
 
 def main():
-    ## run the process on input dir if it is a directory
-    if os.path.isdir(sentinel_image_path):
-        print(f"\nProcess of {sentinel_image_path} started")
-        processImage(sentinel_image_path)
-        print(f"Processing of {sentinel_image_path} done\n")
+    print("\nProcess started")
+    processImage(sentinel_image_path)
+    print("Processing done\n")
 
 if __name__ == '__main__':
     ## This part is the first to execute when script is ran. It times the execution time and rans the main function
     start = time.time()
     main()
     end = time.time()
-    print(f"Script completed in {str(end - start)} seconds")
+    print("Script completed in " + str(end - start) + " seconds")
