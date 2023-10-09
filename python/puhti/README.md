@@ -4,7 +4,7 @@ Here are examples for running Python code on CSC's Puhti supercomputer as four d
 
 ## Example case
 
-![NDVI of dead and green leaf](ndvi.png)
+![](./ndvi.png)
 From [ECE Montana](https://ece.montana.edu/seniordesign/archive/SP15/OpticalWeedMapping/ndvi.html)
 
 The example calculates NDVI (Normalized Difference Vegetation Index) from Sentinel-2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask - xarray example) and only the method of parallelization changes (the code in the main function). 
