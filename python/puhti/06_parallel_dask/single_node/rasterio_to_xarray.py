@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import os
 
+
 def rasterio_to_xarray(fname):
     """Converts the given file to an xarray.DataArray object.
 
@@ -34,22 +35,24 @@ def rasterio_to_xarray(fname):
             x0, y0 = src.bounds.left, src.bounds.top
             dx, dy = src.res[0], -src.res[1]
 
-            coords = {'y': np.arange(start=y0, stop=(y0 + ny * dy), step=dy),
-                      'x': np.arange(start=x0, stop=(x0 + nx * dx), step=dx)}
+            coords = {
+                "y": np.arange(start=y0, stop=(y0 + ny * dy), step=dy),
+                "x": np.arange(start=x0, stop=(x0 + nx * dx), step=dx),
+            }
 
-            dims = ('y', 'x')
+            dims = ("y", "x")
 
             attrs = {}
 
             try:
                 aff = src.affine
-                attrs['affine'] = aff.to_gdal()
+                attrs["affine"] = aff.to_gdal()
             except AttributeError:
                 pass
 
             try:
                 c = src.crs
-                attrs['crs'] = c.to_string()
+                attrs["crs"] = c.to_string()
             except AttributeError:
                 pass
 
@@ -93,26 +96,31 @@ def xarray_to_rasterio(xa, output_filename):
     processed_attrs = {}
 
     try:
-        val = xa.attrs['affine']
-        processed_attrs['affine'] = rasterio.Affine.from_gdal(*val)
+        val = xa.attrs["affine"]
+        processed_attrs["affine"] = rasterio.Affine.from_gdal(*val)
     except KeyError:
         pass
 
     try:
-        val = xa.attrs['crs']
-        processed_attrs['crs'] = rasterio.crs.CRS.from_string(val)
+        val = xa.attrs["crs"]
+        processed_attrs["crs"] = rasterio.crs.CRS.from_string(val)
     except KeyError:
         pass
 
-    with rasterio.open(output_filename, 'w',
-                       driver='GTiff',
-                       height=height, width=width,
-                       dtype=str(xa.dtype), count=count,
-                       **processed_attrs) as dst:
+    with rasterio.open(
+        output_filename,
+        "w",
+        driver="GTiff",
+        height=height,
+        width=width,
+        dtype=str(xa.dtype),
+        count=count,
+        **processed_attrs
+    ) as dst:
         dst.write(xa.values, band_indicies)
 
 
-def xarray_to_rasterio_by_band(xa, output_basename, dim='time', date_format='%Y-%m-%d'):
+def xarray_to_rasterio_by_band(xa, output_basename, dim="time", date_format="%Y-%m-%d"):
     for i in range(len(xa[dim])):
         args = {dim: i}
         data = xa.isel(**args)
@@ -123,6 +131,6 @@ def xarray_to_rasterio_by_band(xa, output_basename, dim='time', date_format='%Y-
         else:
             formatted_index = str(index_value)
 
-        filename = output_basename + formatted_index + '.tif'
+        filename = output_basename + formatted_index + ".tif"
         xarray_to_rasterio(data, filename)
-        print('Exported %s' % formatted_index)
+        print("Exported %s" % formatted_index)

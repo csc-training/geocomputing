@@ -30,6 +30,7 @@ output_folder = "output"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
+
 def readImage(image_folder_fp):
     print("Reading Sentinel image from: %s" % (image_folder_fp))
 
@@ -37,54 +38,57 @@ def readImage(image_folder_fp):
     for subdir, dirs, files in os.walk(image_folder_fp):
         for file in files:
             if file.endswith("_B04_10m.jp2"):
-                red_fp = os.path.join(subdir,file)
+                red_fp = os.path.join(subdir, file)
             if file.endswith("_B08_10m.jp2"):
-                nir_fp = os.path.join(subdir,file)
+                nir_fp = os.path.join(subdir, file)
 
     ### Read the red and nir band files to xarray and with the chunk-option to dask
-    red = rioxarray.open_rasterio(red_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
-    nir = rioxarray.open_rasterio(nir_fp, chunks={'band': 1, 'x': 1024, 'y': 1024})
+    red = rioxarray.open_rasterio(red_fp, chunks={"band": 1, "x": 1024, "y": 1024})
+    nir = rioxarray.open_rasterio(nir_fp, chunks={"band": 1, "x": 1024, "y": 1024})
 
     ### Scale the image values back to real reflectance values
-    red = red /10000
-    nir = nir /10000
+    red = red / 10000
+    nir = nir / 10000
 
-    return red,nir
+    return red, nir
 
-def calculateNDVI(red,nir):
+
+def calculateNDVI(red, nir):
     print("Computing NDVI")
     ### This function calculates NDVI with xarray
 
     ## NDVI calculation for all pixels where red or nir != 0
-    ndvi = xr.where((nir ==0)  & (red==0), 0, (nir - red) / (nir + red))
+    ndvi = xr.where((nir == 0) & (red == 0), 0, (nir - red) / (nir + red))
 
     return ndvi
+
 
 def processImage(image_folder_fp):
     ### This is the function that gets parallellized. This gathers all operations we do for one image
 
     ## Read image and get a list of opened bands
-    red,nir = readImage(image_folder_fp)
+    red, nir = readImage(image_folder_fp)
 
     ## Calculate NDVI and save the result file
-    ndvi = calculateNDVI(red,nir)
+    ndvi = calculateNDVI(red, nir)
 
     ## Get image name and save image
     image_name = os.path.basename(image_folder_fp)
-    saveImage(ndvi,image_name)
+    saveImage(ndvi, image_name)
 
     return image_name
 
-def saveImage(ndvi,image_name):
+
+def saveImage(ndvi, image_name):
     ## Create the output filename and save it with using a function xarray_to_rasterio from a separate python file
     output_file = image_name.replace(".SAFE", "_NDVI.tif")
     output_path = os.path.join(output_folder, output_file)
 
     print("Saving image: %s" % output_path)
-    xarray_to_rasterio(ndvi,  output_path)
+    xarray_to_rasterio(ndvi, output_path)
+
 
 def main():
-
     ## This list hosts the delayed functions which are then ran with compute()
     list_of_delayed_functions = []
 
@@ -100,7 +104,7 @@ def main():
     compute(list_of_delayed_functions)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start = time.time()
     main()
     end = time.time()
