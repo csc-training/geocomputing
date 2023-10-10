@@ -57,6 +57,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Local disk: 0
     * Time: 1:00:00
     * Python: geoconda
+    * Jupyter type: Lab (you can also try Notebook, based on needs and preferences)
     * Working directory: `/scratch/project_200xxxx/students/cscusername`
     * `Launch`
 
