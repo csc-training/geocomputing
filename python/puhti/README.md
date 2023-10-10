@@ -234,13 +234,13 @@ sbatch array_job_example.sh
 
 ## Parallelization within Python
 
-We can also paralellize within Python. In this case there is no for loop to process them one after another, but the Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing`, `joblib` and `dask` are provided. `multiprocessing` package is likely the easiest to use and is included in all Python installations by default. `joblib` provides some more flexibility. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
+We can also paralellize within Python. In this case there is no for loop to process them one after another, but the Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing` and `dask` are provided. `multiprocessing` package is likely the easiest to use and is included in all Python installations by default. Another Python package for parallelization is `joblib`. You can find code (without exercise) for `joblib` in `05_parallel_joblib`. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
 
 ### Multiprocessing
 
 * [04_parallel_multiprocessing/multiprocessing_example.sh](04_parallel_multiprocessing/multiprocessing_example.sh) batch job file for `multiprocessing`.
 	* `--ntasks=1` + `--cpus-per-task=3` reserves 3 cores - one for each file
-	* `--mem-per-cpu=4G` reserves memory per core
+	* `--mem-per-cpu=2G` reserves memory per core
 
 * [04_parallel_multiprocessing/multiprocessing_example.py](04_parallel_multiprocessing/multiprocessing_example.py)
 	* Note how the pool of workers is started and processes divided to workers with `pool.map()`. This replaces the for loop that we have seen in `01_serial/single_core_example_folder.sh`.
@@ -265,7 +265,7 @@ sbatch multiprocessing_example.sh
 
 * [06_parallel_dask/single_node/dask_singlenode.sh](06_parallel_dask/single_node/dask_singlenode.sh) batch job file for `dask`.
 	* `--ntasks=1` + `--cpus-per-task=3` reserves 3 cores - one for each file
-	* `--mem-per-cpu=4G` reserves memory per core
+	* `--mem-per-cpu=2G` reserves memory per core
 
 * [06_parallel_dask/single_node/dask_singlenode.py](06_parallel_dask/single_node/dask_singlenode.py)
 
