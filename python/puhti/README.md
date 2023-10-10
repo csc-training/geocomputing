@@ -37,8 +37,8 @@ If you haven't yet, get the example scripts to Puhti:
     * Create new own folder:`mkdir cscusername` (replace cscusername with your username)
     * Switch into your own folder: `cd cscusername` (replace cscusername with your username)
     * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
-    * Switch to the directory with example files: `cd python/puhti`.
-    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/students/cscusername/python/puhti`.
+    * Switch to the directory with example files: `cd geocomputing/python/puhti`.
+    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti`.
     
     
 ## Interactive job
