@@ -37,8 +37,8 @@ If you haven't yet, get the example scripts to Puhti:
     * Create new own folder:`mkdir cscusername` (replace cscusername with your username)
     * Switch into your own folder: `cd cscusername` (replace cscusername with your username)
     * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
-    * Switch to the directory with example files: `cd python/puhti`.
-    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/students/cscusername/python/puhti`.
+    * Switch to the directory with example files: `cd geocomputing/python/puhti`.
+    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti`.
     
     
 ## Interactive job
@@ -57,6 +57,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Local disk: 0
     * Time: 1:00:00
     * Python: geoconda
+    * Jupyter type: Lab (you can also try Notebook, based on needs and preferences)
     * Working directory: `/scratch/project_200xxxx/students/cscusername`
     * `Launch`
 
