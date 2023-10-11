@@ -291,13 +291,12 @@ Dask can do so much more than delay function computation. Check out the [dask do
 
 ## Example benchmarks 
 
-These are just to demonstrate the difference between single core vs. some kind of parallelism. Depending on the issue, some library might be faster or slower.
+These are just to demonstrate the difference between single core vs. some kind of parallelism. Depending on the issue, some library might be faster or slower. Note also that the performance of your job may depend on some different factors, like disk load or network speed.
 
 | Example         | Jobs | CPU cores / job | Time (min) | CPU efficiency |
 |-----------------|------|-----------------|------------|----------------|
-| single core     | 1    | 1               | 03:23      | 86.70%         |
-| multiprocessing | 1    | 3               | 01:05      | 92.31%         |
-| joblib          | 1    | 3               | 01:12      | 86.57%         |
-| dask            | 1    | 3               | 01:22      | 78.46%         |
-| array job       | 3    | 1               | 01:03      | 95.16%         |
-| GNU parallel    | 1    | 3               | 00:55      | 15.15%         |
+| single core     | 1    | 1               | 02:29      | 86.70%         |
+| GNU parallel    | 1    | 3               | 00:58      | 70.69%         |
+| array job       | 3    | 1               | 01:03      | 85.71%         |
+| multiprocessing | 1    | 3               | 00:52      | 80.13%         |
+| dask            | 1    | 3               | 01:46      | 88.68%         |
