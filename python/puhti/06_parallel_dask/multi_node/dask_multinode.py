@@ -2,12 +2,12 @@
 An example of a Python script on how to resample all bands for 4 Sentinel satellite images
 in parallel with Dask using several computing nodes in Puhti supercomputer
 
-All the files are worked in parallel with the help of Dask delayed functions, see main()-function.
+All the files are working in parallel with the help of Dask delayed functions, see main()-function.
 More info about Python Dask library can be found from:
 https://docs.dask.org/en/latest/why.html
 
-Author: Johannes Nyman, CSC
-Date: 31.03.2020
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
+
 """
 
 import sys

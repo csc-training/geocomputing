@@ -3,7 +3,7 @@ An example Python script how to calculate NDVI for three Sentinel satellite imag
 using just 1 process.
 For going through all the files, a for-loop is used in the main()- function
 
-Author: Johannes Nyman, Kylli Ek, Samantha Wittke CSC
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
 
 """
 import os

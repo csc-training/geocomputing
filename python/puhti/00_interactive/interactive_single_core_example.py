@@ -2,7 +2,7 @@
 An example Python script how to calculate NDVI for one Sentinel satellite images
 using just 1 process.
 
-Author: Johannes Nyman, Kylli Ek, Samantha Wittke CSC
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
 
 """
 import os
