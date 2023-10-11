@@ -65,6 +65,9 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
 * Wait a moment -> Connect to Jupyter
 * Jupyter opens up in the browser
 * Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti` and find the file `interactive.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
+* End the session:
+   * Close the web tab
+   * In Active sessions view: `Delete`
 
 As mentioned, Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it and put the code in a Python script. This means for example to put parts into functions, so that they can be reused. You can find one such cleaned up and generalized script with much more comments in `00_interactive/interactive_single_core_example.py`. Let's take a look at it: 
 
@@ -102,6 +105,9 @@ Visual Studio Code or VSCode is a source code editor by Microsoft. In addition t
     * Wait, it takes a few minutes for complete. The printouts will appear  in the terminal during the process. Note the time it took.
     * Check that there is one new GeoTiff file in your work directory in the Files panel of VSCode.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
+* End all running sessions:
+   * Close the web tab
+   * In Active sessions view: `Delete`
 
 #### Command line
 
@@ -131,7 +137,7 @@ cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/00_in
 python interactive_single_core_example.py 
 ```
 
-* Wait, it takes a few minutes for complete. The printouts will appear  in the terminal during the process. Note the time it took.
+* Wait, it takes a few minutes for complete. The printouts will appear in the terminal during the process. Note the time it took.
 * Check that there is one new GeoTiff file in your work directory with `ls -l output`
 * Close the compute node shell tab in your browser and delete the running job from `my interactive sessions` in the Puhti webinterface.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
@@ -270,7 +276,6 @@ sbatch multiprocessing_example.sh
 	* `--mem-per-cpu=2G` reserves memory per core
 
 * [06_parallel_dask/single_node/dask_singlenode.py](06_parallel_dask/single_node/dask_singlenode.py)
-
 
 > [!NOTE]
 > Submit the parallel job to Puhti from login node shell
