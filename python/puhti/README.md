@@ -50,8 +50,9 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
 
 * Settings for Jupyter:
-    * Project: project_200xxxx
-    * Partition: interactive
+    * (Reservation: `geocomputing_fri`, only during course)
+    * Project: `project_200xxxx`
+    * Partition: `interactive` (`small` during course)
     * Number of CPU cores: 1
     * Memory: 3 Gb
     * Local disk: 0
@@ -78,8 +79,9 @@ Visual Studio Code or VSCode is a source code editor by Microsoft. In addition t
 * Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio code
     * Choose settings for VSCode:
-        * Project: project_200xxxx
-        * Partition: interactive
+        * (Reservation: `geocomputing_fri`, only during course)
+        * Project: `project_200xxxx`
+        * Partition: `interactive` (`small` during course)
         * Number of CPU cores: 1
         * Memory: 2 Gb
         * Local disk: 0
