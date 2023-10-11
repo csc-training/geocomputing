@@ -1,7 +1,7 @@
 """
 An example Python script how to calculate NDVI for one satellite image
 
-Author: Johannes Nyman, Kylli Ek, Samantha Wittke CSC
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
 
 """
 import os

@@ -2,12 +2,12 @@
 A simple example Python script how to calculate NDVI for three Sentinel satellite images
 in parallel with the joblib library.
 
-All the files are worked in parallel with the help of a joblib Parallel jobs, see main()-function.
+All the files are working in parallel with the help of a joblib Parallel jobs, see main()-function.
 More info about Python joblib library can be found from:
 https://joblib.readthedocs.io/en/latest/parallel.html
 
-Author: Johannes Nyman, CSC
-Date: 31.03.2020
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
+
 """
 
 import os

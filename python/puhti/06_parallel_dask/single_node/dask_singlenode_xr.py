@@ -2,11 +2,12 @@
 An example Python script how to calculate NDVI for three Sentinel satellite images
 in parallel with the dask and xarray library.
 
-All the files are worked in parallel with the help of Dask delayed functions, see main()-function.
+All the files are working in parallel with the help of Dask delayed functions, see main()-function.
 More info about Python Dask library can be found from:
 https://docs.dask.org/en/latest/why.html
 
-Author: Johannes Nyman, Samantha Wittke, CSC
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
+
 """
 
 import os
