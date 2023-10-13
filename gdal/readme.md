@@ -7,7 +7,7 @@ GDAL reprents here a commandline tool that is used via Linux bash scripts. The e
 	* A basic serial batch job, where several files are handled in a bash script for loop, one after the other. Only 1 core is used.
 	* Parallel batch job, where different files are handled in parallel with GNU-parallel. Up to one node can be used, in Puhti that is up to 40 cores.
 
-GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder, and add overviews to the same files. Linux bash script is used for starting the GDAL commands.
+GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder and save the file in Cloud-optimized format. Linux bash script is used for starting the GDAL commands.
 
 > [!IMPORTANT]  
 > In these scripts `project_200xxxx` has been used as example project name. Change the project name to your own CSC project name.
