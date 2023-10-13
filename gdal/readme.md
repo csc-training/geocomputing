@@ -69,13 +69,8 @@ sbatch gdal_batch_job_serial.sh
 ```
 * See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
 	* For seeing the files use Puhti web interface or Linux `less <filename>`
- 	* With `tail -f <filename>` it is possible to see also how the output files are written during the job.
+ 	* With `tail -f slurm-<jobid>.out` it is possible to see also how the output files are written during the job.
 * Check that you have new GeoTiff files in the working folder. Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
-
-* See how the job is progressing with following the output file contents update.
-```
-tail -f slurm-<jobid>.out
-```
 
 * `sbatch` prints out a job id, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory? How long did the script run?
 ```
