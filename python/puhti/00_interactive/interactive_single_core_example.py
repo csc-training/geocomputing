@@ -1,5 +1,5 @@
 """
-An example Python script how to calculate NDVI for one Sentinel satellite image
+An example Python script how to calculate NDVI for one Sentinel satellite images
 using just 1 process.
 
 Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
@@ -10,9 +10,8 @@ import sys
 import time
 import rasterio
 
-
-### The filepath for the input Sentinel image that is given as input parameter
-sentinel_image_path = sys.argv[1]
+### The filepath to one Sentinel image
+sentinel_image_path = "/appl/data/geo/sentinel/s2_example_data/L2A/S2B_MSIL2A_20190530T094039_N0212_R036_T36VUR_20190530T113343.SAFE"
 
 
 def readImage(image_folder_fp):
@@ -75,13 +74,15 @@ def processImage(sentinel_image_path):
 
 
 def main():
-    print(f"\nProcess of {sentinel_image_path} started")
-    processImage(sentinel_image_path)
-    print(f"Processing of {sentinel_image_path} done\n")
+    ## run the process on input dir if it is a directory
+    if os.path.isdir(sentinel_image_path):
+        print(f"\nProcess of {sentinel_image_path} started")
+        processImage(sentinel_image_path)
+        print(f"Processing of {sentinel_image_path} done\n")
 
 
 if __name__ == "__main__":
-    ## This part is the first to execute when script is ran. It times the execution time and rans the main function
+    ## This part is the first to execute when script is ran. It times the execution time and runs the main function
     start = time.time()
     main()
     end = time.time()

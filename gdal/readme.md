@@ -7,7 +7,7 @@ GDAL reprents here a commandline tool that is used via Linux bash scripts. The e
 	* A basic serial batch job, where several files are handled in a bash script for loop, one after the other. Only 1 core is used.
 	* Parallel batch job, where different files are handled in parallel with GNU-parallel. Up to one node can be used, in Puhti that is up to 40 cores.
 
-GDAL includes many other useful [commanline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder, and add overviews to the same files. Linux bash script is used for starting the GDAL commands.
+GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder and save the file in Cloud-optimized format. Linux bash script is used for starting the GDAL commands.
 
 > [!IMPORTANT]  
 > In these scripts `project_200xxxx` has been used as example project name. Change the project name to your own CSC project name.
@@ -33,15 +33,15 @@ cd geocomputing/gdal
 
 ## Interactive working 
 
-With `gdalinfo` and `ogrinfo` it is often helpful to check the files, this is a light-weight task, so it can be done from login-node without interactive session.
+With `gdalinfo` and `ogrinfo` it is often helpful to check the files. This is a light-weight task, so it can be done from the login-node without an interactive session.
 
 * Open [Puhti web interface](https://puhti.csc.fi) and log in with CSC user account.
 * Open login node shell: `Tools -> Login node shell`
 * To have GDAL tools available, load [geoconda module](https://docs.csc.fi/apps/geoconda/). Also several other modules include GDAL tools, see [CSC Docs: GDAL page](https://docs.csc.fi/apps/gdal/) for details.
 ```
-module geoconda
+module load geoconda
 ```
-* Check a file with `gdalinfo`. What is the coordinate system? Is the file internally tiled? Do it have overviews?
+* Check a file with `gdalinfo`. What is the coordinate system? Is the file internally tiled? Does it have overviews?
 ```
 gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 ```
@@ -53,27 +53,30 @@ gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 
 We will use Puhti web interface simple file editor for editing the files in this exercise. 
 
-* Open another tab in your web-browser to [Puhti web interface](https://puhti.csc.fi).
+* Open another tab in your web browser to [Puhti web interface](https://puhti.csc.fi).
 * Open Files -> `/scratch/project_200xxx`
 * Open folders: `students` -> `cscusername` -> `geocomputing` -> `gdal`
 
-Open the files with Edit under the menu behind the file name. 
+Open the files with Edit under the menu on the right of file name. 
 * [gdal_serial.sh](gdal_serial.sh) - the bash script, includes GDAL commands to be executed. For handling several files a for loop is used.
-	* Change the project name and username to your's in both GDAL commands. Save.
+	* Change the project name and username to yours in the GDAL command. Save.
 * [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
-	* Change the project name in SLURM settings. Save.
+	* Change the project name in `#SBATCH --account` setting. Save.
 
 * Run the script as batch file: 
 ```
 sbatch gdal_batch_job_serial.sh
 ```
+* See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
+	* For seeing the files use Puhti web interface or Linux `less <filename>`
+ 	* With `tail -f slurm-<jobid>.out` it is possible to see also how the output files are written during the job.
 * Check that you have new GeoTiff files in the working folder. Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 
 * `sbatch` prints out a job id, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory? How long did the script run?
 ```
 seff <jobid>
 ```
-* Once the job is finished, see output in out.txt and err.txt for any possible errors and other outputs. 
+* Once the job is finished, see output inslurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs. 
 
 * Check the resources used in another way. 
 ```
@@ -97,10 +100,10 @@ Open the files with Edit:
 * [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.
 	* No edits are needed, for only viewing the file, click the file name in Files page.
 * [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. How many cores are reserved? How much memory? Which modules are used? 
-	* Change the project name in SLURM settings. Save.
+	* Change the project name in `#SBATCH --account` setting. Save.
    
 * Run the script as batch file: 
 ```
 sbatch gdal_batch_job_parallel.sh
 ```
-* Check the parallel batch job results with seff. Did you reserve a good amount of memory? What was the CPU-efficiency? How long did the script run?
+* Check the parallel batch job results with `seff`. Did you reserve a good amount of memory? What was the CPU-efficiency? How long did the script run?
