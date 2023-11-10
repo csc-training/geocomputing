@@ -53,25 +53,25 @@ The example notebook covers only small area and therefore runs fast and requires
 * Extend analysis area in the Python code
   	* Change location criteria in the STAC search, use a bigger bbox or remove the location criteria.
 	* Change `bounds` setting in `stackstac.stack`, use a bigger bbox or remove `bounds` setting.
-* If running in HPC, give your Jupyter more computing resources. Start a new Jupyter session and give it more cores and memory than recommended in the example. If running the notebooks locally, then no changes are needed. 
+* If running in HPC, give your Jupyter more computing resources. Start a new Jupyter session and give it more cores and memory than recommended in the example. If running the notebook locally, then no changes are needed. 
 * Start Dask cluster
 	* Uncomment the Dask cluster starting cell.
   	* Dask will pick up all available computing resources automatically.
  
 ### How many cores and how much memory to use?
 
-From Dask point of view, it is easy to use up to the full node of HPC, that would be 40 cores in Puhti supercomputer. With [Dask-Jobqueue] it is possible to run also multi-node jobs. But in STAC use case, the computation time is heavily dependent on data download speed, which does not scale so well. So in practice a smaller number of cores is more reasonable. With computationally easier analysis, the recommended number of **cores is 5-12**. If the computational part takes significant amount of time compared to data download, also bigger numbers of cores could be used. 
+From Dask point of view, it is easy to use up to the full node of HPC, that would be 40 cores in Puhti supercomputer. With [Dask-Jobqueue](https://github.com/csc-training/geocomputing/tree/master/python/puhti/06_parallel_dask) it is possible to run also multi-node jobs. But in STAC use case, the computation time is heavily dependent on data download speed, which does not scale so well. So in practice a smaller number of cores is more reasonable. With computationally easier analysis, the recommended number of **cores is 5-12**. If the computational part takes significant amount of time compared to data download, also bigger numbers of cores could be used. 
 
 The **memory** requirements depend more on the specific analysis, but a starting point could be **8-10Gb/core**. 
 
+### Dask chunksize
+One more optimization option is to manually assign [Dask chunksize](https://docs.xarray.dev/en/v0.14.0/dask.html#chunking-and-performance). Chunksize defines how big part of data is analysed at once. Using bigger chunksize decreases the amount of data requests to the data storage, but also increases the required memory. In our tests bigger chunksize (4096x4096 compared to 1024x1024) resulted in clearly shorter compute times, if 1-5 cores were used. But with 10-20 core the chunksize had no influence on compute times. 
+
 ### Run the code via batch jobs
 
-For longer analysis, it is recommended to switch from Jupyter notebook to usual Python code and run it via HPC batch job system.
-
-### Dask chunk size
-One more optimization option is to manually assign [Dask chunksize](https://docs.xarray.dev/en/v0.14.0/dask.html#chunking-and-performance). In our tests bigger chunksize (4096x4096 compared to 1024x1024) resulted in clearly shorter compute times, if 1-5 cores were used. But with 10-20 core the chunksize had no influence on compute times.
+For longer analysis, it is recommended to switch from Jupyter notebook to usual Python code and run it via HPC batch job system. See [csc_stac_example.py](csc_stac_example.py) and [csc_stac_example_batch_job.sh](csc_stac_example_batch_job.sh)
 
 Some HPC specific comments:
 * Use `--mem-per-cpu` in the batch job file, when defining the memory reservation.
 * The dask clusters are unlikely to give direct "Out of memory" errors to SLURM scheduler, that would directly kill the job. Rather different warnings and errors appear in the job output file, so keep an eye on that.
-* Normally `seff` output can be used for planning batch jobs memory requirements, but with Dask clusters clearly bigger extra buffer is needed.
+* Normally `seff` output can be used for planning batch jobs memory requirements, but with Dask clusters bigger than usual extra buffer is needed.
