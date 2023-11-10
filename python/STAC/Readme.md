@@ -65,7 +65,7 @@ From Dask point of view, it is easy to use up to the full node of HPC, that woul
 The **memory** requirements depend more on the specific analysis, but a starting point could be **8-10Gb/core**. 
 
 ### Dask chunksize
-One more optimization option is to manually assign [Dask chunksize](https://docs.xarray.dev/en/v0.14.0/dask.html#chunking-and-performance). In our tests bigger chunksize (4096x4096 compared to 1024x1024) resulted in clearly shorter compute times, if 1-5 cores were used. But with 10-20 core the chunksize had no influence on compute times. 
+One more optimization option is to manually assign [Dask chunksize](https://docs.xarray.dev/en/v0.14.0/dask.html#chunking-and-performance). Chunksize defines how big part of data is analysed at once. Using bigger chunksize decreases the amount of data requests to the data storage, but also increases the required memory. In our tests bigger chunksize (4096x4096 compared to 1024x1024) resulted in clearly shorter compute times, if 1-5 cores were used. But with 10-20 core the chunksize had no influence on compute times. 
 
 ### Run the code via batch jobs
 
