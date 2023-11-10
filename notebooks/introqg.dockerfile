@@ -24,7 +24,7 @@ USER $NB_USER
 # NOTE: jupyterlab is pinned to 3.6.6 because the jupyterlab-git plugin does
 #       not yet work for jupyterlab 4
 RUN conda install --yes -c conda-forge \
-    python=3.11 \
+    python=3.10 \
     numpy \
     scipy \
     xarray \
