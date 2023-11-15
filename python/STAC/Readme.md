@@ -12,7 +12,7 @@ In this repository we provide examples to work with:
     * [FMI STAC](static_stac.ipynb)
 * See, also similar [R STAC examples](../../R/STAC)
 
-The examples mainly cover data search and download, using [pystac-client](https://pystac-client.readthedocs.io/en/stable/) and [stackstac](https://stackstac.readthedocs.io/en/latest/).  For analyzing data [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasts, xarray supports also parallelization with [dask](https://www.dask.org/).
+The examples mainly cover data search and download, using [pystac-client](https://pystac-client.readthedocs.io/en/stable/) and [stackstac](https://stackstac.readthedocs.io/en/latest/).  For analyzing data, [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasets, xarray supports also parallelization with [dask](https://www.dask.org/).
 
 The examples can be run on any computer with Python installation, the required Python packages can be seen from beginning of the notebooks. The examples download all data from cloud storage, so relatively good internet connection is needed.
 
@@ -63,7 +63,7 @@ From Dask point of view, it is easy to use up to the full node of HPC, that woul
 The **memory** requirements depend more on the specific analysis, but a starting point could be **6-10Gb/core**. 
 
 ### Dask chunksize
-One more optimization option is to manually assign [Dask chunksize](https://docs.xarray.dev/en/v0.14.0/dask.html#chunking-and-performance). Chunksize defines how big part of data is analysed at once. Using bigger chunksize decreases the amount of data requests to the data storage, which might make the process faster. On the other hand, bigger chunksize also increases the required memory. The default chunksize in most cases is likely good enough, but if you have data cube with 1 or only few dates, increasing the chunkzise to 2048x2048 for cooridnates might be better.
+One more optimization option is to manually assign [Dask chunksize](https://docs.xarray.dev/en/v0.14.0/dask.html#chunking-and-performance). Chunksize defines how big part of data is analysed at once. Using bigger chunksize decreases the amount of data requests to the data storage, which might make the process faster. On the other hand, bigger chunksize also increases the required memory. The default chunksize in most cases is likely good enough, but if you have data cube with 1 or only few dates, increasing the chunkzise to 2048x2048 for coordinates might be better.
 
 ### Run the code via batch jobs
 
@@ -90,8 +90,8 @@ Also different chunksizes were tested, the bigger chunk sizes were signifantly f
 
 In this case the data values were the same, but storage details varied. All options had data as GeoTiffs.
 * FMI - in FMI object storage in Sodankylä.
-* Geocubes - in GeoCubes service (technically in CSC cPouta in Kajaani), divided into mapsheets, one mapsheet relativly big.
-* Paituli - in Paitui service (technically at CSC in Espoo), divided into mapsheets, one mapsheet relativly small.
+* Geocubes - in GeoCubes service (technically in CSC cPouta in Kajaani), divided into mapsheets, one mapsheet relatively big.
+* Paituli - in Paituli service (technically at CSC in Espoo), divided into mapsheets, one mapsheet relatively small.
 * Puhti - Paituli files in Puhti local disk
 
 The compute area was 1600 km2, the original 2m pixel size was used. The STAC search found 1 item from FMI, 16 from GeoCubes and 33 from Paituli/Puhti. Slope was computed with [spatial-xarray's slope function](https://xarray-spatial.org/reference/_autosummary/xrspatial.slope.slope.html).
@@ -108,4 +108,4 @@ Notes:
 * The STAC search and data cube creation part is faster with smaller number of STAC items, items fetching takes some time, if hundreds or thousands of items are found.
 * Using Cloud-Optimized GeoTiffs becomes much more important if you want to use the data in lower than native resolution.
 	* GeoCubes provides the same data in different resolutions via different assets and also as Cloud-Optimized GeoTiff, choose the correct one.
-* In case of GeoCubes, Paituli and Puhti the created datacube had several dates present, but because the exact dates were not important here, the datacube was flattened in time dimension with: `cube2 = cube.max(dim='time')`.
+* In case of GeoCubes, Paituli, and Puhti the created datacube had several dates present, but because the exact dates were not important here, the datacube was flattened in time dimension with: `cube2 = cube.max(dim='time')`.
