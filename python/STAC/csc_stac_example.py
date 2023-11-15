@@ -40,7 +40,9 @@ def find_items_from_stac():
 
 def main():
 
-    # Create Dask client, because the process is slowed down by data download speed, then it usually is good to use 1 core workers.
+    # Create Dask client
+    # Because STAC+xarray analysis is usually slowed down by data download speed, then it is good to use 1 core per worker.
+    # If you have computationally heavy analysis, this could be changed to several cores per worker.
     client = Client(n_workers=no_of_workers)
 
     item_collection = find_items_from_stac()
