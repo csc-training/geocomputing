@@ -3,7 +3,7 @@
 
 # This example shows how to use STAC, dask and xarray via Python script. 
 # If new to STAC, see the STAC_CSC_example.ipynb for longer explanation how STAC works.
-# In this example, we will search and download data through an STAC Catalog and process it using Dask and Xarray. 
+# In this example, we will search and download data through a STAC Catalog and process it using Dask and Xarray. 
 # We will use Sentinel-1 data stored at FMI to compute a mean value of vv_mean for one month. The result will be saved to a new GeoTiff file.
 
 import requests
@@ -14,16 +14,15 @@ import rioxarray
 import sys
 import os
 
-#Settings
+# Settings
 STAC_URL = "https://paituli.csc.fi/geoserver/ogc/stac/v1"
 collection = 'sentinel_1_11_days_mosaics_at_fmi'
 time_filter="2021-03-01/2021-03-31"
 asset = 'mean_vv'
 output_file = os.path.join(os.getcwd(), "sentinel1_mean_vv.tif")
 
-# Use as many workers than you have available cores
+# Use as many workers as you have available cores
 no_of_workers = len(os.sched_getaffinity(0))
-
 
 # To overcome a current bug, rewrite requests to https. Needed only with Paituli STAC.
 def change_to_https(request: requests.Request) -> requests.Request: 
@@ -65,11 +64,10 @@ def main():
         tiled=True,
     )
    
-    #Close Dask cluster
+    # Close Dask cluster
     client.close()
 
-# With Dask, it is important that to use main function
+# With Dask, it is important to use the main function
 if __name__ == "__main__":
     main()
     print("Analysis ready")
-
