@@ -108,4 +108,4 @@ Notes:
 * The STAC search and data cube creation part is faster with smaller number of STAC items, items fetching takes some time, if hundreds or thousands of items are found.
 * Using Cloud-Optimized GeoTiffs becomes much more important if you want to use the data in lower than native resolution.
 	* GeoCubes provides the same data in different resolutions via different assets and also as Cloud-Optimized GeoTiff, choose the correct one.
-* In case of GeoCubes, Paituli and Puhti the created datacube had several dates present, but because the exact dates were not important here, the datacube was flattened in time dimension with: `scube2 = cube.max(dim='time')`.
+* In case of GeoCubes, Paituli and Puhti the created datacube had several dates present, but because the exact dates were not important here, the datacube was flattened in time dimension with: `cube2 = cube.max(dim='time')`.
