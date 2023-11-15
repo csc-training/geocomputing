@@ -94,7 +94,7 @@ In this case the data values were the same, but storage details varied. All opti
 * Paituli - in Paitui service (technically at CSC in Espoo), divided into mapsheets, one mapsheet relativly small.
 * Puhti - Paituli files in Puhti local disk
 
-The compute area was 1600 km2, the original 2m pixel size was used. The STAC search found 1 item from FMI, 16 from GeoCubes and 33 from Paituli/Puhti. 
+The compute area was 1600 km2, the original 2m pixel size was used. The STAC search found 1 item from FMI, 16 from GeoCubes and 33 from Paituli/Puhti. Slope was computed with [spatial-xarray's slope function](https://xarray-spatial.org/reference/_autosummary/xrspatial.slope.slope.html).
 
 The optimal number of cores was 5-10.  The compute time was very similar for all data sources. 
 
