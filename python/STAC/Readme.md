@@ -54,9 +54,7 @@ The example notebook covers only small area and therefore runs fast and requires
   	* Change location criteria in the STAC search, use a bigger bbox or remove the location criteria.
 	* Change `bounds` setting in `stackstac.stack`, use a bigger bbox or remove `bounds` setting.
 * If running in HPC, give your Jupyter more computing resources. Start a new Jupyter session and give it more cores and memory than recommended in the example. If running the notebook locally, then no changes are needed. 
-* Start Dask cluster
-	* Uncomment the Dask cluster starting cell.
-  	* Dask will pick up all available computing resources automatically.
+ 	* Dask will pick up all available computing resources automatically.
  
 ### How many cores and how much memory to use?
 
