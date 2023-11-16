@@ -302,8 +302,9 @@ These are just to demonstrate the difference between single core vs. some kind o
 
 | Example         | Jobs | CPU cores / job | Time (min) | CPU efficiency |
 |-----------------|------|-----------------|------------|----------------|
-| single core     | 1    | 1               | 02:29      | 86.70%         |
-| GNU parallel    | 1    | 3               | 00:58      | 70.69%         |
-| array job       | 3    | 1               | 01:03      | 85.71%         |
-| multiprocessing | 1    | 3               | 00:52      | 80.13%         |
-| dask            | 1    | 3               | 01:46      | 88.68%         |
+| single core     | 1    | 1               | 02:29      | 87%         |
+| GNU parallel    | 1    | 3               | 00:58      | 71%         |
+| array job       | 3    | 1               | 01:03      | 86%         |
+| multiprocessing | 1    | 3               | 00:52      | 80%         |
+| dask            | 1    | 3               | 00:55      | 79%         |
+
