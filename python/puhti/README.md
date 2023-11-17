@@ -267,9 +267,19 @@ sbatch multiprocessing_example.sh
 > [!NOTE]
 > Check with `seff`: How much time and resources did you use?
 
-### dask
+### Dask
 
-`dask` is versatile and has several options for parallelization, this example is for single-node (max 40 cores)- usage, but `dask` can also be used for multi-node jobs. This example uses [delayed functions](https://docs.dask.org/en/latest/delayed.html) from Dask to parallelize the workload. Typically, if a workflow contains a for-loop, it can benefit from delayed. [Dask delayed tutorial](https://tutorial.dask.org/03_dask.delayed.html)
+[Dask](https://www.dask.org/) is versatile and has several options for parallelization. Here are two examples for single-node (max 40 cores) and multi-node usage. The examples use [delayed functions](https://docs.dask.org/en/latest/delayed.html) from Dask to parallelize the workload. Typically, if a workflow contains a for-loop, it can benefit from delayed. 
+
+Besides delayed functions Dask supports also several othe ways of parallelization, inc [Dask DataFrames](https://docs.dask.org/en/stable/dataframe.html) and [Dask Arrays](https://docs.dask.org/en/stable/array.html). For Dask DataFrames, see our [dask-geopandas example](../../dask_geopandas) and for Dask arrays [STAC example with Xarray](../../STAC).
+
+Check out also [CSC dask tutorial](https://docs.csc.fi/support/tutorials/dask-python/) 
+
+### Single node example
+
+This example uses [Dask default single-machine scheduler](https://docs.dask.org/en/latest/scheduling.html). It can only utilize a single node in supercomputer, so on Puhti the maximum number of CPU cores and workers is 40. 
+
+You need to set your project to the batch job file, otherwise this example works out of the box.
 
 * [06_parallel_dask/single_node/dask_singlenode.sh](06_parallel_dask/single_node/dask_singlenode.sh) batch job file for `dask`.
 	* `--ntasks=1` + `--cpus-per-task=3` reserves 3 cores - one for each file
@@ -291,10 +301,17 @@ sbatch dask_singlenode.sh
 > [!NOTE]
 > Check with `seff`: How much time and resources did you use?
 
-Another example using xarray in addition to dask is provided in [06_parallel_dask/single_node/dask_singlenode_xr.sh](06_parallel_dask/single_node/dask_singlenode_xr.sh).
+If you want to define more settings, you can change also to [Local Distributed scheduler](https://docs.dask.org/en/latest/scheduling.html#dask-distributed-local), see the STAC example for details.
 
-Check out also [CSC dask tutorial](https://docs.csc.fi/support/tutorials/dask-python/).
-Dask can do so much more than delay function computation. Check out the [dask documentation](https://docs.dask.org/en/stable/) and for example [NCAR dask tutorial](https://ncar.github.io/dask-tutorial/README.html).
+### Multi-node example
+
+This example spreads the workload to several nodes through the [Dask-Jobqueue library](https://jobqueue.dask.org/en/latest/). 
+
+The batch job file launches basically a master job that does not require much resources. It then launches more SLURM jobs that are used for Dask workers, which do the actual computing. The worker jobs are defined inside the multiple_nodes.py file. Note that they have to queue individually for resources so it is good idea to reserve enough time for the master job so it's not cancelled before the workers finish.
+
+With several SLURM jobs it is possible to use several HPC nodes that is not possible with other Python parallelization options presented here.
+
+When the worker jobs finish, they will be displayd as CANCELLED on Puhti which is intended, the master job cancels them.
 
 ## Example benchmarks 
 
