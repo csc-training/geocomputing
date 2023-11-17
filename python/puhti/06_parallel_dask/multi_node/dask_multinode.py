@@ -1,64 +1,65 @@
 """
-An example of a Python script on how to resample all bands for 4 Sentinel satellite images
-in parallel with Dask using several computing nodes in Puhti supercomputer
+An example Python script how to calculate NDVI for three Sentinel satellite images
+in parallel with multiple HPC nodes with the Dask-Jobqueue: https://jobqueue.dask.org/en/latest/index.html.
 
 All the files are working in parallel with the help of Dask delayed functions, see main()-function.
-More info about Python Dask library can be found from:
-https://docs.dask.org/en/latest/why.html
 
-Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
+The basic idea of Dask-Jobqueue is that from this script more SLURM jobs are started that are used for Dask workers.
+With several SLURM jobs it is possible to use several HPC nodes that is not possible with other Python parallelization options presented in this Github repo.
+
+Author: Johannes Nyman, Kylli Ek, Samantha Wittke CSC
 
 """
 
-import sys
 import os
+import sys
+import rasterio
 import time
-import xarray as xr
 from dask_jobqueue import SLURMCluster
-from dask.distributed import Client
+from dask.distributed import Client, print #Dask print enables seeing worker printouts from main script
 from dask import delayed
 from dask import compute
 
-### This import exists in a another python file called rasterio_to_xarray.py
-### It is downloaded from here https://github.com/robintw/XArrayAndRasterio/blob/master/rasterio_to_xarray.py
-from rasterio_to_xarray import xarray_to_rasterio
-
-### Declare the folder with input sentinel SAFE folders and output folder
+# The folder with input sentinel SAFE folders 
 image_folder = sys.argv[1]
+
+# CSC project name for SLURMCluster
 project_name = sys.argv[2]
-output_folder = "results"
-number_of_workers = 3
-
-### This is the specifications of one worker SLURM job
-### Pay attention to the time option here, especially if you have more jobs than workers, the worker lifetime should be long enough to handle all jobs of that worker.
-single_worker = {
-    "project": project_name,
-    "queue": "small",
-    "nodes": 1,
-    "cores": 4,
-    "memory": "8G",
-    "time": "00:10:00",
-    "temp_folder": f"/scratch/{project_name}/dask_slurm/temp",
-}
-
-## Create a results folder to this location
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
-
 
 def createSLURMCluster():
+    # The number of SLURM jobs
+    # Practically, how many nodes you want to use
+    number_of_jobs = 2
+
+    # Next, limits and settings for ONE SLURM job. 
+    
+    # Number of cores per SLURM job. 
+    # In bigger analysis this has to fit to one HPC node, so in Puhti max 40 cores.  
+
+    no_of_cores = 2 
+    
+    # Here no_of_cores is also used as number of workers (processes) per SLURM job, but number of workers could also be smaller, but not bigger.
+    
+    # The memory per SLURM job, so all workers of one SLURM job together. Count with at least 6 Gb per worker, possibly more.
+     
+    # Pay attention to the time option here, especially if you have more delayed functions (=files here) than workers.
+    # The worker lifetime should be long enough to handle all delayed functions.
+    
+    # For futher details see: https://jobqueue.dask.org/en/latest/configuration-setup.html
+    
     cluster = SLURMCluster(
-        queue=single_worker["queue"],
-        project=single_worker["project"],
-        cores=single_worker["cores"],
-        memory=single_worker["memory"],
-        walltime=single_worker["time"],
-        interface="ib0",
-        local_directory=single_worker["temp_folder"],
+        queue="small",
+        account=project_name,
+        cores=no_of_cores,
+        processes=no_of_cores,
+        memory="12G",
+        walltime="00:10:00",
+        interface="ib0"
     )
 
-    cluster.scale(number_of_workers)
+    cluster.scale(number_of_jobs)
     client = Client(cluster)
+    print(cluster.job_script())
     print(client)
 
 
@@ -73,55 +74,67 @@ def readImage(image_folder_fp):
             if file.endswith("_B08_10m.jp2"):
                 nir_fp = os.path.join(subdir, file)
 
-    ### Read the red and nir band files to xarray and with the chunk-option to dask
-    red = xr.open_rasterio(red_fp, chunks={"band": 1, "x": 1024, "y": 1024})
-    nir = xr.open_rasterio(nir_fp, chunks={"band": 1, "x": 1024, "y": 1024})
+    ### Read the red and nir (near-infrared) band files with Rasterio
+    red = rasterio.open(red_fp)
+    nir = rasterio.open(nir_fp)
 
-    ### Scale the image values back to real reflectance values
-    red = red / 10000
-    nir = nir / 10000
-
+    ### Return the rasterio objects as a list
     return red, nir
 
 
 def calculateNDVI(red, nir):
     print("Computing NDVI")
-    ### This function calculates NDVI with xarray
+    ### This function calculates NDVI from the red and nir bands
 
-    ## NDVI calculation for all pixels where red or nir != 0
-    ndvi = xr.where((nir == 0) & (red == 0), 0, (nir - red) / (nir + red))
+    ## Read the rasterio objects pixel information to numpy arrays
+    red = red.read(1)
+    nir = nir.read(1)
 
+    ### Scale the image values back to real reflectance values (sentinel pixel values have been multiplied by 10000)
+    red = red / 10000
+    nir = nir / 10000
+
+    ### the NDVI formula
+    ndvi = (nir - red) / (nir + red)
     return ndvi
 
 
-def saveImage(ndvi, image_name):
-    ## Create the output filename and save it with using a function xarray_to_rasterio from a separate python file
-    output_file = image_name.replace(".SAFE", "_NDVI.tif")
-    output_path = os.path.join(output_folder, output_file)
+def saveImage(ndvi, sentinel_image_path, input_image):
+    ## Create an output folder to this location, if it does not exist
+    outputdir = "output"
+    if not os.path.exists(outputdir):
+        os.makedirs(outputdir)
+    ## Create output filepath for the image. We use the input name with _NDVI end
+    output_file = os.path.join(
+        outputdir, os.path.basename(sentinel_image_path).replace(".SAFE", "_NDVI.tif")
+    )
+    print(f"Saving image: {output_file}")
+    ## Copy the metadata (extent, coordinate system etc.) from one of the input bands (red)
+    metadata = input_image.profile
+    ## Change the data type from integer to float and file type from jp2 to GeoTiff
+    metadata.update(dtype=rasterio.float64, driver="GTiff")
+    ## Write the ndvi numpy array to a GeoTiff with the updated metadata
+    with rasterio.open(output_file, "w", **metadata) as dst:
+        dst.write(ndvi, 1)
 
-    print("Saving image: %s" % output_path)
-    xarray_to_rasterio(ndvi, output_path)
 
+def processImage(sentinel_image_path):
+    ### This function processes one image (read, compute, save)
 
-def processImage(image_folder_fp):
-    ### This is the function that gets parallellized. This gathers all operations we do for one image
+    ## Read the image and get rasterio objects from the red nir bands
+    red, nir = readImage(sentinel_image_path)
 
-    ## Read image and get a list of opened bands
-    red, nir = readImage(image_folder_fp)
-
-    ## Calculate NDVI and save the result file
+    ## Calculate NDVI and get the resulting numpy array
     ndvi = calculateNDVI(red, nir)
 
-    ## Get image name and save image
-    image_name = os.path.basename(image_folder_fp)
-    saveImage(ndvi, image_name)
-
-    return image_name
+    ## Write the NDVI numpy array to file to the same extent as the red input band
+    saveImage(ndvi, sentinel_image_path, red)
 
 
 def main():
-    createSLURMCluster()
 
+    createSLURMCluster()
+    
     ## This list hosts the delayed functions which are then ran with compute()
     list_of_delayed_functions = []
 
@@ -130,7 +143,7 @@ def main():
         folder_path = os.path.join(image_folder, directory)
         if os.path.isdir(folder_path):
             print(folder_path)
-            ### add delayed processImage function for one image to a list
+            ### add delayed processImage function for one image to a list instead of running the process directly
             list_of_delayed_functions.append(delayed(processImage)(folder_path))
 
     ## After constructing the Dask graph of delayed functions, run them with the resources available
