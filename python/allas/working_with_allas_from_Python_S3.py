@@ -11,6 +11,8 @@ Created on Wed Dec  4 13:57:52 2019
 # - Looping over all files of certain type in a bucket
 # - Older option to write files that likely is not needed any more.
 
+# Please notice that this example works ONLY with GDAL-based libraries for spatial data: rasterio, geopandas etc.
+
 # The required packages depend on the task
 # For working with rasters
 import rasterio
