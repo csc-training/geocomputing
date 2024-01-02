@@ -1,3 +1,9 @@
+!!! note
+
+These scripts are outdated since SciHub has been replaced by the Copernice Space Data Ecosystem in 2023. Use [sentinelhub](https://sentinelhub-py.readthedocs.io/en/latest/index.html) instead.
+
+
+
 ### Sentinel download script
 
 This script is an example how to find and download large quantities of Sentinel-2 images using Python and the [sentinelsat library](https://sentinelsat.readthedocs.io).
