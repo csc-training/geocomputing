@@ -1,6 +1,5 @@
-!!! note
-
-These scripts are outdated since SciHub has been replaced by the Copernice Space Data Ecosystem in 2023. Use [sentinelhub](https://sentinelhub-py.readthedocs.io/en/latest/index.html) instead.
+> **⚠️ Warning**
+> These scripts are outdated since SciHub has been replaced by the Copernice Space Data Ecosystem in 2023. Use [sentinelhub](https://sentinelhub-py.readthedocs.io/en/latest/index.html) instead.
 
 
 
