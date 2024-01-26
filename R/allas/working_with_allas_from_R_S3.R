@@ -3,6 +3,8 @@
 # - Looping over all files of certain type in a bucket
 # - Writing raster and vector files (not working properly) Older version
 
+# Please notice that this example works ONLY with GDAL-based libraries for spatial data: sf, terra etc.
+
 library("terra")
 library("sf")
 library("aws.s3")
