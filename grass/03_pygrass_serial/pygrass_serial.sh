@@ -8,21 +8,7 @@
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
 #SBATCH --mem-per-cpu=4000  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 
-#module load grassgis
-module load qgis
+module load grassgis
 
-GRASS_DIR=/scratch/project_2000599/grass
-GRASS_DB_DIR=$GRASS_DIR/db
-GRASS_LOCATION_DIR=$GRASS_DB_DIR/3067
-
-# create a directory to hold the location used for processing
-mkdir -p $GRASS_DB_DIR/db
-
-# create new temporary location for the job, exit after creation of this location
-grass -c epsg:3067 $GRASS_LOCATION_DIR -e
-
-# now use this new location and run the job
-grass --exec python3 pygrass_serial.py 
-
-# Optional, delete temporary location 
-rm -rf $GRASS_LOCATION_DIR
+# Run the PyGRASS script with temporary location
+grass --tmp-location EPSG:3067 --exec python3 pygrass_serial.py 
