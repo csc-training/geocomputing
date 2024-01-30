@@ -42,18 +42,8 @@ r.out_gdal(input='aspect', output=aspectfile, overwrite=True)
 #r.out_ogr(input=grasscontoursfile, output=outfile, overwrite=True)
 
 # These can be left out, just debug info
-print( "\n\n ***DEBUG INFO***")
-print( "GRASS version")
-print(g.version())
-
-print("GRASS env settings: gisdatabase, location, mapset")
+g.version()
 g.gisenv()
-
-print("Available datasets:")
 g.list(type="all", flags='m')
-
-print("Input file info")
 r.info(map=grassfile, verbose=True)
-
-print("Output  info")
 v.info(map=grasscontoursfile, verbose=True)
