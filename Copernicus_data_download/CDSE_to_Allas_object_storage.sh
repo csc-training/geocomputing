@@ -7,6 +7,7 @@
 #
 # Requirements: Rclone setup to work with allas as [s3allas] (s3 setup connected to CSC project for Allas) and CDSE as [cdse].
 # See [CSC EO guide](https://docs.csc.fi/support/tutorials/gis/eo_guide/) about how to set it up. 
+# Instead of downloading directly to Allas, data can also be downloaded to a computing environment via [s3cmd](https://docs.csc.fi/data/Allas/using_allas/s3_client/). 
 #
 # Based on script provided by Maria Yli-Heikkilä (LUKE) - adapted to CDSE by Samantha Wittke, CSC - IT center for Science
 
@@ -39,8 +40,8 @@ do
     # echo $BASEURL$QUERY
     wget --output-document=query_$YEAR_$TILE.json $BASEURL$QUERY
 
-    # JSON includes much more information than only product paths -> extract product path from the JSON
-    jq -r  '.. | .productIdentifier? | select( . != null ) ' query_$YEAR_$TILE.json  | grep "/eodata/" > name_$TILE.txt
+    # JSON includes much more information than only product paths -> extract product path from the JSON and safe to 
+    jq -r  '.. | .productIdentifier? | select( . != null ) ' query_$YEAR_$TILE.json  | grep "/eodata/" > name_$YEAR_$TILE.txt
 
     # Read the file with product paths and download each file from CDSE to Allas bucket defined above
     while IFS="" read -r FILE || [ -n "$FILE" ]
