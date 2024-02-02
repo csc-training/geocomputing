@@ -2,7 +2,7 @@
 
 ###############
 # Example script to 
-# 1. Query Copernicus Data Space Ecosystem Sentinel-2 catalog based on startdate, enddate, cloudcover and tilename 
+# 1. Query Copernicus Data Space Ecosystem Sentinel-2 catalog based on startdate, enddate, cloudcover and tilename using [openSearch API](https://documentation.dataspace.copernicus.eu/APIs/OpenSearch.html)
 # 2. Download the found data from CDSE object storage to Allas object storage
 #
 # Requirements: Rclone setup to work with allas as [s3allas] (s3 setup connected to CSC project for Allas) and CDSE as [cdse].
@@ -35,13 +35,14 @@ YEAR=${ENDDATE:0:4}
 for TILE in ${TILES[@]}
 
 do
-    # Query the catalog with previously defined variables
-    QUERY="productType=S2MSI2A&startDate=${STARTDATE}.000Z&completionDate=${ENDDATE}.000Z&cloudCover=${CLOUDCOVER}&productIdentifier=${TILE}"
+    # Query the catalog with previously defined variables, 20 is the default max record number, which you can adapt to your needs
+    # See https://documentation.dataspace.copernicus.eu/APIs/OpenSearch.html#output-sorting-and-limiting for further options for sorting
+    QUERY="productType=S2MSI2A&startDate=${STARTDATE}.000Z&completionDate=${ENDDATE}.000Z&cloudCover=${CLOUDCOVER}&productIdentifier=${TILE}&maxRecords=20"
     # echo $BASEURL$QUERY
-    wget --output-document=query_$YEAR_$TILE.json $BASEURL$QUERY
+    wget --output-document=query_${YEAR}_${TILE}.json $BASEURL$QUERY
 
     # JSON includes much more information than only product paths -> extract product path from the JSON and safe to 
-    jq -r  '.. | .productIdentifier? | select( . != null ) ' query_$YEAR_$TILE.json  | grep "/eodata/" > name_$YEAR_$TILE.txt
+    jq -r  '.. | .productIdentifier? | select( . != null ) ' query_${YEAR}_${TILE}.json  | grep "/eodata/" > name_${YEAR}_${TILE}.txt
 
     # Read the file with product paths and download each file from CDSE to Allas bucket defined above
     while IFS="" read -r FILE || [ -n "$FILE" ]
@@ -49,6 +50,6 @@ do
         echo $FILE
         # Rclone needs the filename in destination, otherwise the source .SAFE directory is unpacked without the .SAFE directory
         SAFENAME="$(basename -- $FILE)"
-        rclone copy -P -v cdse:$FILE s3allas:$BUCKETBASENAME-$YEAR-$TILE/$SAFENAME
-    done < name_$DATE_$TILE.txt
+        rclone copy -P -v cdse:$FILE s3allas:$BUCKETBASENAME-${YEAR}-${TILE}/$SAFENAME
+    done < name_${YEAR}_${TILE}.txt
 done
