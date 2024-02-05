@@ -1,13 +1,9 @@
-> **⚠️ Warning**
-> These scripts are outdated since SciHub has been replaced by the Copernice Space Data Ecosystem in 2023. Check [CSC Earth Observation guide](https://docs.csc.fi/support/tutorials/gis/eo_guide/) for alternative ways of downloading Sentinel data from the CDSE.
-
-
 
 ### Sentinel download script
 
 This script is an example how to find and download large quantities of Sentinel-2 images using Python and the [sentinelsat library](https://sentinelsat.readthedocs.io).
 
-The script favors the Finnish **Finhub API** over the European **Scihub API** if the same image is found from both. 
+The script works only for the Finnish **Finhub API**, or other national mirrors that use the same API. It does however not work for the Copernice Space Data Ecosystem. Check [CSC Earth Observation guide](https://docs.csc.fi/support/tutorials/gis/eo_guide/) for alternative ways of downloading Sentinel data from the CDSE.
 
 Another option for similar task is to use [STAC ](../STAC).
  
@@ -18,7 +14,7 @@ In Puhti sentinelsat is included in the [geoconda module](https://docs.csc.fi/ap
 
 ```
 module load geoconda
-python sentinelsat_download_from_finhub_and_scihub.py
+python sentinelsat_download_from_finhub.py
 ```
 
 You can run the script simply on login-node for smaller amounts of data.
@@ -37,6 +33,5 @@ Unzip all files to current directory and delete them at the same time
 
 ## Things to consider 
 
-* Finhub API has only L1C images
-* If the images are over a year old, they move to Long Term Archive in Scihub. This script can't download them. [More information](https://scihub.copernicus.eu/userguide/LongTermArchive)
+* Finhub API has data limited to Nordics only, as well as only some chosen data products. For more options, check the Copernicus Data Space ecosystem
 * If the area of interest is in the middle of two UTM zones, the script often downloads the same image in two different projections. You can specify the UTM zone if you do not want to download duplicates
