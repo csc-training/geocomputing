@@ -43,10 +43,10 @@ do
         # Define folder name for each .SAFE file
         SAFENAME="$(basename -- $FILE)"
 		
-		# Download to local disk
-		rclone copy -P -v cdse:$FILE /scratch/project_2000599/cdse/$SAFENAME
+	# Download to local disk
+	rclone copy -P -v cdse:$FILE /scratch/project_2000599/cdse/$SAFENAME
 		
-		# OR Download to Allas
+	# OR Download to Allas
         #rclone copy -P -v cdse:$FILE s3allas:yourBucketName/$SAFENAME
     done < name_${YEAR}_${TILE}.txt
 done
