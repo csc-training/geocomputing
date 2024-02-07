@@ -1,21 +1,13 @@
 #!/bin/bash
 
 ###############
-# Example script to 
-# 1. Query Copernicus Data Space Ecosystem Sentinel-2 catalog based on startdate, enddate, cloudcover and tilename using [openSearch API](https://documentation.dataspace.copernicus.eu/APIs/OpenSearch.html)
-# 2. Download the found data from CDSE object storage to Allas object storage
+# Example script to query and download data from Copernicus Data Space Ecosystem.
+# See readme for connection set up details.
 #
-# Requirements: Rclone setup to work with allas as [s3allas] (s3 setup connected to CSC project for Allas) and CDSE as [cdse].
-# See [CSC EO guide](https://docs.csc.fi/support/tutorials/gis/eo_guide/) about how to set it up. 
-# Instead of downloading directly to Allas, data can also be downloaded to a computing environment via [s3cmd](https://docs.csc.fi/data/Allas/using_allas/s3_client/). 
-#
-# Based on script provided by Maria Yli-Heikkilä (LUKE) - adapted to CDSE by Samantha Wittke, CSC - IT center for Science
+# Based on script provided by Maria Yli-Heikkilä (LUKE) - adapted to CDSE by Samantha Wittke and Kylli Ek, CSC - IT center for Science
 
 # Provide Sentinel-2 tilenames that you want to download
 TILES=("T34VDM" "T34VEM" "T34VEN")
-
-# Provide your bucketname for Allas; bucketname is then constructed: BUCKETBASENAME-YEAR-TILE
-BUCKETBASENAME="your_bucket_name"
 
 # Provide the timedelta - start date and time
 STARTDATE=2023-05-01T00:00:00
@@ -48,8 +40,13 @@ do
     while IFS="" read -r FILE || [ -n "$FILE" ]
     do
         echo $FILE
-        # Rclone needs the filename in destination, otherwise the source .SAFE directory is unpacked without the .SAFE directory
+        # Define folder name for each .SAFE file
         SAFENAME="$(basename -- $FILE)"
-        rclone copy -P -v cdse:$FILE s3allas:$BUCKETBASENAME-${YEAR}-${TILE}/$SAFENAME
+		
+		# Download to local disk
+		rclone copy -P -v cdse:$FILE /scratch/project_2000599/cdse/$SAFENAME
+		
+		# OR Download to Allas
+        #rclone copy -P -v cdse:$FILE s3allas:yourBucketName/$SAFENAME
     done < name_${YEAR}_${TILE}.txt
 done
