@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###############
-# Example script to query and download data from Copernicus Data Space Ecosystem.
+# Example script to query and download data from Copernicus Data Space Ecosystem WITH SENTINEL-2 TILE NAMES.
 # See readme for connection set up details.
 #
 # Based on script provided by Maria Yli-Heikkilä (LUKE) - adapted to CDSE by Samantha Wittke and Kylli Ek, CSC - IT center for Science
@@ -49,4 +49,9 @@ do
 	# OR Download to Allas
         #rclone copy -P -v cdse:$FILE s3allas:yourBucketName/$SAFENAME
     done < name_${YEAR}_${TILE}.txt
+	
+	# Delete temporary files
+	rm query_${YEAR}_${TILE}.json
+	rm name_${YEAR}_${TILE}.txt
 done
+

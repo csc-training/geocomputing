@@ -3,12 +3,17 @@
 The [Copernicus Data Space Ecosystem](https://dataspace.copernicus.eu/) (CDSE) provides multiple ways of querying and downloading data. Check out the [CSC Earth Observation guide](https://docs.csc.fi/support/tutorials/gis/eo_guide) for further information about the CDSE.
 
 ## CDSE S3 download with rclone
-This example shows how find and to copy data from CDSE S3 object storage using `rclone`. 
 
-The script [CDSE_S3_download.sh](CDSE_S3_download.sh) provides an example on how to query and download CDSE with `rclone` command line tool:
+These examples show how find and to copy data from CDSE S3 object storage using `rclone`:
 
-1. Query CDSE Sentinel-2 catalog based on startdate, enddate, cloudcover and tilename using [openSearch API](https://documentation.dataspace.copernicus.eu/APIs/OpenSearch.html)
+1. Query CDSE Sentinel-2 catalog based on startdate, enddate, cloudcover using [openSearch API](https://documentation.dataspace.copernicus.eu/APIs/OpenSearch.html)
 2. Download the found data from CDSE object storage via `s3` using `rclone`. Data can be downloaded to local disk or directly to CSC's object storage Allas. 
+
+The scripts are otherwise very similar, but the area of interest is defined in 2 different ways:
+
+* Area is defined by Sentinel-2 tile names: [CDSE_S3_download_with_tile_names.sh](CDSE_S3_download_with_tile_names.sh)
+* Area is defined by polygon in a file: [CDSE_S3_download_with_polygon.sh](CDSE_S3_download_with_polygon.sh). The polygon many also be calculated as convex hull of a vector layer.
+
 
 To run the script, first **connection details** to must be set up.
 
