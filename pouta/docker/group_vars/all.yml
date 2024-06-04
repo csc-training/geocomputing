@@ -5,7 +5,4 @@ instance_flavor: "standard.medium" # This will affect your billing, select one s
 instance_name: "ubuntu-docker"
 
 internal_ips: # Please change this to your own, you can use https://apps.csc.fi/myip to check your IP
-  - "193.166.1.0/16"
-  - "193.166.2.0/16"
-  - "193.166.84.0/16"
-  - "193.166.85.0/16"
+ - # your internal_ips
