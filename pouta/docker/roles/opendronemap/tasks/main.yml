@@ -1,0 +1,14 @@
+---
+
+- name: Get OpenDroneMap info
+  community.docker.docker_container_info:
+    name: test_opendronemap # Change this to suit your needs
+  register: opendronemap_status
+
+- name: Pull OpenDroneMap Image
+  community.docker.docker_image:
+    name: opendronemap/odm
+    source: pull
+    pull:
+      platform: amd64
+  when: not opendronemap_status.exists

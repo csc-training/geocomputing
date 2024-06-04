@@ -1,0 +1,26 @@
+---
+
+- name: Get PostGIS info
+  community.docker.docker_container_info:
+    name: test_postgis
+  register: postgis_status
+
+- name: Pull PostGIS Image
+  community.docker.docker_image:
+    name: postgis/postgis
+    source: pull
+    pull:
+      platform: amd64
+  when: not postgis_status.exists
+
+- name: Restart PostGIS if not up
+  community.docker.docker_container:
+    name: test_postgis
+    image: postgis/postgis:{{ postgis_version }}
+    state: started
+    restart: true
+    ports:
+      - "5432:5432"
+    env: # Change these to your own
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: test
