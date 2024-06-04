@@ -91,3 +91,12 @@
     ansible_user: ubuntu
   with_items:
     - "{{ server_facts.servers }}"
+
+- name: wait for SSH connection
+  wait_for:
+    host: "{{ item.access_ipv4 }}"
+    state: started
+    port: 22
+    delay: 0
+  with_items:
+    - "{{ server_facts.servers }}"
