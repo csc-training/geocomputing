@@ -7,7 +7,7 @@ A collection of Ansible playbooks to set up a virtual machine on Pouta and then 
 In order to run this code you need to first install some tools into your computer.
 
 1. First, you need Ansible to be installed. There are several methods to install Ansible, one of them being pip:
-  *  Make sure you have Python (>= 3.6). 
+  **  Make sure you have Python (>= 3.6). 
   `pip install ansible`
 2. You need the [openstack.cloud collection](https://docs.ansible.com/ansible/latest/collections/openstack/cloud/index.html) for Ansible:
   `ansible-galaxy collection install openstack.cloud`
