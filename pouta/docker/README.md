@@ -25,6 +25,10 @@ In order to run this code you need to first install some tools into your compute
    ```
 7. Lastly, you need the OpenRC file corresponding to the CSC Project. This can be downloaded from [API access](https://pouta.csc.fi/dashboard/project/api_access/) page from CSC Pouta. More information on [Pouta access through OpenStack APIs](https://docs.csc.fi/cloud/pouta/api-access/)
 
+## Variables
+
+Changing the variables used for creating the virtual machine and security group rules needs to be done [here](/group_vars/all.yml)
+
 ## Running the playbooks
 
 Before running the playbooks, you need to run the OpenRC file:
