@@ -27,7 +27,7 @@ In order to run this code you need to first install some tools into your compute
 
 ## Variables
 
-Changing the variables used for creating the virtual machine and security group rules needs to be done [here](/group_vars/all.yml)
+Changing the variables used for creating the virtual machine and security group rules needs to be done [here](group_vars/all.yml)
 
 ## Running the playbooks
 
