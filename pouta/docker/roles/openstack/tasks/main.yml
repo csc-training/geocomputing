@@ -83,7 +83,7 @@
     name: "{{ instance_name }}"
   register: server_facts
 
-- name: add hosts to inventory
+- name: Add hosts to inventory
   add_host:
     hostname: "{{ item.name }}"
     group: "{{ item.metadata.group }}"
@@ -92,7 +92,7 @@
   with_items:
     - "{{ server_facts.servers }}"
 
-- name: wait for SSH connection
+- name: Wait for SSH connection
   wait_for:
     host: "{{ item.access_ipv4 }}"
     state: started
