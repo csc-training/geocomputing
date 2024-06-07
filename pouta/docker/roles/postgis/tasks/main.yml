@@ -21,6 +21,6 @@
     restart: true
     ports:
       - "5432:5432"
-    env: # Change these to your own
+    env: # These can also be set using Ansible Vault variables https://docs.ansible.com/ansible/latest/vault_guide/index.html
         POSTGRES_USER: admin
         POSTGRES_PASSWORD: test
