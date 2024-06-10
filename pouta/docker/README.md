@@ -36,6 +36,11 @@ Before running the playbooks, you need to source the OpenRC file:
    ```bash
    source <project_name>-openrc.sh
    ```
+On Windows, use PowerShell and run the dot sourcing command:
+
+   ```powershell
+   . <project_name>-openrc.sh
+   ```
 
 Running the playbook:
 
