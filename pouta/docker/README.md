@@ -1,6 +1,6 @@
 # Ansible Docker installations of GeoServer, OpenDroneMap, and PostGIS on Pouta
 
-A collection of Ansible playbooks to set up a virtual machine on Pouta and install geocomputing software.
+A collection of Ansible playbooks to set up a virtual machine on Pouta and install geocomputing software. These guides are intended for Linux, Mac, and Windows Subsystem for Linux. **The playbooks will not work on Windows.**
 
 Please include the ansible.cfg file for the playbooks to work as intended.
 
@@ -35,11 +35,6 @@ Before running the playbooks, you need to source the OpenRC file:
 
    ```bash
    source <project_name>-openrc.sh
-   ```
-On Windows, use PowerShell and run the dot sourcing command:
-
-   ```powershell
-   . <project_name>-openrc.sh
    ```
 
 Running the playbook:
