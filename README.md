@@ -46,8 +46,7 @@ This repository contains examples for use of different geospatial applications. 
 - [MetaShape](./pouta/metashape_with_VNC) - installing other Desktop tools could be rather similar.
 
 ## Download
-
-You can download these scripts to any computer using git. To do this, first navigate to the destination folder (in Puhti this could be your project's **projappl** or **scratch** folder):
+If you have installed Git or You can download these scripts to any computer using git. To do this, first navigate to the destination folder (in Puhti this could be your project's **projappl** or **scratch** folder):
 
 `cd /projappl/<YOUR-PROJECT>`
 or
@@ -56,6 +55,10 @@ or
 And then clone this repository there
 
 `git clone https://github.com/csc-training/geocomputing.git`
+
+If Git is not available, you can download the files also as zip-file from the `Code` drop-down menu above.
+
+### Git download
 
 ## License
 These examples are free to use under CC 4.0 BY license unless marked otherwise.
