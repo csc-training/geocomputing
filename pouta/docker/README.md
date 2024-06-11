@@ -22,7 +22,7 @@ Set up [SSH key pair for cPouta](https://docs.csc.fi/cloud/pouta/launch-vm-from-
 ### Local installations
 In order to run the Ansible scripts, you need to have Python with Ansible and [OpenstackSDK for Python](https://pypi.org/project/openstacksdk/) installed to your laptop or PC. 
 
-1. Make sure you have Python(>= 3.6) and git installed.
+1. Make sure you have Python(>= 3.6) and pip installed.
 1. Then, add Ansible and OpenStackSDK with pip:
    
    ```bash
