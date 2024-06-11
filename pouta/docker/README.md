@@ -16,6 +16,9 @@ Technically the examples use [Ansible scripts](https://www.ansible.com/) for cre
 ### cPouta usage rights
 First, make sure you have CSC user account with a project with cPouta access enabled. More info about [CSC user accounts](https://docs.csc.fi/accounts/).
 
+### SSH key 
+Set up [SSH key pair for cPouta](https://docs.csc.fi/cloud/pouta/launch-vm-from-web-gui/#setting-up-ssh-keys).
+
 ### Local installations
 In order to run the Ansible scripts, you need to have Python with Ansible and [OpenstackSDK for Python](https://pypi.org/project/openstacksdk/) installed to your laptop or PC. 
 
@@ -31,17 +34,24 @@ In order to run the Ansible scripts, you need to have Python with Ansible and [O
    ansible-galaxy collection install openstack.cloud
    ```
 
-### Required files 
+### Download required files 
 
 Download to your local laptop/PC:
-1. The OpenRC file of your CSC Project from [cPouta API access page](https://pouta.csc.fi/dashboard/project/api_access/). More information on [Pouta access through OpenStack APIs](https://docs.csc.fi/cloud/pouta/api-access/)
+1. The Ansible scripts from [this Github repository](https://github.com/csc-training/geocomputing?tab=readme-ov-file#download). The included `ansible.cfg` file is needed for the playbooks to work as intended.
+2. The OpenRC file of your CSC Project from [cPouta API access page](https://pouta.csc.fi/dashboard/project/api_access/). More information on [Pouta access through OpenStack APIs](https://docs.csc.fi/cloud/pouta/api-access/)
 
-2. The Ansible scripts from [this Github repository](https://github.com/csc-training/geocomputing?tab=readme-ov-file#download). The included `ansible.cfg` file is needed for the playbooks to work as intended.
 
-## Changing default settings
+#### Define own settings
 
-Changing the variables used for creating the virtual machine and security group rules can to be done with [the variable file](group_vars/all.yml) in the group_vars folder.
+Some settings must be changed and some others are good to review, before doing the installation.
 
+[group_vars/all.yml variable file](group_vars/all.yml) includes the common variables used for creating the virtual machine and security group rules can to be done with
+
+* `key_name` - Name of your SSH key pair added to cPouta. Must be changed.
+* `internal_ips` - To which IPs the admin ports of virtual machine should be open. Please change this to your own, you can use https://apps.csc.fi/myip to check your IP or ask jour local IT-support which IPs to use. Leaving this to default (open to everywhere) is tehcnically possible, but decreases the security of your virtual machine.
+* `instance_flavor` - The [cPouta flavour](https://docs.csc.fi/cloud/pouta/vm-flavors-and-billing/#cpouta-flavors) to be used, this will affect your billing, select one suitable for you.
+
+  
 ## The installation
 
 In principle, all tools have the same general workflow of installation:
