@@ -1,0 +1,8 @@
+---
+key_name: <your-ssh-key-name-here>
+os_image: "Ubuntu-22.04"
+instance_flavor: "standard.medium" # This will affect your billing, select one suitable for you https://docs.csc.fi/cloud/pouta/vm-flavors-and-billing/#cpouta-flavors
+instance_name: "ubuntu-docker"
+
+internal_ips: # Please change this to your own, you can use https://apps.csc.fi/myip to check your IP
+ - 0.0.0.0/0

@@ -1,0 +1,28 @@
+---
+
+- name: Get GeoServer container info
+  community.docker.docker_container_info:
+    name: test_geoserver
+  register: geoserver_status
+
+- name: Pull GeoServer image
+  community.docker.docker_image:
+    name: docker.osgeo.org/geoserver:{{ geoserver_version }}
+    source: pull
+    pull:
+      platform: amd64
+  when: not geoserver_status.exists
+
+- name: Restart GeoServer if not up
+  community.docker.docker_container:
+    name: test_geoserver
+    image: docker.osgeo.org/geoserver:{{ geoserver_version }}
+    state: started
+    restart: true
+    ports:
+      - "8080:8080"
+    env: # These are only needed when using extensions, here ysld is used as an example
+      INSTALL_EXTENSIONS: "true"
+      STABLE_EXTENSIONS: "ysld"
+      # If you want to use Community modules, add COMMUNITY_EXTENSIONS followed by the modules you want to use 
+      # e.g. COMMUNITY_EXTENSIONS: "ogcapi-features,ogcapi-images"

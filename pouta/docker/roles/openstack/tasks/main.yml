@@ -1,0 +1,102 @@
+---
+
+- set_fact:
+    security_group: "{{ instance_name }}-security-group"
+
+- name: Create security group
+  openstack.cloud.security_group:
+    state: present
+    name: "{{ security_group }}"
+    description: "Security group for {{ instance_name }}"
+
+- name: Add port 22 opening to ips {{ internal_ips }} to rule {{ instance_name }}
+  openstack.cloud.security_group_rule:
+    state: present
+    security_group: "{{ security_group }}"
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: "{{ item }}"
+  with_items:
+    - "{{ internal_ips }}"
+
+- name: Add port 5432 opening to ips {{ internal_ips }} to rule {{ instance_name }}
+  openstack.cloud.security_group_rule:
+    state: present
+    security_group: "{{ instance_name }}-security-group"
+    protocol: tcp
+    port_range_min: 5432
+    port_range_max: 5432
+    remote_ip_prefix: "{{ item }}"
+  with_items:
+    - "{{ internal_ips }}"
+  when: installed_packages == "postgis"
+
+- name: Add port 8080 opening to ips {{ internal_ips }} to rule {{ instance_name }}
+  openstack.cloud.security_group_rule:
+    state: present
+    security_group: "{{ instance_name }}-security-group"
+    protocol: tcp
+    port_range_min: 8080
+    port_range_max: 8080
+    remote_ip_prefix: "0.0.0.0/0"
+  when: installed_packages == "geoserver"
+
+- name: Add port 8082 opening to ips {{ internal_ips }} to rule {{ instance_name }}
+  openstack.cloud.security_group_rule:
+    state: present
+    security_group: "{{ instance_name }}-security-group"
+    protocol: tcp
+    port_range_min: 8082
+    port_range_max: 8082
+    remote_ip_prefix: "0.0.0.0/0"
+  when: installed_packages == "geoserver"
+
+- name: Create instance
+  openstack.cloud.server:
+    name: "{{ instance_name }}"
+    state: present
+    key_name: "{{ key_name }}"
+    image: "{{ os_image }}"
+    flavor: "{{ instance_flavor }}"
+    security_groups: "default,{{security_group}}"
+    metadata:
+      group: "created_instances"
+  register: servers
+
+- name: Acquire Floating IP
+  openstack.cloud.floating_ip:
+    server: "{{ item }}"
+    network: "public"
+    reuse: true
+    wait: true
+    timeout: 60
+  delay: 1
+  retries: 3
+  async: 60
+  poll: 0
+  with_items:
+    - "{{ servers.server }}"
+
+- name: Register openstack servers facts
+  openstack.cloud.server_info:
+    name: "{{ instance_name }}"
+  register: server_facts
+
+- name: Add hosts to inventory
+  add_host:
+    hostname: "{{ item.name }}"
+    group: "{{ item.metadata.group }}"
+    ansible_host: "{{ item.access_ipv4 }}"
+    ansible_user: ubuntu
+  with_items:
+    - "{{ server_facts.servers }}"
+
+- name: Wait for SSH connection
+  wait_for:
+    host: "{{ item.access_ipv4 }}"
+    state: started
+    port: 22
+    delay: 0
+  with_items:
+    - "{{ server_facts.servers }}"

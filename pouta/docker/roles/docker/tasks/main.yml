@@ -1,0 +1,51 @@
+---
+
+# This tutorial is for Ubuntu
+- name: Create Docker group
+  become: true
+  group:
+    name: docker
+    state: present
+
+- name: Add user to Docker group
+  become: true
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
+
+- name: Update all packages
+  become: true
+  apt:
+    name: "*"
+    update_cache: yes
+    state: latest
+
+- name: Add signing key
+  become: true
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+
+- name: Add Docker repository into sources list
+  become: true
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu/ jammy stable
+    state: present
+
+- name: Install Docker
+  become: true
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: latest
+    update_cache: True
+
+- name: Start Docker
+  service:
+    name: docker
+    enabled: True
+    state: started
