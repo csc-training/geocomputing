@@ -1,4 +1,4 @@
 ---
 collections:
   - name: openstack.cloud
-  - name: docker
+  - name: community.docker
