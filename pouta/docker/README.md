@@ -28,11 +28,17 @@ In order to run the Ansible scripts, you need to have Python with Ansible and [O
    ```bash
    pip install ansible openstacksdk
    ```
-2. You need to add the [openstack.cloud collection](https://docs.ansible.com/ansible/latest/collections/openstack/cloud/index.html) for Ansible:
+2. You need to add the [openstack.cloud](https://docs.ansible.com/ansible/latest/collections/openstack/cloud/index.html) and [docker](https://docs.ansible.com/ansible/latest/collections/community/docker/index.html) collections for Ansible:
    
    ```bash
    ansible-galaxy collection install openstack.cloud
+   ansible-galaxy collection install community.docker
    ```
+   or
+   ```bash
+   ansible-galaxy install -r requirements.yml
+   ```
+   
 
 ### Download required files 
 
