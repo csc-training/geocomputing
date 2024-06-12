@@ -17,12 +17,12 @@ Technically the examples use [Ansible scripts](https://www.ansible.com/) for cre
 First, make sure you have CSC user account with a project with cPouta access enabled. More info about [CSC user accounts](https://docs.csc.fi/accounts/).
 
 ### SSH key 
-Set up [SSH key pair for cPouta](https://docs.csc.fi/cloud/pouta/launch-vm-from-web-gui/#setting-up-ssh-keys).
+Set up [SSH key pair for cPouta](https://docs.csc.fi/cloud/pouta/launch-vm-from-web-gui/#setting-up-ssh-keys). If you create new key pair, save the private key to your laptop or PC.
 
 ### Local installations
-In order to run the Ansible scripts, you need to have Python with Ansible and [OpenstackSDK for Python](https://pypi.org/project/openstacksdk/) installed to your laptop or PC. 
+In order to run the Ansible scripts, you need to have Python(>= 3.6) with Ansible (>= 4.0)  and [OpenstackSDK for Python](https://pypi.org/project/openstacksdk/) installed to your laptop or PC. 
 
-1. Make sure you have Python(>= 3.6) and pip installed.
+1. Make sure you have Python and pip installed.
 1. Then, add Ansible and OpenStackSDK with pip:
    
    ```bash
@@ -39,7 +39,6 @@ In order to run the Ansible scripts, you need to have Python with Ansible and [O
    ansible-galaxy install -r requirements.yml
    ```
    
-
 ### Download required files 
 
 Download to your local laptop/PC:
@@ -65,6 +64,8 @@ In principle, all tools have the same general workflow of installation:
 2. Install Docker to the virtual machine
 3. Install the selected software using Docker containers
 
+For each of these steps there is an Ansible role.
+
 Before running the playbooks, you need to source the OpenRC file:he 
 
 ```bash
@@ -79,4 +80,20 @@ ansible-playbook install-odm.yml
 ansible-playbook install-postgis.yml
 ```
 
+If do not have the private key in ~/.ssh folder, you can add its path to the commands like this:
+```bash
+ansible-playbook install-geoserver.yml --extra-vars "ansible_ssh_private_key_file=<path_to_key>/<key_name>.pem"
+```
+Ansible prints out the steps of the scripts and shows the status.
 
+### Virtual machines
+You can check that the virtual machine was created and is running from [cPouta web interface](https://pouta.csc.fi/):
+   * The `Instances` page shows main info about the virtual machines
+   * The `Floating IPs` page shows the IP address of the virtual machine, that can be used for connecting to it.
+   * The `Security groups` page shows the settings for different ports.
+     
+```
+ssh ubuntu@<public_ip> 
+# OR if you had custom private key path
+ssh ubuntu@<public_ip> -i <path_to_key>/<key_name>.pem
+```
