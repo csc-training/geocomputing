@@ -26,3 +26,9 @@
       STABLE_EXTENSIONS: "ysld"
       # If you want to use Community modules, add COMMUNITY_EXTENSIONS followed by the modules you want to use 
       # e.g. COMMUNITY_EXTENSIONS: "ogcapi-features,ogcapi-images"
+
+- name: GeoServer info
+  debug:
+    msg: 
+      - "You now have GeoServer available at: http://{{ hostvars['localhost']['server_facts']['servers'][0]['access_ipv4'] }}:8080/geoserver/"
+      - "To login in to the virtual machine, connect with: ssh ubuntu@{{ hostvars['localhost']['server_facts']['servers'][0]['access_ipv4'] }}"

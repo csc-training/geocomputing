@@ -24,13 +24,8 @@ output_file = os.path.join(os.getcwd(), "sentinel1_mean_vv.tif")
 # Use as many workers as you have available cores
 no_of_workers = len(os.sched_getaffinity(0))
 
-# To overcome a current bug, rewrite requests to https. Needed only with Paituli STAC.
-def change_to_https(request: requests.Request) -> requests.Request: 
-    request.url = request.url.replace("http:", "https:")
-    return request
-
 def find_items_from_stac():
-    catalog = pystac_client.Client.open(STAC_URL, request_modifier=change_to_https)
+    catalog = pystac_client.Client.open(STAC_URL)
     search_bbox = catalog.search(
         collections=[collection],
         datetime=time_filter
