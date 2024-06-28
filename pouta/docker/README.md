@@ -9,7 +9,7 @@ Included installation examples are for following widely used open source tools:
 
 All tools are installed using [Docker containers](https://www.docker.com/). The used Docker containers are provided by the each project themselves. Installing other tools with Docker would have mainly similar steps.
 
-Technically the examples use [Ansible scripts](https://www.ansible.com/) for creating the virtual machine to cPouta and installing the geospatial tools. These scripts are suitable for setting up the new virtual machine from Linux, Mac and Windows Subsystem for Linux, **they will not work on Windows.**
+Technically the examples use [Ansible scripts](https://www.ansible.com/) for creating the virtual machine to cPouta and installing the geospatial tools. These scripts are suitable for setting up the new virtual machine from Linux, Mac and Windows Subsystem for Linux, **they will not work on native Windows.**
 
 ## Preparations for intallation
 
