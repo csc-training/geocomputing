@@ -21,7 +21,7 @@
     owner: ubuntu
   become: yes
 
-- name: Restart GeoServer if not up
+- name: Start GeoServer
   community.docker.docker_container:
     name: test_geoserver
     image: docker.osgeo.org/geoserver:{{ geoserver_version }}
