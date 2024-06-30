@@ -16,7 +16,13 @@
   collections:
     - openstack.cloud
   vars:
-    postgis_version: "16-3.4" # If you want to install a different version of GeoServer, change this variable
+    postgis_version: "16-3.4" # If you want to install a different version of GeoServer, change this
+    host_port: "5432"
+    username: "admin"
+    password: "test"
+    database: "postgis"
+    docker_name: "postgis"
+    
 
   roles:
     - docker

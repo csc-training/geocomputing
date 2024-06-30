@@ -2,25 +2,35 @@
 
 - name: Get PostGIS info
   community.docker.docker_container_info:
-    name: test_postgis
+    name: "{{ docker_name }}"
   register: postgis_status
 
 - name: Pull PostGIS Image
   community.docker.docker_image:
-    name: postgis/postgis
+    name: postgis/postgis:{{ postgis_version }}
     source: pull
     pull:
       platform: amd64
   when: not postgis_status.exists
 
-- name: Restart PostGIS if not up
+- name: Start PostGIS
   community.docker.docker_container:
-    name: test_postgis
+    name: "{{ docker_name }}"
     image: postgis/postgis:{{ postgis_version }}
     state: started
     restart: true
     ports:
-      - "5432:5432"
-    env: # These can also be set using Ansible Vault variables https://docs.ansible.com/ansible/latest/vault_guide/index.html
-        POSTGRES_USER: admin
-        POSTGRES_PASSWORD: test
+      - "{{ host_port }}:5432"
+    env: 
+        POSTGRES_USER: "{{ username }}"
+        POSTGRES_PASSWORD: "{{ password }}"
+        POSTGRES_DB: "{{ database }}"
+        
+- name: PostGIS info
+  debug:
+    msg: 
+      - "You now have PostGIS available at IP: {{ hostvars['localhost']['server_facts']['servers'][0]['access_ipv4'] }}"
+      - "Port: {{ host_port }}, database: {{database}} "
+      - "Username: {{ username}}, password: {{ password }} "
+      - "To login in to the virtual machine, connect with: ssh ubuntu@{{ hostvars['localhost']['server_facts']['servers'][0]['access_ipv4'] }}"
+      - "Once inside virtual machine, open psql: docker exec -ti {{ docker_name }} -d {{ database }} -U {{ username }}"
