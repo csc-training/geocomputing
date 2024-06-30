@@ -55,6 +55,7 @@ Some settings must be changed and some others are good to review, before doing t
 * `key_name` - Name of your SSH key pair added to cPouta. Must be changed.
 * `internal_ips` - To which IPs the admin ports of virtual machine should be open. Please change this to your own, you can use https://apps.csc.fi/myip to check your IP or ask jour local IT-support which IPs to use. Leaving this to default (open to everywhere) is tehcnically possible, but decreases the security of your virtual machine.
 * `instance_flavor` - The [cPouta flavour](https://docs.csc.fi/cloud/pouta/vm-flavors-and-billing/#cpouta-flavors) to be used, this will affect your billing, select one suitable for you.
+* `os_image` - The [base Linux image](https://docs.csc.fi/cloud/pouta/images/), no need to change, but good to be aware.
 
   
 ## The installation
@@ -97,8 +98,14 @@ ssh ubuntu@<public_ip>
 # OR if you had custom private key path
 ssh ubuntu@<public_ip> -i <path_to_key>/<key_name>.pem
 ```
+### GeoServer
+* The scripts install official [GeoServer Docker image](https://docs.geoserver.org/latest/en/user/installation/docker.html). 
+* GeoServer version and DataDirectory location are defined in: [install-geoserver.yml](install-geoserver.yml)
+* See [GeoServer Docker readme](https://github.com/geoserver/docker/blob/master/README.md) for additional options.
+* The changes should be done to [roles/geoserver/tasks/main.yml](roles/geoserver/tasks/main.yml) `Start GeoServer` task.
+* The example shows how to add bind data directory from outside of the Docker and how to install `ysld` extension.
 
-# OpenDroneMap
+### OpenDroneMap
 
 Other options: 
 * The basic OpenDroneMap is also available in [Puhti](https://docs.csc.fi/apps/opendronemap/), but OpenDroneMap Web requires cPouta. 
