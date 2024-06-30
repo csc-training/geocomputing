@@ -96,7 +96,7 @@ ssh ubuntu@<public_ip>
 ssh ubuntu@<public_ip> -i <path_to_key>/<key_name>.pem
 ```
 ## GeoServer
-* The script prints out the URL of GeoServer admin page.
+* The script prints out the URL of GeoServer admin page and how to connect to the virtual machine.
 * The default username (admin) and password (geoserver) are used, change password from Admin front page.
 * If GeoServer is used for courses, do not let students use the main admin credetials, but [create new user account(s)](https://docs.geoserver.org/latest/en/user/security/webadmin/ugr.html#add-user).
 * The scripts install the official [GeoServer Docker image](https://docs.geoserver.org/latest/en/user/installation/docker.html). 
@@ -107,8 +107,42 @@ ssh ubuntu@<public_ip> -i <path_to_key>/<key_name>.pem
    * The changes should be done to [roles/geoserver/tasks/main.yml](roles/geoserver/tasks/main.yml) `Start GeoServer` task.
    * The example shows how to bind data directory from outside of the Docker and how to install `ysld` extension.
 
+## PostGIS
+* The script prints out the IP, port, database and credentials of PostGIS and how to connect to the virtual machine.
+* If PostGIS is used for courses, do not let students use the main admin credetials, but [create new user account(s)](https://www.postgresql.org/docs/16/sql-createuser.html).
+* The scripts install the community [PostGIS Docker image](https://postgis.net/documentation/getting_started/install_docker/) 
+* PostGIS version, host port and credentials are defined in: [install-postgis.yml](install-postgis.yml), change at least the password.
+* Customization:
+   * See [PostGIS Docker readme](https://hub.docker.com/r/postgis/postgis/) for additional options.
+   * The changes should be done to [roles/postgis/tasks/main.yml](roles/postgis/tasks/main.yml) `Start PostGIS` task.
+
 ## OpenDroneMap
+* The script prints out how to connect to the virtual machine.
+* The scripts install the official [OpenDroneMap Docker image](https://hub.docker.com/r/opendronemap/odm) 
+* ODM image folder is defined in: [install-odm.yml](install-odm.yml).
+* Customization:
+   * See [OpenDroneMap Docker readme](https://hub.docker.com/r/opendronemap/odm) for additional options.
+   * The changes should be done in the code below.
+   * To run OpenDronemap, connect to the virtual machine and move your images to /data/images folder
+```
+# Move to the data folder
+cd /data/
+
+# Use the **screen** command to start a detachable terminal (= you can close the terminal and the process keeps running)
+screen –S odm
+
+# Run the opendronemap command (use the **time** command to get info on how long it run):
+time sudo docker run -it --rm \
+    -v "$(pwd)/images:/code/images" \
+    -v "$(pwd)/odm_orthophoto:/code/odm_orthophoto" \
+    -v "$(pwd)/odm_georeferencing:/code/odm_georeferencing" \
+    opendronemap/opendronemap \
+    --mesh-size 100000
+```
 
 Other options: 
 * The basic OpenDroneMap is also available in [Puhti](https://docs.csc.fi/apps/opendronemap/), but OpenDroneMap Web requires cPouta. 
 * UEF drone lab has very detailed instructions for OpenDroneMap and OpenDroneMap Web in [GeoPortti](https://www.geoportti.fi/tools/instruments/) (see the end of the page).
+
+**
+Credentials can also be set using Ansible Vault variables https://docs.ansible.com/ansible/latest/vault_guide/index.html
