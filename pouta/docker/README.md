@@ -34,10 +34,6 @@ In order to run the Ansible scripts, you need to have Python(>= 3.6) with Ansibl
    ansible-galaxy collection install openstack.cloud
    ansible-galaxy collection install community.docker
    ```
-   or
-   ```bash
-   ansible-galaxy install -r requirements.yml
-   ```
    
 ### Download required files 
 
@@ -92,20 +88,26 @@ You can check that the virtual machine was created and is running from [cPouta w
    * The `Instances` page shows main info about the virtual machines
    * The `Floating IPs` page shows the IP address of the virtual machine, that can be used for connecting to it.
    * The `Security groups` page shows the settings for different ports.
+   * [More info](https://docs.csc.fi/cloud/pouta/connecting-to-vm/)
      
 ```
 ssh ubuntu@<public_ip> 
 # OR if you had custom private key path
 ssh ubuntu@<public_ip> -i <path_to_key>/<key_name>.pem
 ```
-### GeoServer
-* The scripts install official [GeoServer Docker image](https://docs.geoserver.org/latest/en/user/installation/docker.html). 
-* GeoServer version and DataDirectory location are defined in: [install-geoserver.yml](install-geoserver.yml)
-* See [GeoServer Docker readme](https://github.com/geoserver/docker/blob/master/README.md) for additional options.
-* The changes should be done to [roles/geoserver/tasks/main.yml](roles/geoserver/tasks/main.yml) `Start GeoServer` task.
-* The example shows how to add bind data directory from outside of the Docker and how to install `ysld` extension.
+## GeoServer
+* The script prints out the URL of GeoServer admin page.
+* The default username (admin) and password (geoserver) are used, change password from Admin front page.
+* If GeoServer is used for courses, do not let students use the main admin credetials, but [create new user account(s)](https://docs.geoserver.org/latest/en/user/security/webadmin/ugr.html#add-user).
+* The scripts install the official [GeoServer Docker image](https://docs.geoserver.org/latest/en/user/installation/docker.html). 
+* GeoServer version and data directory location are defined in: [install-geoserver.yml](install-geoserver.yml)
+* For adding your own data, add it to data directory, which is mounted to Docker and visible for GeoServer.
+* Customization:
+   * See [GeoServer Docker readme](https://github.com/geoserver/docker/blob/master/README.md) for additional options.
+   * The changes should be done to [roles/geoserver/tasks/main.yml](roles/geoserver/tasks/main.yml) `Start GeoServer` task.
+   * The example shows how to bind data directory from outside of the Docker and how to install `ysld` extension.
 
-### OpenDroneMap
+## OpenDroneMap
 
 Other options: 
 * The basic OpenDroneMap is also available in [Puhti](https://docs.csc.fi/apps/opendronemap/), but OpenDroneMap Web requires cPouta. 
