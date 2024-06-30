@@ -2,7 +2,7 @@
 
 - name: Get GeoServer container info
   community.docker.docker_container_info:
-    name: test_geoserver
+    name: geoserver
   register: geoserver_status
 
 - name: Pull GeoServer image
@@ -23,7 +23,7 @@
 
 - name: Start GeoServer
   community.docker.docker_container:
-    name: test_geoserver
+    name: geoserver
     image: docker.osgeo.org/geoserver:{{ geoserver_version }}
     state: started
     restart: true
