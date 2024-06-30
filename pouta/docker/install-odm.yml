@@ -15,6 +15,9 @@
   gather_facts: false
   collections:
     - openstack.cloud
+  vars:
+    images_dir: "/data/images"
+    docker_name: "odm"    
 
   roles:
     - docker

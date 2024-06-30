@@ -2,8 +2,16 @@
 
 - name: Get OpenDroneMap info
   community.docker.docker_container_info:
-    name: test_opendronemap # Change this to suit your needs
+    name: "{{ docker_name }}"
   register: opendronemap_status
+
+- name: Create Geoserver data directory 
+  file:
+    path: "{{images_dir}}"
+    state: directory
+    mode: '0770'
+    owner: ubuntu
+  become: yes
 
 - name: Pull OpenDroneMap Image
   community.docker.docker_image:
@@ -12,3 +20,8 @@
     pull:
       platform: amd64
   when: not opendronemap_status.exists
+  
+- name: OpenDroneMap info
+  debug:
+    msg: 
+      - "To login in to the virtual machine, connect with: ssh ubuntu@{{ hostvars['localhost']['server_facts']['servers'][0]['access_ipv4'] }}"
