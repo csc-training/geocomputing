@@ -12,6 +12,14 @@
     pull:
       platform: amd64
   when: not geoserver_status.exists
+  
+- name: Create Geoserver data directory 
+  file:
+    path: "{{geoserver_datadir}}"
+    state: directory
+    mode: '0770'
+    owner: ubuntu
+  become: yes
 
 - name: Restart GeoServer if not up
   community.docker.docker_container:
@@ -21,6 +29,10 @@
     restart: true
     ports:
       - "8080:8080"
+    mounts:
+      - type: "bind"
+        target: /opt/geoserver_data
+        source: "{{geoserver_datadir}}"
     env: # These are only needed when using extensions, here ysld is used as an example
       INSTALL_EXTENSIONS: "true"
       STABLE_EXTENSIONS: "ysld"

@@ -15,7 +15,8 @@
   collections:
     - openstack.cloud
   vars:
-    geoserver_version: "2.25.1" # If you want to install a different version of GeoServer, change this variable
+    geoserver_version: "2.25.2" # If you want to install a different version of GeoServer, change this
+    geoserver_datadir: "/geoserver_data"
 
   roles:
     - docker
