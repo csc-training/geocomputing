@@ -47,7 +47,7 @@ gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 ```
 
 > [!IMPORTANT]  
-> If you want to run more computationally heavy GDAL commands, then use [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) on a compute node.
+> If you want to run more computationally heavy GDAL commands, then use [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) on a compute node, easiest with a [Compute node shell]() in web interface.
 
 ## Serial batch job
 
@@ -63,7 +63,7 @@ Open the files with Edit under the menu on the right of file name.
 * [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
 	* Change the project name in `#SBATCH --account` setting. Save.
 
-* Run the script as batch file: 
+* In the Login shell window, run the script as batch file: 
 ```
 sbatch gdal_batch_job_serial.sh
 ```
