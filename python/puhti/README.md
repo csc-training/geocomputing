@@ -117,9 +117,11 @@ sbatch single_core_example.sh
 
 ## Parallelel job
 
-We can also paralellize within Python. In this case Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples `dask` are provided. 
+We can also paralellize within Python. In this case Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples `dask` are provided. Here are two examples for single-node (max 40 cores) and multi-node usage. 
 
 * Please see Geocomputing course's [Dask section](https://csc-training.github.io/geocomputing_course/materials/parallel_python.html#dask) for more general introduction.
+
+The examples use [delayed functions](https://docs.dask.org/en/latest/delayed.html) from Dask to parallelize the workload. Typically, if a workflow contains a for-loop, it can benefit from delayed. Besides delayed functions Dask supports also several othe ways of parallelization, inc [Dask DataFrames](https://docs.dask.org/en/stable/dataframe.html) and [Dask Arrays](https://docs.dask.org/en/stable/array.html). For Dask DataFrames, see our [dask-geopandas example](../../dask_geopandas) and for Dask arrays [STAC example with Xarray](../../STAC).
 
 ### Single node example
 
