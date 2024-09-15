@@ -1,6 +1,15 @@
 # Python Puhti examples
 
-Here are examples for running Python code on CSC's Puhti supercomputer as four different job styles: interactive, serial, array and embarrasingly/delightfully/naturally parellel. For parallel jobs there are 3 options with different Python libraries: `multiprocessing`, `joblib` and `dask`.  We'll take a look at these three and `GNUParallel`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your scripts. 
+Here are examples for running Python code on CSC's Puhti supercomputer as different job styles: 
+
+* Interactive - for developing your scripts, usually with limited test data.
+* Via batch jobs - for computationally more demanding analysis:
+	* Serial  
+	* Parellel:
+		* With different Python libraries: `multiprocessing`, `joblib` and `dask`.
+		* With external tools like `GNU parellel` and array jobs.
+
+If unsure, start with Dask, it is one of the newest, most versatile and easy to use. But Dask has many options and alternatives, multiprocessing might be easier to learn as first.
 
 ## Example case
 
@@ -33,51 +42,17 @@ If you haven't yet, get the example scripts to Puhti:
 * Log in to Puhti web interface: https://puhti.csc.fi
 * Start a `Login node shell`
 * Create a folder for yourself:
-    * Switch to your projects scratch directory and further int the students directory: `cd /scratch/project_200xxxx/students` (fill in your project number for x)
-    * Create new own folder:`mkdir cscusername` (replace cscusername with your username)
-    * Switch into your own folder: `cd cscusername` (replace cscusername with your username)
+    * Switch to your projects scratch directory and further int the students directory: `cd /scratch/project_200xxxx/students`
+    * Create new own folder:`mkdir cscusername` 
+    * Switch into your own folder: `cd cscusername` 
     * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
     * Switch to the directory with example files: `cd geocomputing/python/puhti`.
     * Check that we are in the correct place: `pwd` should show something like `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti`.
     
     
-## Interactive job
+## Interactive job with Visual Studio Code
 
-Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this.
-
-### Jupyter
-
-If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
-
-* Settings for Jupyter:
-    * (Reservation: `geocomputing_fri`, only during course)
-    * Project: `project_200xxxx`
-    * Partition: `interactive` (`small` during course)
-    * Number of CPU cores: 1
-    * Memory: 3 Gb
-    * Local disk: 0
-    * Time: 1:00:00
-    * Python: geoconda
-    * Jupyter type: Lab (you can also try Notebook, based on needs and preferences)
-    * Working directory: `/scratch/project_200xxxx/students/cscusername`
-    * `Launch`
-
-* Wait a moment -> Connect to Jupyter
-* Jupyter opens up in the browser
-* Open folder with the exercise files from the left browser panel `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti` and find the file `interactive.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
-* End the session:
-   * Close the web tab
-   * In Active sessions view: `Delete`
-
-As mentioned, Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it and put the code in a Python script. This means for example to put parts into functions, so that they can be reused. You can find one such cleaned up and generalized script with much more comments in `00_interactive/interactive_single_core_example.py`. Let's take a look at it: 
-
-### Interactive job with Python script
-
-We can open and look at the Python script from Puhti webinterface > Files tab, within Jupyter environment, Visual Studio Code application or the command line. 
-
-#### Visual Studio Code
-
-Visual Studio Code or VSCode is a source code editor by Microsoft. In addition to being able to run the full script within Visual Studio Code, it also possible to run parts of a script step by step.
+Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this. We can open and look at the Python script from Puhti webinterface > Files tab, within Jupyter environment, Visual Studio Code (VSCode) application or the command line. In addition to being able to run the full script within Visual Studio Code, it also possible to run parts of a script step by step.
 
 * Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio code
@@ -88,7 +63,7 @@ Visual Studio Code or VSCode is a source code editor by Microsoft. In addition t
         * Number of CPU cores: 1
         * Memory: 2 Gb
         * Local disk: 0
-        * Time: 1:00:00
+        * Time: 1:30:00
         * Code version and compiler: leave default
         * Modules: geoconda
         * `Launch`
@@ -104,50 +79,11 @@ Visual Studio Code or VSCode is a source code editor by Microsoft. In addition t
     * Click the arrow up right above script (Run Python File in Terminal)
     * Wait, it takes a few minutes for complete. The printouts will appear  in the terminal during the process. Note the time it took.
     * Check that there is one new GeoTiff file in your work directory in the Files panel of VSCode.
-* Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
-* End all running sessions:
-   * Close the web tab
-   * In Active sessions view: `Delete`
-
-#### Command line
-
-If you prefer working in the command line, you can also start a compute node shell directly from the tools tab in Puhti web interface. Choose settings for the interactive session:
-
-* Project: project_200xxxx
-* Number of CPU cores: 1
-* Memory: 2 Gb
-* Local disk: 0
-* Time: 1:00:00
-
-> [!NOTE]
-> You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) from a login node (by starting a login node shell from tools tab in Puhti webinterface or by connecting to Puhti via ssh in your own computers terminal) with:
->  `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
-> This gives you a compute node shell; you can see "where" you are from your terminal prompt [cscusername@puhti-loginXX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node. 
-
-For both of the above:
-
-After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer":
-
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
-
-```
-module load geoconda
-cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/00_interactive
-python interactive_single_core_example.py 
-```
-
-* Wait, it takes a few minutes for complete. The printouts will appear in the terminal during the process. Note the time it took.
-* Check that there is one new GeoTiff file in your work directory with `ls -l output`
-* Close the compute node shell tab in your browser and delete the running job from `my interactive sessions` in the Puhti webinterface.
-* Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
-
 
 ## Serial job
+All computationally heavy analysis should be done via batch jobs. The login node is used only for telling the supercomputer, what it should do. The execution of the code will happen on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
 
-What if we don't want the execution of the script blocking our command line? We need to start writing batch job scripts and separate the submission of the job on the login node from the execution of the job on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
-
-* Open `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` (replace your project number and CSC username in path) with your favorite editor (e.g. `nano` in login node shell or open the file editor via the three dots next to the filename in the webinterface -> Files section or VSCode).
+* Open `/scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` with VSCode.
 
 * Check out the changes in the Python file compared to the `00_interactive/interactive_single_core_example.py`:
     * Python script reads one input image file from the argument, which is set inside the batch job file. 
@@ -164,9 +100,6 @@ What if we don't want the execution of the script blocking our command line? We 
 * Update the project with the number of your project
 * Submit the batch job from **login node shell** (not VSCode terminal or compute node shell):
 
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
-
 ```
 cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
@@ -179,7 +112,7 @@ sbatch single_core_example.sh
 > Did you reserve a good amount of memory?
 
 
-* Once the job is finished, see output in `slurm-jobid.out` and `slurm-jobid.err` (e.g. with `cat slurm-jobid.out`) for any possible errors and other outputs. 
+* Once the job is finished, see output in `slurm-jobid.out` and `slurm-jobid.err` with VSCode for any possible errors and other outputs. 
 * Check that you have a new GeoTiff file in the output folder.
 
 ### Running through multiple Sentinel-2 files
@@ -325,3 +258,64 @@ These are just to demonstrate the difference between single core vs. some kind o
 | multiprocessing | 1    | 3               | 00:52      | 80%         |
 | dask            | 1    | 3               | 00:55      | 79%         |
 
+## Extra
+
+### Jupyter
+
+If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
+
+* Settings for Jupyter:
+    * (Reservation: `geocomputing_fri`, only during course)
+    * Project: `project_200xxxx`
+    * Partition: `interactive` (`small` during course)
+    * Number of CPU cores: 1
+    * Memory: 3 Gb
+    * Local disk: 0
+    * Time: 1:00:00
+    * Python: geoconda
+    * Module version: default
+    * Jupyter type: Lab
+    * Working directory: `/scratch/project_200xxxx/`
+    * `Launch`
+
+* Wait a moment -> Connect to Jupyter
+* Jupyter opens up in the browser
+* Open folder with the exercise files from the left browser panel `students/cscusername/geocomputing/python/puhti` and find the file `interactive.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
+* End the session:
+   * Close the web tab
+   * In Active sessions view: `Cancel`
+
+
+### Command line
+
+If you prefer working in the command line, you can also start a compute node shell directly from the tools tab in Puhti web interface. Choose settings for the interactive session:
+
+* Project: project_200xxxx
+* Number of CPU cores: 1
+* Memory: 2 Gb
+* Local disk: 0
+* Time: 1:00:00
+
+> [!NOTE]
+> You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) from a login node (by starting a login node shell from tools tab in Puhti webinterface or by connecting to Puhti via ssh in your own computers terminal) with:
+>  `sinteractive --account project_200xxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
+> This gives you a compute node shell; you can see "where" you are from your terminal prompt [cscusername@puhti-loginXX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node. 
+
+For both of the above:
+
+After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer":
+
+>[!NOTE]
+> Remember to change the project name and your CSC user name in the paths below.
+
+```
+module load geoconda
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/00_interactive
+python interactive_single_core_example.py 
+```
+
+* Wait, it takes a few minutes for complete. The printouts will appear in the terminal during the process. Note the time it took.
+* Check that there is one new GeoTiff file in your work directory with `ls -l output`
+* Close the compute node shell tab in your browser and delete the running job from `my interactive sessions` in the Puhti webinterface.
+* Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
+As mentioned, Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it and put the code in a Python script. This means for example to put parts into functions, so that they can be reused. You can find one such cleaned up and generalized script with much more comments in `00_interactive/interactive_single_core_example.py`. Let's take a look at it: 
