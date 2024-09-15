@@ -9,7 +9,7 @@ Here are examples for running Python code on CSC's Puhti supercomputer as differ
 		* With different Python libraries: `multiprocessing`, `joblib` and `dask`.
 		* With external tools like `GNU parellel` and array jobs.
 
-If unsure, start with Dask, it is one of the newest, most versatile and easy to use. But Dask has many options and alternatives, multiprocessing might be easier to learn as first.
+If unsure, start with Dask, it is one of the newest, most versatile and easy to use. But Dask has many options and alternatives, multiprocessing might be easier to learn as first and is included in all Python installations by default. `multiprocessing` and `joblib` are suitable for maximum one node (max 40 cores in Puhti). Dask can run also multi-node jobs.
 
 ## Example case
 
@@ -115,102 +115,15 @@ sbatch single_core_example.sh
 * Once the job is finished, see output in `slurm-jobid.out` and `slurm-jobid.err` with VSCode for any possible errors and other outputs. 
 * Check that you have a new GeoTiff file in the output folder.
 
-### Running through multiple Sentinel-2 files
+## Parallelel job
 
-What if we want to run the same process for not only one, but all Sentinel-2 files within a folder? 
+We can also paralellize within Python. In this case Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples `dask` are provided. 
 
--> We could adapt the sbatch script to run the same script with different input one after another  in a for loop in the sbatch file, see `01_serial/single_core_example_list.sh` (the Python file stays the same as before). 
-
--> Or we adjust the Python script to take in the data folder instead of just one Sentinel-2 file and loop through all files in the main function (see `01_serial/single_core_example_folder.sh` and `01_serial/single_core_example_folder.py`). You can run it the same way as the single file script, by adapting the project to your project number in the `.sh` file.
-
-## GNU parallel
-
-GNU parallel can help parallelizing a script which otherwise is not parallelized. Instead of looping through the three files available within the batch job or the Python script, we let GNU Parallel handle that step. Checkout how it is used in [02_gnu_parallel/gnu_parallel_example.sh](02_gnu_parallel/gnu_parallel_example.sh) with your favorite editor and adapt the project number.
-
-* Changes in the batch job file compared to the `01_serial/single_core_example_list.sh`:
-    * `--cpus-per-task` parameter is used to reserve 3 CPUs for the job
-    * Instead of a for loop, we use `parallel` program to read in the filenames from the text file and distribute them to the CPUs
-    * Memory and time allocations
-
-
-> To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` in the login node shell to count everything within the data directory before writing the batch job script. 
-
-Submit the job to Puhti from login node shell:
-
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
-
-```
-cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/02_gnu_parallel
-sbatch gnu_parallel_example.sh
-```
-
-> [!NOTE]
-> Check with `seff jobid`: How much time and resources did you use?
-
-### Array job
-
-In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script or one job on multiple CPUs (GNU parallel). 
-
-* [03_array/array_job_example.sh](03_array/array_job_example.sh) array job batch file. Changes compared to `01_serial/single_core_example_list.sh`:
-    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SLURM_ARRAY_TASK_ID` variable will be from 1 to 3. We can use `sed` to read the first three lines from our `image_path_list.txt` file and start a job for each input file. 
-	* Output from each job is written to `slurm-jobid_arrayid.out` and `slurm-jobid_arrayid.err` files. 
-	* Memory and time allocations are per job.
-
-	
-> [!NOTE]
-> Submit the array job to Puhti from login node shell
-
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
-
-```
-cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/03_array
-sbatch array_job_example.sh
-```
-
-> [!NOTE]
-> Check with `seff`: How much time and resources did you use?
-
-
-## Parallelization within Python
-
-We can also paralellize within Python. In this case there is no for loop to process them one after another, but the Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `multiprocessing` and `dask` are provided. `multiprocessing` package is likely the easiest to use and is included in all Python installations by default. Another Python package for parallelization is `joblib`. You can find code (without exercise) for `joblib` in `05_parallel_joblib`. `multiprocessing` and `joblib` are suitable for one node (max 40 cores). 
-
-### Multiprocessing
-
-* [04_parallel_multiprocessing/multiprocessing_example.sh](04_parallel_multiprocessing/multiprocessing_example.sh) batch job file for `multiprocessing`.
-	* `--ntasks=1` + `--cpus-per-task=3` reserves 3 cores - one for each file
-	* `--mem-per-cpu=2G` reserves memory per core
-
-* [04_parallel_multiprocessing/multiprocessing_example.py](04_parallel_multiprocessing/multiprocessing_example.py)
-	* Note how the pool of workers is started and processes divided to workers with `pool.map()`. This replaces the for loop that we have seen in `01_serial/single_core_example_folder.sh`.
-
-> [!NOTE]
-> Submit the parallel job to Puhti from login node shell
-
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
-
-```
-cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/04_parallel_multiprocessing
-sbatch multiprocessing_example.sh
-```
-
-> [!NOTE]
-> Check with `seff`: How much time and resources did you use?
-
-### Dask
-
-[Dask](https://www.dask.org/) is versatile and has several options for parallelization. Here are two examples for single-node (max 40 cores) and multi-node usage. The examples use [delayed functions](https://docs.dask.org/en/latest/delayed.html) from Dask to parallelize the workload. Typically, if a workflow contains a for-loop, it can benefit from delayed. 
-
-Besides delayed functions Dask supports also several othe ways of parallelization, inc [Dask DataFrames](https://docs.dask.org/en/stable/dataframe.html) and [Dask Arrays](https://docs.dask.org/en/stable/array.html). For Dask DataFrames, see our [dask-geopandas example](../../dask_geopandas) and for Dask arrays [STAC example with Xarray](../../STAC).
-
-Check out also [CSC dask tutorial](https://docs.csc.fi/support/tutorials/dask-python/) 
+* Please see Geocomputing course's [Dask section](https://csc-training.github.io/geocomputing_course/materials/parallel_python.html#dask) for more general introduction.
 
 ### Single node example
 
-This example uses [Dask default single-machine scheduler](https://docs.dask.org/en/latest/scheduling.html). It can only utilize a single node in supercomputer, so on Puhti the maximum number of CPU cores and workers is 40. 
+This example uses [Dask default scheduler](https://docs.dask.org/en/latest/scheduling.html). It can only utilize a single node in supercomputer, so on Puhti the maximum number of CPU cores and workers is 40. 
 
 You need to set your project to the batch job file, otherwise this example works out of the box.
 
@@ -223,8 +136,6 @@ You need to set your project to the batch job file, otherwise this example works
 > [!NOTE]
 > Submit the parallel job to Puhti from login node shell
 
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
 
 ```
 cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/06_parallel_dask/single_node
@@ -242,21 +153,39 @@ This example spreads the workload to several nodes through the [Dask-Jobqueue li
 
 The batch job file launches basically a master job that does not require much resources. It then launches more SLURM jobs that are used for Dask workers, which do the actual computing. The worker jobs are defined inside the multiple_nodes.py file. Note that they have to queue individually for resources so it is good idea to reserve enough time for the master job so it's not cancelled before the workers finish.
 
-With several SLURM jobs it is possible to use several HPC nodes that is not possible with other Python parallelization options presented here.
+With several SLURM jobs it is possible to use several supercomputer nodes that is not possible with other Python parallelization options presented here.
 
 When the worker jobs finish, they will be displayd as CANCELLED on Puhti which is intended, the master job cancels them.
+
+* [06_parallel_dask/multi_node/dask_multinode.sh](06_parallel_dask/multi_node/dask_multinode.sh) batch job file for `dask`.
+	* `--ntasks=1` + `--cpus-per-task=1` reserve resources only for the master node
+
+* [06_parallel_dask/multi_node/dask_multinode.py](06_parallel_dask/multi_node/dask_multinode.py)
+
+> [!NOTE]
+> Submit the parallel job to Puhti from login node shell
+
+
+```
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/06_parallel_dask/multi_node
+sbatch dask_multinode.sh
+```
+
+> [!NOTE]
+> Check with `seff`: How much time and resources did you use?
 
 ## Example benchmarks 
 
 These are just to demonstrate the difference between single core vs. some kind of parallelism. Depending on the issue, some library might be faster or slower. Note also that the performance of your job may depend on some different factors, like disk load or network speed.
 
-| Example         | Jobs | CPU cores / job | Time (min) | CPU efficiency |
-|-----------------|------|-----------------|------------|----------------|
-| single core     | 1    | 1               | 02:29      | 87%         |
-| GNU parallel    | 1    | 3               | 00:58      | 71%         |
-| array job       | 3    | 1               | 01:03      | 86%         |
-| multiprocessing | 1    | 3               | 00:52      | 80%         |
-| dask            | 1    | 3               | 00:55      | 79%         |
+| Example         | Jobs | CPU cores / job | Time (min) | 
+|-----------------|------|-----------------|------------|
+| single core     | 1    | 1               | 02:29      | 
+| multiprocessing | 1    | 3               | 00:52      | 
+| dask            | 1    | 3               | 00:55      | 
+| GNU parallel    | 1    | 3               | 00:58      |
+| array job       | 3    | 1               | 01:03      | 
+
 
 ## Extra
 
@@ -319,3 +248,83 @@ python interactive_single_core_example.py
 * Close the compute node shell tab in your browser and delete the running job from `my interactive sessions` in the Puhti webinterface.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
 As mentioned, Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it and put the code in a Python script. This means for example to put parts into functions, so that they can be reused. You can find one such cleaned up and generalized script with much more comments in `00_interactive/interactive_single_core_example.py`. Let's take a look at it: 
+
+### External parallelization tools
+
+What if we want to run the same process for not only one, but all Sentinel-2 files within a folder? 
+
+-> We could adapt the sbatch script to run the same script with different input one after another  in a for loop in the sbatch file, see `01_serial/single_core_example_list.sh` (the Python file stays the same as before). 
+
+-> Or we adjust the Python script to take in the data folder instead of just one Sentinel-2 file and loop through all files in the main function (see `01_serial/single_core_example_folder.sh` and `01_serial/single_core_example_folder.py`). You can run it the same way as the single file script, by adapting the project to your project number in the `.sh` file.
+
+## GNU parallel
+
+GNU parallel can help parallelizing a script which otherwise is not parallelized. Instead of looping through the three files available within the batch job or the Python script, we let GNU Parallel handle that step. Checkout how it is used in [02_gnu_parallel/gnu_parallel_example.sh](02_gnu_parallel/gnu_parallel_example.sh) with your favorite editor and adapt the project number.
+
+* Changes in the batch job file compared to the `01_serial/single_core_example_list.sh`:
+    * `--cpus-per-task` parameter is used to reserve 3 CPUs for the job
+    * Instead of a for loop, we use `parallel` program to read in the filenames from the text file and distribute them to the CPUs
+    * Memory and time allocations
+
+
+> To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` in the login node shell to count everything within the data directory before writing the batch job script. 
+
+Submit the job to Puhti from login node shell:
+
+>[!NOTE]
+> Remember to change the project name and your CSC user name in the paths below.
+
+```
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/02_gnu_parallel
+sbatch gnu_parallel_example.sh
+```
+
+> [!NOTE]
+> Check with `seff jobid`: How much time and resources did you use?
+
+### Array job
+
+In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script or one job on multiple CPUs (GNU parallel). 
+
+* [03_array/array_job_example.sh](03_array/array_job_example.sh) array job batch file. Changes compared to `01_serial/single_core_example_list.sh`:
+    * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SLURM_ARRAY_TASK_ID` variable will be from 1 to 3. We can use `sed` to read the first three lines from our `image_path_list.txt` file and start a job for each input file. 
+	* Output from each job is written to `slurm-jobid_arrayid.out` and `slurm-jobid_arrayid.err` files. 
+	* Memory and time allocations are per job.
+
+	
+> [!NOTE]
+> Submit the array job to Puhti from login node shell
+
+>[!NOTE]
+> Remember to change the project name and your CSC user name in the paths below.
+
+```
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/03_array
+```
+
+## Multiprocessing
+
+* [04_parallel_multiprocessing/multiprocessing_example.sh](04_parallel_multiprocessing/multiprocessing_example.sh) batch job file for `multiprocessing`.
+	* `--ntasks=1` + `--cpus-per-task=3` reserves 3 cores - one for each file
+	* `--mem-per-cpu=2G` reserves memory per core
+
+* [04_parallel_multiprocessing/multiprocessing_example.py](04_parallel_multiprocessing/multiprocessing_example.py)
+	* Note how the pool of workers is started and processes divided to workers with `pool.map()`. This replaces the for loop that we have seen in `01_serial/single_core_example_folder.sh`.
+
+> [!NOTE]
+> Submit the parallel job to Puhti from login node shell
+
+```
+cd /scratch/project_200xxxx/students/cscusername/geocomputing/python/puhti/04_parallel_multiprocessing
+sbatch multiprocessing_example.sh
+```
+
+> [!NOTE]
+> Check with `seff`: How much time and resources did you use?
+```
+sbatch array_job_example.sh
+```
+
+> [!NOTE]
+> Check with `seff`: How much time and resources did you use?
+
