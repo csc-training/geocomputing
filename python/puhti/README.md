@@ -121,7 +121,7 @@ We can also paralellize within Python. In this case Python code takes care of di
 
 * Please see Geocomputing course's [Dask section](https://csc-training.github.io/geocomputing_course/materials/parallel_python.html#dask) for more general introduction.
 
-The examples use [delayed functions](https://docs.dask.org/en/latest/delayed.html) from Dask to parallelize the workload. Typically, if a workflow contains a for-loop, it can benefit from delayed. Besides delayed functions Dask supports also several othe ways of parallelization, inc [Dask DataFrames](https://docs.dask.org/en/stable/dataframe.html) and [Dask Arrays](https://docs.dask.org/en/stable/array.html). For Dask DataFrames, see our [dask-geopandas example](../../dask_geopandas) and for Dask arrays [STAC example with Xarray](../../STAC).
+The examples use [delayed functions](https://docs.dask.org/en/latest/delayed.html) from Dask to parallelize the workload. Typically, if a workflow contains a for-loop, it can benefit from delayed. Besides delayed functions Dask supports also several othe ways of parallelization, inc [Dask DataFrames](https://docs.dask.org/en/stable/dataframe.html) and [Dask Arrays](https://docs.dask.org/en/stable/array.html). For Dask DataFrames, see our [dask-geopandas example](../dask_geopandas) and for Dask arrays [STAC example with Xarray](../STAC).
 
 ### Single node example
 
