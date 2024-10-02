@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=project_200xxxx    # Choose the project to be billed
+#SBATCH --account=project_20xxxxx    # Choose the project to be billed
 #SBATCH --output=output.txt  # File to write the standard output to.
 #SBATCH --error=errors.txt  # File to write the standard error to.
 #SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
