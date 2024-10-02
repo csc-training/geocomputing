@@ -10,15 +10,15 @@ GDAL reprents here a commandline tool that is used via Linux bash scripts. The e
 GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder and save the file in Cloud-optimized format. Linux bash script is used for starting the GDAL commands.
 
 > [!IMPORTANT]  
-> In these scripts `project_200xxxx` has been used as example project name. Change the project name to your own CSC project name.
+> In these scripts `project_20xxxxx` has been used as example project name. Change the project name to your own CSC project name.
 > `cscusername` is example username, replace with your username.
 
 ## Preparations
 * Make a folder for the exercise materials and make it your working directory
 	* Change the project name and username.
 ```
-mkdir -p /scratch/project_200xxxx/students/cscusername
-cd /scratch/project_200xxxx/students/cscusername
+mkdir -p /scratch/project_20xxxxx/students/cscusername
+cd /scratch/project_20xxxxx/students/cscusername
 ```
 
 * Copy the example scripts to Puhti.
@@ -26,14 +26,14 @@ cd /scratch/project_200xxxx/students/cscusername
 git clone https://github.com/csc-training/geocomputing.git
 ```
 
-* Move to GDAL exercise folder.
+* Move to the GDAL exercise folder.
 ```
 cd geocomputing/gdal
 ``` 
 
 ## Interactive working 
 
-With `gdalinfo` and `ogrinfo` it is often helpful to check the files. This is a light-weight task, so it can be done from the login-node without an interactive session.
+With `gdalinfo` and `ogrinfo` it is often helpful to check the files. This is a light-weight task, so it can be done from the login node without an interactive session.
 
 * Open [Puhti web interface](https://puhti.csc.fi) and log in with CSC user account.
 * Open login node shell: `Tools -> Login node shell`
@@ -47,20 +47,20 @@ gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 ```
 
 > [!IMPORTANT]  
-> If you want to run more computationally heavy GDAL commands, then use [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) on a compute node, easiest with a [Compute node shell]() in web interface.
+> If you want to run more computationally heavy GDAL commands, then use [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) on a compute node, easiest with a Compute node shell in the web interface.
 
 ## Serial batch job
 
 We will use Puhti web interface simple file editor for editing the files in this exercise. 
 
 * Open another tab in your web browser to [Puhti web interface](https://puhti.csc.fi).
-* Open Files -> `/scratch/project_200xxx`
+* Open Files -> `/scratch/project_20xxxx`
 * Open folders: `students` -> `cscusername` -> `geocomputing` -> `gdal`
 
-Open the files with Edit under the menu on the right of file name. 
-* [gdal_serial.sh](gdal_serial.sh) - the bash script, includes GDAL commands to be executed. For handling several files a for loop is used.
+Open the files with Edit under the menu on the right of the file name. 
+* [gdal_serial.sh](gdal_serial.sh) - the bash script, includes GDAL commands to be executed. A for loop is used for handling several files.
 	* Change the project name and username to yours in the GDAL command. Save.
-* [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are output and error messages written? How many cores and for how long time are reserved? How much memory? Which partition is used? Which modules are used?
+* [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are the output and error messages written? How many cores and for how long time are they reserved? How much memory? Which partition is used? Which modules are used?
 	* Change the project name in `#SBATCH --account` setting. Save.
 
 * In the Login shell window, run the script as batch file: 
@@ -69,36 +69,36 @@ sbatch gdal_batch_job_serial.sh
 ```
 * See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
 	* For seeing the files use Puhti web interface or Linux `less <filename>`
- 	* With `tail -f slurm-<jobid>.out` it is possible to see also how the output files are written during the job.
+ 	* With `tail -f slurm-<job_id>.out` it is possible to see also how the output files are written during the job.
 * Check that you have new GeoTiff files in the working folder. Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 
-* `sbatch` prints out a job id, use it to check state and efficiency of the batch job. Did you reserve a good amount of memory? How long did the script run?
+* `sbatch` prints out a job id, use it to check the state and efficiency of the batch job. Did you reserve a good amount of memory? How long did the script run?
 ```
-seff <jobid>
+seff <job_id>
 ```
-* Once the job is finished, see output inslurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs. 
+* Once the job is finished, see the output in slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs. 
 
-* Check the resources used in another way. 
+* Check the resources used in another way.
 ```
-sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
+sacct -j <job_id> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 ```
 
 	- elapsed – time used by the job
 	- TotalCPU – time used by all cores together
 	- reqmem – amount of requested memory
-	- maxrss – maximum resident set size of all tasks in job.
+	- maxrss – maximum resident set size of all tasks in the job.
 	- AllocCPUS – how many CPUs were reserved
 
 > [!IMPORTANT]  
-> Most GDAL tools support only usage of singe core, therefore in this example only 1 core is reserved and used. [gdalwarp](https://gdal.org/programs/gdalwarp.html) can benefit from multiple cores. If using `gdalwarp`, give the job more cores in the batch job file and add the [-multi](https://gdal.org/programs/gdalwarp.html#cmdoption-gdalwarp-multi) setting to the command in the bash script.
+> Most GDAL tools support only usage of singe core, therefore in this example only 1 core is reserved and used. [gdalwarp](https://gdal.org/programs/gdalwarp.html) can benefit from multiple cores. If you are using `gdalwarp`, give the job more cores in the batch job file and add the [-multi](https://gdal.org/programs/gdalwarp.html#cmdoption-gdalwarp-multi) setting to the command in the bash script.
 
 ## Parallel job
 
-GNU parallel is used for handling several files in parallel. In this way max one node (= 40 cores in Puhti) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. 
+GNU parallel is used for handling several files in parallel. In this way, max one node (= 40 cores in Puhti) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. 
 
 Open the files with Edit:
 * [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.
-	* No edits are needed, for only viewing the file, click the file name in Files page.
+	* No edits are needed, for only viewing the file, click the file name on the Files page.
 * [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. How many cores are reserved? How much memory? Which modules are used? 
 	* Change the project name in `#SBATCH --account` setting. Save.
    
