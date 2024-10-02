@@ -5,25 +5,25 @@ The contours are calculated based on NLS 10m DEM data in geotiff format with `te
 
 If an R script is ready on laptop, then for running it in Puhti normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env/#r-package-installations).
 
-Additional info: [Puhti batch job system documentation](https://docs.csc.fi/computing/running/creating-job-scripts/)
+Additional info: [Puhti batch job system documentation](https://docs.csc.fi/computing/running/creating-job-scripts-puhti/)
 
 Files in this example:
 * [mapsheets.txt](mapsheets.txt) file - list of mapsheets to process. Open the file. How many mapsheets (=files) there is?
-* The input NLS 10m DEM is already available in **Puhti&#39;s GIS data folder** : `/appl/data/geo/mml/dem10m/2019/` If you want to preview the files with [QGIS](https://docs.csc.fi/apps/qgis/), open one or a few DEM files from [mapsheets.txt](mapsheets.txt) file. For seeing all Finland you can open `/appl/data/geo/mml/dem10m/dem10m_hierarchical.vrt`.
+* The input NLS 10m DEM is already available in **Puhti's GIS data folder** : `/appl/data/geo/mml/dem10m/2019/` If you want to preview the files with [QGIS](https://docs.csc.fi/apps/qgis/), open one or a few DEM files from [mapsheets.txt](mapsheets.txt) file. For seeing all of Finland you can open `/appl/data/geo/mml/dem10m/dem10m_hierarchical.vrt`.
 * In each of the subfolders there are files for one job type or parallel library. Each subfolder has 2 files:
     * An .R file for defining the tasks to be done.
     * A batch job .sh file for submitting the job to Puhti SLURM.
  
 > [!IMPORTANT]  
-> In these scripts `project_200xxxx` has been used as example project name. Change the project name to your own CSC project name.
+> In these scripts `project_20xxxxx` has been used as an example project name. Change the project name to your own CSC project name.
 > `cscusername` is example username, replace with your username.
 
 ## Interactive working 
 
-* Open [Puhti web interface](https://puhti.csc.fi) and log in with CSC user account.
-* Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio, from front page or `Apps -> RStudio`
-  * (Reservation: `geocomputing_fri`, only during course)
-  * Project: `project_200xxxx`
+* Open [Puhti web interface](https://puhti.csc.fi) and log in with your CSC user account.
+* Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio, from the front page or `Apps -> RStudio`
+  * (Reservation: `geocomputing_thu`, only during course)
+  * Project: `project_20xxxxx`
   * Partition: `interactive` (`small` during course)
   * Partition: interactive
   * CPU cores: 1
@@ -35,8 +35,8 @@ Files in this example:
 * Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
   * Project directory name: geocomputing
-  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_200xxxx/students/cscusername
-  	* If you do not yet have such directory, move to /scratch/project_200xxxx or /scratch/project_200xxxx/students/ as path to folder and create a new directory and enter it)
+  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_20xxxxx/students/cscusername
+  	* If you do not yet have such directory, move to /scratch/project_20xxxxx or /scratch/project_20xxxxx/students/ as path to folder and create a new directory and enter it)
 * In the files window in lower right, move to folder `R/puhti/01_serial`.
 * Set the working directory. `Session -> Set working directory -> To Files Pane location`
 
@@ -47,7 +47,7 @@ Files in this example:
 * Optional, check your results with **[QGIS](https://docs.csc.fi/apps/qgis/)**
 
 ## Simple batch job
-For simple 1 core batch job, use the same R-script as for interactive working.
+For simple 1 core batch job, use the same R script as for interactive working.
 
 * [01_serial/serial_batch_job.sh](01_serial/serial_batch_job.sh).
 	* Fix the project name in the beginning of the file to match your CSC project name.
@@ -57,14 +57,14 @@ For simple 1 core batch job, use the same R-script as for interactive working.
      	* Which partition is used?
       	* Which module is used?
 
-* Open another web tab and open puhti.csc.fi main page. Open Puhti shell (`Tools -> _Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
+* Open another web tab and open [Puhti web interface](https://puhti.csc.fi). Open Puhti shell (`Tools -> Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
-cd /scratch/project_200xxxx/students/cscusername/geocomputing/R/puhti/01_serial
+cd /scratch/project_20xxxxx/students/cscusername/geocomputing/R/puhti/01_serial
 sbatch serial_batch_job.sh
 ``` 
 * `sbatch` prints out a job id, use it to check the state and the efficiency of the batch job. Did you reserve a good amount of memory?
 ```
-seff <jobid>
+seff <job_id>
 ```
 * See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
 	* For seeing the files use RStudio or Linux `less <filename>`
@@ -72,7 +72,7 @@ seff <jobid>
 * Check that you have 3 new GeoPackge files in the working folder.
 * Check the resources used in another way. 
 ```
-sacct -j <jobid> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
+sacct -j <job_id> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 ```
 
 	- elapsed – time used by the job
@@ -102,7 +102,7 @@ sbatch parallel_batch_job_future_cluster.sh
 * Check with `seff` and `sacct` how much time and resources you used?
 
 ## Array job
-[Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context a typical use case would be to run some model on a study area split into multiple files where output from one file doesn't have an impact on the result of an other area. 
+[Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context, a typical use case would be to run some model on a study area split into multiple files, where the output from one file doesn't have an impact on the result of another area.
 
 In the array job example the idea is that the R script will run one process for every given input file as opposed to running a for loop within the script. That means that the R script has to read the file to be processed from commandline argument. 
 
