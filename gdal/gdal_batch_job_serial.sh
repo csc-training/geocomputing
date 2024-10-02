@@ -1,6 +1,6 @@
 #!/bin/bash
 # ToDo: change project name in the row below
-#SBATCH --account=project_200xxxx    # Choose the project to be billed
+#SBATCH --account=project_20xxxxx  # Choose the project to be billed
 #SBATCH --output=slurm-%j.out  # File to write the standard output to. %j is replaced by the job ID.
 #SBATCH --error=slurm-%j.err  # File to write the standard error to. %j is replaced by the job ID. Defaults to slurm-%j.out if not provided. 
 #SBATCH --time 0:05:00
