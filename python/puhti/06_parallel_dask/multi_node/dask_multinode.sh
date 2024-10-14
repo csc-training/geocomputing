@@ -18,4 +18,4 @@ datadir=/appl/data/geo/sentinel/s2_example_data/L2A
 ### Run the Dask example. The directory given to the script has 3 Sentinel images
 ### We also give our project name so the master job is able to launch worker jobs
 
-srun python dask_multinode2.py $datadir $SLURM_JOB_ACCOUNT
+srun python dask_multinode.py $datadir $SLURM_JOB_ACCOUNT
