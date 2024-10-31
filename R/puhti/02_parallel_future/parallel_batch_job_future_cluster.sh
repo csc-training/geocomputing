@@ -1,6 +1,6 @@
 #!/bin/bash -l
 #SBATCH --account=project_20xxxxx    # Choose the project to be billed
-#SBATCH --reservation=geocomputing_thu # Only available during the course
+# SBATCH --reservation=geocomputing_thu # Only available during the course
 #SBATCH --output=output.txt  # File to write the standard output to.
 #SBATCH --error=errors.txt  # File to write the standard error to.
 #SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
