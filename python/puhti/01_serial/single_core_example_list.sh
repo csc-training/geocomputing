@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=project_20xxxxx   # Choose the project to be billed
-#SBATCH --reservation=geocomputing_thu # Only available during the course
+# SBATCH --reservation=geocomputing_thu # Only available during the course
 #SBATCH --output=slurm-%j.out       # File to write the standard output to. %j is replaced by the job ID.
 #SBATCH --error=slurm-%j.err        # File to write the standard error to. %j is replaced by the job ID. Defaults to slurm-%j.out if not provided. 
 #SBATCH --time=00:05:00             # Maximum duration of the job. Upper limit depends on partition.
