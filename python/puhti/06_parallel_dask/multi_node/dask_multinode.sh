@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=project_20xxxxx   # Choose the project to be billed
-#SBATCH --reservation=geocomputing_thu # Only available during the course
+# SBATCH --reservation=geocomputing_thu # Only available during the course
 #SBATCH --time=00:10:00             # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --ntasks=1                  # Number of tasks. Upper limit depends on partition.
 #SBATCH --cpus-per-task=1           # How many processors work on one task. Upper limit depends on number of CPUs per node.
