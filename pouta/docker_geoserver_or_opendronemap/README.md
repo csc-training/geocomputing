@@ -4,7 +4,6 @@ Instructions here show how to install geospatial software to [cPouta](https://do
 
 Included installation examples are for following widely used open source tools:
 * [GeoServer](https://geoserver.org/) - for providing OGC APIs, often running as a back-end of different web map appliations.
-* [PostGIS](https://postgis.net/) - database solution for spatial data.
 * [OpenDroneMap](https://www.opendronemap.org/) - for creating mosaics from drone images.
 
 All tools are installed using [Docker containers](https://www.docker.com/). The used Docker containers are provided by the each project themselves. Installing other tools with Docker would have mainly similar steps.
@@ -74,7 +73,6 @@ Running the playbooks:
 ```bash
 ansible-playbook install-geoserver.yml
 ansible-playbook install-odm.yml
-ansible-playbook install-postgis.yml
 ```
 
 If do not have the private key in ~/.ssh folder, you can add its path to the commands like this:
@@ -106,15 +104,6 @@ ssh ubuntu@<public_ip> -i <path_to_key>/<key_name>.pem
    * See [GeoServer Docker readme](https://github.com/geoserver/docker/blob/master/README.md) for additional options.
    * The changes should be done to [roles/geoserver/tasks/main.yml](roles/geoserver/tasks/main.yml) `Start GeoServer` task.
    * The example shows how to bind data directory from outside of the Docker and how to install `ysld` extension.
-
-## PostGIS
-* The script prints out the IP, port, database and credentials of PostGIS and how to connect to the virtual machine.
-* If PostGIS is used for courses, do not let students use the main admin credetials, but [create new user account(s)](https://www.postgresql.org/docs/16/sql-createuser.html).
-* The scripts install the community [PostGIS Docker image](https://postgis.net/documentation/getting_started/install_docker/) 
-* PostGIS version, host port and credentials are defined in: [install-postgis.yml](install-postgis.yml), change at least the password.
-* Customization:
-   * See [PostGIS Docker readme](https://hub.docker.com/r/postgis/postgis/) for additional options.
-   * The changes should be done to [roles/postgis/tasks/main.yml](roles/postgis/tasks/main.yml) `Start PostGIS` task.
 
 ## OpenDroneMap
 * The script prints out how to connect to the virtual machine.
