@@ -1,13 +1,13 @@
 # Installation of geospatial tools to cPouta
 
-Instructions here show how to install geospatial software to [cPouta](https://docs.csc.fi/cloud/pouta/), which is CSC public cloud service. 
+Instructions here show how to install geospatial software to [CSC's cPouta](https://docs.csc.fi/cloud/pouta/). 
 
 Included installation examples are for following widely used open source tools:
 * [GeoServer](https://geoserver.org/) - for providing OGC APIs, often running as a back-end of different web map appliations.
 * [PostGIS](https://postgis.net/) - database solution for spatial data.
 * [OpenDroneMap](https://www.opendronemap.org/) - for creating mosaics from drone images.
 
-All tools are installed using [Docker containers](https://www.docker.com/). The used Docker containers are provided by the each project themselves. Installing other tools with Docker would have mainly similar steps.
+All tools are installed using [Docker containers](https://www.docker.com/). The used Docker containers are provided by each software project themselves. Installing other tools with Docker would have mainly similar steps.
 
 Technically the examples use [Ansible scripts](https://www.ansible.com/) for creating the virtual machine to cPouta and installing the geospatial tools. These scripts are suitable for setting up the new virtual machine from Linux, Mac and Windows Subsystem for Linux, **they will not work on native Windows.**
 
