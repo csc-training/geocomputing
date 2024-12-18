@@ -1,3 +1,7 @@
+> [!NOTE]  
+> The instructions here are from 2018 and **are partly outdated**. Partly they still could be still useful. After 2018t ESRI has realeased [ArcPy also as conda package](https://enterprise.arcgis.com/en/server/latest/develop/linux/linux-python.htm). Using the conda installation is likely easier, but installing the ArcGIS Server is still also needed to get the license.
+> If possible, **consider using opensource Python libraries instead**, see for example [Puhti geoconda](https://docs.csc.fi/apps/geoconda/) libraries.
+
 # Setting up and using ArcPy in cPouta
 If you need to run [ArcPy scripts](http://desktop.arcgis.com/en/arcmap/latest/analyze/arcpy/what-is-arcpy-.htm) in CSC's cPouta environment, the following instructions will help you set up a remote virtual machine with the necessary software.
 
@@ -6,7 +10,6 @@ On a Windows PC/laptop ArcPy is usually installed as part of ArcGIS Pro or ArcGI
 Please notice:
 
 * ArcGIS is a **licensed software**. You must have an ArcGIS Server license provisioning file and the corresponding installation package. Universities with ArcGIS campus license (inc. ArcGIS Server licenses) are listed [here](https://docs.csc.fi/apps/arcgis/).
-* The instructions here are from 2018 and **can inlcude outdated information**. Partly they still could be still useful. After 2018t ESRI has realeased [ArcPy also as conda package](https://enterprise.arcgis.com/en/server/latest/develop/linux/linux-python.htm). Using the conda installation is likely easier, but installing the ArcGIS Server is still also needed to get the license.
 
 ## Prerequisites
 In order to follow these instructions you will need to have a cPouta account and a project. You should also have some basic skills in managing cPouta, see the [Pouta User Guide](https://docs.csc.fi/cloud/pouta/).
