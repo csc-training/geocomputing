@@ -13,3 +13,7 @@ dependencies:
   - requests  
   - rioxarray
   - stackstac
+  - libgdal-jp2openjpeg
+  - python-graphviz
+  - jupyter-resource-usage
+  - dask-labextension
