@@ -24,7 +24,7 @@ For parallel computing to work, it is important to use a file format, that suppo
 
 ## Example solutions
 
-Here we provide two solutions, using `xarrray-spatial` [zonal_stats](https://xarray-spatial.readthedocs.io/en/stable/user_guide/zonal.html#Zonal-Statistics) and `rasterstats` [zonal_stats](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics) . In general `rasterstats` works with wider range of data and does not require data pre-processing, but `xarrray-spatial` can handle bigger datasets. `rasterstats` might also be better choice if the polygons cover only small part of the raster.
+Here we provide two solutions, using zonal_stats function from [xarrray-spatial](https://xarray-spatial.readthedocs.io/en/stable/user_guide/zonal.html#Zonal-Statistics) and [rasterstats](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics) . In general `rasterstats` works with wider range of data and does not require data pre-processing, but `xarrray-spatial` can handle bigger datasets. `rasterstats` might also be better choice if the polygons cover only small part of the raster.
 
 | Feature    | `xarrray-spatial` | `rasterstats`
 | -------- | ------- | ------- |
