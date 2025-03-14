@@ -24,17 +24,14 @@ For parallel computing to work, it is important to use a file format, that suppo
 
 ## Example solutions
 
-Here we provide two solutions, using two different Python packages:
-
-* `xarrray-spatial` [zonal_stats](https://xarray-spatial.readthedocs.io/en/stable/user_guide/zonal.html#Zonal-Statistics) 
-* `rasterstats` [zonal_stats](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics) 
+Here we provide two solutions, using `xarrray-spatial` [zonal_stats](https://xarray-spatial.readthedocs.io/en/stable/user_guide/zonal.html#Zonal-Statistics) and `rasterstats` [zonal_stats](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics) . In general `rasterstats` works with wider range of data and does not require data pre-processing, but `xarrray-spatial` can handle bigger datasets. `rasterstats` might also be better choice if the polygons cover only small part of the raster.
 
 | Feature    | `xarrray-spatial` | `rasterstats`
 | -------- | ------- | ------- |
-| Input vector  | Xarray DataArray, so the vector data has to be rasterized as pre-step.    | GeoDataFrame or any Fiona-supported file |
+| Input vector  | Xarray DataArray, matching the raster data, so the vector data has to be rasterized as a first step.    | GeoDataFrame or any Fiona-supported file |
 | Input raster | Xarray DataArray | Numpy Array or any GDAL-supported raster file |
-| Parellel processing    | Yes, if [the Xarray DataArrays are Dask Arrays](https://docs.xarray.dev/en/stable/user-guide/dask.html)    | No, but in the example here is shown how it can be used in parallel with some extra code using for example `multiprocessing` library. |
-| Does data need to fit to memory? | No | Yes | 
-| 
+| Parellel processing    | Yes, if the Xarray DataArrays are [Dask Arrays](https://docs.xarray.dev/en/stable/user-guide/dask.html)    | No, but in the example here is shown how it can be used in parallel with some extra code using for example `multiprocessing` library. |
+| Is it possible to handle data that does not fit to the memory? | Yes | No | 
+
 
 
