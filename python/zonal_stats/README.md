@@ -1,14 +1,40 @@
-# Zonal statistics using multiprocessing and virtual raster
+# Zonal statistics in parallel for big rasters
 
-In this example zonal statistics are calculated using a big raster and Python `rasterstats` library. The idea is that we have multiple zones split across several raster files (and some zones also covering more than one raster) and we want to compute zonal statistics for these zones. The way we handle the multiple raster files in this example is to construct a single virtual raster  after which we don't have to worry about which polygon covers which raster. Here the virtual raster for 10M DEM available in Puhti is used directly.
+In this example zonal statistics are calculated based on a vector polygons from a big raster dataset. 
 
-The script uses geoconda module in Puhti.
+The data used in the example:
+* 10m DEM from NLS
+* Field parces from Finnish Food Authority.
 
-Two a little bit different examples are given here:
+The script uses geoconda module in Puhti and reads both datasets directly from [Puhti common GIS data area](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-puhti).
 
-`zonal_stats_serial.py` is the more basic version, here the work is done on one core. 
+## Raster data considerations
 
-`zonal_stats_parallel.py` is the more advanced version, here the work is done on 4 cores. To make processing multiple polygons faster we divide the calculation into parts and process them in parallel using `multiprocessing` library. 
+For handling big rasters 3 main options could be considered:
 
-Additionally a batch job scripts are provided, for running this script on CSC's Puhti supercluster. For submitting the job to Puhti:
-`sbatch batch_job_XX.sh`
+* **One big file**. 5-10 Gb or even bigger raster files have become rather common. 
+
+* **Virtual raster**, is a GDAL concept to virtually merge rasters that are split to mapsheets. It enables handling many files as if they were one. See [CSC Virtual rasters tutorial](https://docs.csc.fi/support/tutorials/gis/virtual-rasters/) for longer explanation. Creating own virtual rasters is a simple and fast process. Virtual raster is a good solution, if data does not have time dimension.
+
+* **STAC** enables to find spatial-temporal data and create a datacube of it, inc simple mosaicing. But it requires that the input raster data is available in a STAC API service. A lot of Finnish data is available via [Paituli STAC](https://paituli.csc.fi/stac.html).
+
+### File format
+For parallel computing to work, it is important to use a file format, that supports well partial windowed reading of the data. **Cloud-optimized geotiffs (COG)** are often good for this.
+
+
+## Example solutions
+
+Here we provide two solutions, using two different Python packages:
+
+* `xarrray-spatial` [zonal_stats](https://xarray-spatial.readthedocs.io/en/stable/user_guide/zonal.html#Zonal-Statistics) 
+* `rasterstats` [zonal_stats](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics) 
+
+| Feature    | `xarrray-spatial` | `rasterstats`
+| -------- | ------- | ------- |
+| Input vector  | Xarray DataArray, so the vector data has to be rasterized as pre-step.    | GeoDataFrame or any Fiona-supported file |
+| Input raster | Xarray DataArray | Numpy Array or any GDAL-supported raster file |
+| Parellel processing    | Yes, if [the Xarray DataArrays are Dask Arrays](https://docs.xarray.dev/en/stable/user-guide/dask.html)    | No, but in the example here is shown how it can be used in parallel with some extra code using for example `multiprocessing` library. |
+| Does data need to fit to memory? | No | Yes | 
+| 
+
+
