@@ -34,18 +34,18 @@ This repository contains examples for use of different geospatial applications. 
 ### Use cases / longer examples
 * [GeoPortti share Github repository](https://github.com/geoporttishare?tab=repositories) includes several longer examples of HPC usage.
 
-## CSC Notebooks
-* [Setting up geospatial Python Jupyter environment](./notebooks/README.md)
-
 ## Pouta 
 * [Overview](./pouta/README.md): A collection of instructions to setup virtual machines in [CSC's cPouta environment](https://docs.csc.fi/cloud/pouta/) for different tools: 
 - [OpenDroneMap as Docker applications](./pouta/docker-applications) - installing other Docker applications would be very similar.
 - [GeoServer](./pouta/geoserver) 
-- [PostGIS](./pouta/postgis)
 - [ArcPy](./pouta/arcpy) 
 - [MetaShape](./pouta/metashape_with_VNC) - installing other Desktop tools could be rather similar.
 
+## CSC Notebooks
+* [Setting up geospatial Python Jupyter environment](./notebooks/README.md)
+
 ## Download
+
 If you have installed Git or You can download these scripts to any computer using git. To do this, first navigate to the destination folder (in Puhti this could be your project's **projappl** or **scratch** folder):
 
 `cd /projappl/<YOUR-PROJECT>`
@@ -58,7 +58,6 @@ And then clone this repository there
 
 If Git is not available, you can download the files also as zip-file from the `Code` drop-down menu above.
 
-### Git download
 
 ## License
 These examples are free to use under CC 4.0 BY license unless marked otherwise.
