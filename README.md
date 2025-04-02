@@ -38,7 +38,7 @@ This repository contains examples for use of different geospatial applications. 
 * [Instructions to setup geospatial tools](./pouta/README.md) to virtual machines in [CSC's cPouta environment](https://docs.csc.fi/cloud/pouta/), inc OpenDroneMap, GeoServer, ArcPy and MetaShape.
 
 ## CSC Notebooks
-* [Setting up geospatial Python Jupyter environment](./notebooks/Readme.md)
+* [Setting up geospatial Python Jupyter environment](./noppe/Readme.md)
 
 ## Download
 
