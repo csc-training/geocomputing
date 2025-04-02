@@ -38,9 +38,11 @@ This repository contains examples for use of different geospatial applications. 
 * [Overview](./pouta/README.md): A collection of instructions to setup virtual machines in [CSC's cPouta environment](https://docs.csc.fi/cloud/pouta/) for different tools: 
 - [OpenDroneMap as Docker applications](./pouta/docker-applications) - installing other Docker applications would be very similar.
 - [GeoServer](./pouta/geoserver) 
-- [PostGIS](./pouta/postgis)
 - [ArcPy](./pouta/arcpy) 
 - [MetaShape](./pouta/metashape_with_VNC) - installing other Desktop tools could be rather similar.
+
+## CSC Notebooks
+* [Setting up geospatial Python Jupyter environment](./notebooks/README.md)
 
 ## Download
 
