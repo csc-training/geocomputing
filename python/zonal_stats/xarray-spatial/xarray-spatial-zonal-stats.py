@@ -27,11 +27,15 @@ def main():
     # Read the raster file, to read as Dasked backed Xarray DataArray
     # Notice the use of `chunks=True`.
     dem10m = rioxarray.open_rasterio("/appl/data/geo/mml/dem10m/dem10m_direct.vrt", chunks=True) 
+    # If running the code outside Puhti, get the data from Paituli.
+    # dem10m = rioxarray.open_rasterio("https://www.nic.funet.fi/index/geodata/mml/dem10m/dem10m_direct.vrt", chunks=True) 
     # Crop the raster file to processing area, leave out if you want to process the whole file
     dem10m_clip = dem10m.rio.clip_box(minx=x_min, miny=y_min, maxx=x_max, maxy=y_max)
 
     # Read the vector polygons, leave out bbox, if you want to process the whole file
     polygons = gpd.read_file('/appl/data/geo/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg' , layer="KASVULOHKO", bbox=bbox_3067)
+    # If running the code outside Puhti, get the data from Paituli.
+    # polygons = gpd.read_file('https://www.nic.funet.fi/index/geodata/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg' , layer="KASVULOHKO", bbox=bbox_3067)
     polygons['ID'] = polygons.PERUSLOHKOTUNNUS.astype(int)
 
     # Create Xarray DataArray similar to the raster data
