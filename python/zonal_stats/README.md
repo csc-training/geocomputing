@@ -2,7 +2,7 @@
 
 In this example zonal statistics are calculated based on a vector polygons from a big raster dataset. 
 
-Here are 2 different code examples for `rasterstats` and `xarrray-spatial` Python libraries.
+Here are 2 different code examples for [rasterstats](rasterstats) and [xarrray-spatial](xarray-spatial) Python libraries.
 
 The data used in the example:
 * 10m DEM from NLS
