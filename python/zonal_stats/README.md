@@ -10,20 +10,6 @@ The data used in the example:
 
 The script uses geoconda module in Puhti and reads both datasets directly from [Puhti common GIS data area](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-puhti).
 
-## Raster data considerations
-
-For handling big rasters 3 main options could be considered:
-
-* **One big file**. 5-10 Gb or even bigger raster files have become rather common. 
-
-* **Virtual raster**, is a GDAL concept to virtually merge rasters that are split to mapsheets. It enables handling many files as if they were one. See [CSC Virtual rasters tutorial](https://docs.csc.fi/support/tutorials/gis/virtual-rasters/) for longer explanation. Creating own virtual rasters is a simple and fast process. Virtual raster is a good solution, if data does not have time dimension. Many of the rester datasets in Puhti common GIS area have virtual rasters added.
-
-* **STAC** enables to find spatial-temporal data and create a datacube of it, inc simple mosaicing. But it requires that the input raster data is available in a STAC API service. A lot of Finnish data is available via [Paituli STAC](https://paituli.csc.fi/stac.html).
-
-### File format
-For parallel computing to work well, it is important to use a file format, that supports well partial windowed reading of the data. **Cloud-optimized geotiffs (COG)** are often good for this. This applies for single file, as well for virtual rasters or data from STAC.
-
-
 ## `rasterstats` and `xarrray-spatial` comparision
 
 For the examples here, we use zonal_stats function from [xarrray-spatial](https://xarray-spatial.readthedocs.io/en/stable/user_guide/zonal.html#Zonal-Statistics) and [rasterstats](https://pythonhosted.org/rasterstats/manual.html#zonal-statistics) . These are 2 different libraries, with different features:
@@ -41,18 +27,20 @@ In general `rasterstats` could be the first choice, it:
 * it works well, also if the polygons cover only small part of the big raster
 * uses less memory than `xarrray-spatial`
 * is often faster
-* BUT, it is not parallel by default, but here we provide code for parallelization.
+* it is not parallel by default, but here we provide code for parallelization.
   
-Use `xarrray-spatial` if you need to handle bigger datasets that do not fit to memory or if the zonal polygons are in raster format originally.
+Use `xarrray-spatial` if you need to handle bigger datasets, which do not fit to memory or if the zonal polygons are in raster format originally.
 
-> **_NOTE:_**  If the vector datasets includes a lot of polygons, give the raster data to `rasterstats` as Numpy array, it is much faster then.
+
 
 ### Benchmarking results
 
-The same analysis was done with both libraries, using xxx pixels raster and yy polygons raster.
+The same analysis was done with both libraries, using 20 000 x 20 000 pixels raster and 195 000 polygons.
 
+Key findings:
 * `rasterstats` was faster with 1-10 cores.
-* `xarrray-spatial` with 40 cores got the fastest Wall time
+* Using ~5 cores seems to be optimal for `rasterstats`.
+* `xarrray-spatial` benefits more for cores, with 40 cores it got the fastest Wall time, also compared to 'rasterstats'
 * `rasterstats` memory usage did not increase with parallelization and was lower than with `xarrray-spatial`
 * `xarrray-spatial` memory usage increses with number of cores
   
@@ -61,18 +49,58 @@ The same analysis was done with both libraries, using xxx pixels raster and yy p
 | Library | Cores | Wall Time (sec) | Compute time (sec) | CPU efficiency (%) | Used memory (Gb)|
 | -------- | ------- | ------- | ------- | ------- | ------- |
 | `rasterstats` | 1| 565 | 565 | 82 | 4 | 
-| `xarrray-spatial` | 1 | 1345 | 1345 | 95 | 6 |
+| `xarrray-spatial` | 1 | 1 345 | 1 345 | 95 | 6 |
 | `rasterstats` | 5| **188** | 421 | 45 | 4 | 
-| `xarrray-spatial` | 5 | 355 | 1419 |  80 | 11 |
+| `xarrray-spatial` | 5 | 355 | 1 419 |  80 | 11 |
 | `rasterstats` | 10| 183 | 475 | 26 | 4 | 
-| `xarrray-spatial` | 10 | 299 | 2189 | 73 | 15 |
+| `xarrray-spatial` | 10 | 299 | 2 189 | 73 | 15 |
 | `rasterstats` | 20| 218 | 520 | 12 | 4 | 
-| `xarrray-spatial` | 20 | 176 | 2210 | 63 | 20 |
-| `xarrray-spatial` | 40 | **130** | 2330 | 45 | 25 |
+| `xarrray-spatial` | 20 | 176 | 2 210 | 63 | 20 |
+| `xarrray-spatial` | 40 | **130** | 2 330 | 45 | 25 |
 
-Detail comments:
-* In these tests raster data was given to `rasterstats` as Numpy array, if it was given as file path on disk, the process was very slow - 17965 seconds for similar analysis. 
+Details:
+* In these tests, raster data was given to `rasterstats` as Numpy array. Giveng the raster data as file path on disk was tested only with 1 core, but the process was very slow - 17 965 seconds. 
 * `xarrray-spatial` requires the vector data as matching array to the raster data. The vector data was rasterized as a separate first step, it took ~26 seconds. That time is not inlcuded the benchmark results.
-* To provide `xarrray-spatial` data as [Dask Arrays](https://docs.xarray.dev/en/stable/user-guide/dask.html), it seemed that currently the only option, is to write rasterized polygons to disk as COG.
+* Joining statistics back to the geodataframe was left out from the tests, because that would be a serial process and would increase time for all scenarios in a similar way.
 
+## Raster data considerations
 
+For handling big rasters 3 main options could be considered:
+
+* **One big file**. 5-10 Gb or even bigger raster files have become rather common. 
+
+* **Virtual raster**, is a GDAL concept to virtually merge rasters that are split to mapsheets. It enables handling many files as if they were one. See [CSC Virtual rasters tutorial](https://docs.csc.fi/support/tutorials/gis/virtual-rasters/) for longer explanation. Creating own virtual rasters is a simple and fast process. Virtual raster is a good solution, if data does not have time dimension. Many of the raster datasets in Puhti common GIS area have virtual rasters added.
+
+* **STAC** enables to find spatial-temporal data and create a datacube of it, inc simple mosaicing. But it requires that the input raster data is available via STAC. A lot of Finnish data is available via [Paituli STAC](https://paituli.csc.fi/stac.html). 
+
+### File format
+* For parallel computing to work well, it is important to use a file format, that supports well partial windowed reading of the data. **Cloud-optimized geotiffs (COG)** are often good for this. This applies for single file, as well for virtual rasters or data from STAC.
+* If creating own raster data, also **zarr**-format could be considered, for statistics over long time periods, it could be faster than COGs that generally store one timestep per file.
+* If your raster data is in JPEG2000 format or other format, which does not well suite parallel reads, condsider using `rasterstats` without parallelization.
+
+### Reading rasters to `rasterstats`
+
+* If the vector datasets includes a lot of polygons, give the raster data to `rasterstats` as Numpy array, it is much faster then.
+* If the vector datasets includes a few polygons polygons, it might be better not to read all raster data to memory and give to zonal_stats function the path to the file.
+* To read data from a single file or virtual raster, use `rasterio` as shown in the example.
+* To read data from STAC:
+     * Query STAC for data and create an Xarray DataArray of it as show in [CSC STAC exampes](../STAC). In the example the resulting `monthly` DataArray has size: time: 2, y: 601, x: 601, band: 5.
+     * Make the DataArray 2D or 3D. As third dimension, can be either bands or different time steps. In the example code below, we select data for 1 day, but keep all bands (5)
+     * Transpose the DataArray, so that spatial dimensions are last.
+     * Convert the Xarray DataArray to Numpy array. This also reads the data to memory.
+
+```
+date1 = monthly.sel(time='2021-08-01T00:00:00.000000000')
+date1_transposed = date1.transpose("band", "x", "y")
+date1_numpy = date1_transposed.compute().data
+```
+
+### Reading rasters to `xarrray-spatial`
+* `xarrray-spatial` uses raster data from Xarray Arrays, use `rioxarray` to read single file or virtual raster as shown in the example.
+* To provide `xarrray-spatial` vector data as [Dask Arrays](https://docs.xarray.dev/en/stable/user-guide/dask.html), it seemed that currently the only option, is to write rasterized polygons to disk as Cloud-optimized geotiff (COG). And then read them with `rioxarray`.
+* To read data from STAC, follow the same steps as described for `rasterstats`, but leave out the last step of converting to Numpy. In this way `date1_transposed` is lazyly loaded DataArray and no data is read to memory yet. `xarrray-spatial` will fetch data it is processing it.
+
+```
+date1 = monthly.sel(time='2021-08-01T00:00:00.000000000')
+date1_transposed = date1.transpose("band", "x", "y")
+```
