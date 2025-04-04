@@ -22,7 +22,7 @@ bbox_3067 = (x_min, y_min, x_max, y_max)
 # Raster you want to use to compute zonal stastics from
 raster_file = '/appl/data/geo/mml/dem10m/dem10m_direct.vrt'
 # If running the code outside Puhti, get the data from Paituli.
-# https://www.nic.funet.fi/index/geodata/mml/dem10m/dem10m_direct.vrt
+# raster_file = 'https://www.nic.funet.fi/index/geodata/mml/dem10m/dem10m_direct.vrt'
 
 # Polygons file
 polygons_file = '/appl/data/geo/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
