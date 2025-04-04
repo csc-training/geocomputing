@@ -12,51 +12,60 @@ In this case, consider also moving the raster to local disk on the computing nod
 https://docs.csc.fi/computing/disk/#compute-nodes
 
 Author: Elias Annila, Kylli Ek, CSC
-Date: 27.01.2022
+Date: 27.01.2022, updated 13.3.2025
 """
 
 from rasterstats import zonal_stats
-import geopandas
+import geopandas as gpd
 import rasterio
 import time
 
-#input zones file
-zones_file = "zones.shp"
-#output zonal stats file
-zonal_file = "/scratch/project_2000599/python_multiprocessing_rasterstats/zonal_stats.shp"
-#Raster you want to use to compute zonal stastics from, CORINE 2018
+# Set the processing area, leave out if you want to process the whole file
+x_min = 350000.0
+y_min = 6700000.0
+buffer = 200000
+x_max = x_min + buffer
+y_max = y_min + buffer
+
+bbox_3067 = (x_min, y_min, x_max, y_max)
+
+# File paths:
+# Raster you want to use to compute zonal stastics from
 raster_file = '/appl/data/geo/mml/dem10m/dem10m_direct.vrt'
+# If running the code outside Puhti, get the data from Paituli.
+# https://www.nic.funet.fi/index/geodata/mml/dem10m/dem10m_direct.vrt
+
+# Polygons file
+polygons_file = '/appl/data/geo/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
+# If running the code outside Puhti, get the data from Paituli.
+# polygons_file = 'https://www.nic.funet.fi/index/geodata/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
+
 # Statistics calculated for each zone
-statistics = ['count', 'min' ,'mean', 'max','majority']        
+statistics = ['mean']
+#statistics = ['count', 'min' ,'mean', 'max','majority']        
 
 def main():
-    print(datetime.now().time())
-    # Read data
-    zones = geopandas.read_file(zones_file) 
-    # Uncomment next 3 rows, if you need to read the file from disk.
-    # zonal_stats does not directly work with rasterio opened file, but needs data and transformation variables     
-    raster = rasterio.open(raster_file)
-    affine = raster.transform
-    array = raster.read(1)
+    
+    # Read the vector polygons, leave out bbox, if you want to process the whole file
+    zones = gpd.read_file(polygons_file , layer="KASVULOHKO", bbox=bbox_3067)
 
-    results = zonal_stats(zones.geometry, array, affine=affine, stats=statistics)
-    # Use this if raster data is not read to memory   
-    #results = zonal_stats(zones.geometry, raster_file, stats=statistics)
-        
-    # Join the results back to geopandas dataframe        
+    # zonal_stats does not directly work with rasterio opened file, but needs data and transformation variables     
+    with rasterio.open(raster_file) as src:
+        # If you want to use the whole raster file, leave out the window part.
+        raster = src.read(indexes=1, window=rasterio.windows.from_bounds(x_min, y_min, x_max, y_max, src.transform)) 
+        results = zonal_stats(zones.geometry, raster, affine=src.transform, stats=statistics)
+
+    # If you need to read the file from disk.
+    # results = zonal_stats(zones.geometry, raster_file, stats=statistics)
+    
+    #Join the results back to geopandas dataframe        
     for stat in statistics:
         results_as_list = [d[stat] for d in results]
         zones[stat] = results_as_list  
         
-    # Write the results to file
-    zones.to_file(zonal_file)
-
 if __name__ == '__main__':
     t0 = time.time()
     main()	
     t1 = time.time()
     total = t1-t0
-    print(datetime.now().time())
     print("Everything done, took: " + str(round(total, 0))+"s")
-
-
