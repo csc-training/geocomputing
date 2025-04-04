@@ -17,7 +17,7 @@ For the examples here, we use zonal_stats function from [xarrray-spatial](https:
 | Feature    | `xarrray-spatial` | `rasterstats`
 | -------- | ------- | ------- |
 | Input vector  | Xarray DataArray  | GeoDataFrame or any Fiona-supported file |
-| Input raster | Xarray DataArray | Numpy Array or any GDAL-supported raster file |
+| Input raster | 2D Xarray DataArray | 2D Numpy Array or any GDAL-supported raster file |
 | Parellel processing    | Yes, if the Xarray DataArrays are [Dask Arrays](https://docs.xarray.dev/en/stable/user-guide/dask.html)    | Not by default |
 | Handle data bigger than the memory? | Yes | No | 
 
@@ -85,13 +85,11 @@ For handling big rasters 3 main options could be considered:
 * To read data from a single file or virtual raster, use `rasterio` as shown in the example.
 * To read data from STAC:
      * Query STAC for data and create an Xarray DataArray of it as show in [CSC STAC exampes](../STAC). In the example the resulting `monthly` DataArray has size: time: 2, y: 601, x: 601, band: 5.
-     * Make the DataArray 2D or 3D. As third dimension, can be either bands or different time steps. In the example code below, we select data for 1 day, but keep all bands (5)
-     * Transpose the DataArray, so that spatial dimensions are last.
+     * Select 2D DataArray from datacube. Keep one band from one timestep.
      * Convert the Xarray DataArray to Numpy array. This also reads the data to memory.
 
 ```
-date1 = monthly.sel(time='2021-08-01T00:00:00.000000000')
-date1_transposed = date1.transpose("band", "x", "y")
+date1 = monthly. monthly.sel(band='b04').sel(time='2021-08-01T00:00:00.000000000')
 date1_numpy = date1_transposed.compute().data
 ```
 
@@ -101,6 +99,5 @@ date1_numpy = date1_transposed.compute().data
 * To read data from STAC, follow the same steps as described for `rasterstats`, but leave out the last step of converting to Numpy. In this way `date1_transposed` is lazyly loaded DataArray and no data is read to memory yet. `xarrray-spatial` will fetch data it is processing it.
 
 ```
-date1 = monthly.sel(time='2021-08-01T00:00:00.000000000')
-date1_transposed = date1.transpose("band", "x", "y")
+date1 = monthly. monthly.sel(band='b04').sel(time='2021-08-01T00:00:00.000000000')
 ```
