@@ -8,7 +8,7 @@ The data used in the example:
 * 10m DEM from NLS
 * Field parces from Finnish Food Authority.
 
-The script uses geoconda module in Puhti and reads both datasets directly from [Puhti common GIS data area](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-puhti).
+The script uses geoconda module in Puhti and reads both datasets directly from [Puhti common GIS data area](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-puhti). Alternative public HTTPS-links for data are also given.
 
 ## `rasterstats` and `xarrray-spatial` comparision
 
