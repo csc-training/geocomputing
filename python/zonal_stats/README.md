@@ -2,8 +2,10 @@
 
 In this example zonal statistics are calculated based on a vector polygons from a big raster dataset. 
 
-Here are code examples for calculating zonal statiscis in parallel with [rasterstats](rasterstats) and [xarrray-spatial](xarray-spatial) Python libraries.
-* Rasterstats with splitting the 
+Here are three different code examples for calculating zonal statiscis in parallel with `rasterstats` or `xarrray-spatial` Python libraries:
+* One raster and a lot of polygons. For parallelization the the polygons are split to batches. `rasterstats`
+* Several rasters (different dates and bands). The statistics for each raster are cacluated in parallel. `rasterstats`
+* `Xarray-spatial` has built-in parallelization, it splits the raster to chunks. 
 
 The data used in the example:
 * 10m DEM from NLS (or Sentinel-2 11-day data mosaics from STAC)
