@@ -2,10 +2,13 @@
 
 In this example zonal statistics are calculated based on a vector polygons from a big raster dataset. 
 
-Here are 2 different code examples for [rasterstats](rasterstats) and [xarrray-spatial](xarray-spatial) Python libraries.
+Here are three different code examples for calculating zonal statiscis in parallel with `rasterstats` or `xarrray-spatial` Python libraries:
+* One raster and a lot of polygons. For parallelization the the polygons are split to batches. `rasterstats` + `multiprocessing`
+* Several rasters (different dates and bands). The statistics for each raster are cacluated in parallel. `rasterstats` + `dask` delayed functions
+* `Xarray-spatial` has built-in parallelization, it splits the raster to chunks using `Dask DataArrays`.
 
 The data used in the example:
-* 10m DEM from NLS
+* 10m DEM from NLS (or Sentinel-2 11-day data mosaics from STAC)
 * Field parces from Finnish Food Authority.
 
 The script uses geoconda module in Puhti and reads both datasets directly from [Puhti common GIS data area](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-puhti). Alternative public HTTPS-links for data are also given.
@@ -19,7 +22,7 @@ For the examples here, we use zonal_stats function from [xarrray-spatial](https:
 | Input vector  | Xarray DataArray  | GeoDataFrame or any Fiona-supported file |
 | Input raster | 2D Xarray DataArray | 2D Numpy Array or any GDAL-supported raster file |
 | Parellel processing    | Yes, if the Xarray DataArrays are [Dask Arrays](https://docs.xarray.dev/en/stable/user-guide/dask.html)    | Not by default |
-| Handle data bigger than the memory? | Yes | No | 
+| Handle data bigger than the memory? | Yes | Not by default | 
 
 In general `rasterstats` could be the first choice, it:
 * works with wider range of data
@@ -27,15 +30,14 @@ In general `rasterstats` could be the first choice, it:
 * it works well, also if the polygons cover only small part of the big raster
 * uses less memory than `xarrray-spatial`
 * is often faster
-* it is not parallel by default, but here we provide code for parallelization.
+* it is not parallel by default, but here we provide here code for parallelization.
   
 Use `xarrray-spatial` if you need to handle bigger datasets, which do not fit to memory or if the zonal polygons are in raster format originally.
 
 
-
 ### Benchmarking results
 
-The same analysis was done with both libraries, using 20 000 x 20 000 pixels raster and 195 000 polygons.
+The same analysis was done with both libraries, using 20 000 x 20 000 pixels DEM raster and 195 000 field polygons.
 
 Key findings:
 * `rasterstats` was faster with 1-10 cores.
@@ -75,15 +77,16 @@ For handling big rasters 3 main options could be considered:
 
 ### File format
 * For parallel computing to work well, it is important to use a file format, that supports well partial windowed reading of the data. **Cloud-optimized geotiffs (COG)** are often good for this. This applies for single file, as well for virtual rasters or data from STAC.
-* If creating own raster data, also **zarr**-format could be considered, for statistics over long time periods, it could be faster than COGs that generally store one timestep per file.
-* If your raster data is in JPEG2000 format or other format, which does not well suite parallel reads, condsider using `rasterstats` without parallelization.
+* If your raster data is in JPEG2000 format or other format, which does not well suite parallel reads, condsider using `rasterstats` so that the whole dataset is read at once.
 
 ### Reading rasters to `rasterstats`
 
 * If the vector datasets includes a lot of polygons, give the raster data to `rasterstats` as Numpy array, it is much faster then.
-* If the vector datasets includes a few polygons polygons, it might be better not to read all raster data to memory and give to zonal_stats function the path to the file.
+* If the vector datasets includes a few polygons polygons, that cover small part of the raster, it might be better not to read all raster data to memory and give to zonal_stats function the path to the file.
 * To read data from a single file or virtual raster, use `rasterio` as shown in the example.
 * To read data from STAC:
+  * If interested in statics from several files, found with STAC, see the rastestats and STAC example to analyze rasters in parallel.
+  * If interested only in 1 or few files:
      * Query STAC for data and create an Xarray DataArray of it as show in [CSC STAC exampes](../STAC). In the example the resulting `monthly` DataArray has size: time: 2, y: 601, x: 601, band: 5.
      * Select 2D DataArray from datacube. Keep one band from one timestep.
      * Convert the Xarray DataArray to Numpy array. This also reads the data to memory.

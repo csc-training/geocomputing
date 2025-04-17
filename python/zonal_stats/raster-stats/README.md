@@ -1,6 +1,6 @@
-`zonal_stats_serial.py` is the more basic version, here the work is done on one core. 
+* `zonal_stats_serial.py` is the basic version, here the work is done on one core in serial mode. 
+* `zonal_stats_parallel.py` is the parallel version, where processing of polygons is split to several cores. For parallelization `multiprocessing` library is used.
+* `zonal-stats-stac-parallel.py`is the parallel version, where statistics is calculated for several rastes found via STAC. For parallelization `dask` delayed functions are used.
 
-`zonal_stats_parallel.py` is the more advanced version, here the work is done on 4 cores. To make processing multiple polygons faster we divide the calculation into parts and process them in parallel using `multiprocessing` library. 
-
-Additionally a batch job scripts are provided, for running this script on CSC's Puhti supercluster. For submitting the job to Puhti:
+Additionally batch job scripts are provided, for running this script on CSC's Puhti supercluster. For submitting the job to Puhti:
 `sbatch batch_job_XX.sh`
