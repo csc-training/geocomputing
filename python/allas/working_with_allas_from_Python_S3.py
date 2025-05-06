@@ -23,12 +23,20 @@ import boto3
 import os
 
 
-# Before starting to use Allas with S3 set up your connection to Allas.
+# Before starting to use Allas with S3 
 # See https://docs.csc.fi/support/tutorials/gis/gdal_cloud/#s3-connection-details
 #
-# In CSC supercomputers run before starting your Python script:
+# 1) Set up your credentials to Allas.
 # module load allas
 # allas-conf --mode s3cmd
+# This is needed only once, as long as you are using the same CSC project.
+
+# 2) Set S3-endpoint for GDAL-library using:
+# module load allas
+# OR
+os.environ["AWS_S3_ENDPOINT"] = "a3s.fi"
+# This sets AWS_S3_ENDPOINT environment variable to "a3s.fi".
+# Environment variables are cleaned after session end, so it must be set again in each new session.
 
 # If you want to WRITE files with rasterio/geopandas directly to Allas, set also this.
 os.environ["CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE"] = "YES"
@@ -51,7 +59,7 @@ v.to_file('/vsis3/name_of_your_Allas_bucket/name_of_your_output_vector_file.gpkg
 # Then just print the extent of each file as example.
 
 # Set the end-point correctly for boto3
-s3 = boto3.client("s3", endpoint_url='https://a3s.fi')
+s3 = boto3.client("s3")
 
 for key in s3.list_objects_v2(Bucket='name_of_your_Allas_bucket')['Contents']:
     if (key['Key'].endswith('.tif')):
@@ -60,30 +68,5 @@ for key in s3.list_objects_v2(Bucket='name_of_your_Allas_bucket')['Contents']:
         r = rasterio.open(filePath)
         print(r.bounds)
         
-# *****        
-# Older option to write files that likely is not needed any more.
-# Writing raster file using boto3 library
-
-
-# For writing rasters to Allas (older option)
-from rasterio.io import MemoryFile
-# For writing vectors to Allas (older option)
-import tempfile
-
-# Create the raster file to memory and write to Allas
-with MemoryFile() as mem_file:
-    with mem_file.open(**r.profile) as dataset:
-        print(dataset.meta)
-        dataset.write(input_data)
-        #Write to Allas
-    s3.upload_fileobj(mem_file, 'name_of_your_Allas_bucket', 'name_of_your_output_raster_file.tif')
-
-# Create the vector file to memory and write to Allas
-tmp = tempfile.NamedTemporaryFile()
-v.to_file(tmp, layer='test', driver="GPKG")
-#Move the tmp pointer to the beginning of temp file.
-tmp.seek(0)
-#Write to Allas
-s3.upload_fileobj(tmp, 'name_of_your_Allas_bucket', 'name_of_your_output_vector_file.gpkg')
 
 
