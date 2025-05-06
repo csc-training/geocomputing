@@ -24,17 +24,11 @@ import os
 
 
 # Before starting to use Allas with S3 set up your connection to Allas.
-# In Puhti run:
+# See https://docs.csc.fi/support/tutorials/gis/gdal_cloud/#s3-connection-details
 #
+# In CSC supercomputers run before starting your Python script:
 # module load allas
-# OR
-# os.environ["AWS_S3_ENDPOINT"] = "a3s.fi"
-# This sets AWS_S3_ENDPOINT environment variable to "a3s.fi".
-# Environment variables are cleaned after session end, so it must be set again in each new session.
-#
 # allas-conf --mode s3cmd
-# This creates [.aws/credentials-file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) to your home directory
-# The credentials are saved to a file, so they need to be set only once from a new computer.
 
 # If you want to WRITE files with rasterio/geopandas directly to Allas, set also this.
 os.environ["CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE"] = "YES"
