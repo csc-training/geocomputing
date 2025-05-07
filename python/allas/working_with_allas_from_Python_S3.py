@@ -23,15 +23,18 @@ import boto3
 import os
 
 
-# Before starting to use Allas with S3 
+# Before starting to use S3, set up your credentials and endpoint. 
+# This example here applies for using Allas from CSC Puhti or Mahti supercomputers.
+# To use some other S3 stroage or from some other computer,
 # See https://docs.csc.fi/support/tutorials/gis/gdal_cloud/#s3-connection-details
 #
-# 1) Set up your credentials to Allas.
+# 1) Set up your credentials to Allas:
 # module load allas
 # allas-conf --mode s3cmd
 # This is needed only once, as long as you are using the same CSC project.
-
-# 2) Set S3-endpoint for GDAL-library using:
+# This also sets S3 endopoint to .aws/config file in a way understandable for boto3 library, but not for GDAL.
+#
+# 2) Set S3-endpoint for GDAL-library:
 # module load allas
 # OR
 os.environ["AWS_S3_ENDPOINT"] = "a3s.fi"
@@ -56,14 +59,20 @@ v = gpd.read_file('/vsis3/name_of_your_Allas_bucket/name_of_your_input_vector_fi
 v.to_file('/vsis3/name_of_your_Allas_bucket/name_of_your_output_vector_file.gpkg', layer='layername', driver="GPKG")
 
 # Looping through all files in a bucket, find ones that are tifs.
-# Then just print the extent of each file as example.
+# Then print the extent of each file as example.
 
-# Set the end-point correctly for boto3
-s3 = boto3.client("s3")
+# Create connection to S3 storage
+s3_resource = boto3.resource('s3')
 
-for key in s3.list_objects_v2(Bucket='name_of_your_Allas_bucket')['Contents']:
-    if (key['Key'].endswith('.tif')):
-        filePath = '/vsis3/name_of_your_Allas_bucket/' + key['Key']
+# By default boto3 is connecting to Amazon S3, to use custom endpoint, define it in .aws/config file as done by allas-conf --mode s3cmd
+# OR define it in the Python code
+# s3_resource = boto3.resource("s3", endpoint_url='https://a3s.fi')
+
+my_bucket = s3_resource.Bucket('name_of_your_Allas_bucket')
+
+for my_bucket_object in my_bucket.objects.all():
+    if (my_bucket_object.key.endswith('.tif')):    
+        filePath = '/vsis3/gis-int2/' + my_bucket_object.key
         print(filePath)
         r = rasterio.open(filePath)
         print(r.bounds)
