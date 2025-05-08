@@ -14,21 +14,14 @@ library("tidyverse")
 # This example here applies for using Allas from CSC Puhti or Mahti supercomputers.
 # To use some other S3 stroage or from some other computer,
 # See https://docs.csc.fi/support/tutorials/gis/gdal_cloud/#s3-connection-details
-#
+
 # 1) Set up your credentials to Allas:
 # module load allas
 # allas-conf --mode s3cmd
 # This is needed only once, as long as you are using the same CSC project.
-# This also sets S3 endopoint to .aws/config file in a way understandable for boto3 library, but not for GDAL.
-#
-# 2) Set S3-endpoint for GDAL-library, which is used by terra, sf etc libraries:
-# module load allas
-# OR
-Sys.setenv("AWS_S3_ENDPOINT" = "a3s.fi")
-# This sets AWS_S3_ENDPOINT environment variable to "a3s.fi".
-# Environment variables are cleaned after session end, so it must be set again in each new session.
-#
-# 3) Set S3-endpoint for aws.s3-library
+# This also sets S3 endopoint to .aws/config file.
+
+# 2) Set S3 region for aws.s3-library.
 options("cloudyr.aws.default_region" = "")
 
 # If you want to WRITE files with terra/sf directly to Allas, set also this.
