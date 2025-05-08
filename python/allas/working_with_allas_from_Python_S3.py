@@ -3,13 +3,13 @@
 """
 Created on Wed Dec  4 13:57:52 2019
 @author: ekkylli
+Updated 7.7.2025
 """
 
 # Example script for using Allas directly from an Python script:
 # - Reading raster and vector files
 # - Writing raster and vector files
 # - Looping over all files of certain type in a bucket
-# - Older option to write files that likely is not needed any more.
 
 # Please notice that this example works ONLY with GDAL-based libraries for spatial data: rasterio, geopandas etc.
 
