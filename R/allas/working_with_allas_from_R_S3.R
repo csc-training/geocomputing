@@ -5,6 +5,8 @@
 
 # Please notice that this example works ONLY with GDAL-based libraries for spatial data: sf, terra etc.
 
+# Note this does not work with R version 442 in Puhti, use some other version.
+
 library("terra")
 library("sf")
 library("aws.s3")
