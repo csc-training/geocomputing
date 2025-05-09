@@ -62,6 +62,8 @@ v.to_file('/vsis3/name_of_your_Allas_bucket/name_of_your_output_vector_file.gpkg
 # Then print the extent of each file as example.
 
 # Create connection to S3 storage
+os.environ["AWS_REQUEST_CHECKSUM_CALCULATION"] = "when_required"
+os.environ["AWS_RESPONSE_CHECKSUM_VALIDATION"] = "when_required"
 s3_resource = boto3.resource('s3')
 
 # By default boto3 is connecting to Amazon S3, to use custom endpoint, define it in .aws/config file as done by allas-conf --mode s3cmd
