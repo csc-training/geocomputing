@@ -76,8 +76,6 @@ sbatch gdal_batch_job_serial.sh
 ```
 seff <job_id>
 ```
-* Once the job is finished, see the output in slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs. 
-
 * Check the resources used in another way.
 ```
 sacct -j <job_id> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
