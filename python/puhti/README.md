@@ -115,9 +115,9 @@ sbatch single_core_example.sh
 * Once the job is finished, see output in `slurm-jobid.out` and `slurm-jobid.err` with VSCode for any possible errors and other outputs. 
 * Check that you have a new GeoTiff file in the output folder.
 
-## Parallelel job
+## Parallel job
 
-We can also paralellize within Python. In this case Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `dask` are provided. Here are two examples for single-node (max 40 cores) and multi-node usage. 
+We can also parallelize within Python. In this case Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `dask` are provided. Here are two examples for single-node (max 40 cores) and multi-node usage. 
 
 * Please see Geocomputing course's [Dask section](https://csc-training.github.io/geocomputing_course/materials/parallel_python.html#dask) for more general introduction.
 
@@ -325,7 +325,4 @@ sbatch multiprocessing_example.sh
 ```
 sbatch array_job_example.sh
 ```
-
-> [!NOTE]
-> Check with `seff`: How much time and resources did you use?
 
