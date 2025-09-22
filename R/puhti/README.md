@@ -30,7 +30,7 @@ Files in this example:
   * Memory: 4
   * Local disk: 2
   * Time: 2:00:00
-  * R version: [r-env/4.4.0](https://docs.csc.fi/apps/r-env-for-gis/)
+  * R version: default
 
 * Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
