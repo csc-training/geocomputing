@@ -10,15 +10,15 @@ GDAL reprents here a commandline tool that is used via Linux bash scripts. The e
 GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder and save the file in Cloud-optimized format. Linux bash script is used for starting the GDAL commands.
 
 > [!IMPORTANT]  
-> In these scripts `project_20xxxxx` has been used as example project name. Change the project name to your own CSC project name.
+> In these scripts `project_2015299` has been used as example project name. Change the project name to your own CSC project name.
 > `cscusername` is example username, replace with your username.
 
 ## Preparations
 * Make a folder for the exercise materials and make it your working directory
 	* Change the project name and username.
 ```
-mkdir -p /scratch/project_20xxxxx/students/cscusername
-cd /scratch/project_20xxxxx/students/cscusername
+mkdir -p /scratch/project_2015299/students/cscusername
+cd /scratch/project_2015299/students/cscusername
 ```
 
 * Copy the example scripts to Puhti.

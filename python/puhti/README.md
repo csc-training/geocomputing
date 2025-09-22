@@ -37,17 +37,17 @@ Files in this example:
 If you haven't yet, get the example scripts to Puhti:
 
 > [!WARNING]
-> Please note that you will need to adapt the paths mentioned in this material. In most cases it is `cscusername` and `project_20xxxxx` that need to be replaced with your CSC username and your projectname.
+> Please note that you will need to adapt the paths mentioned in this material. In most cases it is `cscusername` and `project_2015299` that need to be replaced with your CSC username and your projectname.
 
 * Log in to Puhti web interface: https://puhti.csc.fi
 * Start a `Login node shell`
 * Create a folder for yourself:
-    * Switch to your projects scratch directory and further into the students directory: `cd /scratch/project_20xxxxx/students`
+    * Switch to your projects scratch directory and further into the students directory: `cd /scratch/project_2015299/students`
     * Create new own folder:`mkdir cscusername` 
     * Switch into your own folder: `cd cscusername` 
     * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
     * Switch to the directory with the example files: `cd geocomputing/python/puhti`.
-    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti`.
+    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_2015299/students/cscusername/geocomputing/python/puhti`.
     
     
 ## Interactive job with Visual Studio Code
@@ -57,8 +57,8 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 * Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio Code
     * Choose settings for VSCode:
-        * (Reservation: `geocomputing_thu`, only during course)
-        * Project: `project_20xxxxx`
+        * (Reservation: `geocomputing_day2`, only during course)
+        * Project: `project_2015299`
         * Partition: `interactive` (`small` during course)
         * Number of CPU cores: 1
         * Memory: 2 Gb
@@ -70,7 +70,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Wait a moment -> Connect to Visual Studio Code
     * VSCode opens up in the browser
 * Open folder with the exercise files: 
-    * Click three lines up left -> File -> Open folder -> `/scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti` -> OK
+    * Click three lines up left -> File -> Open folder -> `/scratch/project_2015299/students/cscusername/geocomputing/python/puhti` -> OK
 * Open [00_interactive/interactive_single_core_example.py](00_interactive/interactive_single_core_example.py). This is a Python script, which calculates NDVI for one input Sentinel-2 "file". 
 * Check that needed Python libraries are available in Puhti:
     * Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
@@ -83,7 +83,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 ## Serial job
 All computationally heavy analysis should be done via batch jobs. The login node is used only to tell the supercomputer, what it should do. The execution of the code will happen on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
 
-* Open `/scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` with VSCode.
+* Open `/scratch/project_2015299/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` with VSCode.
 
 * Check out the changes in the Python file compared to the `00_interactive/interactive_single_core_example.py`:
     * Python script reads one input image file from the argument, which is set inside the batch job file. 
@@ -101,7 +101,7 @@ All computationally heavy analysis should be done via batch jobs. The login node
 * Submit the batch job from **login node shell** (not VSCode terminal or compute node shell):
 
 ```
-cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/01_serial
+cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
 ```
 
@@ -140,7 +140,7 @@ You need to set your project to the batch job file, otherwise this example works
 
 
 ```
-cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/06_parallel_dask/single_node
+cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/06_parallel_dask/single_node
 sbatch dask_singlenode.sh
 ```
 
@@ -169,7 +169,7 @@ When the worker jobs finish, they will be displayd as CANCELLED on Puhti which i
 
 
 ```
-cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/06_parallel_dask/multi_node
+cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/06_parallel_dask/multi_node
 sbatch dask_multinode.sh
 ```
 
@@ -196,8 +196,8 @@ These are just to demonstrate the difference between single core vs. some kind o
 If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
 
 * Settings for Jupyter:
-    * (Reservation: `geocomputing_thu`, only during course)
-    * Project: `project_20xxxxx`
+    * (Reservation: `geocomputing_day2`, only during course)
+    * Project: `project_2015299`
     * Partition: `interactive` (`small` during course)
     * Number of CPU cores: 1
     * Memory: 3 Gb
@@ -206,7 +206,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Python: geoconda
     * Module version: default
     * Jupyter type: Lab
-    * Working directory: `/scratch/project_20xxxxx/`
+    * Working directory: `/scratch/project_2015299/`
     * `Launch`
 
 * Wait a moment -> Connect to Jupyter
@@ -221,7 +221,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
 
 If you prefer working in the command line, you can also start a compute node shell directly from the tools tab in Puhti web interface. Choose settings for the interactive session:
 
-* Project: project_20xxxxx
+* Project: project_2015299
 * Number of CPU cores: 1
 * Memory: 2 Gb
 * Local disk: 0
@@ -229,7 +229,7 @@ If you prefer working in the command line, you can also start a compute node she
 
 > [!NOTE]
 > You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) from a login node (by starting a login node shell from tools tab in Puhti web interface or by connecting to Puhti via ssh in your own computer's terminal) with:
->  `sinteractive --account project_20xxxxx --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
+>  `sinteractive --account project_2015299 --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
 > This gives you a compute node shell; you can see "where" you are from your terminal prompt [cscusername@puhti-loginXX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node. 
 
 After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer":
@@ -239,7 +239,7 @@ After getting access to the compute node shell, you can load modules and run scr
 
 ```
 module load geoconda
-cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/00_interactive
+cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/00_interactive
 python interactive_single_core_example.py 
 ```
 
@@ -276,7 +276,7 @@ Submit the job to Puhti from login node shell:
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/02_gnu_parallel
+cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/02_gnu_parallel
 sbatch gnu_parallel_example.sh
 ```
 
@@ -300,7 +300,7 @@ In the array job example the idea is that the Python script will run one process
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/03_array
+cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/03_array
 ```
 
 ## Multiprocessing
@@ -316,7 +316,7 @@ cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/03_ar
 > Submit the parallel job to Puhti from login node shell
 
 ```
-cd /scratch/project_20xxxxx/students/cscusername/geocomputing/python/puhti/04_parallel_multiprocessing
+cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/04_parallel_multiprocessing
 sbatch multiprocessing_example.sh
 ```
 
