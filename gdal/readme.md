@@ -17,8 +17,8 @@ GDAL includes many other useful [commandline tools](https://gdal.org/programs/in
 * Make a folder for the exercise materials and make it your working directory
 	* Change the project name and username.
 ```
-mkdir -p /scratch/project_2015299/students/cscusername
-cd /scratch/project_2015299/students/cscusername
+mkdir -p /scratch/project_2015299/students/$USER
+cd /scratch/project_2015299/students/$USER
 ```
 
 * Copy the example scripts to Puhti.
