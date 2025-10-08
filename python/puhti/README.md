@@ -60,7 +60,7 @@ cd geocomputing/python/puhti
 ``` 
 
 > [!WARNING]
-> Please note that you will need to adapt the paths mentioned in this material. In most cases it is `project_2015299` that need to be replaced with your projectname.
+> Please note that if you following this example outside of organized course, you need to change `project_2015299` to your own project's name.
  
     
 ## Interactive job with Visual Studio Code
