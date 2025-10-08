@@ -13,6 +13,13 @@ GDAL includes many other useful [commandline tools](https://gdal.org/programs/in
 > In these scripts `project_2015299` has been used as example project name. Change the project name to your own CSC project name.
 
 ## Preparations
+### Without cloning geocomputing repository
+If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
+```
+cd /scratch/project_2015299/students/$USER/geocomputing/gdal
+```
+
+### With cloning geocomputing repository
 * Make a folder for the exercise materials and make it your working directory
 	* Change the project name and username.
 ```
@@ -97,7 +104,7 @@ Open the files with Edit:
 * [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.
 	* No edits are needed, for only viewing the file, click the file name on the Files page.
 * [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. How many cores are reserved? How much memory? Which modules are used? 
-	* Change the project name in `#SBATCH --account` setting. Save.
+	* If following the example outside of a course, change the project name in `#SBATCH --account` setting. Save.
    
 * Run the script as batch file: 
 ```
