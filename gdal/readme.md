@@ -11,7 +11,6 @@ GDAL includes many other useful [commandline tools](https://gdal.org/programs/in
 
 > [!IMPORTANT]  
 > In these scripts `project_2015299` has been used as example project name. Change the project name to your own CSC project name.
-> `cscusername` is example username, replace with your username.
 
 ## Preparations
 * Make a folder for the exercise materials and make it your working directory
