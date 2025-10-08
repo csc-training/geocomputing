@@ -96,7 +96,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 ## Serial job
 All computationally heavy analysis should be done via batch jobs. The login node is used only to tell the supercomputer, what it should do. The execution of the code will happen on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
 
-* Open `/scratch/project_2015299/students/cscusername/geocomputing/python/puhti/01_serial/single_core_example.sh` with VSCode.
+* Open `/scratch/project_2015299/students/$USER/geocomputing/python/puhti/01_serial/single_core_example.sh` with VSCode.
 
 * Check out the changes in the Python file compared to the `00_interactive/interactive_single_core_example.py`:
     * Python script reads one input image file from the argument, which is set inside the batch job file. 
@@ -114,7 +114,7 @@ All computationally heavy analysis should be done via batch jobs. The login node
 * Submit the batch job from **login node shell** (not VSCode terminal or compute node shell):
 
 ```
-cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/01_serial
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/01_serial
 sbatch single_core_example.sh
 ```
 
@@ -153,7 +153,7 @@ You need to set your project to the batch job file, otherwise this example works
 
 
 ```
-cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/06_parallel_dask/single_node
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/06_parallel_dask/single_node
 sbatch dask_singlenode.sh
 ```
 
@@ -182,7 +182,7 @@ When the worker jobs finish, they will be displayd as CANCELLED on Puhti which i
 
 
 ```
-cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/06_parallel_dask/multi_node
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/06_parallel_dask/multi_node
 sbatch dask_multinode.sh
 ```
 
@@ -252,7 +252,7 @@ After getting access to the compute node shell, you can load modules and run scr
 
 ```
 module load geoconda
-cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/00_interactive
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/00_interactive
 python interactive_single_core_example.py 
 ```
 
@@ -271,7 +271,7 @@ What if we want to run the same process for not only one, but all Sentinel-2 fil
 
 -> Or we adjust the Python script to take in the data folder instead of just one Sentinel-2 file and loop through all files in the main function (see `01_serial/single_core_example_folder.sh` and `01_serial/single_core_example_folder.py`). You can run it the same way as the single file script, by adapting the project to your project number in the `.sh` file.
 
-## GNU parallel
+#### GNU parallel
 
 GNU parallel can help parallelizing a script which otherwise is not parallelized. Instead of looping through the three files available within the batch job or the Python script, we let GNU Parallel handle that step. Checkout how it is used in [02_gnu_parallel/gnu_parallel_example.sh](02_gnu_parallel/gnu_parallel_example.sh) with your favorite editor and adapt the project number.
 
@@ -289,14 +289,14 @@ Submit the job to Puhti from login node shell:
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/02_gnu_parallel
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/02_gnu_parallel
 sbatch gnu_parallel_example.sh
 ```
 
 > [!NOTE]
 > Check with `seff jobid`: How much time and resources did you use?
 
-### Array job
+#### Array job
 
 In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script or one job on multiple CPUs (GNU parallel).
 
@@ -313,7 +313,7 @@ In the array job example the idea is that the Python script will run one process
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/03_array
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/03_array
 ```
 
 ## Multiprocessing
@@ -329,7 +329,7 @@ cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/03_ar
 > Submit the parallel job to Puhti from login node shell
 
 ```
-cd /scratch/project_2015299/students/cscusername/geocomputing/python/puhti/04_parallel_multiprocessing
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/04_parallel_multiprocessing
 sbatch multiprocessing_example.sh
 ```
 
