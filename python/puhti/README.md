@@ -31,24 +31,37 @@ Files in this example:
     * A **.py** file for defining the tasks to be done.
     * A batch job **.sh** file for submitting the job to Puhti batch job scheduler (SLURM).
 
-## Let's get started 
-
-
-If you haven't yet, get the example scripts to Puhti:
-
-> [!WARNING]
-> Please note that you will need to adapt the paths mentioned in this material. In most cases it is `cscusername` and `project_2015299` that need to be replaced with your CSC username and your projectname.
-
+## Preparations
 * Log in to Puhti web interface: https://puhti.csc.fi
 * Start a `Login node shell`
-* Create a folder for yourself:
-    * Switch to your projects scratch directory and further into the students directory: `cd /scratch/project_2015299/students`
-    * Create new own folder:`mkdir cscusername` 
-    * Switch into your own folder: `cd cscusername` 
-    * Get the exercise material by cloning this repository: `git clone https://github.com/csc-training/geocomputing`
-    * Switch to the directory with the example files: `cd geocomputing/python/puhti`.
-    * Check that we are in the correct place: `pwd` should show something like `/scratch/project_2015299/students/cscusername/geocomputing/python/puhti`.
-    
+  
+### Without cloning geocomputing repository
+If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
+```
+cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti
+```
+
+### With cloning geocomputing repository
+* Make a folder for the exercise materials and make it your working directory
+	* Change the project name and username.
+```
+mkdir -p /scratch/project_2015299/students/$USER
+cd /scratch/project_2015299/students/$USER
+```
+
+* Copy the example scripts to Puhti.
+```
+git clone https://github.com/csc-training/geocomputing.git
+```
+
+* Move to the Python exercise folder.
+```
+cd geocomputing/python/puhti
+``` 
+
+> [!WARNING]
+> Please note that you will need to adapt the paths mentioned in this material. In most cases it is `project_2015299` that need to be replaced with your projectname.
+ 
     
 ## Interactive job with Visual Studio Code
 
