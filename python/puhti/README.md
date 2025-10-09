@@ -74,7 +74,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
         * Project: `project_2015299`
         * Partition: `interactive` (`small` during course)
         * Number of CPU cores: 1
-        * Memory: 2 Gb
+        * Memory: 6 Gb
         * Local disk: 0
         * Time: 1:30:00
         * Code version and compiler: leave default
