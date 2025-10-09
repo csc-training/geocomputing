@@ -37,7 +37,7 @@ Files in this example:
   * Project directory name: geocomputing
   * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_2015299/students/cscusername
   	* If you do not yet have such directory, move to /scratch/project_2015299 or /scratch/project_2015299/students/ as path to folder and create a new directory and enter it)
-* In the files window in lower right, move to folder `R/puhti/01_serial`.
+* In the files window in lower right, move to folder `geocomputing/R/puhti/01_serial`.
 * Set the working directory. `Session -> Set working directory -> To Files Pane location`
 
 * Open [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is a basic R script, which uses a **for loop** for going through all 3 files. 
