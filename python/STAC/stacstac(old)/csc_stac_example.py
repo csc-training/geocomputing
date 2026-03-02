@@ -7,7 +7,7 @@
 # We will use Sentinel-1 data stored at FMI to compute a mean value of vv_mean for one month. The result will be saved to a new GeoTiff file.
 
 import requests
-import odc.stac
+import stackstac
 from dask.distributed import Client, Lock
 import pystac_client
 import rioxarray
@@ -41,20 +41,19 @@ def main():
 
     item_collection = find_items_from_stac()
 
-    # Use the `odc-stac` library to convert item collection to Xarray DataArray. 
-    cube = odc.stac.load(
-        item_collection,
-        bands=[asset],
-        crs="EPSG:3067",
-        resolution=10
-    ).squeeze()
-    cube
+    # Use the `stackstac` library to convert item collection to Xarray DataArray. 
+    cube = stackstac.stack(
+        items=item_collection,
+        assets=[asset],
+        #chunksize=(-1,1,2046,2046),
+        epsg=3067
+    ).squeeze() 
     
     # Create new data cube for the mean value. 
     mean = cube.mean("time", keep_attrs=True)
 
     # Compute and save the result
-    mean_tiff = mean.rio.to_raster(
+    mean_ndvi_tiff = mean.rio.to_raster(
         output_file,
         lock=Lock(name="rio", client=client),
         tiled=True,
