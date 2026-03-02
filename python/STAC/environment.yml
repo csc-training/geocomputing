@@ -12,7 +12,7 @@ dependencies:
   - pystac  
   - requests  
   - rioxarray
-  - orc-stac
+  - odc-stac
   - libgdal-jp2openjpeg
   - python-graphviz
   - jupyter-resource-usage
