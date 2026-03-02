@@ -3,16 +3,18 @@
 The [STAC](https://stacspec.org/en/) is a specification to describe geospatial information, so it can easily **searched and downloaded**. 
 STAC includes metadata of datasets and links to actual files, the data files are usually stored in the cloud. See [Paituli STAC page](https://paituli.csc.fi/stac.html) for general introduction about STAC and what Collections (=datasets) are included in Paituli STAC.
 
-In this repository we provide examples to work with:
+In this repository we provide examples to work with Paituli STAC API and odc-stac:
+	* [STAC_CSC_example.ipynb](STAC_CSC_example.ipynb) - more detailed version, including several option to query STAC and how to work with rasterio and STAC
+	* [STAC_CSC_example_short.ipynb](STAC_CSC_example_short.ipynb). Shorter version of most important steps of working with STAC.
 
-* STAC API:
-    * [Paituli STAC API](STAC_CSC_example.ipynb)
-    * [Element84 STAC API](stac_xarray_dask_example.ipynb)
+The examples mainly cover data search and download, using [pystac-client](https://pystac-client.readthedocs.io/en/stable/) and [odc-stac](https://odc-stac.readthedocs.io/en/latest).  For analyzing data, [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasets, xarray supports also parallelization with [dask](https://www.dask.org/).
+
+[R STAC examples](../../R/STAC) provides similar examples for R.
+
+The stacstac(old) folder includes also examples for working with stacstac-library, which unfortunatelly has not been recently updated. See [ODC STAC discussion](https://github.com/opendatacube/odc-stac/issues/54), for differences between Stackstac and ODC STAC.  This folder includes besides the Paituli STAC examples, also
+    * [Element84 STAC API](stac_xarray_dask_example.ipynb), which includes for example global Sentinel-1 and Sentinel-2 data.
 * Static STAC: 
     * [FMI STAC](static_stac.ipynb)
-* See, also similar [R STAC examples](../../R/STAC)
-
-The examples mainly cover data search and download, using [pystac-client](https://pystac-client.readthedocs.io/en/stable/) and [stackstac](https://stackstac.readthedocs.io/en/latest/).  For analyzing data, [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasets, xarray supports also parallelization with [dask](https://www.dask.org/).
 
 The examples can be run on any computer with Python installation, the required Python packages can be seen from beginning of the notebooks. The examples download all data from cloud storage, so relatively good internet connection is needed.
 
@@ -52,7 +54,7 @@ conda env create -f path/to/your/downloaded/environment.yml
 The example notebook covers only small area and therefore runs fast and requires little resources. The same code can be easily extended to cover whole Finland or some other bigger area. Basically only a few changes are needed:
 * Extend analysis area in the Python code
   	* Change location criteria in the STAC search, use a bigger bbox or remove the location criteria.
-	* Change `bounds` setting in `stackstac.stack`, use a bigger bbox or remove `bounds` setting.
+	* Change `bbox` setting in `odc,stac.load`, use a bigger bbox or remove `bbox` setting to include all data.
 * If running in HPC, give your Jupyter more computing resources. Start a new Jupyter session and give it more cores and memory than recommended in the example. If running the notebook locally, then no changes are needed. 
  	* Dask will pick up all available computing resources automatically.
  
