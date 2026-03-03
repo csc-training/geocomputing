@@ -46,7 +46,8 @@ def main():
         item_collection,
         bands=[asset],
         crs="EPSG:3067",
-        resolution=10
+        resolution=10,
+        chunks={"time": 1, "band": 1, "y": 1024, "x": 1024}
     ).squeeze()
     cube
     
@@ -56,7 +57,7 @@ def main():
     # Compute and save the result
     mean_tiff = mean.rio.to_raster(
         output_file,
-        lock=Lock(name="rio", client=client),
+        lock=Lock(name="rio"),
         tiled=True,
     )
    
