@@ -3,20 +3,28 @@
 The [STAC](https://stacspec.org/en/) is a specification to describe geospatial information, so it can easily **searched and downloaded**. 
 STAC includes metadata of datasets and links to actual files, the data files are usually stored in the cloud. See [Paituli STAC page](https://paituli.csc.fi/stac.html) for general introduction about STAC and what Collections (=datasets) are included in Paituli STAC.
 
-In this repository we provide examples to work with:
+[R STAC examples](../../R/STAC) provides similar examples for R.
 
-* STAC API:
-    * [Paituli STAC API](STAC_CSC_example.ipynb)
-    * [Element84 STAC API](stac_xarray_dask_example.ipynb)
-* Static STAC: 
-    * [FMI STAC](static_stac.ipynb)
-* See, also similar [R STAC examples](../../R/STAC)
+In this repository we provide examples to work with Paituli STAC API and `odc-stac`:
 
-The examples mainly cover data search and download, using [pystac-client](https://pystac-client.readthedocs.io/en/stable/) and [stackstac](https://stackstac.readthedocs.io/en/latest/).  For analyzing data, [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasets, xarray supports also parallelization with [dask](https://www.dask.org/).
+* [STAC_CSC_example.ipynb](STAC_CSC_example.ipynb) - more detailed version, including several options to query STAC and how to work with rasterio and STAC
+* [STAC_CSC_example_short.ipynb](STAC_CSC_example_short.ipynb). Shorter version of most important steps of working with STAC.
 
+The examples mainly cover data search and download, using [pystac-client](https://pystac-client.readthedocs.io/en/stable/) and [odc-stac](https://odc-stac.readthedocs.io/en/latest).  For analyzing data, [xarray](https://docs.xarray.dev/en/stable/) and [xarray-spatial](https://xarray-spatial.org/) can be used. If unfamiliar with xarray, [Pangeo 101](https://pangeo-data.github.io/foss4g-2022/intro.html) is one option to get started. When working with bigger datasets, xarray supports also parallelization with [dask](https://www.dask.org/). 
+
+> [!NOTE]
+> The `odc-stac`-based examples were published in 3/2026. Earlier here were similar examples using [stackstac](https://stackstac.readthedocs.io/en/latest/)-libary, which unfortunatelly has not been recently updated. `odc-stac` has slightly different syntax for creating the datacube, but it should be easy to adjust. The bigger change is that `odc-stac` creates [Xarray DataSet](https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html), but `stackstac` creates [Xarray DataArray](https://docs.xarray.dev/en/stable/api/dataarray.html), so changes are needed also on Xarray side. See [ODC STAC discussion](https://github.com/opendatacube/odc-stac/issues/54), for discussion about differences between `stackstac` and `odc-stac`.  
+
+The `stacstac(old)` folder includes the older examples for working with `stackstac`-library. This folder includes besides the Paituli STAC examples, also
+* [Element84 STAC API](stac_xarray_dask_example.ipynb), which includes for example global Sentinel-1 and Sentinel-2 data.
+* [FMI STAC](static_stac.ipynb) as example of static STAC (= no search API).
+
+## Running the examples
 The examples can be run on any computer with Python installation, the required Python packages can be seen from beginning of the notebooks. The examples download all data from cloud storage, so relatively good internet connection is needed.
 
-In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](https://docs.csc.fi/apps/geoconda/), which includes all necessary Python packages. The easiest is to use Jupyter with Puhti web interface:
+### Running the STAC example Jupyter Notebook in Puhti supercomputer 
+
+In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](https://docs.csc.fi/apps/geoconda/), which includes all necessary Python packages. For `odc-stac` geoconda/3.13.12 is needed. The easiest is to use Jupyter with Puhti web interface:
 
 * Open [Puhti web interface](https://www.puhti.csc.fi/)
 * Click "Jupyter" on dashboard
@@ -35,7 +43,7 @@ In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](http
 * If you want to use Dask extension in JupyterLab, see [Dask instructions in docs.csc.fi](https://docs.csc.fi/support/tutorials/dask-python/#dask-with-jupyter)
 
 
-## Running the STAC example Jupyter Notebook on your own computer
+### Running the STAC example Jupyter Notebook on your own computer
 
 You can also run the STAC example notebook on your own computer.
 
@@ -52,7 +60,7 @@ conda env create -f path/to/your/downloaded/environment.yml
 The example notebook covers only small area and therefore runs fast and requires little resources. The same code can be easily extended to cover whole Finland or some other bigger area. Basically only a few changes are needed:
 * Extend analysis area in the Python code
   	* Change location criteria in the STAC search, use a bigger bbox or remove the location criteria.
-	* Change `bounds` setting in `stackstac.stack`, use a bigger bbox or remove `bounds` setting.
+	* Change `bbox` setting in `odc,stac.load`, use a bigger bbox or remove `bbox` setting to include all data.
 * If running in HPC, give your Jupyter more computing resources. Start a new Jupyter session and give it more cores and memory than recommended in the example. If running the notebook locally, then no changes are needed. 
  	* Dask will pick up all available computing resources automatically.
  
