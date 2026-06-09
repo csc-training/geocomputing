@@ -1,6 +1,6 @@
-# Python Puhti examples
+# Python Roihu examples
 
-Here are examples for running Python code on CSC's Puhti supercomputer as different job styles: 
+Here are examples for running Python code on CSC's Roihu supercomputer as different job styles: 
 
 * Interactive - for developing your scripts, usually with limited test data.
 * Via batch jobs - for computationally more demanding analysis:
@@ -9,7 +9,7 @@ Here are examples for running Python code on CSC's Puhti supercomputer as differ
 		* With different Python libraries: `multiprocessing`, `joblib` and `dask`.
 		* With external tools like `GNU parellel` and array jobs.
 
-If unsure, start with Dask, it is one of the newest, most versatile and easy to use. But Dask has many options and alternatives, `multiprocessing` might be easier to learn at first and is included in all Python installations by default. `multiprocessing` and `joblib` are suitable for maximum of one node (max 40 cores in Puhti). Dask can run also multi-node jobs.
+If unsure, start with Dask, it is one of the newest, most versatile and easy to use. But Dask has many options and alternatives, `multiprocessing` might be easier to learn at first and is included in all Python installations by default. `multiprocessing` and `joblib` are suitable for maximum of one node (max 384 cores in Roihu). Dask can run also multi-node jobs.
 
 ## Example case
 
@@ -26,52 +26,52 @@ Basic idea behind the script is to:
 
 Files in this example:
 
-* The input **ESA Sentinel L2A images** are in JPG2000 format and are already stored in Puhti: `/appl/data/geo/sentinel/s2_example_data/L2A`. Puhti has only these example images, more [Sentinel L2A images are available from CSC Allas](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-allas).
+* The input **ESA Sentinel L2A images** are in JPG2000 format and are already stored in Roihu: `/appl/data/geo/sentinel/s2_example_data/L2A`. Roihu has only these example images, more [Sentinel L2A images are available from CSC Allas](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-allas).
 * The example scripts are in subfolders by job type and used parallel library. Each subfolder has 2 files:
     * A **.py** file for defining the tasks to be done.
-    * A batch job **.sh** file for submitting the job to Puhti batch job scheduler (SLURM).
+    * A batch job **.sh** file for submitting the job to Roihu batch job scheduler (SLURM).
 
 ## Preparations
-* Log in to Puhti web interface: https://puhti.csc.fi
+* Log in to Roihu web interface: https://roihu.csc.fi
 * Start a `Login node shell`
   
 ### Without cloning geocomputing repository
 If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu
 ```
 
 ### With cloning geocomputing repository
 * Make a folder for the exercise materials and make it your working directory
 	* Change the project name and username.
 ```
-mkdir -p /scratch/project_2015299/students/$USER
-cd /scratch/project_2015299/students/$USER
+mkdir -p /scratch/project_2000XXX/students/$USER
+cd /scratch/project_2000XXX/students/$USER
 ```
 
-* Copy the example scripts to Puhti.
+* Copy the example scripts to Roihu.
 ```
 git clone https://github.com/csc-training/geocomputing.git
 ```
 
 * Move to the Python exercise folder.
 ```
-cd geocomputing/python/puhti
+cd geocomputing/python/roihu
 ``` 
 
 > [!WARNING]
-> Please note that if you following this example outside of organized course, you need to change `project_2015299` to your own project's name.
+> Please note that if you following this example outside of organized course, you need to change `project_2000XXX` to your own project's name.
  
     
 ## Interactive job with Visual Studio Code
 
-Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this. We can open and look at the Python script from Puhti web interface > Files tab, within Jupyter environment, Visual Studio Code (VSCode) application or the command line. In addition to being able to run the full script within Visual Studio Code, it also possible to run parts of a script step by step.
+Within an [interactive job](https://docs.csc.fi/computing/running/interactive-usage/) it is possible to edit the script in between test-runs; so this suits best when still writing the script. Usually it is best to use some smaller test dataset for this. We can open and look at the Python script from Roihu web interface > Files tab, within Jupyter environment, Visual Studio Code (VSCode) application or the command line. In addition to being able to run the full script within Visual Studio Code, it also possible to run parts of a script step by step.
 
-* Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Puhti web interface](https://docs.csc.fi/computing/webinterface/).
+* Start [Visual Studio Code](https://docs.csc.fi/computing/webinterface/vscode/) in [Roihu web interface](https://docs.csc.fi/computing/webinterface/).
     * Open VSCode start page from front page: Apps -> Visual Studio Code
     * Choose settings for VSCode:
         * (Reservation: `geocomputing_day2`, only during course)
-        * Project: `project_2015299`
+        * Project: `project_2000XXX`
         * Partition: `interactive` (`small` during course)
         * Number of CPU cores: 1
         * Memory: 6 Gb
@@ -83,9 +83,9 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Wait a moment -> Connect to Visual Studio Code
     * VSCode opens up in the browser
 * Open folder with the exercise files: 
-    * Click three lines up left -> File -> Open folder -> `/scratch/project_2015299/students/cscusername/geocomputing/python/puhti` -> OK
+    * Click three lines up left -> File -> Open folder -> `/scratch/project_2000XXX/students/cscusername/geocomputing/python/roihu` -> OK
 * Open [00_interactive/interactive_single_core_example.py](00_interactive/interactive_single_core_example.py). This is a Python script, which calculates NDVI for one input Sentinel-2 "file". 
-* Check that needed Python libraries are available in Puhti:
+* Check that needed Python libraries are available in Roihu:
     * Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
 * We can also run the full script by following these steps: 
     * Exit Python console in Terminal: type `exit()` in the terminal, if you ran pieces of the code before.
@@ -96,7 +96,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 ## Serial job
 All computationally heavy analysis should be done via batch jobs. The login node is used only to tell the supercomputer, what it should do. The execution of the code will happen on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
 
-* Open `/scratch/project_2015299/students/$USER/geocomputing/python/puhti/01_serial/single_core_example.sh` with VSCode.
+* Open `/scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/01_serial/single_core_example.sh` with VSCode.
 
 * Check out the changes in the Python file compared to the `00_interactive/interactive_single_core_example.py`:
     * Python script reads one input image file from the argument, which is set inside the batch job file. 
@@ -114,7 +114,7 @@ All computationally heavy analysis should be done via batch jobs. The login node
 * Submit the batch job from **login node shell** (not VSCode terminal or compute node shell):
 
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/01_serial
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/01_serial
 sbatch single_core_example.sh
 ```
 
@@ -130,7 +130,7 @@ sbatch single_core_example.sh
 
 ## Parallel job
 
-We can also parallelize within Python. In this case Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `dask` are provided. Here are two examples for single-node (max 40 cores) and multi-node usage. 
+We can also parallelize within Python. In this case Python code takes care of dividing the work to 3 processes running at the same time, one for each input file. Python has several packages for code parallelization, here examples for `dask` are provided. Here are two examples for single-node (max 384 cores) and multi-node usage. 
 
 * Please see Geocomputing course's [Dask section](https://csc-training.github.io/geocomputing_course/materials/parallel_python.html#dask) for more general introduction.
 
@@ -138,7 +138,7 @@ The examples use [delayed functions](https://docs.dask.org/en/latest/delayed.htm
 
 ### Single node example
 
-This example uses [Dask default scheduler](https://docs.dask.org/en/latest/scheduling.html). It can only utilize a single node in supercomputer, so on Puhti the maximum number of CPU cores and workers is 40. 
+This example uses [Dask default scheduler](https://docs.dask.org/en/latest/scheduling.html). It can only utilize a single node in supercomputer, so on Roihu the maximum number of CPU cores and workers is 40. 
 
 You need to set your project to the batch job file, otherwise this example works out of the box.
 
@@ -149,11 +149,11 @@ You need to set your project to the batch job file, otherwise this example works
 * [06_parallel_dask/single_node/dask_singlenode.py](06_parallel_dask/single_node/dask_singlenode.py)
 
 > [!NOTE]
-> Submit the parallel job to Puhti from login node shell
+> Submit the parallel job to Roihu from login node shell
 
 
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/06_parallel_dask/single_node
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/06_parallel_dask/single_node
 sbatch dask_singlenode.sh
 ```
 
@@ -170,7 +170,7 @@ The batch job file launches basically a master job that does not require much re
 
 With several SLURM jobs it is possible to use several supercomputer nodes that is not possible with other Python parallelization options presented here.
 
-When the worker jobs finish, they will be displayd as CANCELLED on Puhti which is intended, the master job cancels them.
+When the worker jobs finish, they will be displayd as CANCELLED on Roihu which is intended, the master job cancels them.
 
 * [06_parallel_dask/multi_node/dask_multinode.sh](06_parallel_dask/multi_node/dask_multinode.sh) batch job file for `dask`.
 	* `--ntasks=1` + `--cpus-per-task=1` reserve resources only for the master node
@@ -178,11 +178,11 @@ When the worker jobs finish, they will be displayd as CANCELLED on Puhti which i
 * [06_parallel_dask/multi_node/dask_multinode.py](06_parallel_dask/multi_node/dask_multinode.py)
 
 > [!NOTE]
-> Submit the parallel job to Puhti from login node shell
+> Submit the parallel job to Roihu from login node shell
 
 
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/06_parallel_dask/multi_node
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/06_parallel_dask/multi_node
 sbatch dask_multinode.sh
 ```
 
@@ -206,11 +206,11 @@ These are just to demonstrate the difference between single core vs. some kind o
 
 ### Jupyter
 
-If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Puhti web interface dashboard or the Apps tab in the Puhti web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
+If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Roihu web interface dashboard or the Apps tab in the Roihu web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
 
 * Settings for Jupyter:
     * (Reservation: `geocomputing_day2`, only during course)
-    * Project: `project_2015299`
+    * Project: `project_2000XXX`
     * Partition: `interactive` (`small` during course)
     * Number of CPU cores: 1
     * Memory: 3 Gb
@@ -219,12 +219,12 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Python: geoconda
     * Module version: default
     * Jupyter type: Lab
-    * Working directory: `/scratch/project_2015299/`
+    * Working directory: `/scratch/project_2000XXX/`
     * `Launch`
 
 * Wait a moment -> Connect to Jupyter
 * Jupyter opens up in the browser
-* Open folder with the exercise files from the left browser panel `students/cscusername/geocomputing/python/puhti` and find the file `interactive.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
+* Open folder with the exercise files from the left browser panel `students/cscusername/geocomputing/python/roihu` and find the file `interactive.ipynb`. Execute each code cell one after the other with `Shift+Enter`.
 * End the session:
    * Close the web tab
    * In Active sessions view: `Cancel`
@@ -232,18 +232,18 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
 
 ### Command line
 
-If you prefer working in the command line, you can also start a compute node shell directly from the tools tab in Puhti web interface. Choose settings for the interactive session:
+If you prefer working in the command line, you can also start a compute node shell directly from the tools tab in Roihu web interface. Choose settings for the interactive session:
 
-* Project: project_2015299
+* Project: project_2000XXX
 * Number of CPU cores: 1
 * Memory: 2 Gb
 * Local disk: 0
 * Time: 1:00:00
 
 > [!NOTE]
-> You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) from a login node (by starting a login node shell from tools tab in Puhti web interface or by connecting to Puhti via ssh in your own computer's terminal) with:
->  `sinteractive --account project_2015299 --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
-> This gives you a compute node shell; you can see "where" you are from your terminal prompt [cscusername@puhti-loginXX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node. 
+> You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) from a login node (by starting a login node shell from tools tab in Roihu web interface or by connecting to Roihu via ssh in your own computer's terminal) with:
+>  `sinteractive --account project_2000XXX --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
+> This gives you a compute node shell; you can see "where" you are from your terminal prompt [cscusername@roihu-cpu-loginX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node. 
 
 After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer":
 
@@ -252,13 +252,13 @@ After getting access to the compute node shell, you can load modules and run scr
 
 ```
 module load geoconda
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/00_interactive
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/00_interactive
 python interactive_single_core_example.py 
 ```
 
 * Wait, it takes a few minutes for complete. The printouts will appear in the terminal during the process. Note the time it took.
 * Check that there is one new GeoTiff file in your work directory with `ls -l output`
-* Close the compute node shell tab in your browser and delete the running job from `my interactive sessions` in the Puhti web interface.
+* Close the compute node shell tab in your browser and delete the running job from `my interactive sessions` in the Roihu web interface.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
 
 As mentioned, Jupyter is nice for prototyping and testing, however if we want to use this process as part of a larger script, or make it possible to more easily adapt the script to run on other files or calculate other vegetation indices, we need to generalize it and put the code in a Python script. This means for example to put parts of the code into functions, so that they can be reused. You can find one such cleaned up and generalized script with much more comments in `00_interactive/interactive_single_core_example.py`.
@@ -283,13 +283,13 @@ GNU parallel can help parallelizing a script which otherwise is not parallelized
 
 > To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` in the login node shell to count everything within the data directory before writing the batch job script. 
 
-Submit the job to Puhti from login node shell:
+Submit the job to Roihu from login node shell:
 
 >[!NOTE]
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/02_gnu_parallel
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/02_gnu_parallel
 sbatch gnu_parallel_example.sh
 ```
 
@@ -307,13 +307,13 @@ In the array job example the idea is that the Python script will run one process
 
 	
 > [!NOTE]
-> Submit the array job to Puhti from login node shell
+> Submit the array job to Roihu from login node shell
 
 >[!NOTE]
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/03_array
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/03_array
 ```
 
 ## Multiprocessing
@@ -326,10 +326,10 @@ cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/03_array
 	* Note how the pool of workers is started and processes divided to workers with `pool.map()`. This replaces the for loop that we have seen in `01_serial/single_core_example_folder.sh`.
 
 > [!NOTE]
-> Submit the parallel job to Puhti from login node shell
+> Submit the parallel job to Roihu from login node shell
 
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/python/puhti/04_parallel_multiprocessing
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/04_parallel_multiprocessing
 sbatch multiprocessing_example.sh
 ```
 

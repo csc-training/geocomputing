@@ -34,7 +34,7 @@ def createSLURMCluster():
     # Next, limits and settings for ONE SLURM job. 
     
     # Number of cores per SLURM job. 
-    # In bigger analysis this has to fit to one HPC node, so in Puhti max 40 cores.  
+    # In bigger analysis this has to fit to one HPC node, so in Roihu max 384 cores.  
 
     no_of_cores = 2 
     

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2015299   # Choose the project to be billed
+#SBATCH --account=project_2000XXX   # Choose the project to be billed
 #SBATCH --reservation=geocomputing_day2 # Only available during the course
 #SBATCH --output=slurm-%j.out       # File to write the standard output to. %j is replaced by the job ID.
 #SBATCH --error=slurm-%j.err        # File to write the standard error to. %j is replaced by the job ID. Defaults to slurm-%j.out if not provided. 
@@ -11,6 +11,6 @@
 
 module load geoconda
 
-ones2file=/appl/data/geo/sentinel/s2_example_data/L2A/S2B_MSIL2A_20190530T094039_N0212_R036_T36VUR_20190530T113343.SAFE
+data_folder=/appl/data/geo/sentinel/s2_example_data/L2A/
 
-srun python single_core_example.py $ones2file
+srun python single_core_example_folder.py $data_folder
