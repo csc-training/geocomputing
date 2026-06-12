@@ -33,6 +33,7 @@ dependencies:
   - geodatasets
   - geoviews
   - git
+  - graphviz
   - gstools
   - hvplot
   - holoviews
@@ -49,6 +50,7 @@ dependencies:
   - laspy
   - leafmap
   - lonboard
+  - marimo
   - metpy
   - movingpandas
   - nbclassic
@@ -66,9 +68,12 @@ dependencies:
   - pcraster
   - pdal
   - pip
+  - planetary-computer
+  - plotly
   - pot
   - psycopg2
   - pydeck
+  - pyicu
   - pygmt
   - pyproj
   - pysal
@@ -81,6 +86,7 @@ dependencies:
   - python-keystoneclient
   - python-pdal
   - python-swiftclient
+  - pytest
   - rasterio
   - rasterstats
   - richdem
@@ -96,10 +102,14 @@ dependencies:
   - shapely
   - sparse
   - spectral
+  - spyder
   - stackstac
+  - virtualenv
+  - wheel
   - wrf-python
   - xarray
   - xarray-spatial
+  - xarray-eopf
   - xclim
   - xesmf
   - xgboost
@@ -115,4 +125,4 @@ dependencies:
     - pyogrio
     - scikit-gstat
     - whitebox-workflows
-
+    - git+https://github.com/mayrajeo/geo2ml.git
