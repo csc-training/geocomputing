@@ -13,20 +13,11 @@ If unsure, start with Dask, it is one of the newest, most versatile and easy to 
 
 ## Example case
 
-![](https://ece.montana.edu/seniordesign/archive/SP15/OpticalWeedMapping/uploads/4/9/2/7/49273335/1429843234.png)
-From [ECE Montana](https://ece.montana.edu/seniordesign/archive/SP15/OpticalWeedMapping/ndvi.html)
-
-The example calculates NDVI (Normalized Difference Vegetation Index) from Sentinel-2 satellite image's red and near infrared bands. The reading, writing and calculation of NDVI are identical in all examples (with the exception of the Dask - xarray example) and only the method of parallelization changes (the code in the main function). 
-
-Basic idea behind the script is to:
-
-- Find red and near infrared channels of Sentinel L2A product from its `SAFE` folder (to simplify, we will call this a Sentinel-2 file from here on) and open the `jp2` files. -> `readImage`
-- Read the data as `numpy` array with `rasterio`, scale the values to reflectance values and calculate NDVI index. -> `calculateNDVI`
-- Save output as GeoTiff with `rasterio`. -> `saveImage`
+The example calculates contours from a 10m DEM file. The calculations are identical in all examples (with the exception of the Dask - xarray example) and only the method of parallelization changes (the code in the main function). 
 
 Files in this example:
 
-* The input **ESA Sentinel L2A images** are in JPG2000 format and are already stored in Roihu: `/appl/data/geo/sentinel/s2_example_data/L2A`. Roihu has only these example images, more [Sentinel L2A images are available from CSC Allas](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-allas).
+* The input **NLS 10m DEM files**, listed in `mapsheets_URLs.txt` (in the exercise main folder, common for all examples). 
 * The example scripts are in subfolders by job type and used parallel library. Each subfolder has 2 files:
     * A **.py** file for defining the tasks to be done.
     * A batch job **.sh** file for submitting the job to Roihu batch job scheduler (SLURM).
@@ -35,13 +26,7 @@ Files in this example:
 * Log in to Roihu web interface: https://roihu.csc.fi
 * Start a `Login node shell`
   
-### Without cloning geocomputing repository
-If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
-```
-cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu
-```
-
-### With cloning geocomputing repository
+### Clone geocomputing repository
 * Make a folder for the exercise materials and make it your working directory
 	* Change the project name and username.
 ```
@@ -58,6 +43,11 @@ git clone https://github.com/csc-training/geocomputing.git
 ```
 cd geocomputing/python/roihu
 ``` 
+
+If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
+```
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu
+```
 
 > [!WARNING]
 > Please note that if you following this example outside of organized course, you need to change `project_2000XXX` to your own project's name.
@@ -78,13 +68,13 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
         * Local disk: 0
         * Time: 1:30:00
         * Code version and compiler: leave default
-        * Modules: geoconda
+        * Modules: python-geo
         * `Launch`
     * Wait a moment -> Connect to Visual Studio Code
     * VSCode opens up in the browser
 * Open folder with the exercise files: 
     * Click three lines up left -> File -> Open folder -> `/scratch/project_2000XXX/students/cscusername/geocomputing/python/roihu` -> OK
-* Open [00_interactive/interactive_single_core_example.py](00_interactive/interactive_single_core_example.py). This is a Python script, which calculates NDVI for one input Sentinel-2 "file". 
+* Open [00_interactive/interactive_single_core_example.py](00_interactive/interactive_single_core_example.py). This is a Python script, which calculates one file. 
 * Check that needed Python libraries are available in Roihu:
     * Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
 * We can also run the full script by following these steps: 
