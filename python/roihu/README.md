@@ -206,7 +206,7 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Memory: 3 Gb
     * Local disk: 0
     * Time: 1:00:00
-    * Python: geoconda
+    * Python: python-geo
     * Module version: default
     * Jupyter type: Lab
     * Working directory: `/scratch/project_2000XXX/`
@@ -241,7 +241,7 @@ After getting access to the compute node shell, you can load modules and run scr
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-module load geoconda
+module load python-geo
 cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/00_interactive
 python interactive_single_core_example.py 
 ```

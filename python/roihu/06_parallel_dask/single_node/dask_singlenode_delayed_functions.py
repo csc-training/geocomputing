@@ -1,16 +1,17 @@
 """
-A simple example Python script how to contours for three DEM files
-in parallel with the joblib library.
+An example Python script how to calculate contours for three DEM files
+in parallel with the dask.
 
-All the files are working in parallel with the help of a joblib Parallel jobs, see main()-function.
-More info about Python joblib library can be found from:
-https://joblib.readthedocs.io/en/latest/parallel.html
+All the files are working in parallel with the help of Dask delayed functions, see main()-function.
+More info about Python Dask library can be found from:
+https://docs.dask.org/en/latest/why.html
 
 Author: Kylli Ek, CSC
 
 """
 
-from joblib import Parallel, delayed
+from dask import delayed
+from dask import compute
 from pathlib import Path
 from xrspatial import contours
 import numpy as np
@@ -38,22 +39,26 @@ def processFile(file_path):
 
 
 def main():
+        
     ## How many parallel processes do we want to use
     ## Take all that were reserved from batch job
     parallel_processes = len(os.sched_getaffinity(0))
 
+    ## This list hosts the delayed functions which are then ran with compute()
+    list_of_delayed_functions = []
+
     # Run the process for the all the files
-    with open("../mapsheets_URLs.txt") as f:
+    with open("../../mapsheets_URLs.txt") as f:
         files = [line.strip() for line in f if line.strip()]
-        
-        ## Start a Parallel job that gives one path from the list to a worker process
-        Parallel(n_jobs=parallel_processes)(
-            delayed(processFile)(file) for file in files
-        )        
+        for file in files:
+            ### add delayed processFile function for one file to a list instead of running the process directly
+            list_of_delayed_functions.append(delayed(processFile)(file))
+
+    ## After constructing the Dask graph of delayed functions, run them with the resources available
+    compute(list_of_delayed_functions)
 
 
 if __name__ == "__main__":
-    ## This part is the first to execute when script is ran. It times the execution time and rans the main function
     start = time.time()
     main()
     end = time.time()
