@@ -2,7 +2,7 @@
 An example Python script how to calculate contours for one DEM file
 using just 1 process.
 
-Author: Johannes Nyman, Kylli Ek, Samantha Wittke, Elias Annila CSC
+Author: Kylli Ek CSC
 
 """
 from dask import delayed
@@ -33,19 +33,13 @@ def processFile(file_path):
     
     
 def main():
-    
-    ## This list hosts the delayed functions which are then ran with compute()
-    list_of_delayed_functions = []
-    
+        
     # Run the process for the first file
     with open("../mapsheets_URLs.txt") as f:
         files = [line.strip() for line in f if line.strip()]
         for file in files:
-            list_of_delayed_functions.append(delayed(processFile)(file))            
-            
-    ## After constructing the Dask graph of delayed functions, run them with the resources available
-    compute(list_of_delayed_functions)            
-
+            processFile(file))          
+                      
 if __name__ == "__main__":
     ## This part is the first to execute when script is ran. It times the execution time and rans the main function
     start = time.time()
