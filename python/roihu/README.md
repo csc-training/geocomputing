@@ -7,7 +7,7 @@ Here are examples for running Python code on CSC's Roihu supercomputer as differ
 	* Serial  
 	* Parellel:
 		* With different Python libraries: `multiprocessing`, `joblib` and `dask`.
-		* With external tools like `GNU parellel` and array jobs.
+		* With external tools like `xargs` and array jobs.
 
 If unsure, start with Dask, it is one of the newest, most versatile and easy to use. But Dask has many options and alternatives, `multiprocessing` might be easier to learn at first and is included in all Python installations by default. `multiprocessing` and `joblib` are suitable for maximum of one node (max 384 cores in Roihu). Dask can run also multi-node jobs.
 
@@ -81,7 +81,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Exit Python console in Terminal: type `exit()` in the terminal, if you ran pieces of the code before.
     * Click the arrow up right above script (Run Python File in Terminal)
     * Wait, it takes a few minutes for complete. The printouts will appear in the terminal during the process. Note the time it took.
-    * Check that there is one new GeoTiff file in your work directory in the Files panel of VSCode.
+    * Check that there is one new GeoPackage file in your work directory in the Files panel of VSCode.
 
 ## Serial job
 All computationally heavy analysis should be done via batch jobs. The login node is used only to tell the supercomputer, what it should do. The execution of the code will happen on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
@@ -116,7 +116,7 @@ sbatch single_core_example.sh
 
 
 * Once the job is finished, see output in `slurm-jobid.out` and `slurm-jobid.err` with VSCode for any possible errors and other outputs. 
-* Check that you have a new GeoTiff file in the output folder.
+* Check that you have a new GeoPackage file in the output folder.
 
 ## Parallel job
 
@@ -179,24 +179,12 @@ sbatch dask_multinode.sh
 > [!NOTE]
 > Check with `seff`: How much time and resources did you use?
 
-## Example benchmarks 
-
-These are just to demonstrate the difference between single core vs. some kind of parallelism. Depending on the issue, some library might be faster or slower. Note also that the performance of your job may depend on some different factors, like disk load or network speed.
-
-| Example         | Jobs | CPU cores / job | Time (min) | 
-|-----------------|------|-----------------|------------|
-| single core     | 1    | 1               | 02:29      | 
-| multiprocessing | 1    | 3               | 00:52      | 
-| dask            | 1    | 3               | 00:55      | 
-| GNU parallel    | 1    | 3               | 00:58      |
-| array job       | 3    | 1               | 01:03      | 
-
 
 ## Extra
 
 ### Jupyter
 
-If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Roihu web interface dashboard or the Apps tab in the Roihu web interface. We can find one such prototype file for calculating the NDVI for one file in the materials called `interactive.py`. It introduces the packages and workflow for this lesson.
+If you want to start prototyping and testing in a Jupyter Notebook, you can start with an interactive Jupyter session. Choose **Jupyter** from the Roihu web interface dashboard or the Apps tab in the Roihu web interface. 
 
 * Settings for Jupyter:
     * (Reservation: `geocomputing_day2`, only during course)
@@ -246,8 +234,8 @@ cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/00_interact
 python interactive_single_core_example.py 
 ```
 
-* Wait, it takes a few minutes for complete. The printouts will appear in the terminal during the process. Note the time it took.
-* Check that there is one new GeoTiff file in your work directory with `ls -l output`
+* Wait, it takes 15-20 seconds to complete. The printouts will appear in the terminal during the process. 
+* Check that there is one new GeoPackge file in your work directory with `ls -l output`
 * Close the compute node shell tab in your browser and delete the running job from `my interactive sessions` in the Roihu web interface.
 * Optional, check your results with [QGIS](https://docs.csc.fi/apps/qgis/)
 
@@ -255,23 +243,21 @@ As mentioned, Jupyter is nice for prototyping and testing, however if we want to
 
 ### External parallelization tools
 
-What if we want to run the same process for not only one, but all Sentinel-2 files within a folder? 
+What if we want to run the same process for not only one, but all files within a folder? 
 
 -> We could adapt the sbatch script to run the same script with different input one after another in a for loop in the sbatch file, see `01_serial/single_core_example_list.sh` (the Python file stays the same as before). 
 
 -> Or we adjust the Python script to take in the data folder instead of just one Sentinel-2 file and loop through all files in the main function (see `01_serial/single_core_example_folder.sh` and `01_serial/single_core_example_folder.py`). You can run it the same way as the single file script, by adapting the project to your project number in the `.sh` file.
 
-#### GNU parallel
+#### xargs
 
-GNU parallel can help parallelizing a script which otherwise is not parallelized. Instead of looping through the three files available within the batch job or the Python script, we let GNU Parallel handle that step. Checkout how it is used in [02_gnu_parallel/gnu_parallel_example.sh](02_gnu_parallel/gnu_parallel_example.sh) with your favorite editor and adapt the project number.
+xargs can help parallelizing a script which otherwise is not parallelized. Instead of looping through the three files available within the batch job or the Python script, we let xargs handle that step. Checkout how it is used in [02_xargs_parallel](02_xargs_parallel).
 
 * Changes in the batch job file compared to the `01_serial/single_core_example_list.sh`:
     * `--cpus-per-task` parameter is used to reserve 3 CPUs for the job
-    * Instead of a for loop, we use `parallel` program to read in the filenames from the text file and distribute them to the CPUs
+    * Instead of a for loop, we use `xargs` program to read in the filenames from the text file and distribute them to the CPUs
     * Memory and time allocations
-
-
-> To get to know how many `cpus-per-task` we need you can use for example `ls /appl/data/geo/sentinel/s2_example_data/L2A | wc -l` in the login node shell to count everything within the data directory before writing the batch job script. 
+    * The Python file handles only ONE file, which it reads from arguments
 
 Submit the job to Roihu from login node shell:
 
@@ -279,8 +265,8 @@ Submit the job to Roihu from login node shell:
 > Remember to change the project name and your CSC user name in the paths below.
 
 ```
-cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/02_gnu_parallel
-sbatch gnu_parallel_example.sh
+cd /scratch/project_2000XXX/students/$USER/geocomputing/python/roihu/02_xargs_parallel
+sbatch xargs_parallel_example.sh
 ```
 
 > [!NOTE]
@@ -288,7 +274,7 @@ sbatch gnu_parallel_example.sh
 
 #### Array job
 
-In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script or one job on multiple CPUs (GNU parallel).
+In the array job example the idea is that the Python script will run one process for every given input file as opposed to running a for loop within the script or one job on multiple CPUs (xargs).
 
 * [03_array/array_job_example.sh](03_array/array_job_example.sh) array job batch file. Changes compared to `01_serial/single_core_example_list.sh`:
     * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SLURM_ARRAY_TASK_ID` variable will be from 1 to 3. We can use `sed` to read the first three lines from our `image_path_list.txt` file and start a job for each input file. 
