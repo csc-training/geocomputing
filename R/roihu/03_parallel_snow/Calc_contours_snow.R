@@ -1,4 +1,4 @@
-# This is an spatial analysis example script for using R in CSC Puhti
+# This is an spatial analysis example script for using R in CSC Roihu
 # This scipt can be used for parallel jobs.
 # Here countours are calculated and saved in GeoPackage format.
 # The file given as input is a 10m DEM file from Finnish NLS.

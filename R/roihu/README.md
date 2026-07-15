@@ -1,29 +1,29 @@
-# R Puhti examples, calculating contours
-Here are examples for running R code on CSC's Puhti supercluster as four different job styles: interactive, simple serial, array and parellel. For parallel there are 3 options with different R libraries: `snow`, `parallel` and `future`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Puhti's batch system for requesting the resources and running your script. 
+# R Roihu examples, calculating contours
+Here are examples for running R code on CSC's Roihu supercomputer as four different job styles: interactive, simple serial, array and parellel. For parallel there are 3 options with different R libraries: `snow`, `parallel` and `future`. The interactive style is best for developing your scripts, usually with limited test data. For computationally more demanding analysis you have to use Roihu's batch system for requesting the resources and running your script. 
 
 The contours are calculated based on NLS 10m DEM data in geotiff format with `terra` package. The results are saved in GeoPackge format. 
 
-If an R script is ready on laptop, then for running it in Puhti normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env/#r-package-installations).
+If an R script is ready on laptop, then for running it in Roihu normally you need to edit only the paths to files and folders. Sometimes it might be necessary to install [new R libraries](https://docs.csc.fi/apps/r-env/#r-package-installations).
 
-Additional info: [Puhti batch job system documentation](https://docs.csc.fi/computing/running/creating-job-scripts-puhti/)
+Additional info: [Roihu batch job system documentation](https://docs.csc.fi/computing/running/creating-job-scripts-roihu/)
 
 Files in this example:
 * [mapsheets.txt](mapsheets.txt) file - list of mapsheets to process. Open the file. How many mapsheets (=files) there is?
-* The input NLS 10m DEM is already available in **Puhti's GIS data folder** : `/appl/data/geo/mml/dem10m/2019/` If you want to preview the files with [QGIS](https://docs.csc.fi/apps/qgis/), open one or a few DEM files from [mapsheets.txt](mapsheets.txt) file. For seeing all of Finland you can open `/appl/data/geo/mml/dem10m/dem10m_hierarchical.vrt`.
+* The input NLS 10m DEM is already available in **Roihu's GIS data folder** : `/appl/data/geo/mml/dem10m/2019/` If you want to preview the files with [QGIS](https://docs.csc.fi/apps/qgis/), open one or a few DEM files from [mapsheets.txt](mapsheets.txt) file. For seeing all of Finland you can open `/appl/data/geo/mml/dem10m/dem10m_hierarchical.vrt`.
 * In each of the subfolders there are files for one job type or parallel library. Each subfolder has 2 files:
     * An .R file for defining the tasks to be done.
-    * A batch job .sh file for submitting the job to Puhti SLURM.
+    * A batch job .sh file for submitting the job to Roihu SLURM.
  
 > [!IMPORTANT]  
-> In these scripts `project_2015299` has been used as an example project name. Change the project name to your own CSC project name.
+> In these scripts `project_200XXXX` has been used as an example project name. Change the project name to your own CSC project name.
 > `cscusername` is example username, replace with your username.
 
 ## Interactive working 
 
-* Open [Puhti web interface](https://puhti.csc.fi) and log in with your CSC user account.
+* Open [Roihu web interface](https://roihu.csc.fi) and log in with your CSC user account.
 * Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio, from the front page or `Apps -> RStudio`
   * (Reservation: `geocomputing_day2`, only during course)
-  * Project: `project_2015299`
+  * Project: `project_200XXXX`
   * Partition: `interactive` (`small` during course)
   * Partition: interactive
   * CPU cores: 1
@@ -35,13 +35,13 @@ Files in this example:
 * Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
   * Project directory name: geocomputing
-  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_2015299/students/cscusername
-  	* If you do not yet have such directory, move to /scratch/project_2015299 or /scratch/project_2015299/students/ as path to folder and create a new directory and enter it)
-* In the files window in lower right, move to folder `geocomputing/R/puhti/01_serial`.
+  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_200XXXX/students/cscusername
+  	* If you do not yet have such directory, move to /scratch/project_200XXXX or /scratch/project_200XXXX/students/ as path to folder and create a new directory and enter it)
+* In the files window in lower right, move to folder `geocomputing/R/Roihu/01_serial`.
 * Set the working directory. `Session -> Set working directory -> To Files Pane location`
 
 * Open [01_serial/Contours_simple.R](01_serial/Contours_simple.R). This is a basic R script, which uses a **for loop** for going through all 3 files. 
-* Check that needed R libraries are available in Puhti. Which libraries are used in this script? Run the libraries loading part in RStudio. 
+* Check that needed R libraries are available in Roihu. Which libraries are used in this script? Run the libraries loading part in RStudio. 
 * Run the rest of the commands from RStudio. 
 * Check that there are 3 Geopackage files with contours in your working directory in RStudio.
 * Optional, check your results with **[QGIS](https://docs.csc.fi/apps/qgis/)**
@@ -57,9 +57,9 @@ For simple 1 core batch job, use the same R script as for interactive working.
      	* Which partition is used?
       	* Which module is used?
 
-* Open another web tab and open [Puhti web interface](https://puhti.csc.fi). Open Puhti shell (`Tools -> Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
+* Open another web tab and open [Roihu web interface](https://roihu.csc.fi). Open Roihu shell (`Tools -> Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
-cd /scratch/project_2015299/students/cscusername/geocomputing/R/puhti/01_serial
+cd /scratch/project_200XXXX/students/cscusername/geocomputing/R/roihu/01_serial
 sbatch serial_batch_job.sh
 ``` 
 * `sbatch` prints out a job id, use it to check the state and the efficiency of the batch job. Did you reserve a good amount of memory?
@@ -88,13 +88,13 @@ In this case the R code takes care of dividing the work to parallel processes, o
 	* Fix the project name in the beginning of the file to match your CSC project name.
   	* `--ntasks=4` reserves 4 cores: `snow` and `future` with `cluster` option require one additional process for master process, so that if there are 3 mapsheets to process 4 cores have to be reserved
 	* `--mem-per-cpu=1000` reserves memory per core
-	* `srun apptainer_wrapper exec RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
+	* `srun RMPISNOW --no-save --slave -f Calc_contours_future_cluster.R` starts `RMPISNOW` which enables using several nodes. `RMPISNOW` can not be tested from Rstudio.
 *  [02_parallel_future/Calc_contours_future_cluster.R](02_parallel_future/Calc_contours_future_cluster.R)
 	* Note in the end of the script how cluster is started, processes divided to workers with `future-map()` and cluster is stopped.
 	* For loop has been removed, each worker calculates one file.
 	* Optional, compare to [03_parallel_snow/Calc_contours_snow.R](03_parallel_snow/Calc_contours_snow.R). `future` package takes care of exporting variables and libraries to workers itself, in `snow` and `parallel` it is user's responsibility.
 
-* Submit the parallel job to Puhti
+* Submit the parallel job to Roihu
 ```
 cd ../02_parallel_future
 sbatch parallel_batch_job_future_cluster.sh
@@ -102,7 +102,7 @@ sbatch parallel_batch_job_future_cluster.sh
 * Check with `seff` and `sacct` how much time and resources you used?
 
 ## Array job
-[Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Puhti's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context, a typical use case would be to run some model on a study area split into multiple files, where the output from one file doesn't have an impact on the result of another area.
+[Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Roihu's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context, a typical use case would be to run some model on a study area split into multiple files, where the output from one file doesn't have an impact on the result of another area.
 
 In the array job example the idea is that the R script will run one process for every given input file as opposed to running a for loop within the script. That means that the R script has to read the file to be processed from commandline argument. 
 

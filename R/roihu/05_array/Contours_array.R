@@ -1,4 +1,4 @@
-# This is an spatial analysis example script for using R in CSC Puhti
+# This is an spatial analysis example script for using R in CSC Roihu
 # This script can be used for serial or array jobs.
 # Here a .tif DEM file is provided as an argument
 # and then countours are calculated and saved in GeoPackage format.
