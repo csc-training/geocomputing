@@ -2,7 +2,7 @@
 set -e
 
 #Set file paths and names
-DEMFILE="/appl/data/geo/mml/dem10m/2019/V4/V41/V4132.tif"
+DEMFILE="/dataset/project_2019680/mml/dem10m/2019/V4/V41/V4132.tif"
 GRASSINPUT="V4132"
 GRASSOUTPUT="contours"
 OUTPUT="/scratch/project_2000599/grass/output/V4132.gpkg"

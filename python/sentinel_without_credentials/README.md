@@ -4,9 +4,9 @@ This is an example script of how to get contents from public buckets in Allas co
 
 ### Running 
 
-On CSC's supercomputer Puhti, you can use the [geoconda module](https://docs.csc.fi/apps/geoconda/) which includes the boto3 library:
+On CSC's supercomputer Roihu, you can use the [python-geo module](https://docs.csc.fi/apps/python-geo/) which includes the boto3 library:
 ```
-module load geoconda
+module load python-geo
 python get_open_sentinel_buckets.py
 ```
 

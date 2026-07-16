@@ -15,7 +15,7 @@ ogr2ogr -f CSV area.csv input.json -lco GEOMETRY=AS_WKT
 # Alternatively, if you do not have the polygon ready, but would like to calculate based on some exsisting vector file:
 # Note that besides changing the name of the file, you have to change also the layer name, in case of Shape file, it is the same as file name.
 #
-# ogr2ogr -f CSV area.csv /appl/data/geo/tilastokeskus/tieliikenne/2022/tieliikenne_2022.shp -dialect SQLite -sql "select st_concavehull(st_collect(geometry)) from tieliikenne_2022" -lco GEOMETRY=AS_WKT -t_srs EPSG:4326
+# ogr2ogr -f CSV area.csv /dataset/project_2019680/tilastokeskus/tieliikenne/2022/tieliikenne_2022.shp -dialect SQLite -sql "select st_concavehull(st_collect(geometry)) from tieliikenne_2022" -lco GEOMETRY=AS_WKT -t_srs EPSG:4326
 
 # Get the WKT polygon from file and remove quotes.
 # Only the first polygon of the the file is used.

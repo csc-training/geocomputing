@@ -31,7 +31,7 @@ Sys.setenv("CPL_VSIL_USE_TEMP_FILE_FOR_RANDOM_WRITE" = "YES")
 # Reading raster file
 r <- rast('/vsis3/name_of_your_Allas_bucket/name_of_your_input_raster_file.tif')
 
-# This should work, but has had some bugs in terra code, so does not work with any R version in Puhti (8.8.2023)
+# This should work, but has had some bugs in terra code, so does not work with any R version in Roihu (8.8.2023)
 writeRaster(r, filename='/vsis3/name_of_your_Allas_bucket/name_of_your_output_raster_file.tif')
 
 # Reading vector file

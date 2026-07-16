@@ -4,7 +4,7 @@ import pprint
 
 import json
 
-file='/appl/data/geo/mml/dem10m/2019/W3/W33/W3331.tif'
+file='/dataset/project_2019680/mml/dem10m/2019/W3/W33/W3331.tif'
 grassfile='W3331'
 grasscontoursfile='W3331_contours'
 contoursfile="/scratch/project_2000599/grass/output/V4132.gpkg"

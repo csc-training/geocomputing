@@ -10,11 +10,11 @@
 #SBATCH --cpus-per-task=4  # How many processors work on one task. Upper limit depends on number of CPUs per node.
 #SBATCH --mem-per-cpu=300  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 
-# Load geoconda module to have GDAL commandline tools available.
-module load parallel geoconda
+# Load python-geo module to have GDAL commandline tools available.
+module load parallel python-geo
 
 # Find the files that have .tif ending, we do not want to process the .tif.aux.xml files in the same folders.
 # Run the GDAL script for each of the found files.
 
-find /appl/data/geo/mml/dem10m/2019/W3/W33 -name '*.tif' | \
+find /dataset/project_2019680/mml/dem10m/2019/W3/W33 -name '*.tif' | \
     parallel -j $SLURM_CPUS_PER_TASK bash gdal_parallel.sh {}

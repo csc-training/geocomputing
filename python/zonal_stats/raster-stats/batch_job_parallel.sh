@@ -5,5 +5,5 @@
 #SBATCH --mem=1000  # Real memory required per node.
 #SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
-module load geoconda
+module load python-geo
 python zonal_stats_parallel.py

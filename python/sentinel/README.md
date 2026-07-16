@@ -10,10 +10,10 @@ Another option for similar task is to use [STAC ](../STAC).
 ### Running
 On local computer just install the sentinelsat library first.
 
-In Puhti sentinelsat is included in the [geoconda module](https://docs.csc.fi/apps/geoconda/), which must be loaded before running the script.
+In Roihu sentinelsat is included in the [python-geo module](https://docs.csc.fi/apps/python-geo/), which must be loaded before running the script.
 
 ```
-module load geoconda
+module load python-geo
 python sentinelsat_download_from_finhub.py
 ```
 

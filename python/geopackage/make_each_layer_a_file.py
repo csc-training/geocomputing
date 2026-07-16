@@ -42,8 +42,8 @@ def gdal_error_handler(err_class, err_num, err_msg):
  
 # Note, the original GeoPackage is opened with both ogr and gdal.
 # TODO, it might not be necessary actually
-ogrDS = ogr.Open('/appl/data/geo/mml/maastotietokanta/2020/gpkg/MTK-vakavesi_20-02-06.gpkg')
-gdalDS = gdal.OpenEx('/appl/data/geo/mml/maastotietokanta/2020/gpkg/MTK-vakavesi_20-02-06.gpkg', gdal.OF_VECTOR)
+ogrDS = ogr.Open('/dataset/project_2019680/mml/maastotietokanta/2020/gpkg/MTK-vakavesi_20-02-06.gpkg')
+gdalDS = gdal.OpenEx('/dataset/project_2019680/mml/maastotietokanta/2020/gpkg/MTK-vakavesi_20-02-06.gpkg', gdal.OF_VECTOR)
 
 # get a layer with GetLayer('layername'/layerindex)
 for layer in ogrDS:

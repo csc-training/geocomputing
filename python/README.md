@@ -1,6 +1,6 @@
 # CSC geocomputing Python examples
 
-* [Puhti](./puhti/README.md) - serial/array/parallel processing with Python.  How to parallelize your Python code with different methods for running in Puhti supercomputer.
+* [Roihu](./roihu/README.md) - serial/array/parallel processing with Python.  How to parallelize your Python code with different methods for running in Roihu supercomputer.
 * [Working with Allas data from Python](./allas). Examples with S3 and Swift APIs
 * [Reading NLS topographic database geopackage with Python](./geopackage/README.md)
 * [GRASS multiprocessing from Python](./grass_multiprocessing_with_python/README.md)

@@ -6,8 +6,8 @@
 #SBATCH --mem-per-cpu=10G  # Minimum memory required per allocated CPU.  Default units are megabytes.
 #SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
-# Load the geoconda module which has Python with Dask, Xarray and STAC libraries
-module load geoconda
+# Load the python-geo module which has Python with Dask, Xarray and STAC libraries
+module load python-geo
 
 # Run the Python code. 
 python csc_stac_example.py

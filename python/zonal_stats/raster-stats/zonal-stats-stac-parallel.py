@@ -9,7 +9,7 @@ Technically for parallization are used Dask Delayed functions.
 
 See also:
 * https://github.com/csc-training/geocomputing/tree/master/python/STAC longer STAC example
-* https://github.com/csc-training/geocomputing/tree/master/python/puhti for parallelization with Python in HPC.
+* https://github.com/csc-training/geocomputing/tree/master/python/roihu for parallelization with Python in HPC.
 
 Author: Kylli Ek (CSC), Riku Putkinen (Arbonaut)
 Date: 15.04.2025
@@ -40,8 +40,8 @@ x_max, y_max  = pyproj.Proj("EPSG:3067")(long_max, lat_max)
 bbox_3067 = (x_min, y_min, x_max, y_max)
 
 # Polygons file
-zones_file = '/appl/data/geo/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
-# If running the code outside Puhti, get the data from Paituli.
+zones_file = '/dataset/project_2019680/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
+# If running the code outside Roihu, get the data from Paituli.
 # zones_file = 'https://www.nic.funet.fi/index/geodata/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
 
 # Read the vector polygons

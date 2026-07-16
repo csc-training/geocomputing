@@ -26,7 +26,7 @@ To run the script, first **connection details** to must be set up.
 3. If you want to download files to your local disk, you are ready to go. 
 4. If you want to copy files to another object storage, for example CSC Allas, then set up `rclone` connection details also for the second service. Follow [Allas: Copying files directly between object storages](https://docs.csc.fi/data/Allas/accessing_allas/#copying-files-directly-between-object-storages) instructions. In this example `s3allas` is the name of the second remote connection.
 
-The script should work on any Linux/Mac machine that has `rclone` installed. In CSC supercomputers, `rclone` is included in the `allas`-module. The search with polygon versioni requires `GDAL`, which is available in [several modules in Puhti](https://docs.csc.fi/apps/gdal/), for example `geoconda`.
+The script should work on any Linux/Mac machine that has `rclone` installed. In CSC supercomputers, `rclone` is included in the `allas`-module. The search with polygon versioni requires `GDAL`, which is available in [several modules in Roihu](https://docs.csc.fi/apps/gdal/), for example `python-geo`.
 
 ## Direct use of S3 data with GDAL, Python and R
 CDSE S3 data can also be used directly with [GDAL-based tools, inc Python, R and QGIS](https://docs.csc.fi/support/tutorials/gis/gdal_cloud/#vsis3-reading-and-writing-files-fromto-s3-services).

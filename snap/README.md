@@ -1,4 +1,4 @@
-# SNAP GPT in Puhti
+# SNAP GPT in Roihu
 
 Examples:
 
@@ -9,7 +9,7 @@ Examples:
 Both examples include 2 files:
 
 * .xml-file - the SNAP Graph that defines the processing workflow.  
-* .sh-file - the batch job script that makes resource (time, memory, cores) reservations to Puhti and starts the gpt command. The batch job file [is submitted to the Puhti queuing system](https://docs.csc.fi/computing/running/submitting-jobs/)
+* .sh-file - the batch job script that makes resource (time, memory, cores) reservations to Roihu and starts the gpt command. The batch job file [is submitted to the Roihu queuing system](https://docs.csc.fi/computing/running/submitting-jobs/)
 
 ```
 sbatch snap_batch_job.sh

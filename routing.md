@@ -14,7 +14,7 @@ The best routing tools for Taito seem to be different Python libraries:
 
 ### Python osmnx
 https://github.com/gboeing/osmnx  
-Taito: available in geoconda module
+Taito: available in python-geo module
 
 `osmnx` is a libarary for retrieving OpenStreetMap data for routing. It can:
 * Create a graph suitable for `networkx` library directly.
@@ -29,7 +29,7 @@ Notes:
 
 ### Python networkx
 https://networkx.github.io/  
-Taito: available in geoconda and geopython modules.
+Taito: available in python-geo and geopython modules.
 
 Pure Python routing library, which is simple and easy to use. 
 * It can use any network data as input, from OSM or Shape file. The Shape file reader does not work with Digiroad data, but Henrikki Tenkanen has written own [importer for Digiroad](https://gist.github.com/HTenkanen/6ed582a97a83e9530bbdcca84bca8d0c).

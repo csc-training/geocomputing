@@ -10,6 +10,6 @@
 #SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
 # load needed modules
-module load geoconda
+module load python-geo
 #Pass number of cores reserved to python script as argument, so that correct number of processes can be started
 python nx_parallel.py $SLURM_CPUS_PER_TASK

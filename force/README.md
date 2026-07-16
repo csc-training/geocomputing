@@ -8,7 +8,7 @@ https://force-eo.readthedocs.io/en/latest/index.html
 
 * **file_queue.txt** - the queue file that has all Sentinel images to be processed
 * **LEVEL2_parameters.prm** - the parameter file which holds all processing related parameters. Remember to change the NPROC to number of CPUs you reserved
-* **force_batch_job.sh** - the batch job file used to submit the job to Puhti
+* **force_batch_job.sh** - the batch job file used to submit the job to Roihu
 
 ## Benchmarks
 
@@ -48,7 +48,7 @@ relevant parameters in .prm file
 
 From the benchmark runs, it seems that **a good rule of thumb is that the optimal number of CPU cores is approximately twice the amount of images processed in parallel.** In this example we had 4 images and 8 CPU cores which produced **80% CPU** efficiency, but 16 CPU cores only **42%**. 
 
-Maximum number of available CPU cores for FORCE in Puhti is one full node which is **40 CPU** cores
+Maximum number of available CPU cores for FORCE in Roihu is one full node which is **386 CPU** cores
 
 This example used approximately **34GB** memory while processing 4 images at the same time. 
 

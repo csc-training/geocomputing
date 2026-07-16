@@ -10,8 +10,8 @@
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
 #SBATCH --mem-per-cpu=300  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 
-# Load geoconda module to have GDAL commandline tools available.
-module load geoconda
+# Load python-geo module to have GDAL commandline tools available.
+module load python-geo
 
 # Run the bash script, which includes the GDAL commands.
 srun bash gdal_serial.sh

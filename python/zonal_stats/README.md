@@ -11,7 +11,7 @@ The data used in the example:
 * 10m DEM from NLS (or Sentinel-2 11-day data mosaics from STAC)
 * Field parces from Finnish Food Authority.
 
-The script uses geoconda module in Puhti and reads both datasets directly from [Puhti common GIS data area](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-puhti). Alternative public HTTPS-links for data are also given.
+The script uses python-geo module in Roihu and reads both datasets directly from [Roihu common GIS data area](https://docs.csc.fi/data/datasets/spatial-data-in-csc-computing-env/#spatial-data-in-roihu). Alternative public HTTPS-links for data are also given.
 
 ## `rasterstats` and `xarrray-spatial` comparision
 
@@ -42,7 +42,7 @@ The same analysis was done with both libraries, using 20 000 x 20 000 pixels DEM
 Key findings:
 * `rasterstats` was faster with 1-10 cores.
 * Using ~5 cores seems to be optimal for `rasterstats`.
-* `xarrray-spatial` benefits more for cores, with 40 cores it got the fastest Wall time, also compared to 'rasterstats'
+* `xarrray-spatial` benefits more for cores, with 386 cores it got the fastest Wall time, also compared to 'rasterstats'
 * `rasterstats` memory usage did not increase with parallelization and was lower than with `xarrray-spatial`
 * `xarrray-spatial` memory usage increses with number of cores
   
@@ -71,7 +71,7 @@ For handling big rasters 3 main options could be considered:
 
 * **One big file**. 5-10 Gb or even bigger raster files have become rather common. 
 
-* **Virtual raster**, is a GDAL concept to virtually merge rasters that are split to mapsheets. It enables handling many files as if they were one. See [CSC Virtual rasters tutorial](https://docs.csc.fi/support/tutorials/gis/virtual-rasters/) for longer explanation. Creating own virtual rasters is a simple and fast process. Virtual raster is a good solution, if data does not have time dimension. Many of the raster datasets in Puhti common GIS area have virtual rasters added.
+* **Virtual raster**, is a GDAL concept to virtually merge rasters that are split to mapsheets. It enables handling many files as if they were one. See [CSC Virtual rasters tutorial](https://docs.csc.fi/support/tutorials/gis/virtual-rasters/) for longer explanation. Creating own virtual rasters is a simple and fast process. Virtual raster is a good solution, if data does not have time dimension. Many of the raster datasets in Roihu common GIS area have virtual rasters added.
 
 * **STAC** enables to find spatial-temporal data and create a datacube of it, inc simple mosaicing. But it requires that the input raster data is available via STAC. A lot of Finnish data is available via [Paituli STAC](https://paituli.csc.fi/stac.html). 
 

@@ -22,11 +22,11 @@ The `stacstac(old)` folder includes the older examples for working with `stackst
 ## Running the examples
 The examples can be run on any computer with Python installation, the required Python packages can be seen from beginning of the notebooks. The examples download all data from cloud storage, so relatively good internet connection is needed.
 
-### Running the STAC example Jupyter Notebook in Puhti supercomputer 
+### Running the STAC example Jupyter Notebook in Roihu supercomputer 
 
-In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](https://docs.csc.fi/apps/geoconda/), which includes all necessary Python packages. For `odc-stac` geoconda/3.13.12 is needed. The easiest is to use Jupyter with Puhti web interface:
+In CSC Roihu supercomputer, the notebooks can be run with [python-geo module](https://docs.csc.fi/apps/python-geo/), which includes all necessary Python packages. For `odc-stac` python-geo/3.13.12 is needed. The easiest is to use Jupyter with Roihu web interface:
 
-* Open [Puhti web interface](https://www.puhti.csc.fi/)
+* Open [Roihu web interface](https://www.roihu.csc.fi/)
 * Click "Jupyter" on dashboard
 * Select following settings:
 	* Project: project_2002044 during course, own project otherwise 
@@ -35,7 +35,7 @@ In CSC Puhti supercomputer, the notebooks can be run with [geoconda module](http
 	* Memory (Gb): 8 
 	* Local disk: 0
 	* Time: 1:00:00 (or adjust to reasonable)
-	* Python: geoconda 
+	* Python: python-geo 
 	* Jupyter type: Lab
 	* Working directory: /scratch/project_2002044 during course, own project scratch otherwise
 * Click launch and wait until granted resources 
@@ -66,7 +66,7 @@ The example notebook covers only small area and therefore runs fast and requires
  
 ### How many cores and how much memory to use?
 
-From Dask point of view, it is easy to use up to the full node of HPC, that would be 40 cores in Puhti supercomputer. With [Dask-Jobqueue](https://github.com/csc-training/geocomputing/tree/master/python/puhti/06_parallel_dask) it is possible to run also multi-node jobs. But in STAC use case, the computation time is heavily dependent on data download speed, which does not scale so well. So in practice a smaller number of cores is more reasonable. With computationally easier analysis, the recommended number of **cores is 5-10**. If the computational part takes significant amount of time compared to data download, also bigger numbers of cores could be used. 
+From Dask point of view, it is easy to use up to the full node of HPC, that would be 386 cores in Roihu supercomputer. With [Dask-Jobqueue](https://github.com/csc-training/geocomputing/tree/master/python/roihu/06_parallel_dask) it is possible to run also multi-node jobs. But in STAC use case, the computation time is heavily dependent on data download speed, which does not scale so well. So in practice a smaller number of cores is more reasonable. With computationally easier analysis, the recommended number of **cores is 5-10**. If the computational part takes significant amount of time compared to data download, also bigger numbers of cores could be used. 
 
 The **memory** requirements depend more on the specific analysis, but a starting point could be **6-10Gb/core**. 
 
@@ -86,7 +86,7 @@ Some HPC specific comments:
 We did some tests with different settings (data storage location, chunksize, number of cores) for the same STAC analysis, below are the results.
 
 ### Monthly mean of FMI Sentinel1 11-days mosaics
-In this case exactly the same files were used, but the data was fetched from FMI object storage or from Puhti local disk. Analysis was done for whole Finland. The optimal number of cores was 5-10. Using local data was slightly faster, but especially with parallel analysis, the difference was small. 
+In this case exactly the same files were used, but the data was fetched from FMI object storage or from Roihu local disk. Analysis was done for whole Finland. The optimal number of cores was 5-10. Using local data was slightly faster, but especially with parallel analysis, the difference was small. 
 
 ![DEM](img/S1_data_source_cpu_walltime.gif?raw=true)
 
@@ -100,9 +100,9 @@ In this case the data values were the same, but storage details varied. All opti
 * FMI - in FMI object storage in Sodankylä.
 * Geocubes - in GeoCubes service (technically in CSC cPouta in Kajaani), divided into mapsheets, one mapsheet relatively big.
 * Paituli - in Paituli service (technically at CSC in Espoo), divided into mapsheets, one mapsheet relatively small.
-* Puhti - Paituli files in Puhti local disk
+* Roihu - Paituli files in Roihu local disk
 
-The compute area was 1600 km2, the original 2m pixel size was used. The STAC search found 1 item from FMI, 16 from GeoCubes and 33 from Paituli/Puhti. Slope was computed with [spatial-xarray's slope function](https://xarray-spatial.org/reference/_autosummary/xrspatial.slope.slope.html).
+The compute area was 1600 km2, the original 2m pixel size was used. The STAC search found 1 item from FMI, 16 from GeoCubes and 33 from Paituli/Roihu. Slope was computed with [spatial-xarray's slope function](https://xarray-spatial.org/reference/_autosummary/xrspatial.slope.slope.html).
 
 The optimal number of cores was 5-10.  The compute time was very similar for all data sources. 
 
@@ -116,4 +116,4 @@ Notes:
 * The STAC search and data cube creation part is faster with smaller number of STAC items, items fetching takes some time, if hundreds or thousands of items are found.
 * Using Cloud-Optimized GeoTiffs becomes much more important if you want to use the data in lower than native resolution.
 	* GeoCubes provides the same data in different resolutions via different assets and also as Cloud-Optimized GeoTiff, choose the correct one.
-* In case of GeoCubes, Paituli, and Puhti the created datacube had several dates present, but because the exact dates were not important here, the datacube was flattened in time dimension with: `cube2 = cube.max(dim='time')`.
+* In case of GeoCubes, Paituli, and Roihu the created datacube had several dates present, but because the exact dates were not important here, the datacube was flattened in time dimension with: `cube2 = cube.max(dim='time')`.

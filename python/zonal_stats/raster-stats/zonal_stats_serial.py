@@ -31,13 +31,13 @@ bbox_3067 = (x_min, y_min, x_max, y_max)
 
 # File paths:
 # Raster you want to use to compute zonal stastics from
-raster_file = '/appl/data/geo/mml/dem10m/dem10m_direct.vrt'
-# If running the code outside Puhti, get the data from Paituli.
+raster_file = '/dataset/project_2019680/mml/dem10m/dem10m_direct.vrt'
+# If running the code outside Roihu, get the data from Paituli.
 # https://www.nic.funet.fi/index/geodata/mml/dem10m/dem10m_direct.vrt
 
 # Polygons file
-polygons_file = '/appl/data/geo/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
-# If running the code outside Puhti, get the data from Paituli.
+polygons_file = '/dataset/project_2019680/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
+# If running the code outside Roihu, get the data from Paituli.
 # polygons_file = 'https://www.nic.funet.fi/index/geodata/ruokavirasto/kasvulohkot/2020/LandUse_ExistingLandUse_GSAAAgriculturalParcel.gpkg'
 
 # Statistics calculated for each zone

@@ -12,7 +12,7 @@ Created on 27.01.2020 by Johannes Nyman
 
 ### 1. Establishing the Swift connection to Allas
 
-# You need to run the following commands in Puhti to get the authentication to Allas active
+# You need to run the following commands in Roihu to get the authentication to Allas active
 
 """
 module load allas
@@ -26,7 +26,7 @@ _project_name = os.environ['OS_PROJECT_NAME']
 _user = os.environ['OS_USERNAME']
 
 
-# Various settings for connecting to Puhti
+# Various settings for connecting to Roihu
 _auth_version = '3'
 _os_options = {
     'user_domain_name': 'Default',

@@ -5,5 +5,5 @@
 #SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
 
-module load geoconda
+module load python-geo
 srun python zonal_stats_serial.py

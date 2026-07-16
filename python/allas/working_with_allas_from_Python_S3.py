@@ -24,7 +24,7 @@ import os
 
 
 # Before starting to use S3, set up your credentials and endpoint. 
-# This example here applies for using Allas from CSC Puhti or Mahti supercomputers.
+# This example here applies for using Allas from CSC Roihu or Mahti supercomputers.
 # To use some other S3 stroage or from some other computer,
 # See https://docs.csc.fi/support/tutorials/gis/gdal_cloud/#s3-connection-details
 #

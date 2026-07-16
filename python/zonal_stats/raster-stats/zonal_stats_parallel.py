@@ -34,11 +34,11 @@ zones_file = "zones.shp"
 #output zonal stats file
 zonal_file = "/scratch/project_2000599/python_multiprocessing_rasterstats/zonal_stats.shp"
 #Raster you want to use to compute zonal stastics from, CORINE 2018
-raster_file = '/appl/data/geo/mml/dem10m/dem10m_direct.vrt'
+raster_file = '/dataset/project_2019680/mml/dem10m/dem10m_direct.vrt'
 # Statistics calculated for each zone
 statistics = ['count', 'min' ,'mean', 'max','majority']        
 
-# This works inside one node in Puhti, so max 40.
+# This works inside one node in Roihu, so max 386.
 parallel_processes = 4
     
 # The task for one worker

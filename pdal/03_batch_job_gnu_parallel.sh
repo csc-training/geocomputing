@@ -17,7 +17,7 @@
 #SBATCH --mem-per-cpu=1000  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 
 #As the job is not run on the login where we submit the job from, it's necessary to load necessary modules in the batch job script. Loading the modules on login node will not help.
-module load parallel geoconda
+module load parallel python-geo
 #Change to the directory where you have the files
 
 cd /scratch/project_2000599/geocomputing/pdal

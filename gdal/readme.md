@@ -5,7 +5,7 @@ GDAL reprents here a commandline tool that is used via Linux bash scripts. The e
 * Using GDAL tools interactively.
 * Using GDAL tools via batch jobs:
 	* A basic serial batch job, where several files are handled in a bash script for loop, one after the other. Only 1 core is used.
-	* Parallel batch job, where different files are handled in parallel with GNU-parallel. Up to one node can be used, in Puhti that is up to 40 cores.
+	* Parallel batch job, where different files are handled in parallel with GNU-parallel. Up to one node can be used, in Roihu that is up to 386 cores.
 
 GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder and save the file in Cloud-optimized format. Linux bash script is used for starting the GDAL commands.
 
@@ -27,7 +27,7 @@ mkdir -p /scratch/project_2015299/students/$USER
 cd /scratch/project_2015299/students/$USER
 ```
 
-* Copy the example scripts to Puhti.
+* Copy the example scripts to Roihu.
 ```
 git clone https://github.com/csc-training/geocomputing.git
 ```
@@ -41,15 +41,15 @@ cd geocomputing/gdal
 
 With `gdalinfo` and `ogrinfo` it is often helpful to check the files. This is a light-weight task, so it can be done from the login node without an interactive session.
 
-* Open [Puhti web interface](https://puhti.csc.fi) and log in with CSC user account.
+* Open [Roihu web interface](https://roihu.csc.fi) and log in with CSC user account.
 * Open login node shell: `Tools -> Login node shell`
-* To have GDAL tools available, load [geoconda module](https://docs.csc.fi/apps/geoconda/). Also several other modules include GDAL tools, see [CSC Docs: GDAL page](https://docs.csc.fi/apps/gdal/) for details.
+* To have GDAL tools available, load [python-geo module](https://docs.csc.fi/apps/python-geo/). Also several other modules include GDAL tools, see [CSC Docs: GDAL page](https://docs.csc.fi/apps/gdal/) for details.
 ```
-module load geoconda
+module load python-geo
 ```
 * Check a file with `gdalinfo`. What is the coordinate system? Is the file internally tiled? Does it have overviews?
 ```
-gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
+gdalinfo /dataset/project_2019680/mml/dem10m/2019/W3/W33/W3333.tif
 ```
 
 > [!IMPORTANT]  
@@ -57,9 +57,9 @@ gdalinfo /appl/data/geo/mml/dem10m/2019/W3/W33/W3333.tif
 
 ## Serial batch job
 
-We will use Puhti web interface simple file editor for editing the files in this exercise. 
+We will use Roihu web interface simple file editor for editing the files in this exercise. 
 
-* Open another tab in your web browser to [Puhti web interface](https://puhti.csc.fi).
+* Open another tab in your web browser to [Roihu web interface](https://roihu.csc.fi).
 * Open Files -> `/scratch/project_20xxxx`
 * Open folders: `students` -> `cscusername` -> `geocomputing` -> `gdal`
 
@@ -74,7 +74,7 @@ Open the files with Edit under the menu on the right of the file name.
 sbatch gdal_batch_job_serial.sh
 ```
 * See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
-	* For seeing the files use Puhti web interface or Linux `less <filename>`
+	* For seeing the files use Roihu web interface or Linux `less <filename>`
  	* With `tail -f slurm-<job_id>.out` it is possible to see also how the output files are written during the job.
 * Check that you have new GeoTiff files in the working folder. Check the result file with `gdalinfo`. What is the coordinate system? Are the files tiled? Do they have overviews?
 
@@ -98,7 +98,7 @@ sacct -j <job_id> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 
 ## Parallel job
 
-GNU parallel is used for handling several files in parallel. In this way, max one node (= 40 cores in Puhti) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. 
+GNU parallel is used for handling several files in parallel. In this way, max one node (= 386 cores in Roihu) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. 
 
 Open the files with Edit:
 * [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.

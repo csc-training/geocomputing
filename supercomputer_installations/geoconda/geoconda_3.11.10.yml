@@ -1,4 +1,4 @@
-name: geoconda-3.11
+name: python-geo-3.11
 channels:
   - conda-forge
 #  - esri

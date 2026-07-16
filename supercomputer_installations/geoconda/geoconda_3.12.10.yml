@@ -1,4 +1,4 @@
-name: geoconda-3.12
+name: python-geo-3.12
 channels:
   - open3d-admin
   - conda-forge

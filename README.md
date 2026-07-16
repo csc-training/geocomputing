@@ -1,12 +1,12 @@
 # Geocomputing using CSC resources
 
-This repository contains examples for use of different geospatial applications. Many of the examples are for [CSC supercomputer Puhti](https://docs.csc.fi/computing/systems-puhti/) but may also be helpful for other systems (or your own computer). Please find a list of all geospatial software that is available on Puhti in [CSC docs](https://docs.csc.fi/apps/#geosciences). 
+This repository contains examples for use of different geospatial applications. Many of the examples are for [CSC supercomputer Roihu](https://docs.csc.fi/computing/systems-roihu/) but may also be helpful for other systems (or your own computer). Please find a list of all geospatial software that is available on Roihu in [CSC docs](https://docs.csc.fi/apps/#geosciences). 
 
-## Puhti
+## Roihu
 
 ### R
 * [Overview](./R/README.md)
-* [Puhti](./R/puhti) - serial/array/parallel processing with R.
+* [Roihu](./R/roihu) - serial/array/parallel processing with R.
 * [R for LiDAR data](./R/R_LiDAR): lidR and rlas
 * [Working with Allas data from R](./R/allas)
 * [Reading NLS topographic database geopackage with R](./R/geopackage)
@@ -14,7 +14,7 @@ This repository contains examples for use of different geospatial applications. 
 
 ### Python
 * [Overview](./python/README.md)
-* [Puhti](./Python/puhti/README.md) - serial/array/parallel processing with Python.
+* [Roihu](./Python/roihu/README.md) - serial/array/parallel processing with Python.
 * [Working with Allas data from Python](./Python/allas)
 * [Reading NLS topographic database geopackage with Python](./python/geopackage/README.md)
 * [GRASS multiprocessing from Python](./python/grass_multiprocessing_with_python/README.md)
@@ -42,7 +42,7 @@ This repository contains examples for use of different geospatial applications. 
 
 ## Download
 
-If you have installed Git or You can download these scripts to any computer using git. To do this, first navigate to the destination folder (in Puhti this could be your project's **projappl** or **scratch** folder):
+If you have installed Git or You can download these scripts to any computer using git. To do this, first navigate to the destination folder (in Roihu this could be your project's **projappl** or **scratch** folder):
 
 `cd /projappl/<YOUR-PROJECT>`
 or

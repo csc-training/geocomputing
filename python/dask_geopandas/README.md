@@ -7,10 +7,10 @@ Unfortunately, Dask-GeoPandas provides only a limited number of operations. Befo
 
 In this example, we will use Finnish addresses (osoitteet), and based on post code data, we will assign each address its post code. To do that, we will load two shapefiles into GeoDataFrames and perform a spatial join. In the end, we compare the execution times of both dask-geopandas and plain geopandas.
 
-To launch this notebook in Puhti, you need JupyterLab with at least 5GB of memory and 4 cores.
+To launch this notebook in Roihu, you need JupyterLab with at least 5GB of memory and 4 cores.
 
 ### Documentation
 - [Dask-geopandas documentation](https://dask-geopandas.readthedocs.io/en/stable/)
 - [CSC Dask tutorial](https://docs.csc.fi/support/tutorials/dask-python/)
-- [Jupyter in Puhti supercomputer](https://docs.csc.fi/computing/webinterface/jupyter/)
-- [Dask batch jobs with Puhti](https://github.com/csc-training/geocomputing/tree/master/python/puhti/05_parallel_dask)
+- [Jupyter in Roihu supercomputer](https://docs.csc.fi/computing/webinterface/jupyter/)
+- [Dask batch jobs with Roihu](https://github.com/csc-training/geocomputing/tree/master/python/roihu/05_parallel_dask)

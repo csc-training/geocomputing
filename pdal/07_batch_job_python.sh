@@ -6,5 +6,5 @@
 #SBATCH --mem-per-cpu=4G  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 #SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
-module load geoconda
+module load python-geo
 srun python 07_pdal_ground.py

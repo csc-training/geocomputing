@@ -1,35 +1,35 @@
 # PDAL
 [PDAL](https://www.pdal.io/) is an open source command line application for point cloud translations and processing. PDAL's functionality is available via [PDAL commandline commands](https://pdal.io/apps/index.html) or [PDAL Python library](https://pdal.io/python.html#extend). 
 
-[Puhti PDAL documentation](https://docs.csc.fi/apps/pdal/)
+[Roihu PDAL documentation](https://docs.csc.fi/apps/pdal/)
 
 ## Interactive working 
 With `pdal info` it is often helpful to check the files, this is a light-weight task, so it can be done from login-node without interactive session.
 
-* Make PDAL commands available with [geoconda module](https://docs.csc.fi/apps/geoconda/)
+* Make PDAL commands available with [python-geo module](https://docs.csc.fi/apps/python-geo/)
 ```
-module load geoconda
+module load python-geo
 ```
 * Check a file with `pdal info`. 
 ```
-pdal info /appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz
+pdal info /dataset/project_2019680/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz
 ```
 
 For computationally more demanding interactive working, use [interactive partition](https://docs.csc.fi/computing/running/interactive-usage/)
 
 ## Batch jobs
-Often the same PDAL pipelines (=workflows) need to be applied to a lot of files, then [batch jobs](https://docs.csc.fi/computing/running/creating-job-scripts-puhti/) should be used. Main options in Puhti for working with a lot of files in parallel are:
+Often the same PDAL pipelines (=workflows) need to be applied to a lot of files, then [batch jobs](https://docs.csc.fi/computing/running/creating-job-scripts-roihu/) should be used. Main options in Roihu for working with a lot of files in parallel are:
 
 * GNU parallel in one node (max 40 cores), GNU parallel should be favoured if processing one file takes less than 20 minutes. See exercise 3 below.
 * Array jobs, could be favoured if processing one files takes several hours. See exercise 4 below.
 * If thousands of files need to be processed and processing of one file is relatively slow, it is possible to combine [GNU parallel with array jobs](https://docs.csc.fi/support/tutorials/many/)
-* Python with `multiprocessing` package, see Exercise 7 below. Python has also other [parallelization options](https://github.com/csc-training/geocomputing/tree/master/python/puhti).  
+* Python with `multiprocessing` package, see Exercise 7 below. Python has also other [parallelization options](https://github.com/csc-training/geocomputing/tree/master/python/roihu).  
 
 ## PDAL exercises from a CSC course in 2019
-(Updated to Puhti in 2021)
+(Updated to Roihu in 2021)
 
 ### Exercise 1. Extracting smaller area from .laz file
-Throughout these exercises we'll use lidar data from Finnish National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Puhti as part of shared GIS data and can be found in `/appl/data/geo/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz`. In this exercise we'll use a ready made script to extract four smaller pieces from the tile. In order to extract smaller pieces we will use PDAL's crop filter. We have two necessary files for this exercise: 
+Throughout these exercises we'll use lidar data from Finnish National Land Survey. We'll use a part of the L4131H3 tile that covers Otaniemi area in Espoo. Because the tiles are quite large and take some time to process for the course it is more convinient to use smaller portions of data. In the first exercise we will extract four adjacent pieces from the L4131H3 tile. The original tile is already in Roihu as part of shared GIS data and can be found in `/dataset/project_2019680/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz`. In this exercise we'll use a ready made script to extract four smaller pieces from the tile. In order to extract smaller pieces we will use PDAL's crop filter. We have two necessary files for this exercise: 
 
 Files:
 * [01_crop_pipeline.json](01_crop_pipeline.json) - defines a PDAL pipeline for cropping a .laz file
@@ -37,7 +37,7 @@ Files:
 
 1. Run the script in interactive session: 
 ```
-module load geoconda
+module load python-geo
 bash 01_split_laz.sh
 ```
 
@@ -57,7 +57,7 @@ Running the pipeline on multiple files can easily be done with GNU parallel. GNU
 Files:
 * [02_pipeline.json](02_pipeline.json) - PDAL pipeline file, same as in Exercise 2
 * [03_batch_job_gnu_parallel.sh](03_batch_job_gnu_parallel.sh) - the batch job script containts two parts:
-	* the instructions to the batch job system marked with `#SBATCH`, these reserve computational resources from Puhti. Each `#SBATCH` option used is explained in the example
+	* the instructions to the batch job system marked with `#SBATCH`, these reserve computational resources from Roihu. Each `#SBATCH` option used is explained in the example
 	* the instructions for data analysis in normal shell script style, including the 'gnu parallel' for distribiuting the work to all available cores.
 * [03_filelist.csv](03_filelist.csv) - list of files to be processed
 
@@ -72,7 +72,7 @@ Run the same DEM creation pipeline for all 4 tiles with array job. Array job is 
 Files:
 * [02_pipeline.json](02_pipeline.json) - PDAL pipeline file, same as in Exercise 2 and 3
 * [04_batch_job_array.sh](04_batch_job_array.sh) - the batch job script containts two parts:
-	* the instructions to the batch job system marked with `#SBATCH`, these reserve computational resources from Puhti. 
+	* the instructions to the batch job system marked with `#SBATCH`, these reserve computational resources from Roihu. 
 	* the instructions for data analysis in normal shell script style, including the array job style distribiuting of work.
 * [03_filelist.csv](03_filelist.csv) - list of files to be processed, same as in Exercise 3
 

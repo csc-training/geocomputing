@@ -2,7 +2,7 @@
 > The instructions here are from 2018 and **are partly outdated**. Partly they still could be still useful. After 2018 ESRI has realeased [ArcPy also as conda package](https://enterprise.arcgis.com/en/server/latest/develop/linux/linux-python.htm). Using the conda installation is likely easier, but installing the ArcGIS Server is still also needed to get the license.
 
 > [!TIP]
-> If possible, **consider using opensource Python libraries instead**, see for example [Puhti geoconda](https://docs.csc.fi/apps/geoconda/) libraries.
+> If possible, **consider using opensource Python libraries instead**, see for example [Roihu python-geo](https://docs.csc.fi/apps/python-geo/) libraries.
 
 # Setting up and using ArcPy in cPouta
 If you need to run [ArcPy scripts](http://desktop.arcgis.com/en/arcmap/latest/analyze/arcpy/what-is-arcpy-.htm) in CSC's cPouta environment, the following instructions will help you set up a remote virtual machine with the necessary software.
