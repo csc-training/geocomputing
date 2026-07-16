@@ -82,7 +82,30 @@ sacct -j <job_id> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 	- AllocCPUS – how many CPUs were reserved
 
 ## Parallel job 
-In this case the R code takes care of dividing the work to parallel processes, one for each input file. R has several packages for code parallelization, here examples for `snow`, `parallel` and `future` are provided. `future` package is likely the easiest to use. `future` has also two internal options `multicore` and `cluster`. `parallel` and `future` with `multicore` can be used in one node, so max 40 cores. `snow` and `future` with `cluster` can be used on several nodes. 
+In this case the R code takes care of dividing the work to parallel processes, one for each input file. R has several packages for code parallelization, here examples for `snow`, `parallel` and `future` are provided. `future` has also two internal options `multicore` for single-node jobs and `cluster` for multi-node jobs. `future` package is likely the easiest to use and most versatile, so it is the first recommendation. The other packages can be used for example with existing code.
+
+* For single node jobs (max 386 cores in Roihu), use `future` with `multicore` or `parallel`. 
+* For multi-node jobs, use `future` with `cluster` or `snow`. Roihu has very big nodes, so this options is needed only for very big jobs.
+
+### Parellel job on a single node
+
+* [02_parallel_future/parallel_batch_job_future_multicore.sh](02_parallel_future/parallel_batch_job_future_multicore.sh) batch job file for `future` with `multicore`.
+	* Fix the project name in the beginning of the file to match your CSC project name.
+  	* `--ntasks=3` reserves 3 cores: one for each mapsheet
+	* `--mem-per-cpu=1000` reserves memory per core
+	* `srun Rscript --no-save Calc_contours_future_multicore.R` Run the R-script.
+*  [02_parallel_future/Calc_contours_future_multicore.R](02_parallel_future/Calc_contours_future_multicore.R)
+	* Note in the end of the script how processes are divided to workers with `future-map()`.
+	* For loop has been removed, each worker calculates one file.
+
+* Submit the parallel job to Roihu
+```
+cd ../02_parallel_future
+sbatch parallel_batch_job_future_multicore.sh
+```
+* Check with `seff` and `sacct` how much time and resources you used?
+
+### Parellel job on multiple node
 
 * [02_parallel_future/parallel_batch_job_future_cluster.sh](02_parallel_future/parallel_batch_job_future_cluster.sh) batch job file for `future` with `cluster`.
 	* Fix the project name in the beginning of the file to match your CSC project name.
