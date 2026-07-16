@@ -57,9 +57,9 @@ For simple 1 core batch job, use the same R script as for interactive working.
      	* Which partition is used?
       	* Which module is used?
 
-* Open another web tab and open [Roihu web interface](https://roihu.csc.fi). Open Roihu shell (`Tools -> Login node shell`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
+* Open another web tab and open [Roihu web interface](https://roihu.csc.fi). Open Roihu shell (`Tools -> Login node shell (Roihu - CPU)`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
-cd /scratch/project_200XXXX/students/cscusername/geocomputing/R/roihu/01_serial
+cd /scratch/project_200XXXX/students/$USER/geocomputing/R/roihu/01_serial
 sbatch serial_batch_job.sh
 ``` 
 * `sbatch` prints out a job id, use it to check the state and the efficiency of the batch job. Did you reserve a good amount of memory?
