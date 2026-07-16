@@ -17,11 +17,11 @@ options(future.availableCores.methods = "Slurm")
 # With plan(multicore) the number of workers is based on batch job reservation details.
 plan("multicore")
 
-# In Puhti R OpenMP parallelization does not seem to work with lidR, so do not use this option in Puhti. 
+# In Roihu R OpenMP parallelization does not seem to work with lidR, so do not use this option in Roihu. 
 # set_lidr_threads(2)
 
 # load catalog
-project <- readLAScatalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/")
+project <- readLAScatalog("/dataset/project_2019680/mml/laserkeilaus/2008_latest/2019/U442/1/")
 
 # lascheck(ctg_subset)
 

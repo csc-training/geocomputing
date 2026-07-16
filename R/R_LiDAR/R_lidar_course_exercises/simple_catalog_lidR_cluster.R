@@ -18,11 +18,11 @@ options(future.availableCores.methods = "Slurm")
 cl<-getMPIcluster()
 fcn <- plan(cluster, workers = cl)
 
-# In Puhti R snow clusters do not seem to support OpenMP parallelization, so do not use this option in Puhti. 
+# In Roihu R snow clusters do not seem to support OpenMP parallelization, so do not use this option in Roihu. 
 # set_lidr_threads(2)
 
 # load catalog
-project <- readLAScatalog("/appl/data/geo/mml/laserkeilaus/2008_latest/2019/U442/1/")
+project <- readLAScatalog("/dataset/project_2019680/mml/laserkeilaus/2008_latest/2019/U442/1/")
 
 # lascheck(ctg_subset)
 

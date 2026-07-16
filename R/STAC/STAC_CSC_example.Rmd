@@ -262,7 +262,7 @@ write_tif(cube, dir='tifs', prefix='monthly_mean_bbox_')
 
 ### The same data-cube for whole Finland.
 
-For big areas or long time series gdalcubes supports parallel processing to some extent. In a test with all Finland 8 cores was ~5x times faster than 1 core. Set options according to available number of cores. This can be run with one core, but it takes a few minutes. In Puhti, you need to reserve the cores at the RStudio start-up time.
+For big areas or long time series gdalcubes supports parallel processing to some extent. In a test with all Finland 8 cores was ~5x times faster than 1 core. Set options according to available number of cores. This can be run with one core, but it takes a few minutes. In Roihu, you need to reserve the cores at the RStudio start-up time.
 
 ```{r}
 gdalcubes_options(parallel=1)

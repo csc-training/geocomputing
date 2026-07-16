@@ -12,11 +12,11 @@ The examples mainly cover data search and download, using [rstac](https://cran.r
 
 The examples can be run on any computer with R installation. The required R packages can be seen from the beginning of the example scripts. The examples download all data from cloud storage, so relatively good internet connection is needed. For using data in JP2000 format, GDAL must be installed with JP2000-support.
 
-It is possible to try this script also in CSC Puhti supercomputer. The easiest option is to start RStudio in Puhti web interface. For learning STAC, it is recommended to reserve 1 core and 8 Gb memory. Data analysis part with gdalcubes would benefit from more cores. Currently Puhti r-env does not support JP2000 format, so sentinel2-l2a can not be used with gdalcubes. Searching all collections works.
+It is possible to try this script also in CSC Roihu supercomputer. The easiest option is to start RStudio in Roihu web interface. For learning STAC, it is recommended to reserve 1 core and 8 Gb memory. Data analysis part with gdalcubes would benefit from more cores. Currently Roihu r-env does not support JP2000 format, so sentinel2-l2a can not be used with gdalcubes. Searching all collections works.
 
-In CSC Puhti supercomputer, the examples can be run with [r-env module](https://docs.csc.fi/apps/r-env/), which includes all necessary R packages. The easiest is to use RStudio with Puhti web interface:
+In CSC Roihu supercomputer, the examples can be run with [r-env module](https://docs.csc.fi/apps/r-env/), which includes all necessary R packages. The easiest is to use RStudio with Roihu web interface:
 
-* Open [Puhti web interface](https://www.puhti.csc.fi/)
+* Open [Roihu web interface](https://www.roihu.csc.fi/)
 * Click "RStudio" on dashboard
 * Select following settings:
 	* Project: project_2002044 during course, own project otherwise 

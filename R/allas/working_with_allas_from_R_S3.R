@@ -5,7 +5,6 @@
 
 # Please notice that this example works ONLY with GDAL-based libraries for spatial data: sf, terra etc.
 
-# Note this does not work with R version 442 in Puhti, use some other version.
 
 library("terra")
 library("sf")
@@ -13,7 +12,7 @@ library("aws.s3")
 library("tidyverse")
 
 # Before starting to use Allas with aws.s3 set up your credentials and endpoint to Allas.
-# This example here applies for using Allas from CSC Puhti or Mahti supercomputers.
+# This example here applies for using Allas from CSC Roihu or Mahti supercomputers.
 # To use some other S3 stroage or from some other computer,
 # See https://docs.csc.fi/support/tutorials/gis/gdal_cloud/#s3-connection-details
 

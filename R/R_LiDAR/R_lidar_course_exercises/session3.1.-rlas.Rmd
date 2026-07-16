@@ -21,7 +21,7 @@ The tools offer some basic functionality to directly read and manipulate LAS dat
 
 ```{r}
 library(rlas)
-file_name <- "/appl/data/geo/mml/laserkeilaus/2008_latest/2019/L331/1/L3313F3.laz"
+file_name <- "/dataset/project_2019680/mml/laserkeilaus/2008_latest/2019/L331/1/L3313F3.laz"
 lasdata   <- read.las(file_name)
 lasheader <- read.lasheader(file_name)
 ```

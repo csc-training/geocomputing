@@ -1,9 +1,9 @@
 # Example scripts for using virtual rasters.
 # Here contours are calculated based on a 2m DEM file and saved in GeoPackage format.
 # As input 4 different options are used:
-# 1) Paituli files, copied to Puhti local disk
+# 1) Paituli files, copied to Roihu local disk
 # 2) Paituli files, with URLs (from Espoo)
-# 3) GeoPortti GeoCubes file (physically in cPouta next to Puhti, in Kajaani)
+# 3) GeoPortti GeoCubes file (physically in cPouta next to Roihu, in Kajaani)
 # 4) FMI STAC file (physically somewhere else in Finland)
 # All of these data sources cover all Finland.
 # The contours are calculated only on a subset of the data, defined by BBOX.
@@ -20,9 +20,9 @@ library(tictoc)
 bbox_vrt <- ext(480000, 490000, 7330000, 7340000)
 
 
-# Paituli files in Puhti locally
-puhti_dem2m_vrt <- "/appl/data/geo/mml/dem2m/dem2m_direct.vrt"
-puhti_result_file <- 'Puhti_vrt_contours.gpkg'
+# Paituli files in Roihu locally
+roihu_dem2m_vrt <- "/dataset/project_2019680/mml/dem2m/dem2m_direct.vrt"
+roihu_result_file <- 'Roihu_vrt_contours.gpkg'
 
 # Paituli files (URL)
 # Link from here: https://www.nic.funet.fi/index/geodata/mml/dem2m/2008_latest/
@@ -54,8 +54,8 @@ contours_from_vrt <- function(vrt_path, bbox, output_file){
 }
 
 # Run the function with each data source and see how long it takes.
-tic("Paituli files, in Puhti locally")
-contours_from_vrt(puhti_dem2m_vrt, bbox_vrt, puhti_result_file)
+tic("Paituli files, in Roihu locally")
+contours_from_vrt(roihu_dem2m_vrt, bbox_vrt, roihu_result_file)
 toc()
 
 tic("Paituli files, URL")

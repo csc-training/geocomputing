@@ -5,7 +5,7 @@
 # The input files are listed in the mapsheet.txt file
 
 # For parallel tasks the foreach with doMPI is used.
-# See https://docs.csc.fi/apps/r-env-singularity/
+# See https://docs.csc.fi/apps/r-env/
 
 library(doMPI,quietly=TRUE)
 cl<-startMPIcluster()

@@ -7,12 +7,5 @@
 #SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
 
-module load r-env-singularity
-
-# If you have installed packages this helps resolve problems related to those
-if test -f ~/.Renviron; then
-    sed -i '/TMPDIR/d' ~/.Renviron
-fi
-
-
-srun singularity_wrapper exec Rscript --no-save --slave basic_rlas.R
+module load r-env
+srun Rscript --no-save basic_rlas.R
