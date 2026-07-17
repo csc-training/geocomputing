@@ -8,6 +8,5 @@ do
     # Define output file name, based on input file name
 	out=$(basename $i)
 	# Change the coordinate system to EPSG:2393, which is the old Finnish YKJ (=KKJ3)
-	# ToDo: change project name and username in the row below
-    gdalwarp $i /scratch/project_2015299/students/$USER/geocomputing/gdal/$out -of COG -t_srs EPSG:2393
+    gdalwarp $i $out -of COG -t_srs EPSG:2393
 done
