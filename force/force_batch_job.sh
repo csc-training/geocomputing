@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_200xxxx    # Choose the project to be billed
+#SBATCH --account=project_200XXXX    # Choose the project to be billed
 #SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --time=01:00:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.

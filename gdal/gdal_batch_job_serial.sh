@@ -1,9 +1,7 @@
 #!/bin/bash
 # ToDo: change project name in the row below
-#SBATCH --account=project_2015299  # Choose the project to be billed
-#SBATCH --reservation=geocomputing_day1 # Only available during the course
-#SBATCH --output=slurm-%j.out  # File to write the standard output to. %j is replaced by the job ID.
-#SBATCH --error=slurm-%j.err  # File to write the standard error to. %j is replaced by the job ID. Defaults to slurm-%j.out if not provided. 
+#SBATCH --account=project_200XXXX  # Choose the project to be billed
+# SBATCH --reservation=geocomputing_day1 # Only available during the course
 #SBATCH --time 0:05:00
 #SBATCH --partition=small  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --nodes=1  # Number of compute nodes. Upper limit depends on partition.
