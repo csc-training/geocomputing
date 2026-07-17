@@ -9,7 +9,7 @@ from grass.pygrass.modules.grid import GridModule
 file='/dataset/project_2019680/mml/dem10m/2019/W3/W33/W3331.tif'
 grassfile='W3331'
 grasscontoursfile='W3331_contours'
-aspectfile="/scratch/project_2000599/grass/output/aspect.tif"
+aspectfile="aspect.tif"
 cpus=4
 
 # Register external GeoTIFF in current mapset:

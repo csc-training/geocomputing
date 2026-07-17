@@ -8,7 +8,7 @@ from grass.pygrass.modules.grid import GridModule
 file='/dataset/project_2019680/mml/dem10m/2019/W3/W33/W3331.tif'
 grassfile='W3331'
 grasscontoursfile='W3331_contours'
-contoursfile="/scratch/project_2000599/grass/output/V4132.gpkg"
+contoursfile="V4132.gpkg"
 
 # Register external GeoTIFF in current mapset:
 r.external(input=file,output=grassfile,flags="e",overwrite=True)
