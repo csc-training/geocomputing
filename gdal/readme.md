@@ -5,26 +5,27 @@ GDAL reprents here a commandline tool that is used via Linux bash scripts. The e
 * Using GDAL tools interactively.
 * Using GDAL tools via batch jobs:
 	* A basic serial batch job, where several files are handled in a bash script for loop, one after the other. Only 1 core is used.
-	* Parallel batch job, where different files are handled in parallel with GNU-parallel. Up to one node can be used, in Roihu that is up to 386 cores.
+	* Parallel batch job, where different files are handled in parallel with `xargs`. Up to one node can be used, in Roihu that is up to 386 cores.
 
 GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder and save the file in Cloud-optimized format. Linux bash script is used for starting the GDAL commands.
 
 > [!IMPORTANT]  
-> In these scripts `project_2015299` has been used as example project name. Change the project name to your own CSC project name.
+> In these scripts `project_200XXXX` has been used as example project name. Change the project name to your own CSC project name.
 
 ## Preparations
 ### Without cloning geocomputing repository
 If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
 ```
-cd /scratch/project_2015299/students/$USER/geocomputing/gdal
+cd /scratch/project_200XXXX/students/$USER/geocomputing/gdal
 ```
 
 ### With cloning geocomputing repository
 * Make a folder for the exercise materials and make it your working directory
-	* Change the project name and username.
+* Change the project name and username.
+
 ```
-mkdir -p /scratch/project_2015299/students/$USER
-cd /scratch/project_2015299/students/$USER
+mkdir -p /scratch/project_200XXXX/students/$USER
+cd /scratch/project_200XXXX/students/$USER
 ```
 
 * Copy the example scripts to Roihu.
@@ -60,17 +61,17 @@ gdalinfo /dataset/project_2019680/mml/dem10m/2019/W3/W33/W3333.tif
 We will use Roihu web interface simple file editor for editing the files in this exercise. 
 
 * Open another tab in your web browser to [Roihu web interface](https://roihu.csc.fi).
-* Open Files -> `/scratch/project_20xxxx`
-* Open folders: `students` -> `cscusername` -> `geocomputing` -> `gdal`
+* Open Files -> `/scratch/project_200XXXX`
+* Open folders: `students` -> `cscusername` -> `geocomputing` -> `gdal` -> `01_serial`
 
 Open the files with Edit under the menu on the right of the file name. 
 * [gdal_serial.sh](gdal_serial.sh) - the bash script, includes GDAL commands to be executed. A for loop is used for handling several files.
-	* Change the project name and username to yours in the GDAL command. Save.
-* [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. Where are the output and error messages written? How many cores and for how long time are they reserved? How much memory? Which partition is used? Which modules are used?
-	* Change the project name in `#SBATCH --account` setting. Save.
+* [gdal_batch_job_serial.sh](gdal_batch_job_serial.sh) - the batch job script. How many cores and for how long time are they reserved? How much memory? Which partition is used? Which modules are used?
+	* If following the example outside of a course, change the project name in `#SBATCH --account` setting. Save.
 
 * In the Login shell window, run the script as batch file: 
 ```
+cd 01_serial
 sbatch gdal_batch_job_serial.sh
 ```
 * See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
@@ -98,9 +99,10 @@ sacct -j <job_id> -o elapsed,TotalCPU,reqmem,maxrss,AllocCPUS
 
 ## Parallel job
 
-GNU parallel is used for handling several files in parallel. In this way, max one node (= 386 cores in Roihu) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. 
+`xargs` is used for handling several files in parallel. In this way, max one node (= 386 cores in Roihu) can be used. If even more is needed, see ["Workflow for many small, independent runs" tutorial](https://docs.csc.fi/support/tutorials/many/) how to combine this with array jobs. 
 
 Open the files with Edit:
+* Open folder `02_xargs_parallel`
 * [gdal_parallel.sh](gdal_parallel.sh) - the bash script, it includes GDAL commands to be executed for one file. The for loop is removed.
 	* No edits are needed, for only viewing the file, click the file name on the Files page.
 * [gdal_batch_job_parallel.sh](gdal_batch_job_parallel.sh) - the batch job script. How many cores are reserved? How much memory? Which modules are used? 
@@ -108,6 +110,7 @@ Open the files with Edit:
    
 * Run the script as batch file: 
 ```
+cd ../02_xargs_parallel
 sbatch gdal_batch_job_parallel.sh
 ```
 * Check the parallel batch job results with `seff`. Did you reserve a good amount of memory? What was the CPU-efficiency? How long did the script run?
