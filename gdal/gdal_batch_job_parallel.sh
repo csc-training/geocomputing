@@ -9,10 +9,13 @@
 #SBATCH --mem-per-cpu=300  # Minimum memory required per usable allocated CPU.  Default units are megabytes.
 
 # Load python-geo module to have GDAL commandline tools available.
-module load parallel python-geo
+module load python-geo
 
 # Find the files that have .tif ending, we do not want to process the .tif.aux.xml files in the same folders.
 # Run the GDAL script for each of the found files.
 
-find /dataset/project_2019680/mml/dem10m/2019/W3/W33 -name '*.tif' | \
-    parallel -j $SLURM_CPUS_PER_TASK bash gdal_parallel.sh {}
+find /dataset/project_2019680/mml/dem10m/2019/W3/W33 -name '*.tif' -print0 | \
+    xargs -0 -n1 -P $SLURM_CPUS_PER_TASK bash gdal_parallel.sh
+
+# -0 helps to read in the file names from find properly
+# -P defines how many processes in parallel
