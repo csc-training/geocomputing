@@ -25,20 +25,18 @@ This repository contains examples for use of different geospatial applications. 
 * [Python Dask-geopandas](./python/dask_geopandas/README.md)
 
 ### Other tools
-* [FORCE ](./force/README.md)  
 * [GDAL](./gdal/readme.md)
 * [GRASS](./grass/readme.md)
 * [PDAL](./pdal/README.md) 
 * [SNAP graph processing tool gpt](./snap/README.md)
+* [FORCE ](./force/README.md)  outdated
+
 
 ### Use cases / longer examples
 * [GeoPortti share Github repository](https://github.com/geoporttishare?tab=repositories) includes several longer examples of HPC usage.
 
 ## Pouta 
-* [Instructions to setup geospatial tools](./pouta/README.md) to virtual machines in [CSC's cPouta environment](https://docs.csc.fi/cloud/pouta/), inc OpenDroneMap, GeoServer, ArcPy and MetaShape.
-
-## CSC Notebooks
-* [Setting up geospatial Python Jupyter environment](./noppe/Readme.md)
+* [Instructions to setup geospatial tools](./pouta/README.md) to virtual machines in [CSC's cPouta environment](https://docs.csc.fi/cloud/pouta/), inc OpenDroneMap, GeoServer and MetaShape.
 
 ## Download
 
