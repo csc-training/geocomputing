@@ -1,6 +1,9 @@
 {
     "pipeline":[
-        "data/part_00.laz",
+		{
+		  "type": "readers.las",
+		  "filename": ""
+		},
         {
             "type":"filters.smrf",
             "window":33,

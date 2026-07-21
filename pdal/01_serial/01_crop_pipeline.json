@@ -1,6 +1,3 @@
-
-
-
 {
   "pipeline":[
     "/dataset/project_2019680/mml/laserkeilaus/2008_latest/2008/L413/1/L4131H3.laz",
@@ -14,4 +11,3 @@
     }
   ]
 }
-
