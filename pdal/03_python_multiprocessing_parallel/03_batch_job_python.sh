@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --account=project_2000599    # Choose the project to be billed
+#SBATCH --account=project_200XXXX    # Choose the project to be billed
 #SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
 #SBATCH --cpus-per-task=4  # How many processors work on one task. Upper limit depends on number of CPUs per node.
