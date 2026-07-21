@@ -8,7 +8,7 @@
 
 module load python-geo
 
-xargs -a ../filelist.txt -n1 -P4 sh -c '
+xargs -a ../filelist.txt -n1 -P $SLURM_CPUS_PER_TASK  sh -c '
     infile="$1"
     base=$(basename "$infile" .laz)
     pdal pipeline \
@@ -16,3 +16,5 @@ xargs -a ../filelist.txt -n1 -P4 sh -c '
         --writers.gdal.filename="${base}.tif" \
         ../pipeline.json
 ' sh
+
+# -P defines how many processes in parallel
