@@ -62,15 +62,14 @@ sbatch 01_serial_batch_job.sh
 It creates new `data`-folder to the pdal folder, which the parallel exercises use as input.
 
 ## Parallel batch jobs
-The parallel jobs below achieve the same result, but using different techinques. The Python set up is slightly more complicated, but gives the options to do something additional with Python.
-
-### Parallel job with xargs
-
 The goal is to run the DEM creation pipeline for 4 tiles. To achieve this, it is possible to override input and outputfiles in the pipeline using `--readers.las.filename` and `--writers.gdal.filename` switches with pdal pipeline command. For example:
 
 `pdal pipeline --readers.las.filename=new_input_file --writers.gdal.filename=new_output_file pipeline.json`. 
 
-Running the pipeline on multiple files can easily be done with xargs. xargs starts multiple calculation in parallel. 
+The parallel jobs below achieve the same result, but using different techinques: `xargs` and Python. The Python set up is slightly more complicated, but gives the option to do something additional with Python.
+
+### Parallel job with xargs
+xargs starts multiple calculations in parallel. 
 
 Files:
 * The common files: [pipeline.json](pipeline.json) and [filelist.txt](filelist.txt)
@@ -87,7 +86,6 @@ sbatch 02_batch_job_xargs_parallel.sh
 
 2. Check computational resources used by your arrayjob: `seff <Job ID>`
 3. Verify that all DEM files were successfully created.
-
 2. Optinal, check resulting DEM with [QGIS](https://docs.csc.fi/apps/qgis/).
 
 
@@ -110,3 +108,4 @@ sbatch 03_batch_job_python.sh`
 
 2. Check computational resources used by your job: `seff <Job ID>`
 3. Verify that all DEM files were successfully created.
+2. Optinal, check resulting DEM with [QGIS](https://docs.csc.fi/apps/qgis/).
