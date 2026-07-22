@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=project_2000599    # Choose the project to be billed
+#SBATCH --account=project_200XXXX    # Choose the project to be billed
 #SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --ntasks=1  # Number of tasks. Upper limit depends on partition.
@@ -8,7 +8,7 @@
 
 module load python-geo
 
-xargs -a ../filelist.txt -n1 -P4 sh -c '
+xargs -a ../filelist.txt -n1 -P $SLURM_CPUS_PER_TASK  sh -c '
     infile="$1"
     base=$(basename "$infile" .laz)
     pdal pipeline \
@@ -16,3 +16,5 @@ xargs -a ../filelist.txt -n1 -P4 sh -c '
         --writers.gdal.filename="${base}.tif" \
         ../pipeline.json
 ' sh
+
+# -P defines how many processes in parallel
