@@ -1,8 +1,8 @@
 # SNAP GPT examples for Roihu
 
-This folder includes example files for [SNAP](https://earth.esa.int/eogateway/tools/snap) for Roihu supercomputer. Read the [CSC Docs: SNAP page]((https://docs.csc.fi/apps/snap/)) before continuing. 
+This folder includes example files for [SNAP](https://earth.esa.int/eogateway/tools/snap) for Roihu supercomputer. Read the [CSC Docs: SNAP page](https://docs.csc.fi/apps/snap/) before continuing. 
 
-The examples use SNAP GPT, to run the computations from commandline.
+The examples use [SNAP GPT](https://step.esa.int/main/wp-content/help/?version=13.0.0&helpid=gpf.graphProcessingTool), to run the computations from commandline.
 
 The examples show how to run:
 
@@ -28,10 +28,16 @@ git clone https://github.com/csc-training/geocomputing.git
 cd geocomputing/snap
 ```
 
+## The SNAP GPT process
+
+The example GPT graph stacks 2 files to one. As example NLS 10m DEM and LUKE 10m erosion risk datasets are used, because these are already available in Roihu. Normally SNAP is used with Sentinel satellite data.
+
 Common files for both examples:
 
-* [snap_graph_stacking.xml](snap_graph_stacking.xml)-file - the SNAP Graph that defines the processing workflow.  Here 2 files are stacked to 1 file. As example NLS 10m DEM and LUKE 10m erosion risk datasets are used, because these are already available in Roihu. Normally SNAP is used with Sentinel satellite data.
-* [process_one_file.sh](process_one_file.sh) - bash script to run the SNAP Graph for one set of inputs. It also sets custom user dir for temporary files.
+* [snap_graph_stacking.xml](snap_graph_stacking.xml)-file - the SNAP Graph that defines the processing workflow. 
+* [process_one_file.sh](process_one_file.sh) - bash script to run the SNAP Graph for one set of inputs. It also sets custom user dir for temporary files and memory settings.
+
+Open both files and check the contents, but no changes are needed to these files.
 
 ## Serial job
 
@@ -85,3 +91,4 @@ Open the files with Edit:
 sbatch snap_array_job.sh
 ```
 * Check the parallel batch job results with `seff`. Did you reserve a good amount of memory? What was the CPU-efficiency? How long did the script run?
+* The script should create 4 .tif files to the working directory (one is overwritten from serial job).
