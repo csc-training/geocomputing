@@ -1,4 +1,4 @@
-# Example script for using Allas directly from an R script:
+)# Example script for using Allas directly from an R script:
 # - Reading and wrtiing raster and vector files
 # - Looping over all files of certain type in a bucket
 # - Writing raster and vector files (not working properly) Older version
@@ -22,7 +22,8 @@ library("tidyverse")
 # This is needed only once, as long as you are using the same CSC project.
 # This also sets S3 endopoint to .aws/config file.
 
-# 2) Set S3 region for aws.s3-library.
+# 2) Set S3 region and endpoint for aws.s3-library.
+Sys.setenv(AWS_S3_ENDPOINT="a3s.fi")
 options("cloudyr.aws.default_region" = "")
 
 # If you want to WRITE files with terra/sf directly to Allas, set also this.
