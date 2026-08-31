@@ -28,7 +28,6 @@ Files in this example:
   * Partition: interactive
   * CPU cores: 1
   * Memory: 4
-  * Local disk: 2
   * Time: 2:00:00
   * R version: default
 

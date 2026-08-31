@@ -20,10 +20,9 @@ In CSC Roihu supercomputer, the examples can be run with [r-env module](https://
 * Click "RStudio" on dashboard
 * Select following settings:
 	* Project: project_2020458 during course, own project otherwise 
-	* Partition: interactive
+	* Partition: interactive (small during the course)
 	* Number of CPU cores: 1
 	* Memory (Gb): 8 
-	* Local disk (GB): 0
 	* Time: 1:00:00 (or adjust to reasonable)
 * Click launch and wait until granted resources 
 * Click "Connect to RStudio Server" 

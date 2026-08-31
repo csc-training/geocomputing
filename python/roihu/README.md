@@ -65,7 +65,6 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
         * Partition: `interactive` (`small` during course)
         * Number of CPU cores: 1
         * Memory: 6 Gb
-        * Local disk: 0
         * Time: 1:30:00
         * Code version and compiler: leave default
         * Modules: python-geo
@@ -192,11 +191,9 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
     * Partition: `interactive` (`small` during course)
     * Number of CPU cores: 1
     * Memory: 3 Gb
-    * Local disk: 0
     * Time: 1:00:00
     * Python: python-geo
     * Module version: default
-    * Jupyter type: Lab
     * Working directory: `/scratch/project_2000XXX/`
     * `Launch`
 
@@ -215,7 +212,6 @@ If you prefer working in the command line, you can also start a compute node she
 * Project: project_2000XXX
 * Number of CPU cores: 1
 * Memory: 2 Gb
-* Local disk: 0
 * Time: 1:00:00
 
 > [!NOTE]
