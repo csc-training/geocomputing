@@ -19,7 +19,7 @@ In CSC Roihu supercomputer, the examples can be run with [r-env module](https://
 * Open [Roihu web interface](https://www.roihu.csc.fi/)
 * Click "RStudio" on dashboard
 * Select following settings:
-	* Project: project_2002044 during course, own project otherwise 
+	* Project: project_2020458 during course, own project otherwise 
 	* Partition: interactive
 	* Number of CPU cores: 1
 	* Memory (Gb): 8 

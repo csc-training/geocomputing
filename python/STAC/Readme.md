@@ -29,15 +29,13 @@ In CSC Roihu supercomputer, the notebooks can be run with [python-geo module](ht
 * Open [Roihu web interface](https://www.roihu.csc.fi/)
 * Click "Jupyter" on dashboard
 * Select following settings:
-	* Project: project_2002044 during course, own project otherwise 
-	* Partition: interactive
+	* Project: project_2020458 during course, own project otherwise 
+	* Partition: interactive (small during the course)
 	* CPU cores: 1
 	* Memory (Gb): 8 
-	* Local disk: 0
 	* Time: 1:00:00 (or adjust to reasonable)
 	* Python: python-geo 
-	* Jupyter type: Lab
-	* Working directory: /scratch/project_2002044 during course, own project scratch otherwise
+	* Working directory: /scratch/project_2020458 during course, own project scratch otherwise
 * Click launch and wait until granted resources 
 * Click "Connect to Jupyter" 
 * If you want to use Dask extension in JupyterLab, see [Dask instructions in docs.csc.fi](https://docs.csc.fi/support/tutorials/dask-python/#dask-with-jupyter)

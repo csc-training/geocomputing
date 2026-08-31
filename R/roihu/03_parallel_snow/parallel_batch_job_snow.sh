@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=project_200XXXX    # Choose the project to be billed
+#SBATCH --account=project_2020458    # Choose the project to be billed
 # SBATCH --reservation=geocomputing_day2 # Only available during the course
 #SBATCH --time=00:04:00  # Maximum duration of the job. Upper limit depends on partition.
 #Reserve cores for 1 master + 3 workers

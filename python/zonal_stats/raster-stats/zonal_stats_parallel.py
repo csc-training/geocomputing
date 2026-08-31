@@ -15,8 +15,6 @@ Raster:
 in the beginning of the script. Just make sure to reserve enogh memory. This causes also least disk readings and is in general the preferred way.
 * If the zones cover only some part raster data or if the raster is too big for memory, then direct read from disk might be better. 
 See the comments in script, how to modify the code to read directly from disk. If reading data from disk, make sure that the raster has a format that can be paritally read (for example GeoTiff) and that it is has inner tiling (https://gdal.org/drivers/raster/gtiff.html -> TILED) for optimal reading.
-In this case, consider also moving the raster to local disk on the computing node:
-https://docs.csc.fi/computing/disk/#compute-nodes
 
 Author: Elias Annila, Kylli Ek, CSC
 Date: 27.01.2022
@@ -32,7 +30,7 @@ import time
 #input zones file
 zones_file = "zones.shp"
 #output zonal stats file
-zonal_file = "/scratch/project_2000599/python_multiprocessing_rasterstats/zonal_stats.shp"
+zonal_file = "/scratch/project_2020458/python_multiprocessing_rasterstats/zonal_stats.shp"
 #Raster you want to use to compute zonal stastics from, CORINE 2018
 raster_file = '/dataset/project_2019680/mml/dem10m/dem10m_direct.vrt'
 # Statistics calculated for each zone

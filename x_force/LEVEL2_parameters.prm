@@ -3,9 +3,9 @@
 # INPUT/OUTPUT DIRECTORIES
 # ------------------------------------------------------------------------
 FILE_QUEUE = /users/johannes/force/file_queue.txt
-DIR_LEVEL2 = /scratch/project_2000599/force/output_L2A
-DIR_LOG = /scratch/project_2000599/force
-DIR_TEMP = /scratch/project_2000599/force/temp
+DIR_LEVEL2 = /scratch/project_2020458/force/output_L2A
+DIR_LOG = /scratch/project_2020458/force
+DIR_TEMP = /scratch/project_2020458/force/temp
 
 # DIGITAL ELEVATION MODEL
 # ------------------------------------------------------------------------

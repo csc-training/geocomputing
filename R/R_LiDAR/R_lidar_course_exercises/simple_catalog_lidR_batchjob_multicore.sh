@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account project_200XXXX
+#SBATCH --account project_2020458
 #SBATCH --partition=test  # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 #SBATCH --time=00:10:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --nodes=1  # Number of compute nodes. Upper limit depends on partition.

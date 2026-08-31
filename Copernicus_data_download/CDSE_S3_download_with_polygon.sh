@@ -53,7 +53,7 @@ do
 	SAFENAME="$(basename -- $FILE)"
 	
 	# Download to local disk
-	rclone copy -P -v cdse:$FILE /scratch/project_2000599/cdse/$SAFENAME
+	rclone copy -P -v cdse:$FILE /scratch/project_2020458/cdse/$SAFENAME
 	
 	# OR Download to Allas
 	#rclone copy -P -v cdse:$FILE s3allas:yourBucketName/$SAFENAME

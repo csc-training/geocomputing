@@ -15,7 +15,7 @@ echo "$OUTPUT"
 JOBID=$$
 
 USERDIR="$TMPDIR/snap_user_${JOBID}"
-#USERDIR="/scratch/project_2000599/tmp/snap_user_${JOBID}"
+#USERDIR="/scratch/project_2020458/tmp/snap_user_${JOBID}"
 
 mkdir -p "$USERDIR"
 

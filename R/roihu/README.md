@@ -15,7 +15,7 @@ Files in this example:
     * A batch job .sh file for submitting the job to Roihu SLURM.
  
 > [!IMPORTANT]  
-> In these scripts `project_200XXXX` has been used as an example project name. Change the project name to your own CSC project name.
+> In these scripts `project_2020458` has been used as an example project name. Change the project name to your own CSC project name.
 > `cscusername` is example username, replace with your username.
 
 ## Interactive working 
@@ -23,7 +23,7 @@ Files in this example:
 * Open [Roihu web interface](https://roihu.csc.fi) and log in with your CSC user account.
 * Start [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) and start RStudio, from the front page or `Apps -> RStudio`
   * (Reservation: `geocomputing_day2`, only during course)
-  * Project: `project_200XXXX`
+  * Project: `project_2020458`
   * Partition: `interactive` (`small` during course)
   * Partition: interactive
   * CPU cores: 1
@@ -35,8 +35,8 @@ Files in this example:
 * Get exercise materials. Clone [geocomputing Github](https://github.com/csc-training/geocomputing) repository. In RStudio: `File -> New project -> Version control -> Git`
   * Repository URL: https://github.com/csc-training/geocomputing.git
   * Project directory name: geocomputing
-  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_200XXXX/students/cscusername
-  	* If you do not yet have such directory, move to /scratch/project_200XXXX or /scratch/project_200XXXX/students/ as path to folder and create a new directory and enter it)
+  * Create project as subdirectory of -> `Browse -> ... (in upper right corner) -> Path to folder`: /scratch/project_2020458/students/cscusername
+  	* If you do not yet have such directory, move to /scratch/project_2020458 or /scratch/project_2020458/students/ as path to folder and create a new directory and enter it)
 * In the files window in lower right, move to folder `geocomputing/R/Roihu/01_serial`.
 * Set the working directory. `Session -> Set working directory -> To Files Pane location`
 
@@ -59,7 +59,7 @@ For simple 1 core batch job, use the same R script as for interactive working.
 
 * Open another web tab and open [Roihu web interface](https://roihu.csc.fi). Open Roihu shell (`Tools -> Login node shell (Roihu - CPU)`) and submit batch job. (Use Shift-Insert or Ctrl+V for paste.)
 ```
-cd /scratch/project_200XXXX/students/$USER/geocomputing/R/roihu/01_serial
+cd /scratch/project_2020458/students/$USER/geocomputing/R/roihu/01_serial
 sbatch serial_batch_job.sh
 ``` 
 * `sbatch` prints out a job id, use it to check the state and the efficiency of the batch job. Did you reserve a good amount of memory?

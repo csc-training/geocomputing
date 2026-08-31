@@ -10,13 +10,13 @@ GDAL reprents here a commandline tool that is used via Linux bash scripts. The e
 GDAL includes many other useful [commandline tools](https://gdal.org/programs/index.html), which usually are very efficient. In this example, we will reproject the coordinate system of multiple files in a folder and save the file in Cloud-optimized format. Linux bash script is used for starting the GDAL commands.
 
 > [!IMPORTANT]  
-> In these scripts `project_200XXXX` has been used as example project name. Change the project name to your own CSC project name.
+> In these scripts `project_2020458` has been used as example project name. Change the project name to your own CSC project name.
 
 ## Preparations
 ### Without cloning geocomputing repository
 If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
 ```
-cd /scratch/project_200XXXX/students/$USER/geocomputing/gdal
+cd /scratch/project_2020458/students/$USER/geocomputing/gdal
 ```
 
 ### With cloning geocomputing repository
@@ -24,8 +24,8 @@ cd /scratch/project_200XXXX/students/$USER/geocomputing/gdal
 * Change the project name and username.
 
 ```
-mkdir -p /scratch/project_200XXXX/students/$USER
-cd /scratch/project_200XXXX/students/$USER
+mkdir -p /scratch/project_2020458/students/$USER
+cd /scratch/project_2020458/students/$USER
 ```
 
 * Copy the example scripts to Roihu.
@@ -61,7 +61,7 @@ gdalinfo /dataset/project_2019680/mml/dem10m/2019/W3/W33/W3333.tif
 We will use Roihu web interface simple file editor for editing the files in this exercise. 
 
 * Open another tab in your web browser to [Roihu web interface](https://roihu.csc.fi).
-* Open Files -> `/scratch/project_200XXXX`
+* Open Files -> `/scratch/project_2020458`
 * Open folders: `students` -> `cscusername` -> `geocomputing` -> `gdal` -> `01_serial`
 
 Open the files with Edit under the menu on the right of the file name. 

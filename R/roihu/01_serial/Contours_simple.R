@@ -7,7 +7,7 @@
 library(terra)
 
 # Set the working directory with RStudio
-# mainDir <- "/scratch/project_2002044/students/ekkylli/geocomputing/R/Roihu/01_serial"
+# mainDir <- "/scratch/project_2020458/students/ekkylli/geocomputing/R/Roihu/01_serial"
 # setwd(mainDir)
 
 mapsheets <- readLines('../mapsheets.txt')

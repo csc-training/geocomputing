@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH -A project_200XXXX
+#SBATCH -A project_2020458
 #SBATCH --time=00:15:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --cpus-per-task=4  # How many processors work on one task. Upper limit depends on number of CPUs per node.
 #SBATCH --mem=12000  # Real memory required per node.
