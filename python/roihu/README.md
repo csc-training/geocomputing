@@ -24,7 +24,7 @@ Files in this example:
 
 ## Preparations
 * Log in to Roihu web interface: https://roihu.csc.fi
-* Start a `Login node shell`
+* Start a `Login node shell (Roihu-CPU)`
   
 ### Clone geocomputing repository
 * Make a folder for the exercise materials and make it your working directory

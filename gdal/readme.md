@@ -43,7 +43,7 @@ cd geocomputing/gdal
 With `gdalinfo` and `ogrinfo` it is often helpful to check the files. This is a light-weight task, so it can be done from the login node without an interactive session.
 
 * Open [Roihu web interface](https://roihu.csc.fi) and log in with CSC user account.
-* Open login node shell: `Tools -> Login node shell`
+* Open login node shell: `Tools -> Login node shell (Roihu-CPU)`
 * To have GDAL tools available, load [python-geo module](https://docs.csc.fi/apps/python-geo/). Also several other modules include GDAL tools, see [CSC Docs: GDAL page](https://docs.csc.fi/apps/gdal/) for details.
 ```
 module load python-geo
