@@ -8,7 +8,7 @@
 #SBATCH --partition=small            # Which queue to use. Defines maximum time, memory, tasks, nodes and local storage for job
 
 module load python-geo
-xargs -n1 -P $SLURM_NTASKS python xargs_parallel_example.py < ../mapsheets_URLs.txt
+xargs -n1 -P $SLURM_CPUS_PER_TASK python xargs_parallel_example.py < ../mapsheets_URLs.txt
 
 # -n1 read one line a time from mapsheets file
 # -P defines how many processes in parallel
