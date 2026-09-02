@@ -258,7 +258,7 @@ sbatch xargs_parallel_example.sh
 ```
 
 > [!NOTE]
-> Check with `seff jobid`: How much time and resources did you use?
+> Check with `seff`: How much time and resources did you use?
 
 #### Array job
 

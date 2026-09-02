@@ -84,7 +84,7 @@ cd ../02_xargs_parallel
 sbatch 02_batch_job_xargs_parallel.sh
 ```
 
-2. Check computational resources used by your arrayjob: `seff <Job ID>`
+2. Check computational resources used by your arrayjob: `seff <job_id>`
 3. Verify that all DEM files were successfully created.
 2. Optinal, check resulting DEM with [QGIS](https://docs.csc.fi/apps/qgis/).
 
@@ -106,6 +106,6 @@ cd 03_python_multiprocessing_parallel
 sbatch 03_batch_job_python.sh`
 ```
 
-2. Check computational resources used by your job: `seff <Job ID>`
+2. Check computational resources used by your job: `seff <job_id>`
 3. Verify that all DEM files were successfully created.
 2. Optinal, check resulting DEM with [QGIS](https://docs.csc.fi/apps/qgis/).
