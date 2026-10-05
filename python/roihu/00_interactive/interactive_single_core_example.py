@@ -4,6 +4,7 @@ An example Python script how to calculate contours for 1 DEM file using just 1 p
 Author: Kylli Ek, CSC
 
 """
+import os
 from pathlib import Path
 from xrspatial import contours
 import numpy as np
@@ -29,6 +30,8 @@ def processFile(file_path):
     print(f" {file_path} done\n")
       
 def main():
+    base_folder = os.path.join(os.sep, 'scratch', 'project_2020458', 'students', os.environ.get('USER'), 'geocomputing', 'python', 'roihu', '00_interactive')
+    os.chdir(base_folder)
     # Run the process for the first file
     with open("../mapsheets_URLs.txt") as f:
         first_file = f.readline().strip()        
