@@ -38,7 +38,7 @@ def main():
     with open("../mapsheets_URLs.txt") as f:
         files = [line.strip() for line in f if line.strip()]
         for file in files:
-            processFile(file))          
+            processFile(file)       
                       
 if __name__ == "__main__":
     ## This part is the first to execute when script is ran. It times the execution time and rans the main function
