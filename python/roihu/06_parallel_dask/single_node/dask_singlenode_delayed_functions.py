@@ -44,22 +44,18 @@ def main():
     ## Take all that were reserved from batch job
     parallel_processes = len(os.sched_getaffinity(0))
 
-    ## This list hosts the delayed functions which are then ran with compute()
-    list_of_delayed_functions = []
-
-    # Run the process for the all the files
+    # Get file list to compute
     with open("../../mapsheets_URLs.txt") as f:
         files = [line.strip() for line in f if line.strip()]
-        for file in files:
-            ### add delayed processFile function for one file to a list instead of running the process directly
-            list_of_delayed_functions.append(delayed(processFile)(file))
 
-    ## After constructing the Dask graph of delayed functions, run them with the resources available
-    compute(list_of_delayed_functions)
+    ## This list hosts the delayed functions which are then ran with compute()
+    tasks = [delayed(processFile)(file) for file in files]
 
+    # Processes avoid GDAL thread-safety issues; each worker cleans up on its own
+    compute(*tasks, scheduler="processes", num_workers=parallel_processes)
 
 if __name__ == "__main__":
     start = time.time()
     main()
     end = time.time()
-    print("Script completed in " + str(end - start) + " seconds")
+    print(f"Script completed in {time.time() - start:.1f} seconds")
