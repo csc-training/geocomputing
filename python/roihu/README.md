@@ -78,8 +78,8 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
 * We can also run the full script by following these steps: 
     * Exit Python console in Terminal: type `exit()` in the terminal, if you ran pieces of the code before.
-    * Click the arrow up right above script (Run Python File in Terminal)
-    * Wait, it takes a few minutes for complete. The printouts will appear in the terminal during the process. Note the time it took.
+    * Click the arrow up right above script (Run Python File)
+    * Wait, it takes a moment to complete. The printouts will appear in the terminal during the process. Note the time it took.
     * Check that there is one new GeoPackage file in your work directory in the Files panel of VSCode.
 
 ## Serial job
@@ -114,7 +114,7 @@ sbatch single_core_example.sh
 > Did you reserve a good amount of memory?
 
 
-* Once the job is finished, see output in `slurm-jobid.out` and `slurm-jobid.err` with VSCode for any possible errors and other outputs. 
+* Once the job is finished, see output in `slurm-jobid.out` with VSCode for any possible errors and other outputs. 
 * Check that you have a new GeoPackage file in the output folder.
 
 ## Parallel job
@@ -143,7 +143,7 @@ You need to set your project to the batch job file, otherwise this example works
 
 ```
 cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/06_parallel_dask/single_node
-sbatch dask_singlenode.sh
+sbatch dask_singlenode_delayed_functions.sh
 ```
 
 > [!NOTE]
@@ -249,16 +249,10 @@ xargs can help parallelizing a script which otherwise is not parallelized. Inste
 
 Submit the job to Roihu from login node shell:
 
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
-
 ```
 cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/02_xargs_parallel
 sbatch xargs_parallel_example.sh
 ```
-
-> [!NOTE]
-> Check with `seff`: How much time and resources did you use?
 
 #### Array job
 
@@ -266,18 +260,14 @@ In the array job example the idea is that the Python script will run one process
 
 * [03_array/array_job_example.sh](03_array/array_job_example.sh) array job batch file. Changes compared to `01_serial/single_core_example_list.sh`:
     * `--array` parameter is used to tell how many jobs to start. Value 1-3 in this case means that `$SLURM_ARRAY_TASK_ID` variable will be from 1 to 3. We can use `sed` to read the first three lines from our `image_path_list.txt` file and start a job for each input file. 
-	* Output from each job is written to `slurm-jobid_arrayid.out` and `slurm-jobid_arrayid.err` files. 
+	* Output from each job is written to `slurm-jobid_arrayid.out` files. 
 	* Memory and time allocations are per job.
 
-	
-> [!NOTE]
-> Submit the array job to Roihu from login node shell
-
->[!NOTE]
-> Remember to change the project name and your CSC user name in the paths below.
+Submit the array job to Roihu from login node shell
 
 ```
 cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/03_array
+sbatch array_job_example.sh
 ```
 
 ## Multiprocessing
@@ -295,11 +285,5 @@ cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/03_array
 ```
 cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/04_parallel_multiprocessing
 sbatch multiprocessing_example.sh
-```
-
-> [!NOTE]
-> Check with `seff`: How much time and resources did you use?
-```
-sbatch array_job_example.sh
 ```
 
