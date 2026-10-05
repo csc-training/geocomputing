@@ -33,10 +33,7 @@ cd /scratch/project_2020458/students/$USER
 git clone https://github.com/csc-training/geocomputing.git
 ```
 
-* Move to the GDAL exercise folder.
-```
-cd geocomputing/gdal
-``` 
+
 
 ## Interactive working 
 
@@ -55,6 +52,11 @@ gdalinfo /dataset/project_2019680/mml/dem10m/2019/W3/W33/W3333.tif
 
 > [!IMPORTANT]  
 > If you want to run more computationally heavy GDAL commands, then use [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) on a compute node, easiest with a Compute node shell in the web interface.
+
+* Move to the GDAL exercise folder.
+```
+cd /scratch/project_2020458/students/$USER/geocomputing/gdal
+``` 
 
 ## Serial batch job
 
