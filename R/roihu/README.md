@@ -65,7 +65,7 @@ sbatch serial_batch_job.sh
 ```
 seff <job_id>
 ```
-* See output of slurm-<job_id>.out and slurm-<job_id>.err for any possible errors and other outputs.
+* See output of slurm-<job_id>.out for any possible errors and other outputs.
 	* For seeing the files use RStudio or Linux `less <filename>`
  	* With `tail -f <filename>` it is possible to see also how the output files are written during the job.
 * Check that you have 3 new GeoPackge files in the working folder.
@@ -118,7 +118,6 @@ sbatch parallel_batch_job_future_multicore.sh
 
 * Submit the parallel job to Roihu
 ```
-cd ../02_parallel_future
 sbatch parallel_batch_job_future_cluster.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
