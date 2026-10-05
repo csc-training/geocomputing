@@ -4,11 +4,14 @@
 # and then countours are calculated and saved in GeoPackage format.
 # The file given as input is a 10m DEM file from Finnish NLS.
 
+start <- Sys.time()
+
 # Load the necessary libraries
 library(terra)
 
 # Read the command line argument, which is the path of the .tif file.
 args = commandArgs(trailingOnly=TRUE)
+
 
 if (length(args)==0) {
   stop("Please give the map sheet number", call.=FALSE)
@@ -20,7 +23,10 @@ print(mapsheet)
 
 # Calculate contours 
 DEM <- rast(mapsheet)
-file <- gsub("tif", "gpkg", basename(mapsheet))
+file <- gsub("\\.tif", ".gpkg", basename(mapsheet))
 contours <- as.contour(DEM)
 # Save the results as GeoPackage
 writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
+
+end <- Sys.time()
+cat(sprintf("Script completed in %.1f seconds\n", as.numeric(difftime(end, start, units = "secs"))))

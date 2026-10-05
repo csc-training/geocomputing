@@ -12,4 +12,4 @@ module load r-env
 # Select the inputfile from row n to the array job n.
 file_path=$(sed -n ${SLURM_ARRAY_TASK_ID}p ../mapsheets.txt)
 
-srun Rscript Contours_array.R $name
+srun Rscript Contours_array.R $file_path

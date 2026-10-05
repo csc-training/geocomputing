@@ -3,6 +3,8 @@
 # Here countours are calculated based on a DEM file and saved in GeoPackage format.
 # The file given as input is a 10m DEM file from Finnish NLS.
 
+start <- Sys.time()
+
 # load terra library
 library(terra)
 
@@ -15,7 +17,10 @@ mapsheets <- readLines('../mapsheets.txt')
 #Calculate contours and save the results as GeoPackage
 for (mapsheet in mapsheets){
   DEM <- rast(mapsheet)
-  file <- gsub("tif", "gpkg", basename(mapsheet))
+  file <- gsub("\\.tif", ".gpkg", basename(mapsheet))
   contours <- as.contour(DEM)
   writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
 }
+
+end <- Sys.time()
+cat(sprintf("Script completed in %.1f seconds\n", as.numeric(difftime(end, start, units = "secs"))))

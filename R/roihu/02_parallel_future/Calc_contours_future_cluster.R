@@ -6,6 +6,8 @@
 
 # For parallel tasks future package is used.
 
+start <- Sys.time()
+
 # load libraries
 library(furrr)
 library(terra)
@@ -16,18 +18,25 @@ plan(cluster, workers = cl)
 
 # The function run on each core
 funtorun <- function(mapsheet) {
-  DEM <- rast(mapsheet)
-  file <- gsub("tif", "gpkg", basename(mapsheet))
-  contours <- as.contour(DEM)
-  writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
+  DEM <- terra::rast(mapsheet)
+  file <- gsub("\\.tif", ".gpkg", basename(mapsheet))
+  contours <- terra::as.contour(DEM)
+  terra::writeVector(contours, file, filetype="GPKG", overwrite=TRUE)
 }
 
 # Read the mapsheets from external file
 mapsheets <- readLines('../mapsheets.txt')
 
 # Give cluster the work to be done
-system.time(a<-future_map(mapsheets,funtorun))
+a<-future_map(mapsheets,funtorun, .options = furrr_options(seed = TRUE))
+
+# Print handled files
+cat(sprintf("Wrote %d files\n", length(a)))
 
 #Stop cluster
 stopCluster(cl)
+
+end <- Sys.time()
+cat(sprintf("Script completed in %.1f seconds\n", as.numeric(difftime(end, start, units = "secs"))))
+
 
