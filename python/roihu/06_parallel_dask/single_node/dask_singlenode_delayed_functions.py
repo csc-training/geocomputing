@@ -45,7 +45,7 @@ def main():
     parallel_processes = len(os.sched_getaffinity(0))
 
     # Get file list to compute
-    with open("../../mapsheets_URLs.txt") as f:
+    with open("../../mapsheets.txt") as f:
         files = [line.strip() for line in f if line.strip()]
 
     ## This list hosts the delayed functions which are then ran with compute()

@@ -33,7 +33,7 @@ def main():
     base_folder = os.path.join(os.sep, 'scratch', 'project_2020458', 'students', os.environ.get('USER'), 'geocomputing', 'python', 'roihu', '00_interactive')
     os.chdir(base_folder)
     # Run the process for the first file
-    with open("../mapsheets_URLs.txt") as f:
+    with open("../mapsheets.txt") as f:
         first_file = f.readline().strip()        
         processFile(first_file)
 
@@ -43,4 +43,4 @@ if __name__ == "__main__":
     start = time.time()
     main()
     end = time.time()
-    print(f"Script completed in {str(end - start)} seconds")
+    print(f"Script completed in {time.time() - start:.1f} seconds")

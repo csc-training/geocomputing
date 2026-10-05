@@ -11,7 +11,7 @@
 module load python-geo
 
 # Select the inputfile from row n to the array job n.
-file_path=$(sed -n ${SLURM_ARRAY_TASK_ID}p ../mapsheets_URLs.txt)
+file_path=$(sed -n ${SLURM_ARRAY_TASK_ID}p ../mapsheets.txt)
 
 # Feed the filename to the Python script
 srun python array_job_example.py $file_path

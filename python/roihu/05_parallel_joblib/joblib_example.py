@@ -43,7 +43,7 @@ def main():
     parallel_processes = len(os.sched_getaffinity(0))
 
     # Run the process for the all the files
-    with open("../mapsheets_URLs.txt") as f:
+    with open("../mapsheets.txt") as f:
         files = [line.strip() for line in f if line.strip()]
         
         ## Start a Parallel job that gives one path from the list to a worker process
@@ -57,4 +57,4 @@ if __name__ == "__main__":
     start = time.time()
     main()
     end = time.time()
-    print("Script completed in " + str(end - start) + " seconds")
+    print(f"Script completed in {time.time() - start:.1f} seconds")
