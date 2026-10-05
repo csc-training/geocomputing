@@ -122,7 +122,8 @@ sbatch parallel_batch_job_future_cluster.sh
 ```
 * Check with `seff` and `sacct` how much time and resources you used?
 
-## Array job
+## Extra
+### Array job
 [Array jobs](https://docs.csc.fi/computing/running/array-jobs/) are an easy way of taking advantage of Roihu's parallel processing capabilities. Array jobs are useful when same code is executed many times for different datasets or with different parameters. In GIS context, a typical use case would be to run some model on a study area split into multiple files, where the output from one file doesn't have an impact on the result of another area.
 
 In the array job example the idea is that the R script will run one process for every given input file as opposed to running a for loop within the script. That means that the R script has to read the file to be processed from commandline argument. 
