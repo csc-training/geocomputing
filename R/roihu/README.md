@@ -90,7 +90,7 @@ In this case the R code takes care of dividing the work to parallel processes, o
 
 * [02_parallel_future/parallel_batch_job_future_multicore.sh](02_parallel_future/parallel_batch_job_future_multicore.sh) batch job file for `future` with `multicore`.
 	* Fix the project name in the beginning of the file to match your CSC project name.
-  	* `--ntasks=3` reserves 3 cores: one for each mapsheet
+  	* `--cpus-per-task=3` reserves 3 cores: one for each mapsheet
 	* `--mem-per-cpu=1000` reserves memory per core
 	* `srun Rscript --no-save Calc_contours_future_multicore.R` Run the R-script.
 *  [02_parallel_future/Calc_contours_future_multicore.R](02_parallel_future/Calc_contours_future_multicore.R)
