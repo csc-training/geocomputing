@@ -30,7 +30,7 @@ import time
 #input zones file
 zones_file = "zones.shp"
 #output zonal stats file
-zonal_file = "/scratch/project_2020458/python_multiprocessing_rasterstats/zonal_stats.shp"
+zonal_file = "/scratch/project_200XXXX/python_multiprocessing_rasterstats/zonal_stats.shp"
 #Raster you want to use to compute zonal stastics from, CORINE 2018
 raster_file = '/dataset/project_2019680/mml/dem10m/dem10m_direct.vrt'
 # Statistics calculated for each zone

@@ -30,8 +30,8 @@ Files in this example:
 * Make a folder for the exercise materials and make it your working directory
 	* Change the project name and username.
 ```
-mkdir -p /scratch/project_2020458/students/$USER
-cd /scratch/project_2020458/students/$USER
+mkdir -p /scratch/project_200XXXX/students/$USER
+cd /scratch/project_200XXXX/students/$USER
 ```
 
 * Copy the example scripts to Roihu.
@@ -46,11 +46,11 @@ cd geocomputing/python/roihu
 
 If you have already cloned geocomputing repository as part of a previous exercise, move to the correct folder:
 ```
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu
 ```
 
 > [!WARNING]
-> Please note that if you following this example outside of organized course, you need to change `project_2020458` to your own project's name.
+> Please note that if you following this example outside of organized course, you need to change `project_200XXXX` to your own project's name.
  
     
 ## Interactive job with Visual Studio Code
@@ -61,7 +61,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Open VSCode start page from front page: Apps -> Visual Studio Code
     * Choose settings for VSCode:
         * (Reservation: `geocomputing_day2`, only during course)
-        * Project: `project_2020458`
+        * Project: `project_200XXXX`
         * Partition: `interactive` (`small` during course)
         * Number of CPU cores: 1
         * Memory: 6 Gb
@@ -72,7 +72,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
     * Wait a moment -> Connect to Visual Studio Code
     * VSCode opens up in the browser
 * Open folder with the exercise files: 
-    * Click three lines up left -> File -> Open folder -> `/scratch/project_2020458/students/cscusername/geocomputing/python/roihu` -> OK
+    * Click three lines up left -> File -> Open folder -> `/scratch/project_200XXXX/students/cscusername/geocomputing/python/roihu` -> OK
 * Open [00_interactive/interactive_single_core_example.py](00_interactive/interactive_single_core_example.py). This is a Python script, which calculates one file. 
 * Check that needed Python libraries are available in Roihu:
     * Select all import rows and press `Shift+Enter`. Wait a few seconds. The import commands are run in Terminal (which opens automatically on the bottom of the page). If no error messages are visible, the packages are available. Also other parts of the script can be tested in the same manner (select the code and run with `Shift+Enter`).
@@ -85,7 +85,7 @@ Within an [interactive job](https://docs.csc.fi/computing/running/interactive-us
 ## Serial job
 All computationally heavy analysis should be done via batch jobs. The login node is used only to tell the supercomputer, what it should do. The execution of the code will happen on a compute node -> We go non-interactive. **From this point onwards we will have to work from the command line.**
 
-* Open `/scratch/project_2020458/students/$USER/geocomputing/python/roihu/01_serial/single_core_example.sh` with VSCode.
+* Open `/scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/01_serial/single_core_example.sh` with VSCode.
 
 * Check out the changes in the Python file compared to the `00_interactive/interactive_single_core_example.py`:
     * Python script reads one input image file from the argument, which is set inside the batch job file. 
@@ -103,7 +103,7 @@ All computationally heavy analysis should be done via batch jobs. The login node
 * Submit the batch job from **login node shell** (not VSCode terminal or compute node shell):
 
 ```
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/01_serial
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/01_serial
 sbatch single_core_example.sh
 ```
 
@@ -142,7 +142,7 @@ You need to set your project to the batch job file, otherwise this example works
 
 
 ```
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/06_parallel_dask/single_node
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/06_parallel_dask/single_node
 sbatch dask_singlenode_delayed_functions.sh
 ```
 
@@ -171,7 +171,7 @@ When the worker jobs finish, they will be displayd as CANCELLED on Roihu which i
 
 
 ```
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/06_parallel_dask/multi_node
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/06_parallel_dask/multi_node
 sbatch dask_multinode.sh
 ```
 
@@ -187,14 +187,14 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
 
 * Settings for Jupyter:
     * (Reservation: `geocomputing_day2`, only during course)
-    * Project: `project_2020458`
+    * Project: `project_200XXXX`
     * Partition: `interactive` (`small` during course)
     * Number of CPU cores: 1
     * Memory: 3 Gb
     * Time: 1:00:00
     * Python: python-geo
     * Module version: default
-    * Working directory: `/scratch/project_2020458/`
+    * Working directory: `/scratch/project_200XXXX/`
     * `Launch`
 
 * Wait a moment -> Connect to Jupyter
@@ -209,14 +209,14 @@ If you want to start prototyping and testing in a Jupyter Notebook, you can star
 
 If you prefer working in the command line, you can also start a compute node shell directly from the tools tab in Roihu web interface. Choose settings for the interactive session:
 
-* Project: project_2020458
+* Project: project_200XXXX
 * Number of CPU cores: 1
 * Memory: 2 Gb
 * Time: 1:00:00
 
 > [!NOTE]
 > You can also start an [interactive session](https://docs.csc.fi/computing/running/interactive-usage/) from a login node (by starting a login node shell from tools tab in Roihu web interface or by connecting to Roihu via ssh in your own computer's terminal) with:
->  `sinteractive --account project_2020458 --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
+>  `sinteractive --account project_200XXXX --cores 1 --time 02:00:00 --mem 4G --tmp 0` 
 > This gives you a compute node shell; you can see "where" you are from your terminal prompt [cscusername@roihu-cpu-loginX] -> login node, [cscusername@rXXcXX] (XX being some numbers) -> compute node. 
 
 After getting access to the compute node shell, you can load modules and run scripts "like on a normal linux computer":
@@ -226,7 +226,7 @@ After getting access to the compute node shell, you can load modules and run scr
 
 ```
 module load python-geo
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/00_interactive
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/00_interactive
 python interactive_single_core_example.py 
 ```
 
@@ -250,7 +250,7 @@ xargs can help parallelizing a script which otherwise is not parallelized. Inste
 Submit the job to Roihu from login node shell:
 
 ```
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/02_xargs_parallel
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/02_xargs_parallel
 sbatch xargs_parallel_example.sh
 ```
 
@@ -266,7 +266,7 @@ In the array job example the idea is that the Python script will run one process
 Submit the array job to Roihu from login node shell
 
 ```
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/03_array
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/03_array
 sbatch array_job_example.sh
 ```
 
@@ -283,7 +283,7 @@ sbatch array_job_example.sh
 > Submit the parallel job to Roihu from login node shell
 
 ```
-cd /scratch/project_2020458/students/$USER/geocomputing/python/roihu/04_parallel_multiprocessing
+cd /scratch/project_200XXXX/students/$USER/geocomputing/python/roihu/04_parallel_multiprocessing
 sbatch multiprocessing_example.sh
 ```
 

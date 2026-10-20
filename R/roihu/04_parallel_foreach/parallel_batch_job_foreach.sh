@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#SBATCH --account=project_2020458    # Choose the project to be billed
+#SBATCH --account=project_200XXXX    # Choose the project to be billed
 #SBATCH --time=00:05:00  # Maximum duration of the job. Upper limit depends on partition.
 #SBATCH --ntasks=3  # Number of tasks. Upper limit depends on partition.
 #Test partition is used for testing, for real jobs use either serial or parallel depending on how many nodes you need.

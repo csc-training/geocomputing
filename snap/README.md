@@ -14,8 +14,8 @@ The examples show how to run:
 * Change the project name and username.
 
 ```
-mkdir -p /scratch/project_2020458/students/$USER
-cd /scratch/project_2020458/students/$USER
+mkdir -p /scratch/project_200XXXX/students/$USER
+cd /scratch/project_200XXXX/students/$USER
 ```
 
 * Copy the example scripts to Roihu.
@@ -44,7 +44,7 @@ Open both files and check the contents, but no changes are needed to these files
 We will use Roihu web interface simple file editor for editing the files in this exercise. 
 
 * Open another tab in your web browser to [Roihu web interface](https://roihu.csc.fi).
-* Open Files -> `/scratch/project_2020458`
+* Open Files -> `/scratch/project_200XXXX`
 * Open folders: `students` -> `cscusername` -> `geocomputing` -> `snap`
 
 Open the files with Edit under the menu on the right of the file name. 

@@ -9,7 +9,7 @@ start <- Sys.time()
 library(terra)
 
 # Set the working directory with RStudio
-# mainDir <- "/scratch/project_2020458/students/ekkylli/geocomputing/R/Roihu/01_serial"
+# mainDir <- "/scratch/project_200XXXX/students/ekkylli/geocomputing/R/Roihu/01_serial"
 # setwd(mainDir)
 
 mapsheets <- readLines('../mapsheets.txt')
